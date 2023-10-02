@@ -3,10 +3,7 @@ import RouteData from './routes/route.data';
 
 const App: Component = () => {
   return (
-    // <>
-    //   <p class="text-4xl text-green-700 text-center py-20">Hello ERP!</p>
-    // </>
-      <RouteData />      
+    <p class="text-4xl text-green-700 text-center py-20">Dashboard</p>
   );
 };
 
