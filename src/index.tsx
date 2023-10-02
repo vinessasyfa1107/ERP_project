@@ -1,6 +1,7 @@
 /* @refresh reload */
 import './index.css';
 import { render } from 'solid-js/web';
+import { Router, hashIntegration } from '@solidjs/router';
 import "virtual:uno.css";
 
 import App from './App';
@@ -13,4 +14,4 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+render(() => <Router source={hashIntegration()}><App /></Router>, root!);
