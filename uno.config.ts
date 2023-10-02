@@ -3,7 +3,10 @@ import {
     defineConfig,
     presetAttributify,
     presetIcons,
+    presetTypography,
     presetUno,
+    transformerDirectives,
+    transformerVariantGroup,
 } from 'unocss'
   
 export default defineConfig({
@@ -20,6 +23,11 @@ export default defineConfig({
         scale: 1.2,
         cdn: 'https://esm.sh/',
       }),
+      presetTypography(),
     ],
+    transformers: [
+        transformerDirectives(),
+        transformerVariantGroup()
+    ]
 })
   
