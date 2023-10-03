@@ -2,12 +2,14 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { Component, lazy } from 'solid-js';
 
 const getPath = ({navigate, location}) => {    
-    return "/dashboard/admin";
+    return "/dashboard/planning";
 }
 
 const Plan = lazy(() => import('../containers/dashboards/plannings/plan'));
 const Admin = lazy(() => import('../containers/dashboards/teams/admin'));
 const Login = lazy(() => import('../containers/login/login'));
+
+const Planning = lazy(() => import('../containers/dashboards/plannings/planning'));
 
 const RouteData: Component = () => {
     return (
@@ -17,6 +19,8 @@ const RouteData: Component = () => {
             <Route path="/dashboard">
                 <Route path="/plan" component={Plan}/>
                 <Route path="/admin" component={Admin}/>
+
+                <Route path="/planning" component={Planning}/>
             </Route>
         </Routes>
     )
