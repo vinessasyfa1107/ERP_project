@@ -1,4 +1,4 @@
-import { createSignal, type Component, onMount, Show } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import RouteData from './routes/route.data';
 import { useStore } from './store';
 import { useNavigate } from '@solidjs/router';
@@ -10,7 +10,6 @@ const App: Component = () => {
     const [needLogin, setNeedLogin] = createSignal(true);
 
     onMount(() => {
-        console.log('halaman app');
         console.log('session ', sessionStore.sessionData);
         if(sessionStore.sessionData){
             setNeedLogin(!needLogin());
@@ -22,12 +21,7 @@ const App: Component = () => {
     });
     return (
       <>
-        <Show when={!needLogin()}>
-          <RouteData />
-        </Show>
-        <Show when={needLogin()}>
-          <Login />
-        </Show>
+        {!needLogin() ? <RouteData/> : <Login />}
       </>
     );
 };
