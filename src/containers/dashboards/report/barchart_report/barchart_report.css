@@ -1,0 +1,56 @@
+.barchart-report-container {
+    background-color: wheat;
+    width: 73vh;
+    height: 70vh;
+}
+
+/*======== css untuk judul tabelnya ========*/
+.barchart-report-container .top-table {
+    /*css untuk mengatur semua elemen yang ada diatas tabel*/
+    display: flex;
+    justify-content: space-between;
+    float: right;
+}
+
+.barchart-report-container .top-table .search-container {
+    /*css untuk mengatur list planning, kotak search, icon sorting*/
+    position: relative;
+    display: flex;
+}
+
+.barchart-report-container .top-table .search-container .search-input {
+    /*css untuk mengatur jarak antara kotak search dengan sorting icon*/
+    justify-content: space-between;
+}
+
+.barchart-report-container .top-table .search-input .form-control {
+    /*css untuk mengatur kotak search input*/
+    width: 13rem;
+    padding: 10px 30px 10px 10px;
+    height: 25px;
+    border: 1px solid #808080;
+    background-color: transparent;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #808080;
+    margin-right: 20px;
+}
+
+.barchart-report-container .top-table .search-container .search-input .search-icon {
+    /*css untuk mengatur search icon*/
+    position: absolute;
+    top: 55%;
+    right: 3.6rem;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.barchart-report-container .top-table .search-container .btn-sort {
+    margin: auto;
+    width: 26px;
+    height: 25px;
+    background-color: #4E558D;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+}
