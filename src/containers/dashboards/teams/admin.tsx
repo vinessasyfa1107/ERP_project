@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component, onMount } from "solid-js";
 import { useNavigate, A, Navigate } from '@solidjs/router';
 
 
@@ -6,8 +6,18 @@ import { useNavigate, A, Navigate } from '@solidjs/router';
 const Admin: Component = () => {
     const navigate = useNavigate();
 
+    onMount(() => {
+        console.log('sudah pindah ke halaman dashboard')
+    })
+    
     const changePage = () => {
         navigate('/dashboard/plan')
+    }
+
+    const ActionLogout = () => {
+        console.log('clear storage ');
+        sessionStorage.clear();
+        navigate('/login');
     }
 
     return (
@@ -18,6 +28,9 @@ const Admin: Component = () => {
             </A><br/><br/>
             <div class="text-center">
                 <button class="btn btn-accent text-center btn-xs" onClick={() => changePage()}>Pindah Halaman - Button</button>
+            </div>
+            <div class="text-right">
+                <button class="btn btn-warning btn-xs" onClick={() => ActionLogout()}>Tombol Logout</button>
             </div>
         </>
     )
