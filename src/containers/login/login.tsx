@@ -20,98 +20,82 @@ const Login: Component = () => {
     }
 
     return (
-        <div class="bg-[#ffffff] w-full h-full fixed overflow-hidden">
-            <User_Top class="absolute left-[1376px] top-[42px] overflow-visible"/>
-            <div class="absolute" style="inset: 0">
-                <div
-                class="bg-[#ffffff] rounded-[20px] w-[253px] h-11 absolute left-[1087px] top-[35px]"
-                style="box-shadow: inset 0px 4px 4px 0px rgba(0, 0, 0, 0.1)"
-                ></div>
-                <div
-                class="text-[#909090] text-left absolute left-[1147px] top-[49px]"
-                style="font: 400 15px 'Inter', sans-serif"
-                >
-                02.10.2023 - 12:00 WIB
+        <div
+            id="LoginRoot"
+            class="overflow-hidden bg-white flex flex-col justify-between w-full h-full items-end pt-8 pb-48 px-12 fixed"
+        >
+            <div class="flex flex-row gap-8 items-start">
+                <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
+                <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
+                    <img
+                    src="https://file.rendit.io/n/Q1vGwgsXbO1TkPP5ycuD.svg"
+                    id="Uimcalender"
+                    class="w-5 shrink-0"
+                    />
+                    <div class="text-sm font-['Inter'] text-[#909090] mt-1">
+                    02.10.2023 - 12:00 WIB
+                    </div>
                 </div>
+                </div>
+                <img
+                src="https://file.rendit.io/n/MsR73VkBZgSutF4rNv0l.svg"
+                class="mt-2 w-5 shrink-0"
+                />
             </div>
-            <div class="absolute" style="inset: 0">
-                <div class="w-[998px] h-[652.98px] static">
-                <div
-                    class="bg-[#efefef] rounded-[21px] w-[998px] h-[652.98px] absolute left-[221px] top-[186px]"
-                ></div>
-                <div class="w-[420px] h-[248.51px] static">
-                    <div
-                    class="text-[#6e49e9] text-right absolute left-[815px] top-[565.51px]"
-                    style="font: 500 14px 'Manrope', sans-serif"
-                    >
-                    forget Password?
+            <div class="shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.02),_0px_3px_5px_0px_rgba(0,_0,_0,_0.03),_0px_5px_10px_0px_rgba(0,_0,_0,_0.04),_0px_9px_18px_0px_rgba(0,_0,_0,_0.05),_0px_18px_33px_0px_rgba(0,_0,_0,_0.06),_0px_42px_80px_0px_rgba(0,_0,_0,_0.08)] self-stretch flex flex-col mx-[176px]">
+                <div class="bg-[#efefef] flex flex-col gap-2 h-[653px] shrink-0 items-center pr-[288px] py-12 rounded-[21px]">
+                <div class="flex flex-row mb-8 gap-2 items-start">
+                    <div class="text-5xl font-['Exo_2'] line-through font-bold text-[#6e49e9] mb-px">
+                    ERP
+                    <div id="ERP" class="text-4xl contents">
+                        {" "}
                     </div>
-                    <div class="w-[420px] h-10 static">
-                    <div
-                        class=" w-5 h-5 absolute left-[896px] top-[456.51px] overflow-hidden"
-                    >
-                        <div class="absolute" style="inset: 0">
-                        <User_Field class="absolute left-[3.33px] top-[1.67px] overflow-visible"/>
-                        </div>
                     </div>
-                    <div
-                        class="rounded-md border-solid border-[#131313] border w-[420px] h-10 absolute left-[510px] top-[446.51px]"
-                    ></div>
-                    <div
-                        class="text-[rgba(128,128,128,0.50)] text-left absolute left-[524px] top-[455.51px]"
-                        style="font: 500 16px 'Manrope', sans-serif"
-                    >
+                    <div class="text-4xl font-['Exo_2'] font-bold text-[#9f9f9f] self-end">
+                    TUS
+                    </div>
+                </div>
+                <img
+                    src="https://file.rendit.io/n/n7NJ45NKZWVUOp5SYmTP.svg"
+                    class="mb-10 w-16"
+                />
+                <div class="relative flex flex-col mb-5 w-3/5">
+                    <img
+                    src="https://file.rendit.io/n/O4HiAwmbvR7oyGVQm7s1.svg"
+                    id="Profile"
+                    class="w-5 h-5 absolute top-3 left-[387px]"
+                    />
+                    <div class="border-solid border-[#131313] relative flex flex-col h-10 shrink-0 items-start pl-3 py-2 border rounded">
+                    <div class="font-['Manrope'] font-medium text-[rgba(128,_128,_128,_0.5)]">
                         Username
                     </div>
                     </div>
-                    <User_Login class="absolute left-[687.47px] top-[336px] overflow-visible"/>
-
-                    <div class="w-[420px] h-10 static">
-                    <div
-                        class="text-[rgba(128,128,128,0.50)] text-left absolute left-[524px] top-[525.51px]"
-                        style="font: 500 16px 'Manrope', sans-serif"
-                    >
-                        Password
+                </div>
+                <div class="relative flex flex-col w-3/5">
+                    <div class="font-['Manrope'] font-medium text-[rgba(128,_128,_128,_0.5)] absolute top-2 left-4 h-5 w-20">
+                    Password
                     </div>
-                    <Key_Field class="absolute right-[910px] top-[526.51px] overflow-visible"/>
-
-                    <div
-                        class="rounded-md border-solid border-[#000000] border w-[420px] h-10 absolute left-[510px] top-[516.51px]"
-                    ></div>
-                    </div>
+                    <img
+                    src="https://file.rendit.io/n/xylO2D7UuVcCm8qandYu.svg"
+                    id="Key"
+                    class="w-5 h-5 absolute top-3 left-[387px]"
+                    />
+                    <div class="border-solid relative h-10 shrink-0 border-black border rounded" />
                 </div>
+                <div class="text-right text-sm font-['Manrope'] font-medium text-[#6e49e9] self-end mb-5 mr-px">
+                    forget Password?
                 </div>
-                <div class="w-[300px] h-[50px] static">
-                <div
-                    class="btn bg-white rounded w-75 h-12 absolute left-[570px] top-[611px]"
-                    style="box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25)"
-                    onClick={() => ActionLogin()}
-                ></div>
-                    <div class="text-[#6e49e9] text-left absolute left-[691px] top-[622.51px]" style="font: 700 20px 'Manrope', sans-serif">Log in</div>
-                
-                </div>
-                <div class="w-[171px] h-[61px] static">
-                <div class="w-[119px] h-[54px] absolute left-[635px] top-[236px]">
-                    <div class="absolute" style="inset: 0">
-                    <div class="w-[94px] h-[60px] static">
-                        <div class="w-[94px] h-[60px] static">
-                        <div class="text-[#fcd35c] text-left absolute left-0 top-0">
-                            <span><span class="erp-span">ERP</span><span class="erp-span2"> </span></span>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div
-                    class="text-[#9f9f9f] text-left absolute left-[739px] top-[255px]"
-                    style="font: 800 italic 35px 'Exo 2', sans-serif"
-                >
-                    TUS
-                </div>
+                <button class="btn shadow-[0px_2px_4px_0px_rgba(0,_0,_0,_0.25)] bg-white flex flex-col justify-center h-12 shrink-0 items-center rounded" onclick={() => ActionLogin()}>
+                    <span class="text-xl font-['Manrope'] font-bold text-[#6e49e9] mx-32">
+                    Log in
+                    </span>
+                </button>
                 </div>
             </div>
         </div>
-    );
+
+    )
+
 }
 
 export default Login;
