@@ -7,7 +7,7 @@ import { createEffect, createSignal } from 'solid-js';
 import './table_report.css';
 
 
-const Table_report: Component = () => {
+const Table_expenses_report: Component = () => {
     const columnDefs = [
         { field: 'Tanggal' },
         { field: 'Deskripsi' },
@@ -55,4 +55,4 @@ const Table_report: Component = () => {
     );
 };
 
-export default Table_report;
+export default Table_expenses_report;

@@ -2,7 +2,6 @@ import { createEffect, onCleanup, createSignal, Component } from 'solid-js';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import './barchart_report.css';
 import { Icon } from '@iconify-icon/solid';
 
 const Barchart_report: Component = () => {
@@ -12,7 +11,6 @@ const Barchart_report: Component = () => {
         // Callback untuk menggambar chart
         const drawChart = () => {
             am4core.useTheme(am4themes_animated);
-
             chart = am4core.create("chartdiv", am4charts.XYChart);
             chart.width = am4core.percent(100);
             chart.height = 400;
@@ -88,8 +86,15 @@ const Barchart_report: Component = () => {
                 series.name = name;
                 series.columns.template.tooltipText = "{name}: [bold]{valueY}[/]";
                 series.stacked = stacked;
-                series.columns.template.width = am4core.percent(95);
+                series.columns.template.width = am4core.percent(100);
                 series.columns.template.fill = color;
+                series.columns.template.column.cornerRadiusTopLeft = 999; // Atur radius sudut kiri atas
+                series.columns.template.column.cornerRadiusTopRight = 999;
+
+                categoryAxis.renderer.grid.template.location = 0;
+                categoryAxis.renderer.minGridDistance = 20;
+                categoryAxis.renderer.cellStartLocation = 0.3;
+                categoryAxis.renderer.cellEndLocation = 0.7;
             }
 
             createSeries("Pemasukan", "Pemasukan", false, am4core.color("#C1533E"));
@@ -97,7 +102,7 @@ const Barchart_report: Component = () => {
 
             // Add legend
             chart!.legend = new am4charts.Legend();
-            chart.legend.position = "top"; 
+            chart.legend.position = "top";
             let markerTemplate = chart.legend.markers.template;
             markerTemplate.width = 19;
             markerTemplate.height = 5;
@@ -123,29 +128,11 @@ const Barchart_report: Component = () => {
 
     return (
         <div>
-            <div class="barchart-report-container">
-                <div class="top-table">
-                    <div class="search-container">
-                        <div class="search-input">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="filter-text-box"
-                                placeholder="Search..."
-                            />
-                            <span class="search-icon">
-                                <Icon icon="ic:baseline-search" color="gray" width="16" height="16" />
-                            </span>
-                        </div>
-            
-                        <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
-
-                    </div>
-                </div>
-                <div class="barchart-container">
-                    <div id="chartdiv" style={{ "width": "35vw", "height": "30vw", "font-size": "10px" }}></div>
+            <div class="barchart1-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "58vh" }}>
+                <div id="chartdiv" style={{ "width": "85vw", "height": "90vw", "font-size": "14px" }}>
                 </div>
             </div>
+
 
 
 
