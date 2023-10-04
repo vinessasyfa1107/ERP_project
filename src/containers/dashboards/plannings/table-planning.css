@@ -42,15 +42,15 @@
 
 .checkbox-container {
     position: relative;
-    padding-left: 35px;
     cursor: pointer;
     user-select: none;
+    background-color: #00BA29;
   }
   
   .checkbox-container input {
     position: absolute;
-    opacity: 0;
     cursor: pointer;
+    color: #00BA29;
   }
   
   .checkbox-checkmark {
@@ -60,7 +60,7 @@
     height: 10px;
     width: 10px;
     background-color: #a7a3a3;
-    border: 1px solid #ccc;
+    border: 1px solid #ac6767;
   }
   
   .checkbox-container:hover .checkbox-checkmark {
@@ -69,6 +69,7 @@
   
   .checkbox-container input:checked + .checkbox-checkmark {
     background-color: #00BA29; /* Warna latar belakang saat dicentang */
+    color: #00BA29;
   }
   
   .checkbox-checkmark:after {
@@ -80,10 +81,9 @@
   .checkbox-container input:checked + .checkbox-checkmark:after {
     display: block;
     left: 9px;
-    top: 5px;
     width: 5px;
     height: 5px;
-    border: solid white;
+    border: solid rgb(151, 58, 58);
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
   }
