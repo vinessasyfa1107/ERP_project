@@ -6,7 +6,7 @@ const getPath = ({navigate, location}) => {
 }
 
 const Plan = lazy(() => import('../containers/dashboards/plannings/plan'));
-const Admin = lazy(() => import('../containers/dashboards/teams/admin'));
+const Admin = lazy(() => import('../containers/dashboards/teams/teams'));
 const Login = lazy(() => import('../containers/login/login'));
 
 const Planning = lazy(() => import('../containers/dashboards/plannings/planning'));

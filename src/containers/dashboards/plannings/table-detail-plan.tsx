@@ -116,7 +116,11 @@ const TableDetailPlan: Component = () => {
       ];
     
       const rowData = [
-        { id: '11C7D', date: '10-2-22', category: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
+        { id: '11C7D', date: '10-2-22', category: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting', confirm: true,
+          if (confirm : true) {
+              return {cellRenderer: 'DeleteButtonRenderer'};
+          }  
+      },
         { id: '11C7C', date: '10-2-22', category: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Event' , status: 'Approved' },
         { id: '11C7B', date: '10-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly', status: 'Rejected' },
         { id: '11C7A', date: '9-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
