@@ -4,6 +4,7 @@ import TablePlanning from './table-planning';
 import ChartPlanning from './chart-planning';
 import TableDetailPlan from './table-detail-plan';
 import { Icon } from '@iconify-icon/solid';
+import FormPlanning from './form-planning';
 
 const Planning: Component = () => {
   return (
@@ -29,6 +30,7 @@ const Planning: Component = () => {
             <div>
                 <h1>List Rencana Pengajuan</h1>
                 <TableDetailPlan/>
+                <FormPlanning/>
             </div>
             
         </div>

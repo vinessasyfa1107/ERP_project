@@ -37,7 +37,7 @@ const TablePlanning: Component = () => {
 
   return (
     <div>
-      <div class="ag-theme-alpine" style={{width:'70vh', height:'30vh'}}>
+      <div class="ag-theme-alpine" style={{width:'65vh', height:'30vh'}}>
         <AgGridSolid
             columnDefs={columnDefs}
             rowData={rowData}

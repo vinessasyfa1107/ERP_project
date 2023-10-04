@@ -22,8 +22,68 @@
   }
 
 
-  .ag-theme-alpine .ag-cell {
+.ag-theme-alpine .ag-cell {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.ag-cell.bold-type {
+    font-weight: 600;
+}
+
+
+
+
+
+/* coba checkbox */
+
+
+
+.checkbox-container {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .checkbox-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 10px;
+    background-color: #a7a3a3;
+    border: 1px solid #ccc;
+  }
+  
+  .checkbox-container:hover .checkbox-checkmark {
+    background-color: #ccc;
+  }
+  
+  .checkbox-container input:checked + .checkbox-checkmark {
+    background-color: #00BA29; /* Warna latar belakang saat dicentang */
+  }
+  
+  .checkbox-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .checkbox-container input:checked + .checkbox-checkmark:after {
+    display: block;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 5px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
