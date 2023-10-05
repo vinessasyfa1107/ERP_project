@@ -16,8 +16,7 @@ const Accounting = lazy(() => import('../containers/dashboards/accounting/accoun
 
 const Barchart_report = lazy(() => import('../containers/dashboards/report/barchart_report/barchart_report'));
 const Table_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
-const Piechart_income_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_income_report'));
-const Piechart_expenses_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_expenses_report'));
+const Piechart_expenses_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_report'));
 const Table_income_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
 const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
 const Report = lazy(() => import('../containers/dashboards/report/report'));
@@ -34,10 +33,8 @@ const RouteData: Component = () => {
                 <Route path="/planning" component={Planning}/>
                 <Route path="/time-tracking" component={TimeTracking}/>
                 <Route path="/accounting" component={Accounting}/>
-
                 <Route path="/barchart_report" component={Barchart_report}/>
                 <Route path="/table_report" component={Table_report}/>
-                <Route path="/piechart_income_report" component={Piechart_income_report}/>
                 <Route path="/piechart_expenses_report" component={Piechart_expenses_report}/>
                 <Route path="/table_income_report" component={Table_income_report}/>
                 <Route path="/table_expenses_report" component={Table_expenses_report}/>
