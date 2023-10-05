@@ -4,10 +4,11 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Icon } from '@iconify-icon/solid';
 import { createEffect, createSignal } from 'solid-js';
-import './table_report.css';
+import './table_income_report.css';
 
 
 const Table_income_report: Component = () => {
+    const [gridApi, setGridApi] = createSignal(null);
     const columnDefs = [
         { field: 'Tanggal' },
         { field: 'Deskripsi' },
@@ -15,9 +16,9 @@ const Table_income_report: Component = () => {
     ];
 
     const rowData = [
-        { Tanggal: '10/10/22', Deskripsi : 'Lorem Ipsum', Total: '2.000.000' },
-        { Tanggal: '10/10/22', Deskripsi : 'Lorem Ipsum', Total: '2.000.000' },
-        { Tanggal: '10/10/22', Deskripsi : 'Lorem Ipsum', Total: '2.000.000' }
+        { Tanggal: '09/10/22', Deskripsi: 'Lorem Ipsum', Total: '2.000.000' },
+        { Tanggal: '09/10/22', Deskripsi: 'Lorem Ipsum', Total: '2.000.000' },
+        { Tanggal: '09/10/22', Deskripsi: 'Lorem Ipsum', Total: '2.000.000' }
     ];
 
     const defaultColDef = {
@@ -37,10 +38,14 @@ const Table_income_report: Component = () => {
         },
     };
 
+    const onGridReady = (params) => {
+        setGridApi(params.api);
+    };
+
 
     return (
         <div>
-            <div class="ag-theme-alpine" style={{ width: '20vw' }}>
+            <div class="ag-theme-alpine" style={{ width: '28vw' }}>
                 <AgGridSolid
                     columnDefs={columnDefs}
                     rowData={rowData}

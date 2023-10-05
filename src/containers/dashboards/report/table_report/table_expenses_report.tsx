@@ -4,7 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Icon } from '@iconify-icon/solid';
 import { createEffect, createSignal } from 'solid-js';
-import './table_report.css';
+import './table_income_report.css';
 
 
 const Table_expenses_report: Component = () => {
@@ -40,7 +40,7 @@ const Table_expenses_report: Component = () => {
 
     return (
         <div>
-            <div class="ag-theme-alpine" style={{ width: '20vw' }}>
+            <div class="ag-theme-alpine" style={{ width: '28vw' }}>
                 <AgGridSolid
                     columnDefs={columnDefs}
                     rowData={rowData}

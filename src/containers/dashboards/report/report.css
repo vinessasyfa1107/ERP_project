@@ -113,3 +113,10 @@
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     margin-right: 20px;
 }
+
+/*======== css untuk piechart income, tabel, dan piechart excome ========*/
+.pietab-inex-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}

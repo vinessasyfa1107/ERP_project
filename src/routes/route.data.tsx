@@ -2,7 +2,7 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { Component, lazy } from 'solid-js';
 
 const getPath = ({navigate, location}) => {    
-    return "/dashboard/piechart_report";
+    return "/dashboard/report";
 }
 
 const Plan = lazy(() => import('../containers/dashboards/plannings/plan'));
@@ -10,7 +10,7 @@ const Admin = lazy(() => import('../containers/dashboards/teams/admin'));
 const Login = lazy(() => import('../containers/login/login'));
 const Barchart_report = lazy(() => import('../containers/dashboards/report/barchart_report/barchart_report'));
 const Table_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
-const Piechart_income_report = lazy(() => import('../containers/dashboards/report/piechart_report/Piechart_income_report'));
+const Piechart_income_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_income_report'));
 const Piechart_expenses_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_expenses_report'));
 const Table_income_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
 const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
