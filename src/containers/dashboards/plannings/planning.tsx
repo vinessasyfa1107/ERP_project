@@ -5,10 +5,16 @@ import ChartPlanning from './chart-planning';
 import TableDetailPlan from './table/table-detail-plan';
 import { Icon } from '@iconify-icon/solid';
 import FormPlanning from './form/form-planning';
+import { A } from '@solidjs/router';
 
 const Planning: Component = () => {
   return (
     <div class="plan">
+
+        <A href="/master/master">
+            <button style={{"background-color":"aqua"}}>ke master</button>
+        </A>
+
         <div class="box-1">
 
             <div class="component-1">

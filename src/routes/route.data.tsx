@@ -10,6 +10,7 @@ const Admin = lazy(() => import('../containers/dashboards/teams/admin'));
 const Login = lazy(() => import('../containers/login/login'));
 
 const Planning = lazy(() => import('../containers/dashboards/plannings/planning'));
+const Master = lazy(() => import('../containers/master/master/master'));
 
 const RouteData: Component = () => {
     return (
@@ -21,6 +22,9 @@ const RouteData: Component = () => {
                 <Route path="/admin" component={Admin}/>
 
                 <Route path="/planning" component={Planning}/>
+            </Route>
+            <Route path="/master">
+                <Route path="/master" component={Master}/>
             </Route>
         </Routes>
     )
