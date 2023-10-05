@@ -2,7 +2,7 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { Component, lazy } from 'solid-js';
 
 const getPath = ({navigate, location}) => {    
-    return "/dashboard/planning";
+    return "/dashboard/report";
 }
 
 const Plan = lazy(() => import('../containers/dashboards/plannings/plan'));
@@ -12,6 +12,15 @@ const Planning = lazy(() => import('../containers/dashboards/plannings/planning'
 const TimeTracking = lazy(() => import('../containers/dashboards/time-tracking/time-tracking'));
 const Accounting = lazy(() => import('../containers/dashboards/accounting/accounting'));
 
+
+
+const Barchart_report = lazy(() => import('../containers/dashboards/report/barchart_report/barchart_report'));
+const Table_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
+const Piechart_income_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_income_report'));
+const Piechart_expenses_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_expenses_report'));
+const Table_income_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
+const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
+const Report = lazy(() => import('../containers/dashboards/report/report'));
 
 
 const RouteData: Component = () => {
@@ -26,6 +35,13 @@ const RouteData: Component = () => {
                 <Route path="/time-tracking" component={TimeTracking}/>
                 <Route path="/accounting" component={Accounting}/>
 
+                <Route path="/barchart_report" component={Barchart_report}/>
+                <Route path="/table_report" component={Table_report}/>
+                <Route path="/piechart_income_report" component={Piechart_income_report}/>
+                <Route path="/piechart_expenses_report" component={Piechart_expenses_report}/>
+                <Route path="/table_income_report" component={Table_income_report}/>
+                <Route path="/table_expenses_report" component={Table_expenses_report}/>
+                <Route path="/report" component={Report}/>
             </Route>
         </Routes>
     )

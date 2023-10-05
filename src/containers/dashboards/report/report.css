@@ -1,0 +1,122 @@
+.report-container .barchartReport-container {
+    /*css untuk mengatur bagian atas dari barchart (atasnya kotak search)*/
+    background-color: #EFEFEF;
+    width: 178vh;
+    padding-top: 90px;
+    margin-left: 15vh;
+}
+
+/*======== css untuk judul tabelnya ========*/
+.report-container .barchartReport-container .top-table {
+    /*css untuk mengatur semua elemen yang ada diatas tabel*/
+    display: flex;
+    justify-content: space-between;
+    width: 178vh;
+    background-color: #EFEFEF;
+    justify-content: end;
+}
+
+.report-container .barchartReport-container .top-table .search-container {
+    /*css untuk mengatur list planning, kotak search, icon sorting*/
+    position: relative;
+    display: flex;
+}
+
+.report-container .barchartReport-container .top-table .search-container .search-input {
+    /*css untuk mengatur jarak antara kotak search dengan sorting icon*/
+    justify-content: space-between;
+}
+
+.report-container .barchartReport-container .top-table .search-input .form-control {
+    /*css untuk mengatur kotak search input*/
+    width: 13rem;
+    padding: 10px 30px 10px 10px;
+    height: 25px;
+    border: 1px solid #808080;
+    background-color: transparent;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #808080;
+    margin-right: 20px;
+}
+
+.report-container .barchartReport-container .top-table .search-container .search-input .search-icon {
+    /*css untuk mengatur search icon*/
+    position: absolute;
+    top: 55%;
+    right: 3.6rem;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.report-container .barchartReport-container .top-table .search-container .btn-sort {
+    margin: auto;
+    width: 26px;
+    height: 25px;
+    background-color: #8467FF;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+
+
+/*======== css untuk mengatur kotak income dan excome ampunt ========*/
+.inex-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 55px;
+}
+
+/*======== kotak income ========*/
+.report-container .inex-container .income-container {
+    /*css untuk mengatur kotak income excome*/
+    width: 242px;
+    height: 68px;
+    flex-shrink: 0;
+    background-color: rgba(193, 83, 62, 0.64);
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.20);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+.income-title {
+    /*css untuk mengatur logo excome income dan title, sekaligus dengan excome*/
+    display: flex;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+.income-title p {
+    /*css untuk mengatur income excome amount, sekaligus dengan excome*/
+    padding-left: 20px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.income-amount p { /*sekaligus dengan excome*/
+    padding-left: 67px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/*======== kotak excome ========*/
+.report-container .inex-container .excome-container {
+    /*css untuk mengatur kotak income excome*/
+    width: 242px;
+    height: 68px;
+    flex-shrink: 0;
+    background-color: #EB9627A1;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.20);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+/*======== css untuk piechart income, tabel, dan piechart excome ========*/
+.pietab-inex-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}

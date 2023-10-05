@@ -37,10 +37,7 @@ const Login: Component = () => {
                     </div>
                 </div>
                 </div>
-                <img
-                src="https://file.rendit.io/n/MsR73VkBZgSutF4rNv0l.svg"
-                class="mt-2 w-5 shrink-0"
-                />
+                <User_Top class="mt-2 w-5 shrink-0"/>
             </div>
             <div class="shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.02),_0px_3px_5px_0px_rgba(0,_0,_0,_0.03),_0px_5px_10px_0px_rgba(0,_0,_0,_0.04),_0px_9px_18px_0px_rgba(0,_0,_0,_0.05),_0px_18px_33px_0px_rgba(0,_0,_0,_0.06),_0px_42px_80px_0px_rgba(0,_0,_0,_0.08)] self-stretch flex flex-col mx-[176px]">
                 <div class="bg-[#efefef] flex flex-col gap-2 h-[653px] shrink-0 items-center pr-[288px] py-12 rounded-[21px]">
@@ -55,16 +52,9 @@ const Login: Component = () => {
                     TUS
                     </div>
                 </div>
-                <img
-                    src="https://file.rendit.io/n/n7NJ45NKZWVUOp5SYmTP.svg"
-                    class="mb-10 w-16"
-                />
+                <User_Login class="mb-10 w-16"/>
                 <div class="relative flex flex-col mb-5 w-3/5">
-                    <img
-                    src="https://file.rendit.io/n/O4HiAwmbvR7oyGVQm7s1.svg"
-                    id="Profile"
-                    class="w-5 h-5 absolute top-3 left-[387px]"
-                    />
+                    <User_Field class="w-5 h-5 absolute top-3 left-[620px]"/>
                     <div class="border-solid border-[#131313] relative flex flex-col h-10 shrink-0 items-start pl-3 py-2 border rounded">
                     <div class="font-['Manrope'] font-medium text-[rgba(128,_128,_128,_0.5)]">
                         Username
@@ -75,11 +65,7 @@ const Login: Component = () => {
                     <div class="font-['Manrope'] font-medium text-[rgba(128,_128,_128,_0.5)] absolute top-2 left-4 h-5 w-20">
                     Password
                     </div>
-                    <img
-                    src="https://file.rendit.io/n/xylO2D7UuVcCm8qandYu.svg"
-                    id="Key"
-                    class="w-5 h-5 absolute top-3 left-[387px]"
-                    />
+                    <Key_Field class="w-5 h-5 absolute top-3 left-[620px]"/>
                     <div class="border-solid relative h-10 shrink-0 border-black border rounded" />
                 </div>
                 <div class="text-right text-sm font-['Manrope'] font-medium text-[#6e49e9] self-end mb-5 mr-px">
