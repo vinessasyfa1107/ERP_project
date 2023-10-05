@@ -87,3 +87,17 @@
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
   }
+
+
+  .btn-approved {
+    color: #00BA29;
+    margin-top: auto;
+  }
+
+  .icon-disabled {
+    color: #a7a3a3;
+  }
+
+  .icon-rejected {
+    color: #ac6767;
+  }
