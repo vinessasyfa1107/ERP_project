@@ -1,16 +1,23 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css'
 import { Icon } from '@iconify-icon/solid';
+import FormApproved from '../form/form-confirm';
 
 
 const TableDetailPlan: Component = () => {
 
-  // icon x <Icon icon="mdi:close-box" color="#e85151" width="15" height="15"/>
-  // icon centang <Icon icon="icomoon-free:checkbox-checked" color="#7bc582" width="15" height="15" />
-  // icon disabled <Icon icon="tabler:square-filled" color="#d9d9d9" width="15" height="15" />  
+  const [popUpApproved, setpopUpApproved] = createSignal(false);
+
+  function handlePopUpApproved () {
+      setpopUpApproved(!popUpApproved());
+  }
+
+  function ClosePopUp () {
+    setpopUpApproved (false);
+  }
 
     function getCellStyle(params: { value: string; }) {
       if (params.value === 'Weekly') {
@@ -26,11 +33,11 @@ const TableDetailPlan: Component = () => {
       let check = null;
     
       if (params.data.status === 'Waiting') {
-        check = <Icon icon="ic:round-square" color="#d9d9d9" width="18" height="18" />  ;
+        check = <Icon icon="ic:round-square" class="icon-disabled" width="21" height="21" />  ;
       } else if (params.data.status === 'Approved') {
-        check = <Icon icon="icomoon-free:checkbox-checked" color="#7bc582" width="15" height="15" />;
+        check = <button class="btn-approved" onClick={handlePopUpApproved}><Icon icon="icomoon-free:checkbox-checked" color="#7bc582" width="16.1" height="16.1" /></button>;
       } else if (params.data.status === 'Rejected') {
-        check = <Icon icon="mdi:close-box" color="#e85151" width="20" height="20"/>;
+        check = <Icon icon="mdi:close-box" class="icon-rejected" width="21.5" height="21.5"/>;
       }
     
       return check;
@@ -87,6 +94,7 @@ const TableDetailPlan: Component = () => {
             defaultColDef={defaultColDef}
             gridOptions={gridOptions}
         />
+        {popUpApproved() && (<FormApproved OnClose={ClosePopUp}/>)}
       </div>
     </div>
   );
