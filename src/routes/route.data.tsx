@@ -21,6 +21,7 @@ const Table_income_report = lazy(() => import('../containers/dashboards/report/t
 const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
 const Report = lazy(() => import('../containers/dashboards/report/report'));
 
+const Master = lazy(() => import('../containers/master/master/master'));
 
 const RouteData: Component = () => {
     return (
@@ -39,6 +40,9 @@ const RouteData: Component = () => {
                 <Route path="/table_income_report" component={Table_income_report}/>
                 <Route path="/table_expenses_report" component={Table_expenses_report}/>
                 <Route path="/report" component={Report}/>
+            </Route>
+            <Route path="/master">
+                <Route path="/master" component={Master}/>
             </Route>
         </Routes>
     )
