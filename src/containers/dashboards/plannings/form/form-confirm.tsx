@@ -14,11 +14,11 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
          <div class="modal-form">
              <form method="dialog">
                  <div class="headakun">
-                     <h2>Form Confirm <span>(*Required)</span></h2>
+                     <h2>Form Confirm</h2>
                      <button onClick={props.OnClose}>✕</button>
                  </div>
 
-                 <div class="isian-form">
+                 <div class="isi-form">
 
                          <label>ID Perencanaan*</label>
                          <br />
@@ -41,13 +41,16 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
                         <label>Bukti*</label>
                         <div class="container-bukti">
                             <div class="box-bukti">
-                                Tes
+                                <Icon icon="bxs:image" class="icon-file" width="50" height="50" />
                             </div>
-                            <div>
+                            <div class="container-2">
                                 <p>Pilih file dengan format .png atau .jpg ke dalam form atau tarik & lepas file tersebut.</p>
+                                <button class="btn-upload"><Icon icon="ic:baseline-folder" color="white" width="30" height="30" /></button>
                             </div>
                         </div>
                     </div>
+
+
 
 
 
@@ -58,6 +61,7 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
                      <button><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                  </div>
              </form>
+             
          </div>
  </div>
     </div>

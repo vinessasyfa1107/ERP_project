@@ -26,7 +26,7 @@ const FormPlanning: Component = () => {
                         <div class="isian-form">
 
                             <p>
-                                <label>Date*</label>
+                                <label>Tanggal*</label>
                                 <br />
                                 <input type="date" required />
                             </p>
@@ -34,7 +34,7 @@ const FormPlanning: Component = () => {
                          
                             <div class="deskripsi">
                                 <p>
-                                    <label>Description*</label>
+                                    <label>Keterangan*</label>
                                     <br />
                                     <textarea name="deskripsi" id="" cols="60" rows="3" class="border-1 border-radius-4"></textarea>
                                 </p>
@@ -42,7 +42,7 @@ const FormPlanning: Component = () => {
 
                             <div class="bt-periode">
                                 <p>
-                                    <label for="kategori">Category*</label>
+                                    <label for="kategori">Kategori*</label>
                                     <br />
                                     <select id="kategori" name="kategori" required>
                                         <option value="trip">Marketing</option>
@@ -55,9 +55,9 @@ const FormPlanning: Component = () => {
 
                                 <br />
                                 <p>
-                                    <label for="tipe">Types*</label>
+                                    <label for="jenis">Jenis*</label>
                                     <br />
-                                    <select id="tipe" name="tipe" required>
+                                    <select id="jenis" name="jenis" required>
                                         <option value="weekly">Weekly</option>
                                         <option value="monthly">Monthly</option>
                                         <option value="yearly">Yearly</option>
@@ -67,7 +67,7 @@ const FormPlanning: Component = () => {
                             </div>
 
                             <p>
-                                <label>Amount*</label>
+                                <label>Jumlah*</label>
                                 <br />
                                 <input type="number" name="harga" id="harga" min="0" step="1" required />
                             </p>
@@ -77,7 +77,7 @@ const FormPlanning: Component = () => {
 
                         <br />
                         <div class="btn-kirim">
-                            <button>Send</button>
+                            <button><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>

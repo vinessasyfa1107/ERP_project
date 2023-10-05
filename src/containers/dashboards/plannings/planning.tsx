@@ -33,7 +33,7 @@ const Planning: Component = () => {
                 <FormPlanning/>
             </div>
             
-        </div>
+            </div>
     </div>
   );
 };
