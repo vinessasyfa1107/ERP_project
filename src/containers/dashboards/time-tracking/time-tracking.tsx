@@ -7,13 +7,13 @@ import { Icon } from '@iconify-icon/solid';
 const TimeTracking: Component = () => {
     return (
         <div class="teams">
-                <div class="module">
+                <div class="card-module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "6vw"}}>
                         Time Trackings
                     </div>
                     <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>Approval Tracker</div>
                 </div>
-            <div class="box-1">
+            <div class="card-time">
                 <div class="nameheader">
                     <div class="rightcp">
                         <input type="text" placeholder="Search.." name="search"/>

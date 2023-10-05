@@ -1,10 +1,10 @@
 import type { Component } from 'solid-js';
 import './planning.css'
-import TablePlanning from './table-planning';
+import TablePlanning from './table/table-planning';
 import ChartPlanning from './chart-planning';
-import TableDetailPlan from './table-detail-plan';
+import TableDetailPlan from './table/table-detail-plan';
 import { Icon } from '@iconify-icon/solid';
-import FormPlanning from './form-planning';
+import FormPlanning from './form/form-planning';
 
 const Planning: Component = () => {
   return (
@@ -33,7 +33,7 @@ const Planning: Component = () => {
                 <FormPlanning/>
             </div>
             
-        </div>
+            </div>
     </div>
   );
 };

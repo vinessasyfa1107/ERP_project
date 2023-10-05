@@ -7,17 +7,17 @@
 
 }
 
-.box-1 {
+.card-teams {
     /* border-radius: 10px; */
     background: #EFEFEF;
     border-radius: 1vw;
-    height: 70vh;
+    height: 72vh;
     padding-bottom: 4vh
     /* justify-content: center;
     align-items: center; */
     /* padding: 30px; */
 }
-.module {
+.card-module {
     display: flex;
     height: 8vh;
     background: #EFEFEF;

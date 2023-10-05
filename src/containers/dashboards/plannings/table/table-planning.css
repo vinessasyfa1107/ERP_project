@@ -67,23 +67,17 @@
     background-color: #ccc;
   }
   
-  .checkbox-container input:checked + .checkbox-checkmark {
-    background-color: #00BA29; /* Warna latar belakang saat dicentang */
+
+
+  .btn-approved {
     color: #00BA29;
+    margin-top: auto;
   }
-  
-  .checkbox-checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
+
+  .icon-disabled {
+    color: #a7a3a3;
   }
-  
-  .checkbox-container input:checked + .checkbox-checkmark:after {
-    display: block;
-    left: 9px;
-    width: 5px;
-    height: 5px;
-    border: solid rgb(151, 58, 58);
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
+
+  .icon-rejected {
+    color: #ac6767;
   }
