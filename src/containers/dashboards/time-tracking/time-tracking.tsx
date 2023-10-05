@@ -1,43 +1,20 @@
-import { Component, onMount } from "solid-js";
-import { useNavigate, A, Navigate } from '@solidjs/router';
-// import type { Component } from 'solid-js';
-
-import './teams.css'
-import TableTeams from './table-teams';
+import type { Component } from 'solid-js';
+import './time-tracking.css'
+import TableTime from './table-time';
 import { Icon } from '@iconify-icon/solid';
 
 
-
-const Admin: Component = () => {
-    const navigate = useNavigate();
-
-    onMount(() => {
-        console.log('sudah pindah ke halaman dashboard')
-    })
-    
-    const changePage = () => {
-        navigate('/dashboard/plan')
-    }
-
-    const ActionLogout = () => {
-        console.log('clear storage ');
-        sessionStorage.clear();
-        navigate('/login');
-    }
-
+const TimeTracking: Component = () => {
     return (
         <div class="teams">
                 <div class="module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "6vw"}}>
-                        Teams
+                        Time Trackings
                     </div>
-                    <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>For Admin</div>
+                    <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>Approval Tracker</div>
                 </div>
             <div class="box-1">
                 <div class="nameheader">
-                    <div class="accountmaster">
-                        Account Master
-                    </div>
                     <div class="rightcp">
                         <input type="text" placeholder="Search.." name="search"/>
                             <span class="search-icon">
@@ -47,11 +24,11 @@ const Admin: Component = () => {
                     </div>
                 </div>
                     <div>
-                        <TableTeams/>
+                        <TableTime/>
                     </div>
             </div>
         </div>
     )
 }
 
-export default Admin;
+export default TimeTracking;
