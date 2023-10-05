@@ -4,7 +4,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     margin: auto;
-    padding: 10px;
+    padding: 5px;
     position: fixed;
     justify-content: center;
     align-items: center;
@@ -61,7 +61,7 @@
 
 .form-confirm form .headakun h2 {
     /*untuk mengatur judul form*/
-    color: #000000;
+    color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
@@ -72,20 +72,20 @@
 }
 
 /*css untuk isian form*/
-/* .form-confirm .isian-form p {
+/* .form-confirm .isi-form p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
 } */
 
-.form-confirm .isian-form label {
+.form-confirm .isi-form label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
 
-.form-confirm .isian-form input,
+.form-confirm .isi-form input,
 select {
     /*untuk kotak teks input*/
     width: 29rem;
@@ -118,7 +118,7 @@ select {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
-    top: 30px;
+    top: 25px;
     width: 80px;
     height: 42px;
     border-radius: 5px;
@@ -132,16 +132,17 @@ select {
     display: flex;
     flex-direction: row;
     margin-top: 5px;
-    justify-content: space-between;
 }
 
 .box-bukti {
-    width: 160px;
+    display: flex;
+    width: 160px; 
     height: 80px;
     border-radius: 5px;
     border: 1px solid #808080;
     background-color: #FFF;
-    box-sizing: border-box; 
+    justify-content: center;
+    align-items: center;
 }
 
 .container-bukti p {
@@ -152,3 +153,23 @@ select {
     line-height: normal;
 }
 
+.icon-file {
+    margin: auto;
+    color: #D9D9D9;
+}
+
+.container-2 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.btn-upload {
+    width: 46px;
+    height: 31px;
+    border-radius: 4px;
+    background: #3B528D;
+    color: #FFF;
+    margin-top: 11px;
+}

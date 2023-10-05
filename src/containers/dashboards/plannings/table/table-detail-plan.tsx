@@ -46,24 +46,24 @@ const TableDetailPlan: Component = () => {
 
     const columnDefs = [
         { field: 'id' , headerName: 'ID'}, // Menambahkan filter pada kolom "make"
-        { field: 'date' }, // Menambahkan filter pada kolom "model"
-        { field: 'description' },
-        { field: 'category' }, 
-        { field: 'type', cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
-        { field: 'amount' }, // Menambahkan filter pada kolom "price"
+        { field: 'tanggal' }, // Menambahkan filter pada kolom "model"
+        { field: 'deskripsi' },
+        { field: 'kategori' }, 
+        { field: 'jenis', cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
+        { field: 'jumlah' }, // Menambahkan filter pada kolom "price"
         { field: 'status' },
-        { field: 'confirm' ,  cellRenderer: confirmCellRenderer},
+        { field: 'konfirmasi' ,  cellRenderer: confirmCellRenderer},
       ];
     
       const rowData = [
-        { id: '11C7D', date: '10-2-22', category: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
-        { id: '11C7C', date: '10-2-22', category: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Event' , status: 'Approved', confirm: true },
-        { id: '11C7B', date: '10-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly', status: 'Rejected' },
-        { id: '11C7A', date: '9-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-        { id: '11C7D', date: '10-2-22', category: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-        { id: '11C7C', date: '10-2-22', category: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Weekly' },
-        { id: '11C7B', date: '10-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly' },
-        { id: '11C7A', date: '9-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' }
+        { id: '11C7D', tanggal: '10-2-22', category: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
+        { id: '11C7C', tanggal: '10-2-22', category: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Event' , status: 'Approved', confirm: true },
+        { id: '11C7B', tanggal: '10-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly', status: 'Rejected' },
+        { id: '11C7A', tanggal: '9-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
+        { id: '11C7D', tanggal: '10-2-22', category: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
+        { id: '11C7C', tanggal: '10-2-22', category: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Weekly' },
+        { id: '11C7B', tanggal: '10-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly' },
+        { id: '11C7A', tanggal: '9-2-22', category: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' }
       ];
     
     
