@@ -42,7 +42,7 @@ const Login: Component = () => {
             <div class="shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.02),_0px_3px_5px_0px_rgba(0,_0,_0,_0.03),_0px_5px_10px_0px_rgba(0,_0,_0,_0.04),_0px_9px_18px_0px_rgba(0,_0,_0,_0.05),_0px_18px_33px_0px_rgba(0,_0,_0,_0.06),_0px_42px_80px_0px_rgba(0,_0,_0,_0.08)] self-stretch flex flex-col mx-[176px]">
                 <div class="bg-[#efefef] flex flex-col gap-2 h-[653px] shrink-0 items-center pr-[288px] py-12 rounded-[21px]">
                 <div class="flex flex-row mb-8 gap-2 items-start">
-                    <div class="text-5xl font-['Exo_2'] line-through font-bold text-[#6e49e9] mb-px">
+                    <div class="text-5xl font-['Exo_2'] font-bold text-[#6e49e9] mb-px">
                     ERP
                     <div id="ERP" class="text-4xl contents">
                         {" "}

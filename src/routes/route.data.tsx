@@ -11,16 +11,12 @@ const Login = lazy(() => import('../containers/login/login'));
 const Planning = lazy(() => import('../containers/dashboards/plannings/planning'));
 const TimeTracking = lazy(() => import('../containers/dashboards/time-tracking/time-tracking'));
 const Accounting = lazy(() => import('../containers/dashboards/accounting/accounting'));
-
-
-
 const Barchart_report = lazy(() => import('../containers/dashboards/report/barchart_report/barchart_report'));
 const Table_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
 const Piechart_expenses_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_report'));
 const Table_income_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
 const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
 const Report = lazy(() => import('../containers/dashboards/report/report'));
-
 const Master = lazy(() => import('../containers/master/master/master'));
 
 const RouteData: Component = () => {
