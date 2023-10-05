@@ -7,13 +7,13 @@
 
 }
 
-.box-1 {
+.card-time {
     background: #EFEFEF;
     border-radius: 1vw;
     height: 55vh;
     padding-bottom: 4vh
 }
-.module {
+.card-module {
     display: flex;
     height: 8vh;
     background: #EFEFEF;

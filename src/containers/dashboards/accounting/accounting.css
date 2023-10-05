@@ -1,0 +1,93 @@
+.accounting {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+.card-acounting-2{
+    background: #EFEFEF;
+    border-radius: 1vw;
+    padding-bottom: 4vh
+}
+.nameheader {
+    display: flex;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+    padding-top: 2vh
+}
+.rightcp {
+    margin-left: 74vw;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    float: right;
+}
+
+.rightcp input[type=text] {
+    border: 1px solid #ccc; 
+    border-radius: 1vh;
+    margin-right: 1vw;
+    background-color: transparent;
+    width: 13vw;
+}
+
+.rightcp .search-icon {
+    position: absolute;
+    display: inline-flex;
+    right: 8vh;
+    color: #ccc;
+}
+.rightcp .btn-sort {
+    margin: auto;
+    width: 26px;
+    height: 25px;
+    background-color: #8467FF;
+    color: white;
+    border-radius: 5px;
+}
+.report-case1 {
+    /* margin-left: 6vw; */
+    margin-top: 3vh;
+    width: 20.5vw;
+    height: 22vh;
+    /* background-image: linear-gradient(45deg, #005687, #0094E8); */
+    border-radius: 0.7vw;
+}
+.report-case2 {
+    margin-left: 2vw;
+    margin-top: 3vh;
+    width: 20.5vw;
+    height: 22vh;
+   /* background-image: linear-gradient(45deg, #0DBEC9, #057E86); */
+    border-radius: 0.7vw;
+}
+.report-case3 {
+    margin-left: 2vw;
+    margin-top: 3vh;
+    width: 20.5vw;
+    height: 22vh;
+    /* background-image: linear-gradient(45deg, #005687, #0094E8); */
+    border-radius: 0.7vw;
+}
+.card-font {
+    margin-left: 1vw;
+    margin-top: 1vh;
+    font-size: 1.2vw;
+    color: black;
+}
+.report-jumlah-1 {
+    text-align: center;
+    margin-top: 1.5vw;
+    color:#a155b9
+}
+.report-jumlah-2 {
+    text-align: center;
+    margin-top: 1.5vw;
+    color:#f765b3
+}
+.report-jumlah-3 {
+    text-align: center;
+    margin-top: 1.5vw;
+    color:#165baa
+}

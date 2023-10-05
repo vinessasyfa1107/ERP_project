@@ -27,13 +27,13 @@ const Admin: Component = () => {
 
     return (
         <div class="teams">
-                <div class="module">
+                <div class="card-module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "6vw"}}>
                         Teams
                     </div>
                     <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>For Admin</div>
                 </div>
-            <div class="box-1">
+            <div class="card-teams">
                 <div class="nameheader">
                     <div class="accountmaster">
                         Account Master

@@ -241,7 +241,7 @@ const ChartAccounting: Component = () => {
     return (
         <div>
           <div>
-            <div id="planchart" style={{width: '85vh', height:'45vh'}}></div>
+            <div id="planchart" style={{width: '100%', height:'45vh'}}></div>
           </div>
         </div>
     )
