@@ -1,19 +1,31 @@
 [{
-    "date": "2018-03-20",
-    "value": 90
+    "Bulan": "Jan",
+    "profitloss": 200,
+    "journal": 400,
+    "balance": 300
 }, {
-    "date": "2018-03-21",
-    "value": 102
+    "Bulan": "Feb",
+    "profitloss": 300,
+    "journal": 500,
+    "balance": 200
 }, {
-    "date": "2018-03-22",
-    "value": 65
+    "Bulan": "Mar",
+    "profitloss": 600,
+    "journal": 300,
+    "balance": 200
 }, {
-    "date": "2018-03-23",
-    "value": 62
+    "Bulan": "Apr",
+    "profitloss": 400,
+    "journal": 100,
+    "balance": 100
 }, {
-    "date": "2018-03-24",
-    "value": 55
+    "Bulan": "Mei",
+    "profitloss": 500,
+    "journal": 200,
+    "balance": 200
 }, {
-    "date": "2018-03-25",
-    "value": 81
+    "Bulan": "Jun",
+    "profitloss": 200,
+    "journal": 300,
+    "balance": 300
 }]

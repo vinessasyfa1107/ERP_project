@@ -18,7 +18,7 @@ const Table_income_report = lazy(() => import('../containers/dashboards/report/t
 const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
 const Report = lazy(() => import('../containers/dashboards/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
-const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik-keuangan'));
+const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik_keuangan'));
 const Master = lazy(() => import('../containers/master/master/master'));
 
 const RouteData: Component = () => {
