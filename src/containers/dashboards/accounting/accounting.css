@@ -46,6 +46,9 @@
     color: white;
     border-radius: 5px;
 }
+.component-1 {
+    text-align: -webkit-center;
+}
 .report-case1 {
     /* margin-left: 6vw; */
     margin-top: 3vh;

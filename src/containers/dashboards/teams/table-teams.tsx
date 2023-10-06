@@ -63,7 +63,7 @@ const TableTeams = () => {
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
-            <div style={{ height: '60vh', width: '85vw' }} class="ag-theme-alpine glass-table">
+            <div style={{ height: '60vh', width: '85vw' }} class="ag-theme-alpine">
                 <AgGridSolid
                     rowData={rowData} // use signal
                     columnDefs={columnDefs} // no signal

@@ -42,9 +42,9 @@ const Accounting: Component = () => {
                         </div>
                     </div>
               </div>
-            {/* <div class="component-1">
+            <div class="component-1">
                 <ChartAccounting/>
-            </div>             */}
+            </div>            
         </div>
     </div>
   );

@@ -13,7 +13,7 @@ const TableTime = () => {
         { field: "Description" },
         { field: "Category" },
         { field: "Type", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
-        { field: "Amount" },
+        { field: "Amount",   cellClass: 'transparent-row', },
         { field: "Status" },
 
     ];
@@ -26,7 +26,8 @@ const TableTime = () => {
             "Category": "Lorem Ipsum",
             "Type": "Weekly", 
             "Amount": "15.000.000",
-            "Status": "Waiting"
+            "Status": "Waiting",
+            isTransparent: true
         },  
         {   
             "NO": "12987", 
@@ -44,7 +45,9 @@ const TableTime = () => {
             "Category": "Lorem Ipsum",
             "Type": "Event", 
             "Amount": "15.000.000",
-            "Status": "Rejected"
+            "Status": "Rejected",
+            isTransparent: true
+
         }, 
         {   
             "NO": "12987", 
@@ -67,8 +70,18 @@ const TableTime = () => {
             // domLayout: 'autoHeight' as DomLayoutType,
             pagination: true,
             paginationPageSize: 4,
-            rowHeight: 40
-          }
+            rowHeight: 40,
+
+            getRowStyle: function(params) {
+                // Kondisi di mana baris harus transparan
+                if (params.data.isTransparent) {
+                  return { background: 'transparent' };
+                }
+                // Kondisi lainnya
+                return null; // Gunakan gaya CSS default
+              },
+            
+          } 
     
 
     function getCellStyle(params: { value: string; }) {
