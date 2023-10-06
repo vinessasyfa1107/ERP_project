@@ -2,6 +2,7 @@ import type { Component } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import './table-master-list.css'
 
 const TableListCOA: Component = () => {
 
@@ -34,7 +35,7 @@ const TableListCOA: Component = () => {
       }
   return (
     <div>
-        <div class="ag-theme-alpine" style={{width:'80vh', height:'24vw'}}>
+        <div class="ag-theme-alpine" style={{width:'70vh', height:'24vw'}}>
             <AgGridSolid
                 columnDefs={columnDefs}
                 rowData={rowData}

@@ -1,9 +1,18 @@
-import { Component, createEffect } from 'solid-js';
+import { Component, createEffect, createSignal, onMount } from 'solid-js';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { dataplanning } from '../../../api/planning/dataplanning';
 
 const ChartPlanning: Component = () => {
+
+  const [RowData, setRowData] = createSignal([{"date":"2012-08-09"}]);
+
+  onMount(async () => {
+    const peng = await dataplanning("hallo");
+    console.log("peng", peng);
+    setRowData(peng);
+  })
        
     createEffect(()=> {
         setTimeout(() => {
@@ -18,6 +27,10 @@ const ChartPlanning: Component = () => {
 
       chart.logo.disabled = true;
 
+      let data1 = RowData();
+
+      
+      // let dataa = 
       let data = [ {
         "date": "2012-07-27",
         "value": 13
@@ -194,7 +207,9 @@ const ChartPlanning: Component = () => {
         "value": 81
         } ];
         
-      chart.data = data;
+      // chart.data = data;
+
+      chart.data = data1;
 
           // Create axes
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
