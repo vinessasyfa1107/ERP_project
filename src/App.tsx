@@ -3,6 +3,7 @@ import RouteData from './routes/route.data';
 import { useStore } from './store';
 import { useNavigate } from '@solidjs/router';
 import Login from './containers/login/login';
+import Navbar from './containers/navbars/navbar';
 
 const App: Component = () => {
     const[{sessionStore}] = useStore();
@@ -21,7 +22,7 @@ const App: Component = () => {
     });
     return (
       <>
-        {!needLogin() ? <RouteData/> : <Login />}
+        {!needLogin() ? <Navbar><RouteData/></Navbar> : <Login />}
       </>
     );
 };

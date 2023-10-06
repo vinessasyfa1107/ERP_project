@@ -62,43 +62,18 @@
 
 
 /*======== css untuk mengatur kotak income dan excome ampunt ========*/
-.inex-container {
-    display: flex;
-    justify-content: center;
-    padding-top: 55px;
-}
+
 
 /*======== kotak income ========*/
 .report-container .inex-container .income-container {
     /*css untuk mengatur kotak income excome*/
     width: 242px;
     height: 68px;
-    flex-shrink: 0;
     background-color: rgba(193, 83, 62, 0.64);
     border-radius: 10px;
     border: 1px solid rgba(128, 128, 128, 0.20);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     margin-right: 20px;
-}
-
-.income-title {
-    /*css untuk mengatur logo excome income dan title, sekaligus dengan excome*/
-    display: flex;
-    padding-left: 20px;
-    padding-top: 5px;
-}
-
-.income-title p {
-    /*css untuk mengatur income excome amount, sekaligus dengan excome*/
-    padding-left: 20px;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.income-amount p { /*sekaligus dengan excome*/
-    padding-left: 67px;
-    font-weight: 600;
-    font-size: 18px;
 }
 
 /*======== kotak excome ========*/
