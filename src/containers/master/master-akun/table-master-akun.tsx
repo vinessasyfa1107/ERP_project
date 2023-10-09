@@ -56,7 +56,7 @@ const TableAkunMaster: Component = () => {
       }
   return (
     <div>
-        <div class="ag-theme-alpine" style={{width:'145vh', height:'30vw',margin:"auto"}}>
+        <div class="ag-theme-alpine" style={{width:'142vh', height:'30vw',margin:"auto"}}>
             <AgGridSolid
                 columnDefs={columnDefs}
                 rowData={rowData}

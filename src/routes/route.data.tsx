@@ -18,7 +18,14 @@ const Table_income_report = lazy(() => import('../containers/dashboards/report/t
 const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
 const Report = lazy(() => import('../containers/dashboards/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
+
 const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik_keuangan'));
+const Neraca = lazy(() => import('../containers/keuangan/neraca/neraca'));
+const LabaRugi = lazy(() => import('../containers/keuangan/laba-rugi/laba-rugi'));
+const Journal = lazy(() => import('../containers/keuangan/journal/journal'));
+const JournalDetail = lazy(() => import('../containers/keuangan/journal-detail/journal-detail'));
+
+
 const Master = lazy(() => import('../containers/master/master/master'));
 const MasterCOA = lazy(() => import('../containers/master/master-coa/master-coa'));
 const MasterAkun = lazy(() => import('../containers/master/master-akun/master-akun'));
@@ -28,6 +35,7 @@ const RouteData: Component = () => {
         <Routes>
             <Route path="/" element={<Navigate href={getPath} />} />
             <Route path="/login" component={Login} />
+
             <Route path="/dashboard">
                 <Route path="/plan" component={Plan} />
                 <Route path="/admin" component={Admin} />
@@ -52,8 +60,12 @@ const RouteData: Component = () => {
                 <Route path="/tabel_kontak" component={Tabel_kontak} />
             </Route>
 
-            <Route path={"/keuangan"}>
-                <Route path="/grafik-keuangan" component={Grafik_keuangan}></Route>
+            <Route path="/keuangan">
+                <Route path="/grafik-keuangan" component={Grafik_keuangan}/>
+                <Route path="/neraca" component={Neraca}/>
+                <Route path="/labarugi" component={LabaRugi}/>
+                <Route path="/journal" component={Journal}/>
+                <Route path="/journaldetail" component={JournalDetail}/>
             </Route>
             
         </Routes>
