@@ -11,11 +11,6 @@ const Login = lazy(() => import('../containers/login/login'));
 const Planning = lazy(() => import('../containers/dashboards/plannings/planning'));
 const TimeTracking = lazy(() => import('../containers/dashboards/time-tracking/time-tracking'));
 const Accounting = lazy(() => import('../containers/dashboards/accounting/accounting'));
-const Barchart_report = lazy(() => import('../containers/dashboards/report/barchart_report/barchart_report'));
-const Table_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
-const Piechart_expenses_report = lazy(() => import('../containers/dashboards/report/piechart_report/piechart_report'));
-const Table_income_report = lazy(() => import('../containers/dashboards/report/table_report/table_income_report'));
-const Table_expenses_report = lazy(() => import('../containers/dashboards/report/table_report/table_expenses_report'));
 const Report = lazy(() => import('../containers/dashboards/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 
@@ -42,11 +37,6 @@ const RouteData: Component = () => {
                 <Route path="/planning" component={Planning} />
                 <Route path="/time-tracking" component={TimeTracking} />
                 <Route path="/accounting" component={Accounting} />
-                <Route path="/barchart_report" component={Barchart_report} />
-                <Route path="/table_report" component={Table_report} />
-                <Route path="/piechart_expenses_report" component={Piechart_expenses_report} />
-                <Route path="/table_income_report" component={Table_income_report} />
-                <Route path="/table_expenses_report" component={Table_expenses_report} />
                 <Route path="/report" component={Report} />
             </Route>
 
@@ -60,12 +50,14 @@ const RouteData: Component = () => {
                 <Route path="/tabel_kontak" component={Tabel_kontak} />
             </Route>
 
+
             <Route path="/keuangan">
                 <Route path="/grafik-keuangan" component={Grafik_keuangan}/>
                 <Route path="/neraca" component={Neraca}/>
                 <Route path="/labarugi" component={LabaRugi}/>
                 <Route path="/journal" component={Journal}/>
                 <Route path="/journaldetail" component={JournalDetail}/>
+
             </Route>
             
         </Routes>
