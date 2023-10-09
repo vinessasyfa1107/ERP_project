@@ -8,10 +8,10 @@ const Barchart_aruskas_report: Component = () => {
         let chart: am4charts.XYChart | null = null;
 
         // Callback untuk menggambar chart
-        const drawChart = () => {
+        const drawChart2 = () => {
             am4core.useTheme(am4themes_animated);
 
-            chart = am4core.create("chartdiv", am4charts.XYChart);
+            chart = am4core.create("chartdiv2", am4charts.XYChart);
             chart.width = am4core.percent(100);
             chart.height = 400;
             chart.logo.disabled = true;
@@ -20,76 +20,48 @@ const Barchart_aruskas_report: Component = () => {
             chart.data = [
                 {
                     "month": "01/22",
-                    "Biaya": 45,
-                    "Pemasukan": 50,
-                    "Pengeluaran": 56,
+                    "Pemasukan": 90,
+                    "Pengeluaran": 40
                 },
                 {
                     "month": "02/22",
-                    "Biaya": 30,
-                    "Pemasukan": 40,
-                    "Pengeluaran": 38,
+                    "Pemasukan": 60,
+                    "Pengeluaran": 35
                 },
                 {
                     "month": "03/22",
-                    "Biaya": 50,
-                    "Pemasukan": 54,
-                    "Pengeluaran": 35,
+                    "Pemasukan": 70,
+                    "Pengeluaran": 20
                 },
                 {
                     "month": "04/22",
-                    "Biaya": 35,
-                    "Pemasukan": 40,
-                    "Pengeluaran": 38,
+                    "Pemasukan": 90,
+                    "Pengeluaran": 50
                 },
                 {
                     "month": "05/22",
-                    "Biaya": 25,
-                    "Pemasukan": 28,
-                    "Pengeluaran": 28,
+                    "Pemasukan": 100,
+                    "Pengeluaran": 60
                 },
                 {
                     "month": "06/22",
-                    "Biaya": 48,
-                    "Pemasukan": 35,
-                    "Pengeluaran": 56,
+                    "Pemasukan": 50,
+                    "Pengeluaran": 30
                 },
                 {
                     "month": "07/22",
-                    "Biaya": 18,
-                    "Pemasukan": 20,
-                    "Pengeluaran": 10,
+                    "Pemasukan": 65,
+                    "Pengeluaran": 30
                 },
                 {
                     "month": "08/22",
-                    "Biaya": 12,
-                    "Pemasukan": 20,
-                    "Pengeluaran": 18,
+                    "Pemasukan": 30,
+                    "Pengeluaran": 18
                 },
                 {
                     "month": "09/22",
-                    "Biaya": 20,
-                    "Pemasukan": 35,
-                    "Pengeluaran": 28,
-                },
-                {
-                    "month": "10/22",
-                    "Biaya": 20,
                     "Pemasukan": 50,
-                    "Pengeluaran": 35,
-                },
-                {
-                    "month": "11/22",
-                    "Biaya": 35,
-                    "Pemasukan": 10,
-                    "Pengeluaran": 35,
-                },
-                {
-                    "month": "12/22",
-                    "Biaya": 18,
-                    "Pemasukan": 15,
-                    "Pengeluaran": 20,
-
+                    "Pengeluaran": 35
                 }
             ];
 
@@ -116,22 +88,48 @@ const Barchart_aruskas_report: Component = () => {
                 series.stacked = stacked;
                 series.columns.template.width = am4core.percent(95);
                 series.columns.template.fill = color;
+                series.columns.template.column.cornerRadiusTopLeft = 999; // Atur radius sudut kiri atas
+                series.columns.template.column.cornerRadiusTopRight = 999;
+
+                categoryAxis.renderer.grid.template.location = 0;
+                categoryAxis.renderer.minGridDistance = 20;
+                categoryAxis.renderer.cellStartLocation = 0.4;
+                categoryAxis.renderer.cellEndLocation = 0.6;
             }
 
-            createSeries("Biaya", "Biaya", false, am4core.color("#B9002C")); // Menambahkan series untuk Biaya
-            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#0060B9"));
-            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#89963D"));
+            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#C1533E"));
+            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#EB9727"));
+
+            // Membuat LineSeries untuk "Perpindahan Kas Bersih"
+            let lineSeries = chart.series.push(new am4charts.LineSeries());
+            lineSeries.dataFields.valueY = "PerpindahanKasBersih";
+            lineSeries.dataFields.categoryX = "month";
+            lineSeries.name = "Perpindahan Kas Bersih";
+            lineSeries.strokeWidth = 2;
+            lineSeries.stroke = am4core.color("#000000");
+
+            let bullet = lineSeries.bullets.push(new am4charts.CircleBullet());
+            bullet.circle.fill = am4core.color("#000000"); // Warna bullet
+            bullet.circle.stroke = am4core.color("#000000"); // Warna pinggiran bullet
+            bullet.circle.strokeWidth = 2; // Lebar pinggiran bullet
+            bullet.tooltipText = "{name}: [bold]{valueY}[/]";
+
+            for (let i = 0; i < chart.data.length; i++) {
+                let dataItem = chart.data[i];
+                dataItem.PerpindahanKasBersih = dataItem.Pemasukan - dataItem.Pengeluaran;
+            }
 
 
             // Add legend
             chart!.legend = new am4charts.Legend();
+            chart.legend.position = "top";
             let markerTemplate = chart.legend.markers.template;
-            markerTemplate.width = 35;
+            markerTemplate.width = 19;
             markerTemplate.height = 5;
         };
 
         // Gambar chart ketika komponen pertama kali dimount
-        drawChart();
+        drawChart2();
 
         // Cleanup untuk menghancurkan chart saat komponen di-unmount
         onCleanup(() => {
@@ -150,8 +148,8 @@ const Barchart_aruskas_report: Component = () => {
 
     return (
         <div>
-            <div class="barchart-container">
-                <div id="chartdiv" style={{ "width": "60vw", "height": "30vw"}}></div>
+            <div class="barchart2-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "52vh", "margin-left": "20px", "width": "154vh" }}>
+                <div id="chartdiv2" style={{ "width": "154vh", "height": "90vw", "font-size": "14px" }}></div>
             </div>
 
         </div>
