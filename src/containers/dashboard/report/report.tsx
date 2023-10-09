@@ -5,7 +5,7 @@ import Piechart_expenses_report from './piechart_report/piechart_report';
 import Barchart_inex_report from './barchart_inex_report/barchart_inex_report';
 import Barchart_aruskas_report from './barchart_aruskas_report/barchart_aruskas_report';
 import Barchart_labarugi_report from './barchart_labarugi_report/barchart_labarugi_report';
-
+// import ReportNavbar from '../reportNavbar';
 import { Icon } from '@iconify-icon/solid';
 import './report.css';
 
@@ -25,6 +25,10 @@ const Report: Component = () => {
 
     return (
         <div>
+            {/* <div class="navbar-f-report">
+                <ReportNavbar />
+            </div> */}
+
             <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "255vh", "width": "160vh" , "border-radius":"10px", "padding-top":"15px","margin-bottom":"20px"}}>
                 {/* div untuk barchart container */}
                 <div class="barchartReport-container">
