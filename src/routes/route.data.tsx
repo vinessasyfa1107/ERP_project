@@ -15,6 +15,8 @@ const Report = lazy(() => import('../containers/dashboards/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik_keuangan'));
 const Master = lazy(() => import('../containers/master/master/master'));
+const MasterCOA = lazy(() => import('../containers/master/master-coa/master-coa'));
+const MasterAkun = lazy(() => import('../containers/master/master-akun/master-akun'));
 
 const RouteData: Component = () => {
     return (
@@ -29,15 +31,20 @@ const RouteData: Component = () => {
                 <Route path="/accounting" component={Accounting} />
                 <Route path="/report" component={Report} />
             </Route>
+
             <Route path="/master">
                 <Route path="/master" component={Master} />
+                <Route path="/mastercoa" component={MasterCOA}/>
+                <Route path="/masterakun" component={MasterAkun}/>
             </Route>
+
             <Route path="/kontak">
                 <Route path="/tabel_kontak" component={Tabel_kontak} />
             </Route>
             <Route path="/keuangan">
                 <Route path="/grafik-keuangan" component={Grafik_keuangan}></Route>
             </Route>
+            
         </Routes>
     )
 }

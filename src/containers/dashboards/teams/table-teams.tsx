@@ -4,7 +4,7 @@ import './table-teams.css'
 import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
 import { createSignal } from 'solid-js';
-import DeleteButtonRenderer from './delete.button';
+import TagsHeader from './tags-header';
 
 const TableTeams = () => {
     const columnDefs = [
@@ -13,12 +13,13 @@ const TableTeams = () => {
         { field: "Access" },
         { field: "Role" },
         { field: "Category" },
-        { field: "Action" },
         {
-            headerName: 'Actions',
-            cellRendererFramework: DeleteButtonRenderer,
-          },
- 
+        headerName: 'Action',
+        field: 'checkboxColumn',
+        headerComponentFramework: TagsHeader, // Gunakan custom header component
+        width: 50,
+        },
+    
     ];
 
     const rowData = [
