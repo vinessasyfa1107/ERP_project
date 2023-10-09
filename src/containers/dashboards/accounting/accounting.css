@@ -3,21 +3,28 @@
     padding: 0;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    /* padding: 30px; */
+    width: 71vw;
 }
-.card-acounting-2{
+.card-accounting-2{
     background: #EFEFEF;
     border-radius: 1vw;
     padding-bottom: 4vh
 }
+.card-chart {
+    background: white;
+    border-radius: 1vw;
+    text-align: -webkit-center;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    margin-top: 3vh
+}
 .nameheader {
     display: flex;
-    margin-bottom: 2vh;
-    margin-top: 2vh;
     padding-top: 2vh
 }
 .rightcp {
-    margin-left: 74vw;
+    margin-left: 53vw;
     display: inline-flex;
     align-items: center;
     position: relative;
@@ -53,7 +60,7 @@
     /* margin-left: 6vw; */
     margin-top: 3vh;
     width: 20.5vw;
-    height: 22vh;
+    height: 18vh;
     /* background-image: linear-gradient(45deg, #005687, #0094E8); */
     border-radius: 0.7vw;
 }
@@ -61,7 +68,7 @@
     margin-left: 2vw;
     margin-top: 3vh;
     width: 20.5vw;
-    height: 22vh;
+    height: 18vh;
    /* background-image: linear-gradient(45deg, #0DBEC9, #057E86); */
     border-radius: 0.7vw;
 }
@@ -69,7 +76,7 @@
     margin-left: 2vw;
     margin-top: 3vh;
     width: 20.5vw;
-    height: 22vh;
+    height: 18vh;
     /* background-image: linear-gradient(45deg, #005687, #0094E8); */
     border-radius: 0.7vw;
 }
@@ -93,4 +100,18 @@
     text-align: center;
     margin-top: 1.5vw;
     color:#165baa
+}
+.card-font-4 {
+    text-align: left;
+    font-size: 1.2vw;
+    color: black;
+}
+.report-jumlah-4 {
+    text-align: left;
+    color: #0b1354;
+}
+.total {
+    margin-left: 6vw;
+    margin-bottom: 2vh;
+    padding-top: 4vh;
 }

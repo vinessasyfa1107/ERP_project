@@ -68,7 +68,7 @@ const ChartAccounting = () => {
 
   return (
     <div>
-      <div id="Statistic-chart" style="width: 75vw; height: 45vh;margin-top: 0vw;margin-left: 0vw"></div>
+      <div id="Statistic-chart" style="width: 60vw; height: 35vh;margin-top: 0vw;margin-left: 0vw"></div>
     </div>
   );
 };

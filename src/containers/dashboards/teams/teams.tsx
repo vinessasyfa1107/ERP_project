@@ -28,7 +28,7 @@ const Admin: Component = () => {
     return (
         <div class="teams">
                 <div class="card-module">
-                    <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "6vw"}}>
+                    <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
                         Teams
                     </div>
                     <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>For Admin</div>
@@ -36,7 +36,7 @@ const Admin: Component = () => {
             <div class="card-teams">
                 <div class="nameheader">
                     <div class="accountmaster">
-                        Account Master
+                        Account Master 
                     </div>
                     <div class="rightcp">
                         <input type="text" placeholder="Search.." name="search"/>
@@ -46,7 +46,7 @@ const Admin: Component = () => {
                         <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
                     </div>
                 </div>
-                    <div>
+                    <div class="tableteams">
                         <TableTeams/>
                     </div>
             </div>

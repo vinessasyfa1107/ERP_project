@@ -6,7 +6,7 @@ import { Icon } from '@iconify-icon/solid';
 const Accounting: Component = () => {
   return (
     <div class="accounting">
-        <div class="card-acounting-2">
+        <div class="card-accounting-2">
                 <div class="nameheader">
                   <div class="rightcp">
                         <input type="text" placeholder="Search.." name="search"/>
@@ -42,7 +42,16 @@ const Accounting: Component = () => {
                         </div>
                     </div>
               </div>
-            <div class="component-1">
+            <div class="card-chart">
+                    <div class="total">
+                        <div>
+                            <div class="card-font-4 stat-title">Total</div>
+                            <div>
+                                <div class="report-jumlah-4 stat-value">5.987,37</div>
+                            </div>
+                            <div class="card-font-4 stat-title">BGN</div>
+                        </div>
+                    </div>
                 <ChartAccounting/>
             </div>            
         </div>

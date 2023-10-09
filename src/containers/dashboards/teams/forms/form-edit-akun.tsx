@@ -2,13 +2,13 @@ import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
 import { createSignal } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './edit-akun-master.css'
+import './form-edit-akun.css'
 
-interface EditAkunMasterProps {
+interface FormEditTeams {
     OnClose: () => void;
 }
 
-const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
+const FormEditAkunTeams: Component<FormEditTeams> = (props) => {
 
     const [formData, setFormData] = createSignal({
         username: '',
@@ -25,7 +25,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
     
 
     return (
-        <div class="edit-acc-master">
+        <div class="edit-data">
          
                 <div class="edit-form">
                     <form method="dialog">
@@ -37,7 +37,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                         <div class="isi-form">
 
                             <p>
-                                <label>Nama Akun*</label>
+                                <label>ID*</label>
                                 <br />
                                 <input type="text" required />
                             </p>
@@ -74,4 +74,4 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
 };
 
 
-export default EditAkunMaster;
+export default FormEditAkunTeams;
