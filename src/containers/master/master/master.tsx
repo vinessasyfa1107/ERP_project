@@ -3,7 +3,7 @@ import './master.css'
 import TableListCOA from './table-list-coa';
 import TableListAkun from './table-list-akun';
 import { Icon } from '@iconify-icon/solid';
-import { A } from '@solidjs/router';
+import { A, useLocation } from '@solidjs/router';
 
 
 const Master: Component = () => {
@@ -20,28 +20,29 @@ const Master: Component = () => {
         setTable2(!Table2())
     }
 
+  const location = useLocation();
+
   return (
     <div>
-
-        <div class="top-master-btn">
-            <A href='/master/master' class="active">Master</A>
-            <A href='/master/mastercoa'>Master COA</A>
-            <A href='/master/masterakun'>Master Akun</A>
-        </div>
+      <div class="top-master-btn">
+        <A href='/master/master' classList={{ active: location.pathname === '/master/master' }}>Master</A>
+        <A href='/master/mastercoa' classList={{ active: location.pathname === '/master/mastercoa' }}>Master COA</A>
+        <A href='/master/masterakun' classList={{ active: location.pathname === '/master/masterakun' }}>Master Akun</A>
+      </div>
 
         <div class="master">
             <div class="content">
                 <div class="content-1">
-                    <div class="list-coa">
+                    <div class="list-coa" onClick={handleTable1}>
                         <p>List COA</p>
-                        <button class="btn-sort" onClick={handleTable1}><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+                        <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
                     </div>
                     {Table1() && <TableListCOA/>}
                 </div>
-                <div class="content-2">
+                <div class="content-2"  onClick={handleTable2}>
                     <div class="list-akun">
                         <p>List Akun</p>
-                        <button class="btn-sort" onClick={handleTable2}><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+                        <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
                     </div>
                     {Table2() && <TableListAkun/>}
                 </div>

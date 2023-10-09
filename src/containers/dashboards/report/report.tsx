@@ -1,5 +1,5 @@
 import { Component, createSignal } from 'solid-js';
-import Barchart_report from './barchart_report/barchart_report';
+import Barchart_report from './barchart_report/barchart_inex_report';
 import Table_income_report from './table_report/table_income_report';
 import Table_expenses_report from './table_report/table_expenses_report';
 import Piechart_expenses_report from './piechart_report/piechart_report';
@@ -23,7 +23,7 @@ const Report: Component = () => {
 
     return (
         <div>
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "135vh" }}>
+            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "135vh", "width": "160vh" , "border-radius":"10px", "padding-top":"15px"}}>
                 {/* div untuk barchart container */}
                 <div class="barchartReport-container">
                     <div class="top-table">

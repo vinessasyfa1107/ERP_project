@@ -37,7 +37,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                         <div class="isi-form">
 
                             <p>
-                                <label>ID*</label>
+                                <label>Nama Akun*</label>
                                 <br />
                                 <input type="text" required />
                             </p>

@@ -1,18 +1,20 @@
-.report-container .barchartReport-container {
+/* .report-container .barchartReport-container { */
     /*css untuk mengatur bagian atas dari barchart (atasnya kotak search)*/
-    background-color: #EFEFEF;
-    width: 178vh;
+    /* background-color: red;
+    border-top-right-radius: 10px;
+    width: 145vh;
     padding-top: 90px;
     margin-left: 15vh;
-}
+} */
 
 /*======== css untuk judul tabelnya ========*/
 .report-container .barchartReport-container .top-table {
     /*css untuk mengatur semua elemen yang ada diatas tabel*/
     display: flex;
     justify-content: space-between;
-    width: 178vh;
-    background-color: #EFEFEF;
+    width: 156.6vh;
+    margin-left: 20px;
+    background-color: red;
     justify-content: end;
 }
 
