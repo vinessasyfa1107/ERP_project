@@ -10,11 +10,11 @@ const TableJournal: Component = () => {
         { field: 'id' , headerName: 'ID'}, // Menambahkan filter pada kolom "make"
         { field: 'tanggal' }, // Menambahkan filter pada kolom "model"
         { field: 'pengeluaran' },
-        { field: 'penghasilan' }
+        { field: 'pemasukan' }
       ];
     
       const rowData = [
-        { id: '1-T300', tanggal:'', pengeluaran:'Loren Ipsum', penghasilan:'' }
+        { id: '1-T300', tanggal:'', pengeluaran:'Loren Ipsum', pemasukan:'' }
       ];
     
     

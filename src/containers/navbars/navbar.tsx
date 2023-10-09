@@ -1,10 +1,18 @@
-import { Component, JSX } from "solid-js";
+import { Component, JSX, createSignal } from "solid-js";
+import PT_PopUp from "./pop-up/pt-pop-up";
 
 interface NavbarProps {
     children: JSX.Element
 }
 
 const Navbar: Component<NavbarProps> = (props) => {
+
+  const [popUpPT, setpopUpPT] =  createSignal(false);
+
+  function handlepopUpPT() {
+    setpopUpPT(!popUpPT());
+  }
+
     return (
         <div
   class="overflow-hidden bg-white absolute flex flex-row justify-between pr-12 w-full items-center"
@@ -151,13 +159,15 @@ const Navbar: Component<NavbarProps> = (props) => {
   <div class="bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3">
     <div
       id="Ellipse"
-      class="bg-[url(https://file.rendit.io/n/uDD9S64MFEoBlI4Pt9yw.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-col ml-1 w-12 items-start p-1"
+      class="bg-[url(https://file.rendit.io/n/uDD9S64MFEoBlI4Pt9yw.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-col ml-1 w-12 items-start p-1 cursor-pointer"
+      onClick={handlepopUpPT}
     >
       <img
         src="https://file.rendit.io/n/hlAlQ9Tuj0B7xjGjoFd1.svg"
         id="Mdiinternet"
         class="w-10"
       />
+      {popUpPT() && <PT_PopUp/>}
     </div>
     <img
       src="https://file.rendit.io/n/W6GYZbOZRXaNodBHmwjY.svg"
