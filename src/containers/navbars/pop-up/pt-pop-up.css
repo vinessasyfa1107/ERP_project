@@ -1,0 +1,97 @@
+.pt-pop-up {
+    width: 243px;
+    height: 286px;
+    border-radius: 10px;
+    background: rgba(235, 235, 235, 0.80);
+    position: absolute;
+    top: 80px;
+    left: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 10px;
+}
+
+
+.pt-pop-up button {
+    width: 194px;
+    height: 30px;
+    background-color: #FFF;
+    padding: 0 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.13), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+#slide {
+    position: absolute;
+    left: -100%;
+    -webkit-animation: slide 0.5s forwards;
+    animation: slide 0.5s forwards;
+  }
+  
+  @-webkit-keyframes slide {
+    100% {
+      left: 80px;
+    }
+  }
+  
+  @keyframes slide {
+    100% {
+      left: 80px;
+    }
+  }
+
+
+/* 
+  .pt-pop-up {
+    width: 300px;
+    height: 200px;
+    background: rgba(235, 235, 235, 0.80);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform: translateX(-100%); /* Awalnya di luar layar 
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .pt-pop-up.visible {
+    transform: translateX(0); 
+    opacity: 1;
+    pointer-events: auto; 
+  }
+  
+  .pt-pop-up .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .pt-pop-up .popup-content {
+    text-align: center;
+  }
+  
+  .pt-pop-up.slide-out {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+   */
