@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     padding: 30px;
+    width: 73vw;
 
 }
 .card-time {
@@ -25,11 +26,10 @@
 .nameheader {
     display: flex;
     margin-bottom: 2vh;
-    margin-top: 2vh;
     padding-top: 2vh
 }
 .rightcp {
-    margin-left: 74vw;
+    margin-left: 51vw;
     display: inline-flex;
     align-items: center;
     position: relative;

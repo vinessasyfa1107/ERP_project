@@ -5,6 +5,23 @@ import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
 import { createSignal } from 'solid-js';
 import TagsHeader from './tags-header';
+import { Icon } from '@iconify-icon/solid';
+import FormEditAkunTeams from './forms/form-edit-akun';
+
+
+const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
+  
+const [editedData, setEditedData] = createSignal(null);
+
+const showEditPopup = (rowData: any) => {
+  setEditedData(rowData);
+  setIsEditPopupOpen(!isEditPopupOpen());
+};
+
+function CloseEditPopUp () {
+  setIsEditPopupOpen (false);
+}
+
 
 const TableTeams = () => {
     const columnDefs = [
@@ -13,12 +30,14 @@ const TableTeams = () => {
         { field: "Access" },
         { field: "Role" },
         { field: "Category" },
-        {
-        headerName: 'Action',
-        field: 'checkboxColumn',
-        headerComponentFramework: TagsHeader, // Gunakan custom header component
-        width: 50,
-        },
+        { field: 'aksi', cellRenderer: (params: any) => {
+            return (
+              <div style={{"margin-top": "8px", display:"flex", "justify-content":"space-between", width:"50px"}}>
+                <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+              </div>
+            );
+          }}
     
     ];
 
@@ -51,6 +70,66 @@ const TableTeams = () => {
             "Category": "Suppervisor",
             "Action": "button"
         },  
+        {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+    },  
+            {   "Name": "Dede Herman", 
+            "Email": "dedeherman@braincodesolution", 
+            "Access": "Admin", 
+            "Role": "Employee, Supplier", 
+            "Category": "Suppervisor",
+            "Action": "button"
+        },  
+        {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },  
+        {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },  
+        {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },  
+        {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },          {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },          {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },          {   "Name": "Dede Herman", 
+        "Email": "dedeherman@braincodesolution", 
+        "Access": "Admin", 
+        "Role": "Employee, Supplier", 
+        "Category": "Suppervisor",
+        "Action": "button"
+        },  
         ];
 
     const defaultColDef = {
@@ -64,7 +143,7 @@ const TableTeams = () => {
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
-            <div style={{ height: '60vh', width: '85vw' }} class="ag-theme-alpine">
+            <div style={{ height: '60vh', width: '65vw' }} class="ag-theme-alpine">
                 <AgGridSolid
                     rowData={rowData} // use signal
                     columnDefs={columnDefs} // no signal
@@ -73,6 +152,9 @@ const TableTeams = () => {
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
                 />
             </div>
+                <div>
+                </div>
+                    {isEditPopupOpen() && (<FormEditAkunTeams OnClose={CloseEditPopUp}/>)}
         </div>
     );
 };

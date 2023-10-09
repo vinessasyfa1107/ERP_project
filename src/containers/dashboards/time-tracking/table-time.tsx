@@ -101,7 +101,7 @@ const TableTime = () => {
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
-            <div style={{ height: '45vh', width: '85vw' }} class="ag-theme-alpine glass-table">
+            <div style={{ height: '35vh', width: '65vw' }} class="ag-theme-alpine glass-table">
                 <AgGridSolid
                     rowData={rowData} 
                     columnDefs={columnDefs} 
