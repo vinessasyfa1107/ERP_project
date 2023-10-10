@@ -6,7 +6,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
 import { createSignal } from 'solid-js';
 import TagsHeader from './tags-header';
 import { Icon } from '@iconify-icon/solid';
-import FormEditAkunTeams from './forms/form-edit-akun';
+import FormEditAkunTeams from './forms/edit-akun-teams';
 
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);

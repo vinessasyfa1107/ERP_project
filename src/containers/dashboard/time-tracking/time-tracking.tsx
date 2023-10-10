@@ -4,9 +4,10 @@ import TableTime from './table-time';
 import { Icon } from '@iconify-icon/solid';
 
 
+
 const TimeTracking: Component = () => {
     return (
-        <div class="teams">
+        <div class="time-tracking">
                 <div class="card-module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
                         Time Trackings
