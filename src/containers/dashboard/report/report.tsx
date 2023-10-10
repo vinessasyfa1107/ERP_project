@@ -29,7 +29,7 @@ const Report: Component = () => {
                 <ReportNavbar />
             </div> */}
 
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "255vh", "width": "160vh" , "border-radius":"10px", "padding-top":"15px","margin-bottom":"20px"}}>
+            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "255vh", "width": "160vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
                 {/* div untuk barchart container */}
                 <div class="barchartReport-container">
                     <div class="top-table">
@@ -55,12 +55,13 @@ const Report: Component = () => {
                 </div>
 
                 {/* div untuk income container dan expenses container */}
-                <div class="inex-container" style={{ 
-                "margin-top": "25px",
-                "justify-content": "center", 
-                "text-align": "center", 
-                "align-items": "center",
-                "display":"flex"}}>
+                <div class="inex-container" style={{
+                    "margin-top": "25px",
+                    "justify-content": "center",
+                    "text-align": "center",
+                    "align-items": "center",
+                    "display": "flex"
+                }}>
                     {/* ====== button untuk menampilkan tabel income ====== */}
                     <div>
                         <button onClick={toggleIncomeTable} style={{
@@ -141,7 +142,7 @@ const Report: Component = () => {
                 {/* div untuk piechart income, tabel, dan piechart excome */}
                 <div class="pietab-inex-container">
 
-                    <div class="tabel-inex-container" style={{"padding-top":"25px"}}>
+                    <div class="tabel-inex-container" style={{ "padding-top": "25px" }}>
                         {showIncomeTable() && <Table_income_report />}
                         {showExpensesTable() && <Table_expenses_report />}
                     </div>
@@ -152,13 +153,13 @@ const Report: Component = () => {
                 </div>
 
                 {/* div untuk barchart arus kas report */}
-                <p style={{"margin":"22px","color":"#414141","font-size":"18px","font-style":"normal","font-weight":"700","line-height":"normal"}}>Arus Kas</p>
-                <div class="barchart-aruskas-container" style={{"margin-bottom":"5.5rem"}}>
+                <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal" }}>Arus Kas</p>
+                <div class="barchart-aruskas-container" style={{ "margin-bottom": "5.5rem" }}>
                     <Barchart_aruskas_report />
                 </div>
 
                 {/* div untuk barchart laba rugi */}
-                <p style={{"margin":"22px","color":"#414141","font-size":"18px","font-style":"normal","font-weight":"700","line-height":"normal"}}>Laba Rugi</p>
+                <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal" }}>Laba Rugi</p>
                 <div class="barchart-labarugi-container" >
                     <Barchart_labarugi_report />
                 </div>
