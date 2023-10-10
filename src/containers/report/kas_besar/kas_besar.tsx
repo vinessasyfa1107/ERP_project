@@ -84,7 +84,7 @@ const Kas_besar: Component = () => {
                 {/* div untuk mengatur top table pada kasBesar yang terdiri dari judul tabel, search, dan sorting icon */}
                 <div class="kasBesar-top-table">
                     <div class="kasBesar-title">
-                        <p>Approval Table<span> (Diurut dari baru)</span></p>
+                        <p>Kas Besar</p>
                     </div>
                     <div class="search-container">
                         <div class="search-input">
