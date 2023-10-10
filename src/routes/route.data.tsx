@@ -13,6 +13,8 @@ const TimeTracking = lazy(() => import('../containers/dashboard/time-tracking/ti
 const Accounting = lazy(() => import('../containers/dashboard/accounting/accounting'));
 const Report = lazy(() => import('../containers/dashboard/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
+const Header = lazy(() => import('../containers/header/header'));
+
 
 const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik_keuangan'));
 const Neraca = lazy(() => import('../containers/keuangan/neraca/neraca'));
@@ -43,6 +45,7 @@ const RouteData: Component = () => {
                 <Route path="/time-tracking" component={TimeTracking} />
                 <Route path="/accounting" component={Accounting} />
                 <Route path="/report" component={Report} />
+                <Route path="/header" component={Header} />
             </Route>
 
             <Route path="/master">

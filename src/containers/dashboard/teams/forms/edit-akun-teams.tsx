@@ -2,7 +2,7 @@ import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
 import { createSignal } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './form-edit-akun.css'
+import './edit-akun-teams.css'
 
 interface FormEditTeams {
     OnClose: () => void;

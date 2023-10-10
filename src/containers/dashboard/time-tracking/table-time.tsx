@@ -3,10 +3,14 @@ import AgGridSolid from 'ag-grid-solid';
 
 import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
-import { createSignal } from 'solid-js';
+import { type Component, createSignal } from 'solid-js';
 import './table-time.css'
 
-const TableTime = () => {
+interface TableTimeProps {
+    onRowClicked: (event: { data: any; node: any }) => void;
+  }
+
+const TableTime: Component<TableTimeProps> = (props) => {
     const columnDefs = [
         { field: "NO" },
         { field: "Date" },
@@ -101,7 +105,8 @@ const TableTime = () => {
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
-            <div style={{ height: '35vh', width: '65vw' }} class="ag-theme-alpine glass-table">
+
+            <div style={{ height: '45vh', width: '50vw' }} class="ag-theme-alpine glass-table">
                 <AgGridSolid
                     rowData={rowData} 
                     columnDefs={columnDefs} 
@@ -109,6 +114,7 @@ const TableTime = () => {
                     defaultColDef={defaultColDef}
                     gridOptions={gridOptions}
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
+                    onRowClicked={props.onRowClicked}
                 />
             </div>
         </div>

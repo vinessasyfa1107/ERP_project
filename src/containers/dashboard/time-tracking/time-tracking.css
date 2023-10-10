@@ -1,4 +1,4 @@
-.teams {
+.time-tracking {
     margin: 0;
     padding: 0;
     justify-content: center;
@@ -13,7 +13,8 @@
      #EFEFEF;
     border-radius: 1vw;
     /* height: 55vh; */
-    padding-bottom: 4vh
+    padding-bottom: 4vh;
+    width: 150vh;
 }
 .card-module {
     display: flex;
