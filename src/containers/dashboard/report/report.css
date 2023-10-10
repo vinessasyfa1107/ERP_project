@@ -1,11 +1,4 @@
-/* .report-container .barchartReport-container { */
-    /*css untuk mengatur bagian atas dari barchart (atasnya kotak search)*/
-    /* background-color: red;
-    border-top-right-radius: 10px;
-    width: 145vh;
-    padding-top: 90px;
-    margin-left: 15vh;
-} */
+
 
 /*======== css untuk judul tabelnya ========*/
 .report-container .barchartReport-container .top-table {
@@ -14,7 +7,7 @@
     justify-content: space-between;
     width: 156.6vh;
     margin-left: 20px;
-    background-color: red;
+    background-color: #EFEFEF;
     justify-content: end;
 }
 
@@ -96,4 +89,15 @@
     display: flex;
     justify-content: center;
     padding-top: 20px;
+}
+
+.report-container .barchart-aruskas-container {
+    /* Aturan CSS untuk mengatur tampilan grafik Bar Chart Arus Kas */
+    width: 100%;
+    /* Sesuaikan dengan ukuran yang diinginkan */
+    height: 400px;
+    /* Sesuaikan dengan ukuran yang diinginkan */
+    margin-top: 20px;
+    /* Sesuaikan dengan jarak dari elemen di atasnya */
+    /* Tambahkan properti lain sesuai kebutuhan Anda */
 }

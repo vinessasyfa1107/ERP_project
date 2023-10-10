@@ -5,13 +5,13 @@ const getPath = ({ navigate, location }) => {
     return "/dashboard/report";
 }
 
-const Plan = lazy(() => import('../containers/dashboards/plannings/plan'));
-const Admin = lazy(() => import('../containers/dashboards/teams/teams'));
+const Plan = lazy(() => import('../containers/dashboard/plannings/plan'));
+const Admin = lazy(() => import('../containers/dashboard/teams/teams'));
 const Login = lazy(() => import('../containers/login/login'));
-const Planning = lazy(() => import('../containers/dashboards/plannings/planning'));
-const TimeTracking = lazy(() => import('../containers/dashboards/time-tracking/time-tracking'));
-const Accounting = lazy(() => import('../containers/dashboards/accounting/accounting'));
-const Report = lazy(() => import('../containers/dashboards/report/report'));
+const Planning = lazy(() => import('../containers/dashboard/plannings/planning'));
+const TimeTracking = lazy(() => import('../containers/dashboard/time-tracking/time-tracking'));
+const Accounting = lazy(() => import('../containers/dashboard/accounting/accounting'));
+const Report = lazy(() => import('../containers/dashboard/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 const Header = lazy(() => import('../containers/header/header'));
 

@@ -1,9 +1,11 @@
 import { Component, createSignal } from 'solid-js';
-import Barchart_report from './barchart_report/barchart_inex_report';
 import Table_income_report from './table_report/table_income_report';
 import Table_expenses_report from './table_report/table_expenses_report';
 import Piechart_expenses_report from './piechart_report/piechart_report';
-
+import Barchart_inex_report from './barchart_inex_report/barchart_inex_report';
+import Barchart_aruskas_report from './barchart_aruskas_report/barchart_aruskas_report';
+import Barchart_labarugi_report from './barchart_labarugi_report/barchart_labarugi_report';
+// import ReportNavbar from '../reportNavbar';
 import { Icon } from '@iconify-icon/solid';
 import './report.css';
 
@@ -23,7 +25,11 @@ const Report: Component = () => {
 
     return (
         <div>
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "135vh", "width": "160vh" , "border-radius":"10px", "padding-top":"15px"}}>
+            {/* <div class="navbar-f-report">
+                <ReportNavbar />
+            </div> */}
+
+            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "255vh", "width": "160vh" , "border-radius":"10px", "padding-top":"15px","margin-bottom":"20px"}}>
                 {/* div untuk barchart container */}
                 <div class="barchartReport-container">
                     <div class="top-table">
@@ -43,8 +49,8 @@ const Report: Component = () => {
                         </div>
                     </div>
 
-                    <div class="barchartReport">
-                        <Barchart_report />
+                    <div class="barchartInexReport">
+                        <Barchart_inex_report />
                     </div>
                 </div>
 
@@ -144,6 +150,19 @@ const Report: Component = () => {
                         <Piechart_expenses_report />
                     </div>
                 </div>
+
+                {/* div untuk barchart arus kas report */}
+                <p style={{"margin":"22px","color":"#414141","font-size":"18px","font-style":"normal","font-weight":"700","line-height":"normal"}}>Arus Kas</p>
+                <div class="barchart-aruskas-container" style={{"margin-bottom":"5.5rem"}}>
+                    <Barchart_aruskas_report />
+                </div>
+
+                {/* div untuk barchart laba rugi */}
+                <p style={{"margin":"22px","color":"#414141","font-size":"18px","font-style":"normal","font-weight":"700","line-height":"normal"}}>Laba Rugi</p>
+                <div class="barchart-labarugi-container" >
+                    <Barchart_labarugi_report />
+                </div>
+
 
             </div>
         </div>
