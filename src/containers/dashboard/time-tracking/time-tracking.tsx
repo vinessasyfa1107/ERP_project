@@ -122,23 +122,6 @@ const TimeTracking: Component = () => {
                         <TableTime onRowClicked={handleRowClick}/>
                     </div>
                     <div class="card-bar">
-                        <div style={{"margin-right":"1vw"}}>
-
-                            <progress class="progress progress-success w-50 h-7" value="100" max="100"></progress>
-                            <div style={{"font-weight": "600"}}>Transmit Request/Planning</div>
-                            <div style={{"font-weight": "600"}}>For Approval</div>
-                        </div>
-                        <div>
-                            <progress class="progress progress-success w-50 h-7" value="100" max="100"></progress>
-                            <div style={{"font-weight": "600"}}>Approval By</div>
-                            <div style={{"font-weight": "600"}}>Direktur Keuangan</div>
-                        </div>
-                        <div style={{"margin-left": "1vw"}}>
-
-                            <progress class="progress progress-success w-50 h-7" value="0" max="100"></progress>
-                            <div style={{"font-weight": "600"}}>Approval By</div>
-                            <div style={{"font-weight": "600"}}>Direktur Utama</div>
-                        </div>
                         {showText() && <p>Klik barisan untuk melihat tracker</p>}
                         {showSteps() && selectedRow()?.status && getStatusSteps(selectedRow()?.status)}
                     </div>
