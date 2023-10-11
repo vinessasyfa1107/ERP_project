@@ -1,31 +1,29 @@
 [{
-    "Bulan": "Jan",
-    "profitloss": 200,
-    "journal": 400,
-    "balance": 300
+    "date": "10/12/22",
+    "COA": "1-1100",
+    "keterangan": "Lorem ipsum",
+    "pemasukan": 50000000,
+    "pengeluaran": 39000000,
+    "saldo_awal": 20000000
 }, {
-    "Bulan": "Feb",
-    "profitloss": 300,
-    "journal": 500,
-    "balance": 200
+    "date": "10/12/22",
+    "COA": "1-1100",
+    "keterangan": "Lorem ipsum",
+    "pemasukan": 50000000,
+    "pengeluaran": 39000000,
+    "saldo_awal": 20000000
 }, {
-    "Bulan": "Mar",
-    "profitloss": 600,
-    "journal": 300,
-    "balance": 200
+    "date": "10/12/22",
+    "COA": "1-1100",
+    "keterangan": "Lorem ipsum",
+    "pemasukan": 50000000,
+    "pengeluaran": 39000000,
+    "saldo_awal": 20000000
 }, {
-    "Bulan": "Apr",
-    "profitloss": 400,
-    "journal": 100,
-    "balance": 100
-}, {
-    "Bulan": "Mei",
-    "profitloss": 500,
-    "journal": 200,
-    "balance": 200
-}, {
-    "Bulan": "Jun",
-    "profitloss": 200,
-    "journal": 300,
-    "balance": 300
+    "date": "10/12/22",
+    "COA": "1-1100",
+    "keterangan": "Lorem ipsum",
+    "pemasukan": 50000000,
+    "pengeluaran": 39000000,
+    "saldo_awal": 20000000
 }]

@@ -27,6 +27,11 @@ const Master = lazy(() => import('../containers/master/master/master'));
 const MasterCOA = lazy(() => import('../containers/master/master-coa/master-coa'));
 const MasterAkun = lazy(() => import('../containers/master/master-akun/master-akun'));
 
+const Kas_besar = lazy(() => import('../containers/report/kas_besar/kas_besar'));
+const Semua_laporan = lazy(() => import('../containers/report/semua_laporan'));
+const Pemasukan = lazy(() => import('../containers/report/pemasukan/pemasukan'));
+const Pengeluaran = lazy(() => import('../containers/report/pengeluaran/pengeluaran'));
+
 const RouteData: Component = () => {
     return (
         <Routes>
@@ -45,8 +50,8 @@ const RouteData: Component = () => {
 
             <Route path="/master">
                 <Route path="/master" component={Master} />
-                <Route path="/mastercoa" component={MasterCOA}/>
-                <Route path="/masterakun" component={MasterAkun}/>
+                <Route path="/mastercoa" component={MasterCOA} />
+                <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
             <Route path="/kontak">
@@ -55,14 +60,21 @@ const RouteData: Component = () => {
 
 
             <Route path="/keuangan">
-                <Route path="/grafik-keuangan" component={Grafik_keuangan}/>
-                <Route path="/neraca" component={Neraca}/>
-                <Route path="/labarugi" component={LabaRugi}/>
-                <Route path="/journal" component={Journal}/>
-                <Route path="/journaldetail" component={JournalDetail}/>
-
+                <Route path="/grafik-keuangan" component={Grafik_keuangan} />
+                <Route path="/neraca" component={Neraca} />
+                <Route path="/labarugi" component={LabaRugi} />
+                <Route path="/journal" component={Journal} />
+                <Route path="/journaldetail" component={JournalDetail} />
             </Route>
-            
+
+
+            <Route path="/report">
+                <Route path="/semua_laporan" component={Semua_laporan} />
+                <Route path="/kas_besar" component={Kas_besar} />
+                <Route path="/pemasukan" component={Pemasukan} />
+                <Route path="/pengeluaran" component={Pengeluaran} />
+            </Route>
+
         </Routes>
     )
 }

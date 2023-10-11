@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "@solidjs/router";
-import { Component, onMount } from "solid-js";
+import { Component, createSignal, onMount } from "solid-js";
 import { Key_Field, User_Field, User_Login, User_Top } from "../../components/Icons/Users/Icon_User";
+import { datalogin } from "../../api/login/datalogin";
 
 
 
@@ -8,16 +9,70 @@ const Login: Component = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    onMount(() => {
-        console.log('ini halaman Login');
-    });
-
     const ActionLogin = () => {
         console.log('hallo login button clicked');
         const dataUser = {username: "erp-last", email: "erp-last@gmail.com"};
         sessionStorage.setItem('userData', JSON.stringify(dataUser));
         window.location.assign('/');
     }
+
+    // const [username, setUsername] = createSignal("");
+    // const [password, setPassword] = createSignal("");
+
+    // onMount(() => {
+    //     console.log('ini halaman Login');
+    // });
+
+    // const ActionLogin = async () => {
+    //     console.log('hallo login button clicked');
+    //     const dataUser = { username: username(), password: password() };
+    //     try {
+    //       // Kirim dataUser ke server untuk proses login
+    //       const response = await fetch('http://192.168.100.210:8080/login/query/', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(dataUser),
+    //       });
+      
+    //       if (response.ok) {
+    //         // Jika login berhasil, Anda dapat melakukan navigasi ke halaman yang sesuai.
+    //         const responseData = await response.json();
+    //         // responseData dapat berisi informasi tambahan yang Anda butuhkan dari server.
+      
+    //         // Contoh penggunaan responseData:
+    //         console.log('Login berhasil:', responseData);
+      
+    //         // Di sini Anda bisa menentukan apa yang harus dilakukan setelah login berhasil,
+    //         // seperti menavigasi ke halaman dashboard.
+    //         navigate('/dashboard');
+    //       } else {
+    //         // Handle kesalahan jika login gagal
+    //         console.error('Login gagal');
+    //         // Tampilkan pesan kesalahan kepada pengguna jika perlu.
+    //       }
+    //     } catch (error) {
+    //       // Handle kesalahan jika ada masalah koneksi atau lainnya
+    //       console.error('Error selama proses login:', error);
+    //       // Tampilkan pesan kesalahan kepada pengguna jika ada masalah koneksi.
+    //     }
+    //   };
+      
+      
+
+    // onMount(async () => {
+    //     const data_login = await datalogin ("data coa master");
+    //     console.log("datalogin", data_login);
+    //     setDataLogin(data_login);
+    //   })
+
+    // const ActionLogin = () => {
+    //     console.log('hallo login button clicked');
+    //     const dataUser = {username: `${username}`, password:`${password}`};
+    //     sessionStorage.setItem('userData', JSON.stringify(dataUser));
+    //     window.location.assign('/');
+    // }
 
     return (
         <div
@@ -68,6 +123,8 @@ const Login: Component = () => {
                     <Key_Field class="w-5 h-5 absolute top-3 left-[620px]"/>
                     <div class="border-solid relative h-10 shrink-0 border-black border rounded" />
                 </div>
+
+
                 <div class="text-right text-sm font-['Manrope'] font-medium text-[#6e49e9] self-end mb-5 mr-px">
                     forget Password?
                 </div>
