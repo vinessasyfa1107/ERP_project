@@ -2,10 +2,12 @@ import type { Component } from 'solid-js';
 import './accounting.css'
 import ChartAccounting from './chart-accounting';
 import { Icon } from '@iconify-icon/solid';
+import Header from '../../header/header';
 
 const Accounting: Component = () => {
   return (
     <div class="accounting">
+        <Header/>
         <div class="card-accounting-2">
                 <div class="nameheader">
                   <div class="rightcp">

@@ -8,6 +8,8 @@ import Barchart_labarugi_report from './barchart_labarugi_report/barchart_labaru
 // import ReportNavbar from '../reportNavbar';
 import { Icon } from '@iconify-icon/solid';
 import './report.css';
+import Header from '../../header/header';
+
 
 const Report: Component = () => {
     const [showIncomeTable, setShowIncomeTable] = createSignal(false);
@@ -25,6 +27,7 @@ const Report: Component = () => {
 
     return (
         <div>
+            <Header/>
             {/* <div class="navbar-f-report">
                 <ReportNavbar />
             </div> */}

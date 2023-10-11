@@ -2,12 +2,20 @@ import { useLocation, useNavigate } from "@solidjs/router";
 import { Component, createSignal, onMount } from "solid-js";
 import { Key_Field, User_Field, User_Login, User_Top } from "../../components/Icons/Users/Icon_User";
 import { datalogin } from "../../api/login/datalogin";
-
+import './login.css';
 
 
 const Login: Component = () => {
     const navigate = useNavigate();
     const location = useLocation();
+
+
+    const [username, setUsername] = createSignal("");
+    const [password, setPassword] = createSignal("");
+
+    onMount(() => {
+        console.log('ini halaman Login');
+    });
 
     const ActionLogin = () => {
         console.log('hallo login button clicked');
@@ -67,6 +75,7 @@ const Login: Component = () => {
     //     setDataLogin(data_login);
     //   })
 
+
     // const ActionLogin = () => {
     //     console.log('hallo login button clicked');
     //     const dataUser = {username: `${username}`, password:`${password}`};
@@ -74,34 +83,90 @@ const Login: Component = () => {
     //     window.location.assign('/');
     // }
 
+    const fetchLogin = async () => {
+        try {
+          const response = await fetch(`/api/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: username(),
+              password: password(),
+            }),
+          });
+    
+          if (response.ok) {
+            const data = await response.json();
+            return data;
+          } else {
+            throw new Error('Failed to login');
+          }
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      };
+
+    const ActionLogin1 = async () => {
+    try {
+        const data = await fetchLogin();
+        // Cek apakah data login berhasil atau tidak
+        if (data) {
+        // Login berhasil, Anda dapat menyimpan data pengguna di sessionStorage atau localStorage
+        sessionStorage.setItem('userData', JSON.stringify(data));
+        // Redirect ke halaman utama atau halaman lain yang sesuai
+        window.location.assign('/');
+        } else {
+        // Handle login gagal di sini
+        console.error('Login failed');
+        }
+    } catch (error) {
+        // Handle kesalahan saat melakukan permintaan login
+        console.error(error);
+    }
+    };
+      
+
     return (
-        <div
-            id="LoginRoot"
-            class="overflow-hidden bg-white flex flex-col justify-between w-full h-full items-end pt-8 pb-48 px-12 fixed"
-        >
-            <div class="flex flex-row gap-8 items-start">
-                <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
-                <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
-                    <img
-                    src="https://file.rendit.io/n/Q1vGwgsXbO1TkPP5ycuD.svg"
-                    id="Uimcalender"
-                    class="w-5 shrink-0"
-                    />
-                    <div class="text-sm font-['Inter'] text-[#909090] mt-1">
-                    02.10.2023 - 12:00 WIB
+        <div id="LoginRoot" class="login-container">
+            <div class="flex flex-row gap-8 float-right mt-5 mb-20 mr-10">
+                    <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
+                    <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
+                        <img
+                        src="https://file.rendit.io/n/Q1vGwgsXbO1TkPP5ycuD.svg"
+                        id="Uimcalender"
+                        class="w-5 shrink-0"
+                        />
+                        <div class="text-sm font-['Inter'] text-[#909090] mt-1">
+                        02.10.2023 - 12:00 WIB
+                        </div>
                     </div>
-                </div>
-                </div>
-                <User_Top class="mt-2 w-5 shrink-0"/>
+                    </div>
+                    <User_Top class="mt-2 w-5 shrink-0"/>
             </div>
-            <div class="shadow-[0px_1px_2px_0px_rgba(0,_0,_0,_0.02),_0px_3px_5px_0px_rgba(0,_0,_0,_0.03),_0px_5px_10px_0px_rgba(0,_0,_0,_0.04),_0px_9px_18px_0px_rgba(0,_0,_0,_0.05),_0px_18px_33px_0px_rgba(0,_0,_0,_0.06),_0px_42px_80px_0px_rgba(0,_0,_0,_0.08)] self-stretch flex flex-col mx-[176px]">
-                <div class="bg-[#efefef] flex flex-col gap-2 h-[653px] shrink-0 items-center pr-[288px] py-12 rounded-[21px]">
-                <div class="flex flex-row mb-8 gap-2 items-start">
-                    <div class="text-5xl font-['Exo_2'] font-bold text-[#6e49e9] mb-px">
-                    ERP
-                    <div id="ERP" class="text-4xl contents">
-                        {" "}
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="inline-flex">
+                        <p class="p1">ERP</p>
+                        <p class="p2">TUS</p>
                     </div>
+                    <User_Login class="mt-6 w-16 mb-5"/>
+                    <div class="login-content">
+                        <input type="text" placeholder="Username" required
+                        id="username"
+                        value={username()}
+                        onInput={(e) => setUsername(e.currentTarget.value)}
+                        />
+                        <span class="icon-user"><User_Field/></span>
+                        <input placeholder="Password"
+                        id="password"
+                        type="password"
+                        value={password()}
+                        onInput={(e) => setPassword(e.currentTarget.value)}
+                        />
+                        <span class="icon-pass"><Key_Field/></span>
+                        <p>Forgot Password?</p>
                     </div>
                     <div class="text-4xl font-['Exo_2'] font-bold text-[#9f9f9f] self-end">
                     TUS
@@ -133,7 +198,9 @@ const Login: Component = () => {
                     Log in
                     </span>
                 </button>
-                </div>
+                    <div>
+                        <button  onclick={() => ActionLogin1()}>Log in</button>
+                    </div>
             </div>
         </div>
 

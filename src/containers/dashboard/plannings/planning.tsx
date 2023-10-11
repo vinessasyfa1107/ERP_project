@@ -6,11 +6,12 @@ import TableDetailPlan from './table/table-detail-plan';
 import { Icon } from '@iconify-icon/solid';
 import FormPlanning from './form/form-planning';
 import { A } from '@solidjs/router';
+import Header from '../../header/header';
 
 const Planning: Component = () => {
   return (
     <div class="plan">
-
+            <Header/>
         <A href="/master/master">
             <button style={{"background-color":"aqua"}}>ke master</button>
         </A>
