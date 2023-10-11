@@ -13,7 +13,7 @@ export async function datacoamaster(query: string) {
     
              
     const response = await fetch(
-      `http://192.168.100.210:8080/coa/query/`, {mode: 'no-cors'}
+      `http://localhost:8001/api/coa/`, {mode: 'no-cors'}
     );
     
     const results = await response.json();
