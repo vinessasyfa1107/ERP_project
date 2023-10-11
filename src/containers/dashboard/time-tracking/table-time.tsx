@@ -12,6 +12,9 @@ interface TableTimeProps {
 
 const TableTime: Component<TableTimeProps> = (props) => {
     const columnDefs = [
+      { valueGetter: 'node.rowIndex + 1', headerName: 'No', 
+      width: 70, filter: false, 
+      cellStyle: { textAlign: 'center' } },
         { field: "NO" },
         { field: "Date" },
         { field: "Description" },

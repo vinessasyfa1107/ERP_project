@@ -41,10 +41,30 @@
 .name-selection {
     font-weight: 600;
 }
-.menu-selection.active .name-selection {
-    color: blue; /* Atur warna teks "Teams" menjadi biru */
-  }
-  
-  .menu-selection.active svg path {
-    fill: blue; /* Atur warna isi path SVG menjadi biru */
-  }
+.selection A.active {
+    color: rgba(132, 103, 255, 0.80);
+}
+
+
+
+.input-icon {
+    position: relative;
+}
+
+.iconify {
+    position: absolute;
+    left: 10px; /* Jarak antara ikon dan sisi kiri input */
+    top: 50%; /* Posisi vertikal tengah ikon */
+    transform: translateY(-50%); /* Pusatkan ikon secara vertikal */
+    color: #7E7F90; /* Warna ikon (sesuaikan dengan kebutuhan Anda) */
+    font-size: 16px; /* Ukuran ikon (sesuaikan dengan kebutuhan Anda) */
+}
+
+.input {
+    padding-left: 30px; /* Jarak antara ikon dan teks input */
+    /* Gaya input Anda */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
