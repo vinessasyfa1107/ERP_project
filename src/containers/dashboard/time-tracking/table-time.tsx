@@ -4,7 +4,7 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
 import { type Component, createSignal } from 'solid-js';
-import './table-time.css'
+import './table-time.css';
 
 interface TableTimeProps {
     onRowClicked: (event: { data: any; node: any }) => void;
@@ -33,7 +33,7 @@ const TableTime: Component<TableTimeProps> = (props) => {
             "Category": "Lorem Ipsum",
             "Type": "Weekly", 
             "Amount": "15.000.000",
-            "Status": "Waiting",
+            "Status": "In Process",
             isTransparent: true
         },  
         {   
@@ -108,8 +108,7 @@ const TableTime: Component<TableTimeProps> = (props) => {
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
-
-            <div style={{ height: '45vh', width: '50vw' }} class="ag-theme-alpine glass-table">
+            <div style={{ height: '45vh', width: '65vw' }} class="ag-theme-alpine glass-table">
                 <AgGridSolid
                     rowData={rowData} 
                     columnDefs={columnDefs} 

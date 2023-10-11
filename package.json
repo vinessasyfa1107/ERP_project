@@ -36,6 +36,7 @@
     "@amcharts/amcharts4-geodata": "^4.1.27",
     "@solidjs/router": "^0.8.3",
     "ag-grid-community": "^30.2.0",
+    "ag-grid-enterprise": "^30.2.0",
     "ag-grid-solid": "^30.2.0",
     "solid-js": "^1.7.6"
   }

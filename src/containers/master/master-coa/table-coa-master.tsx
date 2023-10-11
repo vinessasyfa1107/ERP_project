@@ -32,7 +32,7 @@ const TabelCOAMaster: Component = () => {
     }
 
     const columnDefs = [
-        { field: 'id'},
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No' },
         { field: 'coa_kd', headerName: 'Kode Akun'},
         { field: 'coa_name', headerName: 'Nama COA'},
         { field: 'category'},

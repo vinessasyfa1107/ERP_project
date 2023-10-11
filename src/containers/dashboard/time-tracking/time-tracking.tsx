@@ -7,7 +7,7 @@ import Header from '../../header/header';
 
 
 const TimeTracking: Component = () => {
-    const [selectedRow, setSelectedRow] = createSignal<{ id: any; approval: any; } | null>(null);
+    const [selectedRow, setSelectedRow] = createSignal<{ id: any; status: any; } | null>(null);
 
     const [showText, setShowText] = createSignal(true);
 
@@ -20,54 +20,78 @@ const TimeTracking: Component = () => {
 
     // const handleRowClick = (event: { data: any; node: any; }) => {
     //   const { data, node } = event;
-    //   setSelectedRow(() => ({ id: node.data.number, approval: data.approved_by }));
+    //   setSelectedRow(() => ({ id: node.data.number, status: data.approved_by }));
     //   setShowText(false);
     // };
 
     const handleRowClick = (event: { data: any; node: any; }) => {
       const { data, node } = event;
-      setSelectedRow(() => ({ id: node.data.No, approval: data.Approval }));
+      setSelectedRow(() => ({ id: node.data.NO, status: data.Status }));
       setShowText(!showText());
       handleSteps();
     };
   
-    const getStatusSteps = (approval: any) => {
-      switch (approval) {
-        case "admin":
+    const getStatusSteps = (status: any) => {
+      switch (status) {
+        case "Waiting":
           return (
-            <ul class="steps">
-              <li data-content="✓" class="step step-accent">Transmit Request/Planning <br />For Approval</li>
-              <li class="step">Approval By <br />VP</li>
-              <li class="step">Approval By <br />Direktur</li>
-              <li class="step">Finish</li>
-            </ul>
+            <div class="step-status">
+              <div class="step-bar">
+                  <div class="bar success"></div>
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+              </div>
+              <div class="step-bar">
+                  <div class="step-label">Transmit Request/Planning For Status</div>
+                  <div class="step-label">Approval by Direktur Keuangan</div>
+                  <div class="step-label">Approval by Direktur Utama</div>
+              </div>
+            </div>
           );
-        case "Approve":
+        case "Approved":
           return (
-            <ul class="steps">
-              <li data-content="✓" class="step step-accent">Transmit Request/Planning <br />For Approval</li>
-              <li data-content="✓" class="step step-accent">Approval By <br />VP</li>
-              <li data-content="✓" class="step step-accent">Approval By <br />Direktur</li>
-              <li data-content="✓" class="step step-accent">Finish</li>
-            </ul>
+            <div class="step-status">
+              <div class="step-bar">
+                  <div class="bar success"></div>
+                  <div class="bar success"></div>
+                  <div class="bar success"></div>
+              </div>
+              <div class="step-bar">
+                  <div class="step-label">Transmit Request/Planning For Status</div>
+                  <div class="step-label">Approval by Direktur Keuangan</div>
+                  <div class="step-label">Approval by Direktur Utama</div>
+              </div>
+            </div>
           );
-        case "Reject":
+        case "Rejected":
           return (
-            <ul class="steps">
-              <li data-content="✓" class="step step-secondary">Transmit Request/Planning <br />For Approval</li>
-              <li data-content="✕" class="step step-secondary">Approval By <br />VP</li>
-              <li data-content="✕" class="step step-secondary">Approval By <br />Direktur</li>
-              <li data-content="✕" class="step step-secondary">Rejected</li>
-            </ul>
+            <div class="step-status">
+              <div class="step-bar">
+                  <div class="bar reject"></div>
+                  <div class="bar reject"></div>
+                  <div class="bar reject"></div>
+              </div>
+              <div class="step-bar">
+                  <div class="step-label">Transmit Request/Planning For Status</div>
+                  <div class="step-label">Approval by Direktur Keuangan</div>
+                  <div class="step-label">Approval by Direktur Utama</div>
+              </div>
+            </div>
           );
         case "In Process":
           return (
-            <ul class="steps">
-              <li data-content="✓" class="step step-accent">Transmit Request/Planning <br />For Approval</li>
-              <li data-content="✓" class="step step-accent">Approval By <br />VP</li>
-              <li class="step">Approval By <br />Direktur</li>
-              <li class="step">Finish</li>
-            </ul>
+            <div class="step-status">
+              <div class="step-bar">
+                  <div class="bar success"></div>
+                  <div class="bar success"></div>
+                  <div class="bar"></div>
+              </div>
+              <div class="step-bar">
+                  <div class="step-label">Transmit Request/Planning For Status</div>
+                  <div class="step-label">Approval by Direktur Keuangan</div>
+                  <div class="step-label">Approval by Direktur Utama</div>
+              </div>
+            </div>
           );
         default:
           return null;
@@ -77,11 +101,12 @@ const TimeTracking: Component = () => {
     return (
         <div class="time-tracking">
                 <Header/>
+            <div class="teams">
                 <div class="card-module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
                         Time Trackings
                     </div>
-                    <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>Approval Tracker</div>
+                    <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>status Tracker</div>
                 </div>
             <div class="card-time">
                 <div class="nameheader">
@@ -97,25 +122,11 @@ const TimeTracking: Component = () => {
                         <TableTime onRowClicked={handleRowClick}/>
                     </div>
                     <div class="card-bar">
-                        <div style={{"margin-right":"1vw"}}>
-
-                            <progress class="progress progress-success w-50 h-7" value="100" max="100"></progress>
-                            <div style={{"font-weight": "600"}}>Transmit Request/Planning</div>
-                            <div style={{"font-weight": "600"}}>For Approval</div>
-                        </div>
-                        <div>
-                            <progress class="progress progress-success w-50 h-7" value="100" max="100"></progress>
-                            <div style={{"font-weight": "600"}}>Approval By</div>
-                            <div style={{"font-weight": "600"}}>Direktur Keuangan</div>
-                        </div>
-                        <div style={{"margin-left": "1vw"}}>
-
-                            <progress class="progress progress-success w-50 h-7" value="0" max="100"></progress>
-                            <div style={{"font-weight": "600"}}>Approval By</div>
-                            <div style={{"font-weight": "600"}}>Direktur Utama</div>
-                        </div>
+                        {showText() && <p>Klik barisan untuk melihat tracker</p>}
+                        {showSteps() && selectedRow()?.status && getStatusSteps(selectedRow()?.status)}
                     </div>
             </div>
+        </div>
         </div>
     )
 }
