@@ -4,6 +4,7 @@ import { useNavigate, A, Navigate } from '@solidjs/router';
 
 import './teams.css'
 import TableTeams from './table-teams';
+import Header from '../../header/header';
 import { Icon } from '@iconify-icon/solid';
 
 
@@ -27,6 +28,7 @@ const Admin: Component = () => {
 
     return (
         <div class="teams">
+                <Header/>
                 <div class="card-module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
                         Teams

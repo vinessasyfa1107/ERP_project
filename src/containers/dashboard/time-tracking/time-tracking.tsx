@@ -2,12 +2,14 @@ import type { Component } from 'solid-js';
 import './time-tracking.css'
 import TableTime from './table-time';
 import { Icon } from '@iconify-icon/solid';
+import Header from '../../header/header';
 
 
 
 const TimeTracking: Component = () => {
     return (
         <div class="time-tracking">
+                <Header/>
                 <div class="card-module">
                     <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
                         Time Trackings
