@@ -1,12 +1,21 @@
-import { createSignal, type Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Icon } from '@iconify-icon/solid';
 import './table-master-akun.css'
 import EditAkunMaster from './forms/edit-akun-master';
+import { dataaccountmaster } from '../../../api/master/data-account-master';
 
 const TableAkunMaster: Component = () => {
+
+  const [RowData, setRowData] = createSignal([{"id":1}]);
+
+  onMount(async () => {
+    const accountmaster = await dataaccountmaster("data account master");
+    console.log("accountread", accountmaster);
+    setRowData(accountmaster)
+  })
 
     const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
   
@@ -21,12 +30,13 @@ const TableAkunMaster: Component = () => {
       setIsEditPopupOpen (false);
     }
 
+
     const columnDefs = [
-        { field: 'nama'},
-        { field: 'email', headerName: 'Kode Akun'},
-        { field: 'akses', headerName: 'Nama COA'},
-        { field: 'posisi'},
-        { field: 'kategori'},
+        { field: 'account_name', headerName: 'Nama'},
+        { field: 'email' },
+        { field: 'access', headerName: 'Akses'},
+        { field: 'role', headerName: 'Posisi'},
+        { field: 'category', headerName: 'Kategori'},
         { field: 'aksi', cellRenderer: (params: any) => {
             return (
               <div style={{"margin-top": "8px", display:"flex", "justify-content":"space-between", width:"50px"}}>
@@ -59,7 +69,7 @@ const TableAkunMaster: Component = () => {
         <div class="ag-theme-alpine" style={{width:'142vh', height:'30vw',margin:"auto"}}>
             <AgGridSolid
                 columnDefs={columnDefs}
-                rowData={rowData}
+                rowData={RowData()}
                 defaultColDef={defaultColDef}
                 gridOptions={gridOptions}
             />

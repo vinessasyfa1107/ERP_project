@@ -130,15 +130,16 @@ const Login: Component = () => {
 
     return (
         <div id="LoginRoot" class="login-container">
-            <div class="flex flex-row gap-8 float-right mt-5 mb-20 mr-10">
-                    <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
-                    <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
+          <div class="flex flex-col">
+            <div class="flex flex-row gap-8 align-right mt-5 mb-15 mr-10 ml-auto">
+                    <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] overflow-hidden flex flex-col w-64 shrink-0 rounded-[20px]">
+                    <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)]  bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
                         <img
                         src="https://file.rendit.io/n/Q1vGwgsXbO1TkPP5ycuD.svg"
                         id="Uimcalender"
                         class="w-5 shrink-0"
                         />
-                        <div class="text-sm font-['Inter'] text-[#909090] mt-1">
+                        <div class="text-sm font-['Inter'] text-[#909090]">
                         02.10.2023 - 12:00 WIB
                         </div>
                     </div>
@@ -151,6 +152,7 @@ const Login: Component = () => {
                         <p class="p1">ERP</p>
                         <p class="p2">TUS</p>
                     </div>
+
                     <User_Login class="mt-6 w-16 mb-5"/>
                     <div class="login-content">
                         <input type="text" placeholder="Username" required
@@ -168,39 +170,11 @@ const Login: Component = () => {
                         <span class="icon-pass"><Key_Field/></span>
                         <p>Forgot Password?</p>
                     </div>
-                    <div class="text-4xl font-['Exo_2'] font-bold text-[#9f9f9f] self-end">
-                    TUS
-                    </div>
-                </div>
-                <User_Login class="mb-10 w-16"/>
-                <div class="relative flex flex-col mb-5 w-3/5">
-                    <User_Field class="w-5 h-5 absolute top-3 left-[620px]"/>
-                    <div class="border-solid border-[#131313] relative flex flex-col h-10 shrink-0 items-start pl-3 py-2 border rounded">
-                    <div class="font-['Manrope'] font-medium text-[rgba(128,_128,_128,_0.5)]">
-                        Username
-                    </div>
-                    </div>
-                </div>
-                <div class="relative flex flex-col w-3/5">
-                    <div class="font-['Manrope'] font-medium text-[rgba(128,_128,_128,_0.5)] absolute top-2 left-4 h-5 w-20">
-                    Password
-                    </div>
-                    <Key_Field class="w-5 h-5 absolute top-3 left-[620px]"/>
-                    <div class="border-solid relative h-10 shrink-0 border-black border rounded" />
-                </div>
-
-
-                <div class="text-right text-sm font-['Manrope'] font-medium text-[#6e49e9] self-end mb-5 mr-px">
-                    forget Password?
-                </div>
-                <button class="btn shadow-[0px_2px_4px_0px_rgba(0,_0,_0,_0.25)] bg-white flex flex-col justify-center h-12 shrink-0 items-center rounded" onclick={() => ActionLogin()}>
-                    <span class="text-xl font-['Manrope'] font-bold text-[#6e49e9] mx-32">
-                    Log in
-                    </span>
-                </button>
                     <div>
                         <button  onclick={() => ActionLogin1()}>Log in</button>
                     </div>
+                </div>
+            </div>
             </div>
         </div>
 
