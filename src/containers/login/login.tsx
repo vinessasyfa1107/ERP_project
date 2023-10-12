@@ -130,15 +130,16 @@ const Login: Component = () => {
 
     return (
         <div id="LoginRoot" class="login-container">
-            <div class="flex flex-row gap-8 float-right mt-5 mb-20 mr-10">
-                    <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
-                    <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
+          <div class="flex flex-col">
+            <div class="flex flex-row gap-8 align-right mt-5 mb-15 mr-10 ml-auto">
+                    <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] overflow-hidden flex flex-col w-64 shrink-0 rounded-[20px]">
+                    <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)]  bg-white flex flex-row justify-center pt-3 gap-3 h-10 shrink-0 items-start rounded-[20px]">
                         <img
                         src="https://file.rendit.io/n/Q1vGwgsXbO1TkPP5ycuD.svg"
                         id="Uimcalender"
                         class="w-5 shrink-0"
                         />
-                        <div class="text-sm font-['Inter'] text-[#909090] mt-1">
+                        <div class="text-sm font-['Inter'] text-[#909090]">
                         02.10.2023 - 12:00 WIB
                         </div>
                     </div>
@@ -173,6 +174,7 @@ const Login: Component = () => {
                         <button  onclick={() => ActionLogin1()}>Log in</button>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
 

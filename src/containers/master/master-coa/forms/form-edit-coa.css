@@ -34,7 +34,7 @@
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
-    height: 90vh;
+    height: 75vh;
     background-color: #fff;
     text-align: left;
     padding: 25px 20px;
@@ -47,6 +47,7 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 15px;
+    margin-bottom: 2vh;
 }
 
 .edit-data form .headakun button {
@@ -112,14 +113,13 @@ select {
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.edit-data .btn-add-acc button {
+.edit-data .btn-edit-coa button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
-    top: 25px;
+    transform: translate(-50%, 10%); /*Geser tombol ke tengah*/
     width: 80px;
     height: 42px;
     border-radius: 5px;

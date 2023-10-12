@@ -7,7 +7,7 @@ import './table-master-list.css'
 const TableListCOA: Component = () => {
 
     const columnDefs = [
-        { field: 'coa_kd', headerName: 'Kode Akun'},
+        { field: 'coa_kd', headerName: 'Kode Akun', minWidth: 10},
         { field: 'coa_name', headerName: 'Nama COA'},
         { field: 'kategori'}
       ];
@@ -33,6 +33,9 @@ const TableListCOA: Component = () => {
         paginationPageSize: 7,
         rowHeight: 33
       }
+
+
+
   return (
     <div>
         <div class="ag-theme-alpine" style={{width:'70vh', height:'24vw'}}>

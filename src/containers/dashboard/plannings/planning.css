@@ -6,7 +6,7 @@
 }
 
 .plan .box-1 {
-    width: 1050px;
+    width: 150vh;
     height: 687px;
     border-radius: 10px;
     background: #EFEFEF;
@@ -62,6 +62,3 @@
     border-radius: 5px;
 }
 
-.tabel-keterangan {
-    margin-left: 20px;
-}
