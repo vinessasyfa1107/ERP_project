@@ -64,26 +64,10 @@
 /*======== css untuk tutup buku ========*/
 .pemasukan-container .pemasukan-top-table .tutup-buku-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Pusat vertikal */
-    text-align: center;
-    /* Pusat horizontal */
-    background-color: #9780FA;
-    padding: 5px;
-    width: 6rem;
     height: 1.8rem;
-    border-radius: 4px;
-    gap: 5px;
-    align-self: stretch;
-    font-weight: 600;
-    margin-left: auto;
-    margin-right: -32rem;
+
 }
-.pemasukan-container .pemasukan-top-table .tutup-buku-container button {
-    font-size: 13px;
-    color: black;
-}
+
 
 
 /*======== css untuk top tabel search containernya ========*/

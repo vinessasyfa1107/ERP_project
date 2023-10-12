@@ -3,13 +3,17 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import 'ag-grid-enterprise';
+import 'ag-grid-enterprise';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
 import { createEffect, createSignal } from 'solid-js';
+import { ColDef, MenuItemDef } from 'ag-grid-enterprise';
+
+
 import Semua_laporanNavbar from '../semua_laporanNavbar';
 import './pemasukan.css';
-import { ColDef, MenuItemDef } from 'ag-grid-enterprise';
+import Tutup_buku from './tutup_buku';
+
 
 const Pemasukan: Component = () => {
   const columnDefs = [
@@ -66,7 +70,7 @@ const Pemasukan: Component = () => {
         {/* div untuk mengatur top table pada pemasukan yang terdiri dari judul tabel, search, dan sorting icon */}
         <div class="pemasukan-top-table">
           <div class="tutup-buku-container">
-            <button>+ Tutup Buku</button>
+            <Tutup_buku />
           </div>
 
           <div class="search-container">
