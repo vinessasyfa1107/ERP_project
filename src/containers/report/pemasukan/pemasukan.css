@@ -1,32 +1,11 @@
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Manrope', sans-serif;
 }
-
-@import 'ag-grid-community/styles/ag-grid.css';
-@import 'ag-grid-community/styles/ag-theme-balham.css';
-
-
-/* .ag-theme-alpine .ag-header-group-cell {
-    font-size: 12px;
-    color: black;
-}
-.ag-theme-alpine .ag-header-cell {
-    font-size: 18px;
-    color: black;
-} */
-
-.ag-theme-balham {
-    --ag-foreground-color: rgb(0, 0, 0);
-    --ag-background-color: rgb(255, 255, 255);
-    --ag-header-foreground-color: rgb(0, 0, 0);
-    /* --ag-header-background-color: rgb(194, 194, 206); */
-    --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
-    /* --ag-header-column-resize-handle-color: rgb(126, 46, 132); */
-  }
-
 
 /*======== css untuk top tabel ========*/
 .pemasukan-container {
@@ -47,7 +26,7 @@
     margin-left: 2.2rem;
 }
 
-.pemasukan-container .pemasukan-top-table {
+.pemasukan-container   .pemasukan-top-table {
     margin-top: 20px;
     display: flex;
     margin-left: 35px;
