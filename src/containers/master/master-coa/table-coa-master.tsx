@@ -8,7 +8,7 @@ import './table-coa-master.css'
 import FormTambahCOA from './forms/form-tambah-coa';
 import { datacoamaster } from '../../../api/master/data-coa-master';
 
-const TabelCOAMaster: Component = (props) => {
+const TabelCOAMaster: Component = () => {
 
     const [RowData, setRowData] = createSignal([{}]);
 
@@ -20,11 +20,15 @@ const TabelCOAMaster: Component = (props) => {
 
     const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
     const [id, setId] = createSignal(0);
+    const [balance, setBalance] = createSignal(0);
 
 
 
-    const showEditPopup = (id: number) => {
+    const showEditPopup = (id: number, balance: number) => {
+      console.log("ID yang diklik:", id);
       setId(id);
+      console.log("Balance:", balance);
+      setBalance(balance);
       setIsEditPopupOpen(!isEditPopupOpen());
     };
   
@@ -46,7 +50,7 @@ const TabelCOAMaster: Component = (props) => {
         { field: 'aksi', cellRenderer: (params: any) => {
             return (
               <div style={{"margin-top": "1vh", display:"flex", "justify-content":"space-between", width:"9vh"}}>
-                <button onClick={() => showEditPopup(params.data.id)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={() => showEditPopup(params.data.id, params.data.balance)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
                 <button><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
@@ -86,7 +90,7 @@ const TabelCOAMaster: Component = (props) => {
       <div>
       <FormTambahCOA/>
       </div>
-      {isEditPopupOpen() && (<FormEditAkun OnClose={CloseEditPopUp} dataId={id()}/>)}
+      {isEditPopupOpen() && (<FormEditAkun OnClose={CloseEditPopUp} dataId={id()} balance={balance()}/>)}
     </div>
   );
 };
