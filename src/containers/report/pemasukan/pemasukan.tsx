@@ -1,39 +1,47 @@
 import type { Component } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
-import 'ag-grid-community';
+
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import 'ag-grid-enterprise';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
-import { createEffect, createSignal } from 'solid-js';
-import Semua_laporanNavbar from '../semua_laporanNavbar';
-import './pemasukan.css';
 import { ColDef, MenuItemDef } from 'ag-grid-enterprise';
 
+
+import Semua_laporanNavbar from '../semua_laporanNavbar';
+import './pemasukan.css';
+import Tutup_buku from './tutup_buku';
+
+
 const Pemasukan: Component = () => {
+
+  const agLinkCellRenderer = (params: any) => {
+    const bukti = params.data.bukti;
+    const link = `https://example.com/city/${bukti}`;
+
+    return (
+      <a href={link} target="_blank" rel="noopener noreferrer" style={{ "text-decoration": "underline", color: "blue" }}>
+        {bukti}
+      </a>
+    );
+  };
+
   const columnDefs = [
     { headerName: 'ID', field: 'id' },
     { headerName: 'ID Pengajuan', field: 'id_pengajuan' },
     { headerName: 'Jumlah', field: 'jumlah' },
     { headerName: 'Tanggal', field: 'tanggal' },
     { headerName: 'Keterangan', field: 'keterangan' },
-    { headerName: 'Bukti', field: 'bukti', cellRenderer: 'agLinkCellRenderer' },
-    { headerName: 'Tags', field: 'tags' }
+    { headerName: 'Bukti', field: 'bukti', cellRenderer: agLinkCellRenderer },
+    {
+      headerName: 'Tags',
+      field: 'tags',
+      filter: 'agSetColumnFilter',
+      filterParams: {
+        values: [] // Nilai-nilai unik akan diisi secara otomatis 
+      }
+    }
   ];
-
-  const frameworkComponents = {
-    agLinkCellRenderer: (params: any) => {
-      const bukti = params.data.bukti;
-      const link = `https://example.com/city/${bukti}`;
-
-      return (
-        <a href={link} target="_blank" rel="noopener noreferrer" style={{ "text-decoration": "underline", color: "blue" }}>
-          {bukti}
-        </a>
-      );
-    },
-  };
 
   const rowData = [
     {
@@ -42,7 +50,7 @@ const Pemasukan: Component = () => {
       "jumlah": 2000000,
       "tanggal": '10/12/22',
       "keterangan": "Lorem Ipsum Dolor Sit Amet",
-      bukti: "https://www.google.com/",
+      "bukti": "evidance.jpg",
       "tags": "VIP"
     },
   ];
@@ -56,7 +64,7 @@ const Pemasukan: Component = () => {
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
-    frameworkComponents, // Tambahkan frameworkComponents ke dalam gridOptions
+    // frameworkComponents, // Tambahkan frameworkComponents ke dalam gridOptions
   };
 
   return (
@@ -66,7 +74,7 @@ const Pemasukan: Component = () => {
         {/* div untuk mengatur top table pada pemasukan yang terdiri dari judul tabel, search, dan sorting icon */}
         <div class="pemasukan-top-table">
           <div class="tutup-buku-container">
-            <button>+ Tutup Buku</button>
+            <Tutup_buku />
           </div>
 
           <div class="search-container">
