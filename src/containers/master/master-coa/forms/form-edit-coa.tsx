@@ -7,6 +7,8 @@ import './form-edit-coa.css'
 interface FormEditAkunProps {
     OnClose: () => void;
     dataId: number;
+    balance: number; // Tambahkan properti balance
+
 }
 
 const FormEditAkun: Component<FormEditAkunProps> = (props) => {
@@ -49,13 +51,14 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
     const saveChanges = async () => {
         try {
             const dataToSend = {
+                id: idValue,
                 coa_kd: coa_kd(),
                 coa_name: coa_name(),
                 category: category(),
-                id: id() // Mengirim ID data yang akan diubah
+                balance: props.balance,
             };
     
-            const response = await fetch(`/api/coa/${id()}`, { // Menggunakan endpoint dengan ID
+            const response = await fetch(`/api/coa/update`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +70,7 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
                 // Data berhasil diubah, tampilkan alert
                 alert('Data berhasil diubah');
             } else {
-                // Gagal mengubah data, tampilkan alert dengan pesan kesalahan
+                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
                 const errorMessage = await response.text();
                 alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
                 console.error('Gagal mengubah data:', errorMessage);
@@ -78,6 +81,7 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
             console.error('Terjadi kesalahan:', error);
         }
     };
+    
     
 
     // onMount(async () => {
