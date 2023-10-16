@@ -16,14 +16,14 @@ const Pengeluaran_semualap: Component = () => {
 
     const columnDefs = [
         { headerName: 'Tanggal', field: 'tanggal' },
-        { headerName: 'Deskripsi', field: 'deskripsi' },
+        { headerName: 'Keterangan', field: 'keterangan' },
         { headerName: 'Jumlah', field: 'jumlah' }
     ];
 
     const rowData = [
         {
             "tanggal": '10/12/22',
-            "deskripsi": "Lorem Ipsum Dolor Sit Amet",
+            "keterangan": "Lorem Ipsum Dolor Sit Amet",
             "jumlah": 2000000
         }
     ];

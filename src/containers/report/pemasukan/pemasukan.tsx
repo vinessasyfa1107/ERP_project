@@ -72,6 +72,8 @@ const Pemasukan: Component = () => {
 const columnDefs = [
   { headerName: 'ID', field: 'id' },
   { headerName: 'ID Pengajuan', field: 'id_pengajuan' },
+  { headerName: 'Faktur', field: 'faktur' },
+  { headerName: 'COA', field: 'COA' },
   { headerName: 'Jumlah', field: 'jumlah' },
   { headerName: 'Tanggal', field: 'tanggal' },
   { headerName: 'Keterangan', field: 'keterangan' },
@@ -92,6 +94,8 @@ const rowData = [
   {
     "id": 1,
     "id_pengajuan": 123,
+    "faktur": "KM20231016",
+    "COA": "1-1000",
     "jumlah": 2000000,
     "tanggal": '10/12/22',
     "keterangan": "Lorem Ipsum Dolor Sit Amet",
@@ -101,6 +105,8 @@ const rowData = [
   {
     "id": 2,
     "id_pengajuan": 123,
+    "faktur": "KM20231016",
+    "COA": "1-1000",
     "jumlah": 2000000,
     "tanggal": '10/12/22',
     "keterangan": "Lorem Ipsum Dolor Sit Amet",
@@ -110,6 +116,8 @@ const rowData = [
   {
     "id": 3,
     "id_pengajuan": 123,
+    "faktur": "KM20231016",
+    "COA": "1-1000",
     "jumlah": 2000000,
     "tanggal": '10/12/22',
     "keterangan": "Lorem Ipsum Dolor Sit Amet",
@@ -119,6 +127,8 @@ const rowData = [
   {
     "id": 4,
     "id_pengajuan": 123,
+    "faktur": "KM20231016",
+    "COA": "1-1000",
     "jumlah": 2000000,
     "tanggal": '10/12/22',
     "keterangan": "Lorem Ipsum Dolor Sit Amet",
@@ -128,6 +138,8 @@ const rowData = [
   {
     "id": 5,
     "id_pengajuan": 123,
+    "faktur": "KM20231016",
+    "COA": "1-1000",
     "jumlah": 2000000,
     "tanggal": '10/12/22',
     "keterangan": "Lorem Ipsum Dolor Sit Amet",
