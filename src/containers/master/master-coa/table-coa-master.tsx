@@ -7,6 +7,7 @@ import FormEditAkun from './forms/form-edit-coa';
 import './table-coa-master.css'
 import FormTambahCOA from './forms/form-tambah-coa';
 import { datacoamaster } from '../../../api/master/data-coa-master';
+import ConfirmPopUP from './pop-up/confirm-pop-up';
 
 const TabelCOAMaster: Component = () => {
 
@@ -18,28 +19,32 @@ const TabelCOAMaster: Component = () => {
       setRowData(data_coa)
     })
 
-    const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
+    const [isEditPopup1Open, setisEditPopup1Open] = createSignal(false);
     const [id, setId] = createSignal(0);
     const [balance, setBalance] = createSignal(0);
 
 
-
-    const showEditPopup = (id: number, balance: number) => {
+    const showEditPopup1 = (id: number, balance: number) => {
       console.log("ID yang diklik:", id);
       setId(id);
       console.log("Balance:", balance);
       setBalance(balance);
-      setIsEditPopupOpen(!isEditPopupOpen());
+      setisEditPopup1Open(!isEditPopup1Open());
     };
   
     function CloseEditPopUp () {
-      setIsEditPopupOpen (false);
+      setisEditPopup1Open (false);
+      setConfirmPopUp (false);
     }
-  
 
+    const [ConfirmPopUp, setConfirmPopUp] = createSignal(false);
 
-    const [editedData, setEditedData] = createSignal(null);
-  
+    const showEditPopup2 = (id: number) => {
+      console.log("ID yang diklik:", id);
+      setId(id);
+      setConfirmPopUp(!ConfirmPopUp());
+    };
+
 
 
     const columnDefs = [
@@ -50,8 +55,8 @@ const TabelCOAMaster: Component = () => {
         { field: 'aksi', cellRenderer: (params: any) => {
             return (
               <div style={{"margin-top": "1vh", display:"flex", "justify-content":"space-between", width:"9vh"}}>
-                <button onClick={() => showEditPopup(params.data.id, params.data.balance)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                <button onClick={() => showEditPopup1(params.data.id, params.data.balance)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={() => showEditPopup2(params.data.id)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
           }}
@@ -90,7 +95,8 @@ const TabelCOAMaster: Component = () => {
       <div>
       <FormTambahCOA/>
       </div>
-      {isEditPopupOpen() && (<FormEditAkun OnClose={CloseEditPopUp} dataId={id()} balance={balance()}/>)}
+      {isEditPopup1Open() && (<FormEditAkun OnClose={CloseEditPopUp} dataId={id()} balance={balance()}/>)}
+      {ConfirmPopUp() && (<ConfirmPopUP OnClose={CloseEditPopUp} dataId={id()}/>)}
     </div>
   );
 };
