@@ -69,6 +69,7 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
             if (response.ok) {
                 // Data berhasil diubah, tampilkan alert
                 alert('Data berhasil diubah');
+                props.OnClose();
             } else {
                 // Gagal mengubah data, tampilkan pesan kesalahan dari respons
                 const errorMessage = await response.text();
