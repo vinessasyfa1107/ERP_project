@@ -6,6 +6,7 @@ import { Icon } from '@iconify-icon/solid';
 import './table-master-akun.css'
 import EditAkunMaster from './forms/edit-akun-master';
 import { dataaccountmaster } from '../../../api/master/data-account-master';
+import ConfirmDeleteAkun from './pop-up/confirm-delete-akun';
 
 const TableAkunMaster: Component = () => {
 
@@ -22,12 +23,25 @@ const TableAkunMaster: Component = () => {
     const [editedData, setEditedData] = createSignal(null);
   
     const showEditPopup = (rowData: any) => {
+      console.log("ID yang diklik:", id);
+      setId(id);
       setEditedData(rowData);
       setIsEditPopupOpen(!isEditPopupOpen());
     };
   
-    function CloseEditPopUp () {
+    function ClosePopUp () {
       setIsEditPopupOpen (false);
+      setDeletePopUp (false);
+    }
+
+    const [DeletePopUp, setDeletePopUp] = createSignal(false);
+
+    const [id, setId] = createSignal(0);
+
+    const handleDeletePopUp = (id: number) => {
+      console.log("ID yang diklik:", id);
+      setId(id);
+      setDeletePopUp(!DeletePopUp());
     }
 
     
@@ -42,7 +56,7 @@ const TableAkunMaster: Component = () => {
             return (
               <div style={{"margin-top": "8px", display:"flex", "justify-content":"space-between", width:"50px"}}>
                 <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                <button onClick={() => handleDeletePopUp(params.data.id)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
           }}
@@ -74,8 +88,9 @@ const TableAkunMaster: Component = () => {
                 defaultColDef={defaultColDef}
                 gridOptions={gridOptions}
             />
-      </div>
-      {isEditPopupOpen() && (<EditAkunMaster OnClose={CloseEditPopUp}/>)}
+        </div>
+      {isEditPopupOpen() && (<EditAkunMaster dataId={id()} OnClose={ClosePopUp}/>)}
+      {DeletePopUp() && (<ConfirmDeleteAkun dataId={id()} OnClose={ClosePopUp}/>)}
     </div>
   );
 };
