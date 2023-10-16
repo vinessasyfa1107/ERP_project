@@ -1,16 +1,12 @@
-.btn-tutup-buku {
-    margin-left: 30rem;
-
-}
-
-.btn-tutup-buku button {
-    align-items: center;
-    text-align: center;
+.btn-tutup-buku .btn {
+    /* align-items: center;
+    text-align: center; */
+    position: relative;
     background-color: #9780FA;
     padding: 5px;
     width: 6.2rem;
     border-radius: 6px;
-    font-weight: 600;
+    font-weight: 550;
     float: right;
     text-transform: capitalize;
     color: black;
