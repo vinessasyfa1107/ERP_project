@@ -30,6 +30,7 @@ const TableAkunMaster: Component = () => {
       setIsEditPopupOpen (false);
     }
 
+    
 
     const columnDefs = [
         { field: 'account_name', headerName: 'Nama'},
@@ -66,7 +67,7 @@ const TableAkunMaster: Component = () => {
       }
   return (
     <div>
-        <div class="ag-theme-alpine" style={{width:'142vh', height:'30vw',margin:"auto"}}>
+        <div class="ag-theme-alpine" style={{width:'141vh', height:'30vw',margin:"auto"}}>
             <AgGridSolid
                 columnDefs={columnDefs}
                 rowData={RowData()}

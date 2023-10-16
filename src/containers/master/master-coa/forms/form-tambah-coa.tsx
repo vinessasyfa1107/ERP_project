@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './form-tambah-coa.css'
 
@@ -9,6 +9,42 @@ const FormTambahCOA: Component = () => {
         modal.close();
     };
 
+    const [formData, setFormData] = createSignal({
+        id: 0,
+        coa_kd: '',
+        coa_name: '',
+        category: '',
+        balance: 0,
+      });
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const response = await fetch('/api/coa/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData()),
+        });
+    
+        if (response.ok) {
+          console.log('Data berhasil diinput'); // Tampilkan pesan sukses
+          alert('Data berhasil ditambah');
+          // Reset form
+          setFormData({
+            id: 0,
+            coa_kd: '',
+            coa_name: '',
+            category: '',
+            balance: 0,
+          });
+        } else {
+            const errorMessage = await response.text();
+            alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+            console.error('Gagal mengubah data:', errorMessage);
+        }
+      };
 
     return (
         <div class="form-coa">
@@ -25,37 +61,39 @@ const FormTambahCOA: Component = () => {
                         </div>
 
                         <div class="isian-form">
-
-                        <p>
-                                <label>ID*</label>
-                                <br />
-                                <input type="text" required />
-                            </p>
-
                          
                             <p>
                                 <label>Kode Akun*</label>
                                 <br />
-                                <input type="text" required />
+                                <input type="text" required 
+                                value={formData().coa_kd} 
+                                onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
+                                />
                             </p>
 
                             <p>
                                 <label>Nama COA*</label>
                                 <br />
-                                <input type="text" required />
+                                <input type="text" required
+                                value={formData().coa_name} 
+                                onInput={(e) => setFormData({ ...formData(), coa_name: e.target.value })} 
+                                />
                             </p>
 
                             <p>
                                 <label>Kategori*</label>
                                 <br />
-                                <input type="text" required />
+                                <input type="text" required 
+                                value={formData().category} 
+                                onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
+                                />
                             </p>
                 
                         </div>
 
                         <br />
                         <div class="btn-kirim">
-                            <button><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={handleSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>

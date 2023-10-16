@@ -36,8 +36,9 @@
     width: 85vh;
     height: 90vh;
     background-color: #fff;
-    text-align: left;
     padding: 25px 20px;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
@@ -67,6 +68,13 @@
     font-size: 18px;
 }
 
+.edit-acc-master .isi-form {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
 .edit-acc-master form .headakun span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
@@ -89,10 +97,9 @@
 .edit-acc-master .isi-form input,
 select {
     /*untuk kotak teks input*/
-    width: 29rem;
     background-color: #FFFFFF;
     border: none;
-    width: 29rem;
+    width: 78vh;
     height: 35px;
     margin-top: 2px;
     margin-bottom: 20px;
