@@ -10,7 +10,7 @@ export async function api_grafik_keuangan(query: string) {
     if (query.trim() === "") return [];
     // /?q=${encodeURI(query)}
     
-             
+
     const response = await fetch(
         'http://localhost:3000/json/keuangan/keuangan.json'
     );

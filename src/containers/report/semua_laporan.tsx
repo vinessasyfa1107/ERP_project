@@ -42,7 +42,7 @@ const Semua_laporan: Component = () => {
         <p>Semua <span>Laporan</span></p>
 
         {/* div untuk table pemasukan dan pengeluaran */}
-        <div class="inex-semualap-container" style={{"display":"flex", "justify-content":"space-between"}}>
+        <div class="inex-semualap-container" style={{ "display": "flex", "justify-content": "space-between" }}>
           {/* div untuk tabel pemasukan pada semua laporan */}
           <div class="pemasukan-semualap-container">
             <Pemasukan_semualap />
@@ -54,7 +54,7 @@ const Semua_laporan: Component = () => {
           </div>
         </div>
 
-        <div class="kas-besar-semualap-container" style={{"margin-top":"-4.5rem", "margin-bottom":"5rem"}}>
+        <div class="kas-besar-semualap-container" style={{ "margin-top": "-4.5rem", "margin-bottom": "5rem" }}>
           <KasBesar_semualap />
         </div>
 

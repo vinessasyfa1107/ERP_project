@@ -69,14 +69,14 @@ const Header: Component = () => {
                 </A>
             </div>
             <div class="selection">
-                <A href='/dashboard/accounting' classList={{ active: location.pathname === '/dashboard/accounting' }}>
+                <A href='/dashboard/keuangan_dashboard' classList={{ active: location.pathname === '/dashboard/keuangan_dashboard' }}>
                     <div class="menu-selection">                
                         <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 32 24" fill="none">
                             <path d="M9 11H21.375V13H9V11ZM9 16H23.625V18H9V16Z" fill="#8A8A8B"/>
                             <path d="M29.75 2V1.5H29.25H2.25H1.75V2V4V4.5H2.25H15.75H29.25H29.75V4V2ZM0.991192 23.0405L0.662789 23.41L0.991191 23.0405C0.668216 22.7534 0.5 22.3775 0.5 22V2C0.5 1.62245 0.668216 1.24658 0.991192 0.959491C1.31609 0.670697 1.7681 0.5 2.25 0.5H29.25C29.7319 0.5 30.1839 0.670697 30.5088 0.95949C30.8318 1.24658 31 1.62245 31 2V22C31 22.3775 30.8318 22.7534 30.5088 23.0405C30.1839 23.3293 29.7319 23.5 29.25 23.5H2.25C1.7681 23.5 1.31609 23.3293 0.991192 23.0405ZM1.75 22V22.5H2.25H29.25H29.75V22V6V5.5H29.25H2.25H1.75V6V22Z" fill="#8A8A8B" />
                         </svg>
                     <div class="name-selection" style={{"margin-left":"-1.2vw"}}>
-                            Accounting
+                            Keuangan
                         </div>
                     </div>
                 </A>

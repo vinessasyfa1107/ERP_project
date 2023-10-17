@@ -10,7 +10,7 @@ const Admin = lazy(() => import('../containers/dashboard/teams/teams'));
 const Login = lazy(() => import('../containers/login/login'));
 const Planning = lazy(() => import('../containers/dashboard/plannings/planning'));
 const TimeTracking = lazy(() => import('../containers/dashboard/time-tracking/time-tracking'));
-const Accounting = lazy(() => import('../containers/dashboard/accounting/accounting'));
+const Keuangan_dashboard = lazy(() => import('../containers/dashboard/accounting/keuangan_dashboard'));
 const Report = lazy(() => import('../containers/dashboard/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 const Header = lazy(() => import('../containers/header/header'));
@@ -43,8 +43,8 @@ const RouteData: Component = () => {
                 <Route path="/admin" component={Admin} />
                 <Route path="/planning" component={Planning} />
                 <Route path="/time-tracking" component={TimeTracking} />
-                <Route path="/accounting" component={Accounting} />
                 <Route path="/report" component={Report} />
+                <Route path="/keuangan_dashboard" component={Keuangan_dashboard} />
                 <Route path="/header" component={Header} />
             </Route>
 
