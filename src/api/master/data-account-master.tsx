@@ -22,7 +22,7 @@ export async function dataaccountmaster(query: string) {
     // console.log("response ", results)
     const documents = results as resultpengeluaran[];
     console.log(documents);
-    return documents.slice(0, 10).map(({ id, account_name, email, access, role, category  }) => ({
+    return documents.slice(0, documents.length).map(({ id, account_name, email, access, role, category  }) => ({
         id, account_name, email, access, role, category
       }));
   }

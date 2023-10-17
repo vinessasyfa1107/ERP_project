@@ -7,6 +7,7 @@ import './table-master-akun.css'
 import EditAkunMaster from './forms/edit-akun-master';
 import { dataaccountmaster } from '../../../api/master/data-account-master';
 import ConfirmDeleteAkun from './pop-up/confirm-delete-akun';
+import TambahAkunMaster from './forms/tambah-akun-master';
 
 const TableAkunMaster: Component = () => {
 
@@ -81,13 +82,16 @@ const TableAkunMaster: Component = () => {
       }
   return (
     <div>
-        <div class="ag-theme-alpine" style={{width:'141vh', height:'30vw',margin:"auto"}}>
+        <div class="ag-theme-alpine" style={{width:'141vh', height:'32vw',margin:"auto"}}>
             <AgGridSolid
                 columnDefs={columnDefs}
                 rowData={RowData()}
                 defaultColDef={defaultColDef}
                 gridOptions={gridOptions}
             />
+        </div>
+        <div>
+        <TambahAkunMaster/>
         </div>
       {isEditPopupOpen() && (<EditAkunMaster dataId={id()} OnClose={ClosePopUp}/>)}
       {DeletePopUp() && (<ConfirmDeleteAkun dataId={id()} OnClose={ClosePopUp}/>)}

@@ -30,17 +30,20 @@ const ConfirmPopUP: Component<ConfirmPopUpProps> = (props) => {
     };
 
    return (
-    <div class="confirm-delete">
-        <div class="confirm-card">
-            <div>
-                Apa anda yakin mau menghapus data?
-            </div>
-            <div style={{display:'flex', width:'25vh', "justify-content":"space-between", margin:'auto'}}>
-                <button onClick={handleDelete}>Ya</button>
-                <button class="tidak" onClick={props.OnClose}>Tidak</button>
-            </div>
-        </div>
+    <div class="overlay">
+      <div class="confirm-delete">
+          <div class="confirm-card">
+              <div>
+                  Apa anda yakin mau menghapus data?
+              </div>
+              <div style={{display:'flex', width:'25vh', "justify-content":"space-between", margin:'auto'}}>
+                  <button onClick={handleDelete}>Ya</button>
+                  <button class="tidak" onClick={props.OnClose}>Tidak</button>
+              </div>
+          </div>
+      </div>
     </div>
+
   );
 };
 

@@ -20,6 +20,7 @@ const ConfirmDeleteAkun: Component<ConfirmDeleteAkunProps> = (props) => {
       if (response.ok) {
         console.log('Data berhasil dihapus');
         alert('Data berhasil dihapus');
+        window.location.reload();
         props.OnClose();
       } else {
         const errorMessage = await response.text();
@@ -29,16 +30,18 @@ const ConfirmDeleteAkun: Component<ConfirmDeleteAkunProps> = (props) => {
     };
 
    return (
-    <div class="confirm-delete-acc">
-        <div class="confirm-card">
-            <div>
-                Apa anda yakin mau menghapus data?
-            </div>
-            <div style={{display:'flex', width:'25vh', "justify-content":"space-between", margin:'auto'}}>
-                <button onClick={handleDelete}>Ya</button>
-                <button class="tidak" onClick={props.OnClose}>Tidak</button>
-            </div>
-        </div>
+    <div class="overlay">
+      <div class="confirm-delete-acc">
+          <div class="confirm-card">
+              <div>
+                  Apa anda yakin mau menghapus data?
+              </div>
+              <div style={{display:'flex', width:'25vh', "justify-content":"space-between", margin:'auto'}}>
+                  <button onClick={handleDelete}>Ya</button>
+                  <button class="tidak" onClick={props.OnClose}>Tidak</button>
+              </div>
+          </div>
+      </div>
     </div>
   );
 };
