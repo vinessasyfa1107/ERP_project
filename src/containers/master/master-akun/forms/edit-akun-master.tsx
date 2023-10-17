@@ -71,8 +71,8 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
     };
 
     return (
-        <div class="edit-acc-master">
-         
+        <div class="overlay">
+            <div class="edit-acc-master">
                 <div class="edit-form">
                     <form method="dialog">
                         <div class="headakun">
@@ -83,7 +83,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                         <div class="isi-form">
 
                             <p>
-                                <label>Username*</label>
+                                <label>Nama*</label>
                                 <br />
                                 <input type="text" required />
                             </p>
@@ -107,12 +107,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                                 <input type="text" required />
                             </p>
 
-                            <p>
-                                <label>Password*</label>
-                                <br />
-                                <input type="text" required />
-                            </p>
-                
+        
                         </div>
 
                         <br />
@@ -121,7 +116,9 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                         </div>
                     </form>
                 </div>
+            </div>
         </div>
+
     );
 };
 

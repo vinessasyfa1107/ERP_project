@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { onCleanup, type Component, createSignal } from 'solid-js';
 import './form-confirm.css'
 import { Icon } from '@iconify-icon/solid';
 
@@ -7,8 +7,19 @@ interface EditPopUpProps {
 }
 
 const FormConfirm: Component<EditPopUpProps> = (props) => {
+    const [inputFile, setInputFile] = createSignal(null);
+
+    const handleFileInputChange = () => {
+      if (inputFile() && inputFile()!.files.length > 0) {
+        console.log("File yang dipilih:", inputFile()!.files[0].name);
+      }
+    };
+  
+    onCleanup(() => {
+      setInputFile(null);
+    });
   return (
-    <div>
+    <div class="overlay">
         <div class="form-confirm">
          
          <div class="modal-form">
@@ -45,7 +56,15 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
                             </div>
                             <div class="container-2">
                                 <p>Pilih file dengan format .png atau .jpg ke dalam form atau tarik & lepas file tersebut.</p>
-                                <button class="btn-upload"><Icon icon="ic:baseline-folder" color="white" width="30" height="30" /></button>
+                                <label for="file-upload"><Icon icon="ic:baseline-folder" color="white" width="30" height="30" /></label>
+                                <input
+                                    type="file"
+                                    id="file-upload"
+                                    accept=".png, .jpg"
+                                    style="display: none"
+                                    onChange={handleFileInputChange}
+                                    ref={inputFile}
+                                />
                             </div>
                         </div>
                     </div>

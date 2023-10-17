@@ -1,5 +1,5 @@
 /*css untuk button tambah akun*/
-.tambah-acc-master {
+/* .tambah-acc-master {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -12,9 +12,14 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
     background-color: #fff;
+} */
+
+.tambah-acc-master {
+    margin: 0;
+    padding: 0;
 }
 
-/* 
+
 .tambah-acc-master .btn-tambah-akun button {
     width: 76px;
     height: 25px;
@@ -22,12 +27,10 @@
     margin-top: 15px;
     align-items: center;
     justify-content: center;
-    background-color: #4E558D;
+    background-color: #8467FFCC;
     color: white;
     float: right;
-    margin-right: 8px;
-    position: relative;
-} */
+}
 
 /*css untuk tabel form popup*/
 .tambah-acc-master .tambah-form {
@@ -101,8 +104,7 @@ select {
     border: none;
     width: 78vh;
     height: 35px;
-    margin-top: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 12px 10px;
     border-radius: 5px;
     background: #F8F8F9;
@@ -126,7 +128,7 @@ select {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
-    top: 25px;
+    top: 13px;
     width: 80px;
     height: 42px;
     border-radius: 5px;
@@ -135,6 +137,78 @@ select {
 .tambah-acc-master .modal-box label {
     text-align: left;
 }
+
+.tambah-acc-master .options {
+    /*untuk mengatur teks label*/
+    color: #000000;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tambah-acc-master .options select {
+    /*untuk kotak teks input*/
+    padding: 0 5px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+    width: 37vh;
+    height: 2rem;
+}
+
+/* .tambah-acc-master .options input {
+    background-color: #FFFFFF;
+    border: 1px solid black;
+    width: 13rem;
+    height: 2rem;
+    border-radius: 5px;
+} */
+
+.tambah-acc-master .options .drop-posisi {
+    margin-top: 2px ;
+    padding: 3px 10px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    width: 37vh;
+    height: 2rem;
+    justify-content: left;
+    display: inline-flex;
+}
+
+.tambah-acc-master .options .dropdown-content {
+    width: 37vh;
+    height: 8rem;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.tambah-acc-master .options .posisi-opsi {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 6vh;
+}
+
+.tambah-acc-master .options .posisi-opsi label{
+    font-weight: normal;
+}
+
+
+.tambah-acc-master .posisi-opsi input{
+    padding: 0;
+    margin-top: 10px;
+    width: 1rem;
+    height: 1rem;
+    box-shadow: none;
+
+}
+
 /* 
 .container-bukti {
     display: flex;
