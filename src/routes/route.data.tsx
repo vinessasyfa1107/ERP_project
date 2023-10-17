@@ -1,4 +1,5 @@
 import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/router';
+import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
 
 const getPath = ({ navigate, location }) => {
@@ -11,6 +12,7 @@ const Login = lazy(() => import('../containers/login/login'));
 const Planning = lazy(() => import('../containers/dashboard/plannings/planning'));
 const TimeTracking = lazy(() => import('../containers/dashboard/time-tracking/time-tracking'));
 const Accounting = lazy(() => import('../containers/dashboard/accounting/accounting'));
+const ArusKas = lazy(() => import('../containers/dashboard/arus-kas/arus-kas'));
 const Report = lazy(() => import('../containers/dashboard/report/report'));
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 const Header = lazy(() => import('../containers/header/header'));
@@ -46,6 +48,7 @@ const RouteData: Component = () => {
                 <Route path="/accounting" component={Accounting} />
                 <Route path="/report" component={Report} />
                 <Route path="/header" component={Header} />
+                <Route path="/arus-kas" component={ArusKas} />
             </Route>
 
             <Route path="/master">

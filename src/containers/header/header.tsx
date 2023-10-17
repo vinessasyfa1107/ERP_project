@@ -11,7 +11,7 @@ const Header: Component = () => {
 
     return (
         <div class="header">
-            <div class="top-master-btn">
+            <div class="selection">
                 <A href='/dashboard/report' classList={{ active: location.pathname === '/dashboard/report' }}>
                     <div class="menu-selection">
                         <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" width="44" height="45" viewBox="0 0 24 24" fill="none" stroke="#8A8A8B">
