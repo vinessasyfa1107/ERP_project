@@ -1,5 +1,5 @@
 /*css untuk button tambah akun*/
-.edit-data {
+/* .tambah-acc-master {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -12,45 +12,48 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
     background-color: #fff;
+} */
+
+.tambah-acc-master {
+    margin: 0;
+    padding: 0;
 }
 
-/* 
-.edit-data .btn-tambah-akun button {
+
+.tambah-acc-master .btn-tambah-akun button {
     width: 76px;
     height: 25px;
     border-radius: 4px;
     margin-top: 15px;
     align-items: center;
     justify-content: center;
-    background-color: #4E558D;
+    background-color: #8467FFCC;
     color: white;
     float: right;
-    margin-right: 8px;
-    position: relative;
-} */
+}
 
 /*css untuk tabel form popup*/
-.edit-data .edit-form {
+.tambah-acc-master .tambah-form {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
-    height: 75vh;
+    height: 90vh;
     background-color: #fff;
-    text-align: left;
     padding: 25px 20px;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 
-.edit-data form .headakun {
+.tambah-acc-master form .headakun {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 15px;
-    margin-bottom: 2vh;
 }
 
-.edit-data form .headakun button {
+.tambah-acc-master form .headakun button {
     /*untuk mengatur button x saja*/
     background-color: #AE0000;
     color: #FFFFFF;
@@ -61,42 +64,47 @@
     float: right;
 }
 
-.edit-data form .headakun h2 {
+.tambah-acc-master form .headakun h2 {
     /*untuk mengatur judul form*/
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
 
-.edit-data form .headakun span {
+.tambah-acc-master .isi-form {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.tambah-acc-master form .headakun span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
 }
 
 /*css untuk isian form*/
-/* .edit-data .isi-form p {
+/* .tambah-acc-master .isi-form p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
 } */
 
-.edit-data .isi-form label {
+.tambah-acc-master .isi-form label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
 
-.edit-data .isi-form input,
+.tambah-acc-master .isi-form input,
 select {
     /*untuk kotak teks input*/
-    width: 29rem;
     background-color: #FFFFFF;
     border: none;
-    width: 29rem;
+    width: 78vh;
     height: 35px;
-    margin-top: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 12px 10px;
     border-radius: 5px;
     background: #F8F8F9;
@@ -107,28 +115,101 @@ select {
 
 
 /*css untuk button add-acc*/
-.edit-data .btn-add-acc {
+.tambah-acc-master .btn-add-acc {
     position: relative; /* Buat parent relative untuk tombol */
     width: 100%; /* Atur lebar sesuai kebutuhan */
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.edit-data .btn-edit-coa button {
+.tambah-acc-master .btn-add-acc button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 10%); /*Geser tombol ke tengah*/
+    transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
+    top: 13px;
     width: 80px;
     height: 42px;
     border-radius: 5px;
 }
 
-/* .edit-data .modal-box label {
+.tambah-acc-master .modal-box label {
     text-align: left;
 }
 
+.tambah-acc-master .options {
+    /*untuk mengatur teks label*/
+    color: #000000;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tambah-acc-master .options select {
+    /*untuk kotak teks input*/
+    padding: 0 5px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+    width: 37vh;
+    height: 2rem;
+}
+
+/* .tambah-acc-master .options input {
+    background-color: #FFFFFF;
+    border: 1px solid black;
+    width: 13rem;
+    height: 2rem;
+    border-radius: 5px;
+} */
+
+.tambah-acc-master .options .drop-posisi {
+    margin-top: 2px ;
+    padding: 3px 10px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    width: 37vh;
+    height: 2rem;
+    justify-content: left;
+    display: inline-flex;
+}
+
+.tambah-acc-master .options .dropdown-content {
+    width: 37vh;
+    height: 8rem;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+.tambah-acc-master .options .posisi-opsi {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 6vh;
+}
+
+.tambah-acc-master .options .posisi-opsi label{
+    font-weight: normal;
+}
+
+
+.tambah-acc-master .posisi-opsi input{
+    padding: 0;
+    margin-top: 10px;
+    width: 1rem;
+    height: 1rem;
+    box-shadow: none;
+
+}
+
+/* 
 .container-bukti {
     display: flex;
     flex-direction: row;
@@ -174,13 +255,3 @@ select {
     color: #FFF;
     margin-top: 11px;
 } */
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3); /* Warna latar belakang semi-transparan */
-    z-index: 2; /* Z-index lebih tinggi dari form popup */
-}

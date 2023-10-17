@@ -106,6 +106,9 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
     // });
 
     return (
+        <div class="overlay">
+
+
         <div class="edit-data">
          
                 <div class="edit-form">
@@ -159,6 +162,7 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
                         </div>
                     </form>
                 </div>
+        </div>
         </div>
     );
 };
