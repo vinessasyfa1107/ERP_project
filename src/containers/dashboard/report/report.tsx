@@ -32,7 +32,7 @@ const Report: Component = () => {
                 <ReportNavbar />
             </div> */}
 
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "255vh", "width": "160vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
+            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "160vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
                 {/* div untuk barchart container */}
                 <div class="barchartReport-container">
                     <div class="top-table">

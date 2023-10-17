@@ -21,10 +21,14 @@
     /*untuk mengatur radius pop up form*/
     border-radius: 20px;
     width: 85vh;
-    height: 90vh;
+    height: 71vh;
     background-color: #fff;
     text-align: left;
     padding: 25px 20px;
+}
+
+.modal-form-coa .isian-form {
+    justify-content: center;
 }
 
 .form-coa form .headrencana {
@@ -56,6 +60,10 @@
 .form-coa form .headrencana span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
+}
+
+.form-coa .isian-form {
+    margin-top: 7px;
 }
 
 /*css untuk isian form*/
@@ -133,7 +141,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    top: 30px;
+    top: 10px;
     transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
     width: 80px;
     height: 42px;

@@ -1,3 +1,5 @@
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +9,7 @@
 
 /*======== css untuk top tabel ========*/
 .pengeluaran-container {
-    background-color: #F8F8F8;
+    background-color: #EFEFEF;
     width: 150vh;
     height: 128vh;
     border-radius: 6px;
@@ -31,36 +33,14 @@
     margin-right: 35px;
 }
 
-.pengeluaran-container .pengeluaran-top-table .pemasukan-title p {
-    font-size: 18px;
-    color: #414141;
-    font-weight: 700;
-    margin-left: 4px;
-}
-
 /*======== css untuk tutup buku ========*/
 .pengeluaran-container .pengeluaran-top-table .tutup-buku-container {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Pusat vertikal */
-    text-align: center;
-    /* Pusat horizontal */
-    background-color: #9780FA;
-    padding: 5px;
-    width: 6rem;
-    height: 1.8rem;
-    border-radius: 4px;
-    gap: 5px;
-    align-self: stretch;
-    font-weight: 600;
     margin-left: auto;
-    margin-right: -32rem;
+    margin-right: -33rem;
 }
-.pengeluaran-container .pengeluaran-top-table .tutup-buku-container button {
-    font-size: 13px;
-    color: black;
-}
+
 
 
 /*======== css untuk top tabel search containernya ========*/
@@ -92,14 +72,13 @@
 .pengeluaran-container .pengeluaran-top-table .search-container .search-input .search-icon {
     /*css untuk mengatur search icon*/
     position: absolute;
-    top: 55%;
+    top: 31%;
     right: 3.6rem;
     transform: translateY(-50%);
     color: #999;
 }
 
 .pengeluaran-container .pengeluaran-top-table .search-container .btn-sort {
-    margin: auto;
     width: 26px;
     height: 25px;
     background-color: #8467FF;

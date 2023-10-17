@@ -6,23 +6,69 @@ import './edit-akun-master.css'
 
 interface EditAkunMasterProps {
     OnClose: () => void;
+    dataId: number;
 }
 
 const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
 
-    const [formData, setFormData] = createSignal({
-        username: '',
-        email: '',
-        access: '',
-        category: '',
-        password: '',
-    });
+    const { dataId } = props;
 
-    const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+
+    const [coa_kd, setCoaKd] = createSignal('');
+    const [coa_name, setCoaName] = createSignal('');
+    const [category, setCategory] = createSignal('');
+    const [id, setId] = createSignal(dataId); // Inisialisasi dengan nilai default
+
+    // Mengatur nilai id saat baris di tabel diklik atau data dimuat dari backend
+    setId(dataId); // dataId adalah nilai ID yang diteruskan sebagai prop
+
+    // Kemudian, Anda dapat mengakses nilai id seperti ini:
+    const idValue = id(); // Mendapatkan nilai id
+
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-        };
+        if (name === 'kodeCOA') {
+            setCoaKd(value);
+        } else if (name === 'namaCOA') {
+            setCoaName(value);
+        } else if (name === 'kategori') {
+            setCategory(value);
+        }
+    };
+
+    const saveChanges = async () => {
+        try {
+            const dataToSend = {
+                id: idValue,
+                coa_kd: coa_kd(),
+                coa_name: coa_name(),
+                category: category(),
+            };
     
+            const response = await fetch(`/api/coa/update`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSend),
+            });
+    
+            if (response.ok) {
+                // Data berhasil diubah, tampilkan alert
+                alert('Data berhasil diubah');
+                props.OnClose();
+            } else {
+                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+                const errorMessage = await response.text();
+                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                console.error('Gagal mengubah data:', errorMessage);
+            }
+        } catch (error) {
+            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+            alert('Terjadi kesalahan. Silakan coba lagi.');
+            console.error('Terjadi kesalahan:', error);
+        }
+    };
 
     return (
         <div class="edit-acc-master">
@@ -37,26 +83,32 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                         <div class="isi-form">
 
                             <p>
-                                <label>Nama Akun*</label>
+                                <label>Username*</label>
                                 <br />
                                 <input type="text" required />
                             </p>
 
                          
                             <p>
-                                <label>Kode Akun*</label>
+                                <label>Email*</label>
                                 <br />
                                 <input type="text" required />
                             </p>
 
                             <p>
-                                <label>Nama COA*</label>
+                                <label>Access*</label>
                                 <br />
                                 <input type="text" required />
                             </p>
 
                             <p>
                                 <label>Kategori*</label>
+                                <br />
+                                <input type="text" required />
+                            </p>
+
+                            <p>
+                                <label>Password*</label>
                                 <br />
                                 <input type="text" required />
                             </p>

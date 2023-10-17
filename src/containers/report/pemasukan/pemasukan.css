@@ -9,7 +9,7 @@
 
 /*======== css untuk top tabel ========*/
 .pemasukan-container {
-    background-color: #F8F8F8;
+    background-color: #EFEFEF;
     width: 150vh;
     height: 128vh;
     border-radius: 6px;
@@ -17,7 +17,7 @@
     margin-bottom: 20px;
 }
 
-.pemasukan-container p {
+.pemasukan-container p { /*untuk mengatur judul pada pemasukan css*/
     font-size: 20px;
     color: #414141;
     font-weight: 700;
@@ -26,25 +26,21 @@
     margin-left: 2.2rem;
 }
 
-.pemasukan-container   .pemasukan-top-table {
+.pemasukan-container .pemasukan-top-table {
     margin-top: 20px;
     display: flex;
     margin-left: 35px;
     margin-right: 35px;
+    justify-content: right;
 }
 
-.pemasukan-container .pemasukan-top-table .pemasukan-title p {
-    font-size: 18px;
-    color: #414141;
-    font-weight: 700;
-    margin-left: 4px;
-}
 
 /*======== css untuk tutup buku ========*/
 .pemasukan-container .pemasukan-top-table .tutup-buku-container {
+    position: relative;
     display: flex;
-    height: 1.8rem;
-
+    margin-left: auto;
+    margin-right: -33rem;
 }
 
 
@@ -55,6 +51,7 @@
     position: relative;
     display: flex;
     margin-left: auto;
+    margin-right: -20px;
 }
 
 .pemasukan-container .pemasukan-top-table .search-container .search-input {
@@ -78,14 +75,13 @@
 .pemasukan-container .pemasukan-top-table .search-container .search-input .search-icon {
     /*css untuk mengatur search icon*/
     position: absolute;
-    top: 55%;
+    top: 31%;
     right: 3.6rem;
     transform: translateY(-50%);
     color: #999;
 }
 
-.pemasukan-container .pemasukan-top-table .search-container .btn-sort {
-    margin: auto;
+.pemasukan-container .pemasukan-top-table .search-container .btn-sort { 
     width: 26px;
     height: 25px;
     background-color: #8467FF;

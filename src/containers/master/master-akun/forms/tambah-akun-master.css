@@ -1,5 +1,5 @@
 /*css untuk button tambah akun*/
-.edit-acc-master {
+.tambah-acc-master {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -15,7 +15,7 @@
 }
 
 /* 
-.edit-acc-master .btn-tambah-akun button {
+.tambah-acc-master .btn-tambah-akun button {
     width: 76px;
     height: 25px;
     border-radius: 4px;
@@ -30,7 +30,7 @@
 } */
 
 /*css untuk tabel form popup*/
-.edit-acc-master .edit-form {
+.tambah-acc-master .tambah-form {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
@@ -42,7 +42,7 @@
     overflow: hidden;
 }
 
-.edit-acc-master form .headakun {
+.tambah-acc-master form .headakun {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;
     justify-content: space-between;
@@ -50,7 +50,7 @@
     padding-bottom: 15px;
 }
 
-.edit-acc-master form .headakun button {
+.tambah-acc-master form .headakun button {
     /*untuk mengatur button x saja*/
     background-color: #AE0000;
     color: #FFFFFF;
@@ -61,40 +61,40 @@
     float: right;
 }
 
-.edit-acc-master form .headakun h2 {
+.tambah-acc-master form .headakun h2 {
     /*untuk mengatur judul form*/
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
 
-.edit-acc-master .isi-form {
+.tambah-acc-master .isi-form {
     justify-content: center;
     display: flex;
     flex-direction: column;
     margin: auto;
 }
 
-.edit-acc-master form .headakun span {
+.tambah-acc-master form .headakun span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
 }
 
 /*css untuk isian form*/
-/* .edit-acc-master .isi-form p {
+/* .tambah-acc-master .isi-form p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
 } */
 
-.edit-acc-master .isi-form label {
+.tambah-acc-master .isi-form label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
 
-.edit-acc-master .isi-form input,
+.tambah-acc-master .isi-form input,
 select {
     /*untuk kotak teks input*/
     background-color: #FFFFFF;
@@ -113,13 +113,13 @@ select {
 
 
 /*css untuk button add-acc*/
-.edit-acc-master .btn-add-acc {
+.tambah-acc-master .btn-add-acc {
     position: relative; /* Buat parent relative untuk tombol */
     width: 100%; /* Atur lebar sesuai kebutuhan */
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.edit-acc-master .btn-add-acc button {
+.tambah-acc-master .btn-add-acc button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -132,7 +132,7 @@ select {
     border-radius: 5px;
 }
 
-.edit-acc-master .modal-box label {
+.tambah-acc-master .modal-box label {
     text-align: left;
 }
 /* 
