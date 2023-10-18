@@ -9,7 +9,7 @@ const JournalDetail: Component = () => {
   return (
 
     <div class="journal-detail">
-        <KeuanganNavbar />
+        <KeuanganNavbar/>
         <div class="box-1">
             <div class="top-1">
                 <h1>Journal Detail</h1>

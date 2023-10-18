@@ -10,7 +10,7 @@ const LabaRugi: Component = () => {
   return (
 
     <div class="laba-rugi">
-        <KeuanganNavbar />
+        <KeuanganNavbar/>
         <div class="box-1">
             <div class="top-1">
                 <h1>Laba Rugi</h1>
