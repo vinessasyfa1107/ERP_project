@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import './journal-detail.css'
 import { Icon } from '@iconify-icon/solid';
-import NeracaNavbar from '../keuangan-navbar';
+import KeuanganNavbar from '../keuangan-navbar';
 import TableJournalDetail from './table-journal-detail';
 
 
@@ -9,7 +9,7 @@ const JournalDetail: Component = () => {
   return (
 
     <div class="journal-detail">
-        <NeracaNavbar/>
+        <KeuanganNavbar />
         <div class="box-1">
             <div class="top-1">
                 <h1>Journal Detail</h1>

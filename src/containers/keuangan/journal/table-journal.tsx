@@ -8,13 +8,14 @@ const TableJournal: Component = () => {
 
     const columnDefs = [
         { field: 'id' , headerName: 'ID'}, // Menambahkan filter pada kolom "make"
+        { field: 'faktur'}, 
         { field: 'tanggal' }, // Menambahkan filter pada kolom "model"
         { field: 'pengeluaran' },
         { field: 'pemasukan' }
       ];
     
       const rowData = [
-        { id: '1-T300', tanggal:'', pengeluaran:'Loren Ipsum', pemasukan:'' }
+        { id: '1-T300', faktur:'', tanggal:'', pengeluaran:'Loren Ipsum', pemasukan:'' }
       ];
     
     
