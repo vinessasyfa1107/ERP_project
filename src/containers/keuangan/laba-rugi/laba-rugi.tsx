@@ -2,7 +2,7 @@ import type { Component } from 'solid-js';
 import './laba-rugi.css'
 import { Icon } from '@iconify-icon/solid';
 import { A } from '@solidjs/router';
-import NeracaNavbar from '../keuangan-navbar';
+import KeuanganNavbar from '../keuangan-navbar';
 import TableLabaRugi from './table-laba-rugi';
 
 
@@ -10,7 +10,7 @@ const LabaRugi: Component = () => {
   return (
 
     <div class="laba-rugi">
-        <NeracaNavbar/>
+        <KeuanganNavbar/>
         <div class="box-1">
             <div class="top-1">
                 <h1>Laba Rugi</h1>

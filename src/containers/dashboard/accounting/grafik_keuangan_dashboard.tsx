@@ -102,6 +102,8 @@ const Grafik_keuangan_dashboard: Component = () => {
             let bullet3 = lineSeries3.bullets.push(new am4charts.CircleBullet());
             bullet3.circle.radius = 5;
             bullet3.circle.fill = am4core.color("#F765A3");
+
+            chart.cursor = new am4charts.XYCursor();
         };
 
         // Gambar chart ketika komponen pertama kali dimount
@@ -124,7 +126,7 @@ const Grafik_keuangan_dashboard: Component = () => {
 
     return (
         <div>
-            <div class="grafik-keuangan-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "58vh" }}>
+            <div class="grafik-keuangan-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "62vh" }}>
                 <div id="chart_keuangan" style={{ "width": "60vw", "height": "90vw", "font-size": "14px" }}>
                 </div>
             </div>

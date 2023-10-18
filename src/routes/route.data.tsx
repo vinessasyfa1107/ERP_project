@@ -19,6 +19,7 @@ const Header = lazy(() => import('../containers/header/header'));
 
 
 const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik_keuangan'));
+const KeuanganModul_dashboard = lazy(() => import('../containers/keuangan/dashboard/keuanganModul_dashboard'));
 const Neraca = lazy(() => import('../containers/keuangan/neraca/neraca'));
 const LabaRugi = lazy(() => import('../containers/keuangan/laba-rugi/laba-rugi'));
 const Journal = lazy(() => import('../containers/keuangan/journal/journal'));
@@ -64,6 +65,7 @@ const RouteData: Component = () => {
 
             <Route path="/keuangan">
                 <Route path="/grafik-keuangan" component={Grafik_keuangan} />
+                <Route path="/keuanganModul_dashboard" component={KeuanganModul_dashboard} />
                 <Route path="/neraca" component={Neraca} />
                 <Route path="/labarugi" component={LabaRugi} />
                 <Route path="/journal" component={Journal} />

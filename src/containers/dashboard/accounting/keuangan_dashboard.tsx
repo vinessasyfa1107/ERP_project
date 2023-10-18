@@ -67,7 +67,7 @@ const Keuangan_dashboard: Component = () => {
 
                 {/* div untuk card chart total pada keuangan dashboard */}
                 <div class="card-chart">
-                    <div class="total" style={{"display":"flex"}}>
+                    <div class="total" style={{ "display": "flex" }}>
                         <div>
                             <div class="card-font-4 stat-title">Total</div>
                             <div>
