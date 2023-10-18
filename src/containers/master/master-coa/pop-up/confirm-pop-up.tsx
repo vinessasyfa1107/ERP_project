@@ -21,7 +21,9 @@ const ConfirmPopUP: Component<ConfirmPopUpProps> = (props) => {
       if (response.ok) {
         console.log('Data berhasil dihapus');
         alert('Data berhasil dihapus');
+        window.location.reload();
         props.OnClose();
+        
       } else {
         const errorMessage = await response.text();
         alert(`Gagal menghapus data. Pesan kesalahan: ${errorMessage}`);
