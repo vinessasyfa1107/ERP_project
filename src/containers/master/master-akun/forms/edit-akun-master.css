@@ -104,15 +104,14 @@
     font-weight: 600;
 }
 
-.edit-acc-master .isi-form input,
-select {
+.edit-acc-master .isi-form input {
     /*untuk kotak teks input*/
     background-color: #FFFFFF;
     border: none;
     width: 78vh;
     height: 35px;
     margin-top: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 12px 10px;
     border-radius: 5px;
     background: #F8F8F9;
@@ -121,6 +120,21 @@ select {
     font-weight: 600;
 }
 
+.edit-acc-master .isi-form select {
+    /*untuk kotak teks input*/
+    background-color: #FFFFFF;
+    border: none;
+    width: 78vh;
+    height: 35px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0px 5px;
+}
 
 /*css untuk button add-acc*/
 .edit-acc-master .btn-add-acc {
@@ -136,7 +150,7 @@ select {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
-    top: 25px;
+    top: 10px;
     width: 80px;
     height: 42px;
     border-radius: 5px;
@@ -145,6 +159,83 @@ select {
 .edit-acc-master .modal-box label {
     text-align: left;
 }
+
+.edit-acc-master .edit-options {
+    /*untuk mengatur teks label*/
+    color: #000000;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+
+.edit-acc-master .edit-options .drop-posisi {
+    margin-top: 2px ;
+    padding: 3px 10px ;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 15px;
+    width: 78vh;
+    height: 35px;
+    justify-content: left;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    text-transform: initial;    
+}
+
+.edit-acc-master .edit-options .drop-posisi {
+    display: block;
+}
+
+/* .edit-acc-master .edit-options .dropdown {
+    display: none;
+} */
+
+.edit-acc-master .edit-options .dropdown-content {
+    margin-top: 2px;
+    width: 78vh;
+    height: 8rem;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+    box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.15);
+    position: absolute;
+}
+.edit-acc-master .edit-options .dropdown-bottom {
+    width: 78vh;
+    height: 32px;
+}
+
+
+.edit-acc-master .edit-options .posisi-opsi {
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    padding: 14px;
+    height: 1px;
+    margin-left: 5px;
+}
+
+.edit-acc-master .edit-options .posisi-opsi label{
+    font-weight: normal;
+}
+
+
+.edit-acc-master .posisi-opsi input{
+    padding: 0;
+    margin-top: 10px;
+    width: 1rem;
+    height: 1rem;
+    box-shadow: none;
+
+}
+
 /* 
 .container-bukti {
     display: flex;

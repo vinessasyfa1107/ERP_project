@@ -6,3 +6,7 @@
 .selection A.active .menu-selection .svg-icon {
     stroke: #6E49E9;
 }
+
+.navbar.btn-hover {
+    background-color: #ececec;
+}
