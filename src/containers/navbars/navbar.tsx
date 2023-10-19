@@ -2,10 +2,19 @@ import { useNavigate, A, Navigate, useLocation } from '@solidjs/router';
 import { Component, JSX, createSignal, onMount } from "solid-js";
 import PT_PopUp from "./pop-up/pt-pop-up";
 import './navbar.css';
+import { Menu, useContextMenu, Item, Separator, Submenu } from 'solid-contextmenu';
+import 'solid-contextmenu/dist/style.css';
+import PengeluaranCreate from './create/pengeluaran/pengeluaran';
+import PemasukanCreate from './create/pemasukan/pemasukan';
+import PengajuanCreate from './create/pengajuan/pengajuan';
+import TambahCoaCreate from './create/tambah-coa/tambah-coa';
+import TambahAkunCreate from './create/tambah-akun/tambah-akun';
 
 interface NavbarProps {
     children: JSX.Element
 }
+
+
 
 const Navbar: Component<NavbarProps> = (props) => {
 
@@ -15,11 +24,35 @@ const Navbar: Component<NavbarProps> = (props) => {
     setpopUpPT(!popUpPT());
   }
 
-  const [pengeluaranPT, setPengeluaranPT] =  createSignal(false);
+  const [pengeluaranPopup, setPengeluaranPopup] = createSignal(false);
+  const [pemasukanPopup, setPemasukanPopup] = createSignal(false);
+  const [pengajuanPopup, setPengajuanPopup] = createSignal(false);
+  const [tambahAkunPopup, setTambahAkunPopup] = createSignal(false);
+  const [tambahCoaPopup, setTambahCoaPopup] = createSignal(false);
 
-  function handlePengeluaranPT() {
-    setPengeluaranPT(!pengeluaranPT());
+  const showPengeluaranPopup = () => {
+    setPengeluaranPopup(!pengeluaranPopup());
+  };
+  const showPemasukanPopup = () => {
+    setPemasukanPopup(!pemasukanPopup());
+  };
+  const showPengajuanPopup = () => {
+    setPengajuanPopup(!pengajuanPopup());
+  };
+  const showTambahAkunPopup = () => {
+    setTambahAkunPopup(!tambahAkunPopup());
+  };
+  const showTambahCoaPopup = () => {
+    setTambahCoaPopup(!tambahCoaPopup());
+  };
+  function ClosePopUp () {
+    setTambahAkunPopup (false);
+    setTambahCoaPopup (false);
+    setPengajuanPopup (false);
+    setPemasukanPopup (false);
+    setPengeluaranPopup (false);
   }
+
 
     return (
         <div
@@ -170,15 +203,64 @@ const Navbar: Component<NavbarProps> = (props) => {
        Create
         </button>
       </div> */}
-      <div class="dropdown dropdown-left">
-        <label tabindex="0" class="btn m-1 bg-[#f56d59] text-white">+ Create</label>
-        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      {/* <div class="dropdown dropdown-left"> */}
+
+      {/* animation = scale | fade | flip | slide */}
+      {/* <Menu id={MENU_ID} animation="scale" theme="light" >
+        <Item>⚡ Beautiful</Item>
+        <Item>😊 Easy use</Item>
+        <Submenu label="▶️ submenu">
+          <Item>👋 Hello</Item>
+          <Item>😀 Hello</Item>
+          <Item>🤝 你好</Item>
+        </Submenu>
+      </Menu>
+        <label tabindex="0" class="btn m-1 bg-[#f56d59] text-white"
+              onClick={(e) => {
+                console.log("klik kan")
+                show(e, { props: 1 });
+              }}
+              >+ Create
+              </label> */}
+
+        {/* <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
           <li><a>Master</a></li>
           <li><a>Pengajuan</a></li>
           <li><a>Pemasukan</a></li>
           <li><a>Pengeluaran</a></li>
+        </ul> */}
+      {/* </div> */}
+
+      <div class="dropdown dropdown-left">
+        <label tabindex="0" class="btn m-1 bg-[#f56d59] text-white">+ Create</label>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li>
+          <details>
+            <summary>Master</summary>
+            <ul>
+              <li onClick={() => showTambahAkunPopup()}>
+                <a>Tambah Akun</a>
+              </li>
+              <li onClick={() => showTambahCoaPopup()}>
+                <a>Tambah Coa</a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li onClick={() => showPengajuanPopup()}>
+          <a>Pengajuan </a>
+          </li>
+        <li onClick={() => showPemasukanPopup()}>
+          <a>Pemasukan</a>
+          </li>
+        <li onClick={() => showPengeluaranPopup()}>
+          <a>
+            Pengeluaran
+          </a>
+        </li>
         </ul>
       </div>
+
       <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
         <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-end gap-3 h-10 shrink-0 items-start pt-3 px-5 rounded-[20px]">
           <img
@@ -235,7 +317,14 @@ const Navbar: Component<NavbarProps> = (props) => {
       </div>
     </div> */}
   </div>
+  {tambahCoaPopup() && (<TambahCoaCreate OnClose={ClosePopUp}/>)}
+  {tambahAkunPopup() && (<TambahAkunCreate OnClose={ClosePopUp}/>)}
+  {pengajuanPopup() && (<PengajuanCreate OnClose={ClosePopUp}/>)}
+  {pemasukanPopup() && (<PemasukanCreate OnClose={ClosePopUp}/>)}
+  {pengeluaranPopup() && (<PengeluaranCreate OnClose={ClosePopUp}/>)}
+
 </div>
+
     )
 }
 

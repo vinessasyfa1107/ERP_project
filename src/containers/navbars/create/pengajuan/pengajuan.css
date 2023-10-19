@@ -1,5 +1,6 @@
+
 /*css untuk button tambah akun*/
-.edit-data {
+.pengajuan-data {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -15,7 +16,7 @@
 }
 
 /* 
-.edit-data .btn-tambah-akun button {
+.pengajuan-data .btn-tambah-akun button {
     width: 76px;
     height: 25px;
     border-radius: 4px;
@@ -30,18 +31,18 @@
 } */
 
 /*css untuk tabel form popup*/
-.edit-data .edit-form {
+.pengajuan-data .pengajuan-form {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
-    height: 75vh;
+    height: 85vh;
     background-color: #fff;
     text-align: left;
     padding: 25px 20px;
     overflow: hidden;
 }
 
-.edit-data form .headakun {
+.pengajuan-data form .headakun {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;
     justify-content: space-between;
@@ -50,7 +51,7 @@
     margin-bottom: 2vh;
 }
 
-.edit-data form .headakun button {
+.pengajuan-data form .headakun button {
     /*untuk mengatur button x saja*/
     background-color: #AE0000;
     color: #FFFFFF;
@@ -61,20 +62,20 @@
     float: right;
 }
 
-.edit-data form .headakun h2 {
+.pengajuan-data form .headakun h2 {
     /*untuk mengatur judul form*/
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
 
-.edit-data form .headakun span {
+.pengajuan-data form .headakun span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
 }
 
 /*css untuk isian form*/
-/* .edit-data .isi-form p {
+/* .pengajuan-data .isi-form p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
@@ -83,20 +84,19 @@
 textarea {
     resize: none;
 }
-.edit-data .isi-form label {
+.pengajuan-data .isi-pengajuan label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
-.edit-data .isi-form input,
+.pengajuan-data .isi-pengajuan input,
 select {
     /*untuk kotak teks input*/
-    width: 29rem;
     background-color: #FFFFFF;
     border: none;
-    width: 17rem;
-    height: 35px;
+    width: 17vw;
+    height: 6vh;
     margin-top: 2px;
     margin-bottom: 20px;
     padding: 12px 10px;
@@ -109,13 +109,13 @@ select {
 
 
 /*css untuk button add-acc*/
-.edit-data .btn-add-acc {
+.pengajuan-data .btn-add-acc {
     position: relative; /* Buat parent relative untuk tombol */
     width: 100%; /* Atur lebar sesuai kebutuhan */
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.edit-data .btn-edit-coa button {
+.pengajuan-data .btn-edit-coa button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -127,7 +127,7 @@ select {
     border-radius: 5px;
 }
 
-/* .edit-data .modal-box label {
+/* .pengajuan-data .modal-box label {
     text-align: left;
 }
 

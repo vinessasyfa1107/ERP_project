@@ -6,3 +6,6 @@
 .selection A.active .menu-selection .svg-icon {
     stroke: #6E49E9;
 }
+.menu-item .submenu {
+    left: 100%; /* Menyesuaikan jarak sesuai kebutuhan */
+}
