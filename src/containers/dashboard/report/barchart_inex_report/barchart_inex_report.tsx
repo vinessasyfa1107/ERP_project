@@ -97,8 +97,8 @@ const Barchart_inex_report: Component = () => {
                 categoryAxis.renderer.cellEndLocation = 0.7;
             }
 
-            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#C1533E"));
-            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#EB9727"));
+            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#6E49E9"));
+            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#8A8A8B"));
 
             // Add legend
             chart!.legend = new am4charts.Legend();
@@ -128,14 +128,10 @@ const Barchart_inex_report: Component = () => {
 
     return (
         <div>
-            <div class="barchart1-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "58vh", "margin-left": "20px", "width": "154vh" }}>
-                <div id="chartdiv" style={{ "width": "154vh", "height": "90vw", "font-size": "14px" }}>
+            <div class="barchart1-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "62vh", "margin-left": "20px", "width": "142vh" }}>
+                <div id="chartdiv" style={{ "width": "142vh", "height": "90vw", "font-size": "14px" }}>
                 </div>
             </div>
-
-
-
-
         </div>
     );
 };

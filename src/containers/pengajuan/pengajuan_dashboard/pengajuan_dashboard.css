@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+}
+.pengajuanDashboard_container {
+    background-color: #EFEFEF;
+    width: 150vh;
+    height: 115vh;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.pengajuanDashboard_container .component-1 {
+    display: flex;
+    padding-top: 2rem;
+    padding-left: 2rem;
+}
+
+.pengajuanDashboard_container .tabel-keterangan .rightcp {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+    float: right;
+}
+
+.pengajuanDashboard_container .tabel-keterangan .rightcp input[type=text] {
+    border: 1px solid #ccc; 
+    width: 260px;
+    height: 25px; 
+    font-size: 13px;
+    margin-right: 10px;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: transparent;
+    display: inline;
+    top: 0;
+}
+
+.pengajuanDashboard_container .tabel-keterangan .rightcp .search-icon {
+    position: absolute;
+    display: inline-flex;
+    right: 8vh;
+    color: #ccc;
+}
+
+.pengajuanDashboard_container .tabel-keterangan .rightcp .btn-sort {
+    margin: auto;
+    width: 26px;
+    height: 25px;
+    background-color: #8467FF;
+    color: white;
+    border-radius: 5px;
+}
+
+.pengajuanDashboard_container .rencanaPengajuan-container {
+    padding-top: 2rem;
+}

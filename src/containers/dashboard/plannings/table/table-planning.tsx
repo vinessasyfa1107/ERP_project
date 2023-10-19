@@ -2,7 +2,7 @@ import type { Component } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './table-planning.css'
+import './table-planning.css';
 
 const TablePlanning: Component = () => {
 

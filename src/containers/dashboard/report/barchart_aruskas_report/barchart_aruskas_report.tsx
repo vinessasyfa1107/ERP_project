@@ -97,8 +97,8 @@ const Barchart_aruskas_report: Component = () => {
                 categoryAxis.renderer.cellEndLocation = 0.6;
             }
 
-            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#C1533E"));
-            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#EB9727"));
+            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#6E49E9"));
+            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#8A8A8B"));
 
             // Membuat LineSeries untuk "Perpindahan Kas Bersih"
             let lineSeries = chart.series.push(new am4charts.LineSeries());
@@ -148,8 +148,8 @@ const Barchart_aruskas_report: Component = () => {
 
     return (
         <div>
-            <div class="barchart2-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "52vh", "margin-left": "20px", "width": "154vh" }}>
-                <div id="chartdiv2" style={{ "width": "154vh", "height": "90vw", "font-size": "14px" }}></div>
+            <div class="barchart2-container" style={{ "background-color": "#FFFFFFEB", "margin-top": "10px", "border-radius": "6px", "height": "62vh", "margin-left": "20px", "width": "142vh" }}>
+                <div id="chartdiv2" style={{ "width": "142vh", "height": "90vw", "font-size": "14px" }}></div>
             </div>
 
         </div>

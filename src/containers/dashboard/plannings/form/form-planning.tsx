@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './form-planning.css'
+import './form-planning.css';
 
 const FormPlanning: Component = () => {
 

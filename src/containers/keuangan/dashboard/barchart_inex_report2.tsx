@@ -97,8 +97,8 @@ const Barchart_inex_report2: Component = () => {
                 categoryAxis.renderer.cellEndLocation = 0.7;
             }
 
-            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#C1533E"));
-            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#EB9727"));
+            createSeries("Pemasukan", "Pemasukan", false, am4core.color("#6E49E9"));
+            createSeries("Pengeluaran", "Pengeluaran", false, am4core.color("#8A8A8B"));
 
             // Add legend
             chart!.legend = new am4charts.Legend();

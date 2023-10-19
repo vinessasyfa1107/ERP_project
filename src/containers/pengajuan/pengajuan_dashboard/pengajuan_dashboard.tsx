@@ -1,23 +1,23 @@
 import type { Component } from 'solid-js';
-import './planning.css'
-import TablePlanning from './table/table-planning';
-import ChartPlanning from './chart-planning';
-import TableDetailPlan from './table/table-detail-plan';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
-import FormPlanning from './form/form-planning';
-import { A } from '@solidjs/router';
-import Header from '../../header/header';
+import AgGridSolid from 'ag-grid-solid';
 
-const Planning: Component = () => {
+import './pengajuan_dashboard.css';
+import Pengajuan_navbar from '../pengajuan_navbar';
+import ChartPlanning from '../../dashboard/plannings/chart-planning';
+import TablePlanning from '../../dashboard/plannings/table/table-planning';
+import TableDetailPlan from '../../dashboard/plannings/table/table-detail-plan';
+import FormPlanning from '../../dashboard/plannings/form/form-planning';
+
+const Pengajuan_dashboard: Component = () => {
     return (
-        <div class="plan">
-            <Header />
-            <A href="/master/master">
-                <button style={{ "background-color": "aqua" }}>ke master</button>
-            </A>
-
-            <div class="box-1">
-
+        <div>
+            <Pengajuan_navbar />
+            <div class="pengajuanDashboard_container">
                 <div class="component-1">
                     <ChartPlanning />
                     <div class="tabel-keterangan">
@@ -34,7 +34,7 @@ const Planning: Component = () => {
                     </div>
                 </div>
 
-                <div>
+                <div class="rencanaPengajuan-container">
                     <h1>List Rencana Pengajuan</h1>
                     <TableDetailPlan />
                     <FormPlanning />
@@ -45,4 +45,5 @@ const Planning: Component = () => {
     );
 };
 
-export default Planning;
+
+export default Pengajuan_dashboard;

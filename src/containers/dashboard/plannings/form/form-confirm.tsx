@@ -1,5 +1,5 @@
 import { onCleanup, type Component, createSignal } from 'solid-js';
-import './form-confirm.css'
+import './form-confirm.css';
 import { Icon } from '@iconify-icon/solid';
 
 interface EditPopUpProps {

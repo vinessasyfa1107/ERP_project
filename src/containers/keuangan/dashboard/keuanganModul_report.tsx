@@ -39,16 +39,15 @@ const KeuanganModul_report: Component = () => {
                 }}>
                     {/* ====== button untuk menampilkan tabel income ====== */}
                     <div>
-                        <button onClick={toggleIncomeTable} style={{
+                        <button onClick={toggleIncomeTable} class={`button-toggle ${showIncomeTable() ? 'active' : ''}`} style={{
                             "width": "242px",
                             "height": "68px",
-                            "background-color": "#C1533EA3",
+                            "background-color": showIncomeTable() ? "#6E49E9" : "#8467FFCC",
                             "border-radius": "10px",
                             "border": "1px solid rgba(128, 128, 128, 0.20)",
                             "box-shadow": "0 5px 5px rgba(0, 0, 0, 0.2)",
                             "margin-right": "20px",
                             "position": "relative"
-
                         }}>
                             <div class="inexcome-info">
                                 <div class="inexcome-title" style={{
@@ -77,10 +76,10 @@ const KeuanganModul_report: Component = () => {
 
                     {/* ====== button untuk menampilkan tabel expenses ====== */}
                     <div>
-                        <button onClick={toggleExpensesTable} style={{
+                        <button onClick={toggleExpensesTable} class={`button-toggle ${showExpensesTable() ? 'active' : ''}`} style={{
                             "width": "242px",
                             "height": "68px",
-                            "background-color": "#EB9627A1",
+                            "background-color": showExpensesTable() ? "#8A8A8B" : "#80808033",
                             "border-radius": "10px",
                             "border": "1px solid rgba(128, 128, 128, 0.20)",
                             "box-shadow": "0 5px 5px rgba(0, 0, 0, 0.2)",
