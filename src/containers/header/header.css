@@ -23,9 +23,16 @@
 }
   
 /* Gaya SVG saat dihover */
-.svg-icon:hover {
-    stroke: #6E49E9; /* Warna stroke saat dihover (biru dalam contoh ini) */
-    /* stroke-width: 1; */
+/* .svg-icon:hover {
+    stroke: #6E49E9; 
+    stroke-width: 1;
+} */
+ 
+.header:hover .name-selection {
+    font-weight: 600;
+    color: #bebebe;
+    text-shadow: 0 2px 5px #bcbcbc;
+    transition: all 0.7s ease;
 }
 
 .menu-selection .name-selection {
@@ -34,14 +41,14 @@
 }
 
 /* Saat SVG dihover */
-.menu-selection:hover .name-selection {
+/* .menu-selection:hover .name-selection {
     color: #6E49E9;
     stroke: #6E49E9;
 }
 
 .menu-selection:hover .svg-icon {
     stroke: #6E49E9;
-}
+} */
 
 /* Saat SVG tidak dihover */
 

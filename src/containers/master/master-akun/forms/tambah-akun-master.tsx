@@ -12,6 +12,7 @@ const TambahAkunMaster: Component = () => {
     };
 
     const [formData, setFormData] = createSignal({
+        account_id: 0,
         id: 0,
         username: '',
         account_name: '',
@@ -29,6 +30,7 @@ const TambahAkunMaster: Component = () => {
 
         // Memisahkan data form untuk masing-masing tabel
         const DataLogin = {
+            account_id: formValues.account_id,
             username: formValues.username,
             password: formValues.password,
         };
@@ -42,11 +44,14 @@ const TambahAkunMaster: Component = () => {
             category: formValues.category,
         };
 
+        console.log(DataLogin);
+        console.log(DataAccounRead);
         // Selanjutnya, Anda dapat mengirim data ke server untuk insert ke dua tabel
         // Misalnya, Anda bisa menggunakan fetch atau library seperti axios.
 
         const resetForm = () => {
             setFormData({
+                account_id: 0,
                 id: 0,
                 username: '',
                 account_name: '',
@@ -59,8 +64,15 @@ const TambahAkunMaster: Component = () => {
         };
 
         try {
+            const responseTable1 = await fetch('/api/accountread/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(DataAccounRead),
+              });
             // Kirim data ke tabel pertama
-            const responseTable1 = await fetch('/api/login/', {
+            const responseTable2 = await fetch('/api/login/', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -69,13 +81,6 @@ const TambahAkunMaster: Component = () => {
             });
         
             // Kirim data ke tabel kedua
-            const responseTable2 = await fetch('/api/accountread/', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(DataAccounRead),
-            });
         
             if (responseTable1.ok && responseTable2.ok) {
               console.log('Data berhasil diinput');
@@ -106,9 +111,6 @@ const TambahAkunMaster: Component = () => {
     const toggleDropdown = () => {
         setDropdownOpen(isDropdownOpen());
     };
-
-
-
 
     onMount(() => {
         const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
@@ -189,8 +191,8 @@ const TambahAkunMaster: Component = () => {
                                 <label>Email*</label>
                                 <br />
                                 <input type="text" required
-                                    value={formData().email}
-                                    onInput={(e) => setFormData({ ...formData(), email: e.target.value })}
+                                value={formData().email}
+                                onInput={(e) => setFormData({ ...formData(), email: e.target.value })}
                                 />
                             </p>
 
@@ -203,8 +205,8 @@ const TambahAkunMaster: Component = () => {
                                     onChange={(e) => setFormData({ ...formData(), access: e.target.value })}
                                     >
                                         <option value="admin">Admin</option>
-                                        <option value="supplier">Direktur Keuangan</option>
-                                        <option value="employee">Direktur Utama</option>
+                                        <option value="direktur keuangan">Direktur Keuangan</option>
+                                        <option value="direktur utama">Direktur Utama</option>
                                     </select>
                                 </p>
 
@@ -245,11 +247,21 @@ const TambahAkunMaster: Component = () => {
                                                             <input type="checkbox" value="Customer" 
                                                             checked={selectedItems().includes("Customer")}
                                                             onChange={(e) => {
-                                                                if (e.target.checked) {
-                                                                    setSelectedItems([...selectedItems(), "Customer"]);
-                                                                } else {
-                                                                    setSelectedItems(selectedItems().filter(role => role !== "Customer"));
-                                                                }
+                                                                setSelectedItems((prevSelectedItems) => {
+                                                                    if (e.target.checked) {
+                                                                        return [...prevSelectedItems, "Customer"];
+                                                                    } else {
+                                                                        return prevSelectedItems.filter(role => role !== "Customer");
+                                                                    }
+                                                                });
+                                                        
+                                                                // Perbarui formData
+                                                                setFormData((prevFormData) => {
+                                                                    return {
+                                                                        ...prevFormData,
+                                                                        role: selectedItems(),
+                                                                    };
+                                                                });
                                                             }}
                                                             /> 
                                                             <p style={{"margin-left": '20px'}}>Customer</p>
@@ -259,16 +271,26 @@ const TambahAkunMaster: Component = () => {
                                                 <li class="posisi-opsi">
                                                     <label>
                                                         <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="Suplier" 
+                                                            <input type="checkbox" value="Supplier" 
                                                             onChange={(e) => {
-                                                                if (e.target.checked) {
-                                                                    setSelectedItems([...selectedItems(), "Supplier"]);
-                                                                } else {
-                                                                    setSelectedItems(selectedItems().filter(role => role !== "Supplier"));
-                                                                }
+                                                                setSelectedItems((prevSelectedItems) => {
+                                                                    if (e.target.checked) {
+                                                                        return [...prevSelectedItems, "Supplier"];
+                                                                    } else {
+                                                                        return prevSelectedItems.filter(role => role !== "Supplier");
+                                                                    }
+                                                                });
+                                                        
+                                                                // Perbarui formData
+                                                                setFormData((prevFormData) => {
+                                                                    return {
+                                                                        ...prevFormData,
+                                                                        role: selectedItems(),
+                                                                    };
+                                                                });
                                                             }}
                                                             /> 
-                                                            <p style={{"margin-left": '20px'}}>Suplier</p>
+                                                            <p style={{"margin-left": '20px'}}>Supplier</p>
                                                         </a>
                                                     </label>
                                                 </li>
@@ -278,11 +300,21 @@ const TambahAkunMaster: Component = () => {
                                                             <input type="checkbox" value="Employee" 
                                                             checked={selectedItems().includes("Employee")}
                                                             onChange={(e) => {
-                                                                if (e.target.checked) {
-                                                                    setSelectedItems([...selectedItems(), "Employee"]);
-                                                                } else {
-                                                                    setSelectedItems(selectedItems().filter(role => role !== "Employee"));
-                                                                }
+                                                                setSelectedItems((prevSelectedItems) => {
+                                                                    if (e.target.checked) {
+                                                                        return [...prevSelectedItems, "Employee"];
+                                                                    } else {
+                                                                        return prevSelectedItems.filter(role => role !== "Employee");
+                                                                    }
+                                                                });
+                                                        
+                                                                // Perbarui formData
+                                                                setFormData((prevFormData) => {
+                                                                    return {
+                                                                        ...prevFormData,
+                                                                        role: selectedItems(),
+                                                                    };
+                                                                });
                                                             }}
                                                             /> 
                                                             <p style={{"margin-left": '20px'}}>Employee</p>
