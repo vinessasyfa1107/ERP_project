@@ -1,6 +1,7 @@
 import { Component, JSX, createSignal, onMount } from "solid-js";
 import PT_PopUp from "./pop-up/pt-pop-up";
 import { A } from "@solidjs/router";
+import LogoutPopUp from "./pop-up/logout-pop-up";
 
 interface NavbarProps {
     children: JSX.Element
@@ -10,8 +11,14 @@ const Navbar: Component<NavbarProps> = (props) => {
 
   const [popUpPT, setpopUpPT] =  createSignal(false);
 
+  const [popUpLogout, setpopUpLogout] =  createSignal(false);
+
   function handlepopUpPT() {
     setpopUpPT(!popUpPT());
+  }
+
+  function handleLogOut() {
+    setpopUpLogout(!popUpLogout());
   }
 
 
@@ -208,11 +215,13 @@ const Navbar: Component<NavbarProps> = (props) => {
         class="w-10"
       />
     </div>
-    <img
-      src="https://file.rendit.io/n/W6GYZbOZRXaNodBHmwjY.svg"
-      class="ml-3 w-8"
-      onClick={handlepopUpPT}
-    />
+    <div>
+      <img
+        src="https://file.rendit.io/n/W6GYZbOZRXaNodBHmwjY.svg"
+        class="ml-3 w-8 cursor-pointer fixed bottom-10 left-3"
+        onClick={handleLogOut}/>
+    </div>
+    {popUpLogout() && <LogoutPopUp/>}
   </div>
   <div class="flex flex-col ml-88 mt-25 w-[full]">
     {props.children}
