@@ -61,7 +61,7 @@ const Navbar: Component<NavbarProps> = (props) => {
         />
       </div>
     </A>
-    <A href='/pengajuan' classList={{ active: location.pathname === '/dashboard/report' }}>
+    <A href='/plannings/planning' classList={{ active: location.pathname === '/dashboard/report' }}>
       <div class="bg-[url(https://file.rendit.io/n/seiGpSyeGKUt0Ci1XUPM.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center">
         <div class="flex flex-row gap-2 w-3/5 items-center">
           <img
@@ -117,21 +117,23 @@ const Navbar: Component<NavbarProps> = (props) => {
         />
       </div>
     </A>
-    <div class="bg-[url(https://file.rendit.io/n/oSM21HgnJDbezXnmDN0k.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-center">
-      <div class="flex flex-row gap-2 w-20 shrink-0 items-center">
+    <A href='/kontak/tabel_kontak' classList={{ active: location.pathname === '/dashboard/report' }}>
+      <div class="bg-[url(https://file.rendit.io/n/oSM21HgnJDbezXnmDN0k.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-center">
+        <div class="flex flex-row gap-2 w-20 shrink-0 items-center">
+          <img
+            src="https://file.rendit.io/n/RPwE1JFYLgOmgr7ppOEa.svg"
+            id="Icroundcontactpage"
+            class="self-start w-5 shrink-0"
+          />
+          <div class="font-['Inter'] font-bold text-black/42">Kontak</div>
+        </div>
         <img
-          src="https://file.rendit.io/n/RPwE1JFYLgOmgr7ppOEa.svg"
-          id="Icroundcontactpage"
-          class="self-start w-5 shrink-0"
+          src="https://file.rendit.io/n/ecNIkV3GbrJy8rFTPryt.svg"
+          id="Radixiconscaretdown1"
+          class="self-start w-6 shrink-0 my-1"
         />
-        <div class="font-['Inter'] font-bold text-black/42">Kontak</div>
       </div>
-      <img
-        src="https://file.rendit.io/n/ecNIkV3GbrJy8rFTPryt.svg"
-        id="Radixiconscaretdown1"
-        class="self-start w-6 shrink-0 my-1"
-      />
-    </div>
+    </A>
   </div>
   <div class="w-full h-24 bg-[#f7f7f7] fixed top-[-15px] left-1 flex flex-row justify-between items-end pb-4 pl-[113px] pr-24">
     <div class="flex flex-row justify-between gap-32 items-start">
@@ -172,7 +174,8 @@ const Navbar: Component<NavbarProps> = (props) => {
       </div>
     </div>
   </div>
-  <div class="bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3">
+  <div class="bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3"
+  style={{"padding-bottom":"6vh"}}>
     <div
       id="Ellipse"
       class="bg-[url(https://file.rendit.io/n/uDD9S64MFEoBlI4Pt9yw.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-col ml-1 w-12 items-start p-1 cursor-pointer"
@@ -188,6 +191,7 @@ const Navbar: Component<NavbarProps> = (props) => {
     <img
       src="https://file.rendit.io/n/W6GYZbOZRXaNodBHmwjY.svg"
       class="ml-3 w-8"
+      onClick={handlepopUpPT}
     />
   </div>
   <div class="flex flex-col ml-88 mt-25 w-[full]">

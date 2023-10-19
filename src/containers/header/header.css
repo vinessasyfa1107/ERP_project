@@ -31,6 +31,7 @@
 .menu-selection .name-selection {
     font-weight: 600;
     color: white;
+    font-size: 15px;
 }
 
 /* Saat SVG dihover */
@@ -54,6 +55,7 @@
 .selection A.active .menu-selection .name-selection {
     color: #6E49E9;
     opacity: 1;
+    font-size: 15px;
 }
 
 .selection A.active .menu-selection .svg-icon {
