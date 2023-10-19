@@ -13,7 +13,6 @@
     height: fit-content;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
-    border: 1px solid rgba(128, 128, 128, 0.20);
 }
 
 /*======== css untuk top tabel search containernya ========*/
@@ -86,7 +85,7 @@
 }
 
 .grafik_keuangan_dashboard .grafik_keuangan_dashboard2 .card-chart .grafik-keuangan-dashboard-container {
-    background: white;
+    background: red;
     border-radius: 0 0 1vw 1vw;
     margin-top: -6px;
 }
@@ -125,17 +124,20 @@
 .report-jumlah-1 {
     text-align: center;
     margin-top: 1.5vw;
-    color:#a155b9
+    color:#a155b9;
+    font-size: 2rem;
 }
 .report-jumlah-2 {
     text-align: center;
     margin-top: 1.5vw;
-    color:#f765b3
+    color:#f765b3;
+    font-size: 2rem;
 }
 .report-jumlah-3 {
     text-align: center;
     margin-top: 1.5vw;
-    color:#165baa
+    color:#165baa;
+    font-size: 2rem;
 }
 .card-font-4 {
     text-align: left;

@@ -13,54 +13,139 @@ const TambahAkunMaster: Component = () => {
 
     const [formData, setFormData] = createSignal({
         id: 0,
+        username: '',
         account_name: '',
         email: '',
         access: '',
-        role: '',
-        category: ''
+        role: [],
+        category: '',
+        password: ''
     });
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        // Mendapatkan data dari form
+        const formValues = formData();
+
+        // Memisahkan data form untuk masing-masing tabel
+        const DataLogin = {
+            username: formValues.username,
+            password: formValues.password,
+        };
+
+        const DataAccounRead = {
+            id: formValues.id,
+            account_name: formValues.account_name,
+            email: formValues.email,
+            access: formValues.access,
+            role: formValues.role,
+            category: formValues.category,
+        };
+
+        // Selanjutnya, Anda dapat mengirim data ke server untuk insert ke dua tabel
+        // Misalnya, Anda bisa menggunakan fetch atau library seperti axios.
+
+        const resetForm = () => {
+            setFormData({
+                id: 0,
+                username: '',
+                account_name: '',
+                email: '',
+                access: '',
+                role: [],
+                category: '',
+                password: ''
+            });
+        };
+
+        try {
+            // Kirim data ke tabel pertama
+            const responseTable1 = await fetch('/api/login/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(DataLogin),
+            });
+        
+            // Kirim data ke tabel kedua
+            const responseTable2 = await fetch('/api/accountread/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(DataAccounRead),
+            });
+        
+            if (responseTable1.ok && responseTable2.ok) {
+              console.log('Data berhasil diinput');
+              alert('Data berhasil ditambah');
+              window.location.reload();
+              const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
+              modal.close();
+              
+            } else {
+              const errorMessageTable1 = await responseTable1.text();
+              const errorMessageTable2 = await responseTable2.text();
+              const errorMessage = `Gagal mengubah data. Pesan kesalahan (Tabel 1): ${errorMessageTable1}, (Tabel 2): ${errorMessageTable2}`;
+              alert(errorMessage);
+              console.error('Gagal mengubah data:', errorMessage);
+            }
+          } catch (error) {
+            console.error('Gagal mengirim permintaan:', error);
+          }
+
+    };
+
 
 
     //fungsi untuk dropdown posisi
     const [selectedItems, setSelectedItems] = createSignal<string[]>([]);
     const [isDropdownOpen, setDropdownOpen] = createSignal(false);
-  
+
+    const toggleDropdown = () => {
+        setDropdownOpen(isDropdownOpen());
+    };
+
+
+
+
     onMount(() => {
-      const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
-  
-      const updateSelectedItems = () => {
-        const selectedItemsText = checkboxes
-          .filter((checkbox) => checkbox.checked)
-          .map((checkbox) => checkbox.value);
-        setSelectedItems(selectedItemsText);
-      };
-  
-    //   const closeDropdown = () => {
-    //     setDropdownOpen(false);
-    //   };
-  
-      checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", updateSelectedItems);
-      });
-  
-      onCleanup(() => {
+        const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]')) as HTMLInputElement[];
+
+        const updateSelectedItems = () => {
+            const selectedItemsText = checkboxes
+                .filter((checkbox) => checkbox.checked)
+                .map((checkbox) => checkbox.value);
+            setSelectedItems(selectedItemsText);
+        };
+
+        //   const closeDropdown = () => {
+        //     setDropdownOpen(false);
+        //   };
+
         checkboxes.forEach((checkbox) => {
-          checkbox.removeEventListener("change", updateSelectedItems);
+            checkbox.addEventListener("change", updateSelectedItems);
         });
-      });
-  
-      // Initial update
-      updateSelectedItems();
-  
-      // Handle closing dropdown when clicking outside
-    //   document.addEventListener("click", (event) => {
-    //     const target = event.target as HTMLElement; // Cast 'event.target' to HTMLElement
-    //     if (!target.closest || !target.closest(".multiselect-container")) {
-    //       closeDropdown();
-    //     }
-    //   });
+
+        onCleanup(() => {
+            checkboxes.forEach((checkbox) => {
+                checkbox.removeEventListener("change", updateSelectedItems);
+            });
+        });
+
+        // Initial update
+        updateSelectedItems();
+
+        // Handle closing dropdown when clicking outside
+        //   document.addEventListener("click", (event) => {
+        //     const target = event.target as HTMLElement; // Cast 'event.target' to HTMLElement
+        //     if (!target.closest || !target.closest(".multiselect-container")) {
+        //       closeDropdown();
+        //     }
+        //   });
     });
-  
+
     // const toggleDropdown = () => {
     //   setDropdownOpen(!isDropdownOpen());
     // };
@@ -71,7 +156,7 @@ const TambahAkunMaster: Component = () => {
             <div class="btn-tambah-akun">
                 <button onClick={() => (document.getElementById('form_modal_1') as HTMLDialogElement).showModal()}><Icon icon="fa:plus" color="white" width="10" height="11" /></button>
             </div>
-         
+
             <dialog id="form_modal_1" class="modal">
                 <div class="tambah-form">
                     <form method="dialog">
@@ -85,80 +170,155 @@ const TambahAkunMaster: Component = () => {
                             <p>
                                 <label>Username*</label>
                                 <br />
-                                <input type="text"  
-                                value={formData().account_name}
-                                onInput={(e) => setFormData({ ...formData(), account_name: e.target.value})}
+                                <input type="text" required
+                                    value={formData().username}
+                                    onInput={(e) => setFormData({ ...formData(), username: e.target.value })}
                                 />
                             </p>
 
-                         
+                            <p>
+                                <label>Nama*</label>
+                                <br />
+                                <input type="text" required
+                                    value={formData().account_name}
+                                    onInput={(e) => setFormData({ ...formData(), account_name: e.target.value })}
+                                />
+                            </p>
+
                             <p>
                                 <label>Email*</label>
                                 <br />
-                                <input type="text"  
-                                value={formData().email}
-                                onInput={(e) => setFormData({ ...formData(), email: e.target.value})}
+                                <input type="text" required
+                                    value={formData().email}
+                                    onInput={(e) => setFormData({ ...formData(), email: e.target.value })}
                                 />
                             </p>
 
                             <div class="options">
-                            <p>
-                                <label>Access*</label>
-                                <br />
-                                <select id="access" name="access">
-                                    <option value="admin">Admin</option>
-                                    <option value="supplier">Direktur Keuangan</option>
-                                    <option value="employee">Direktur Utama</option>
-                                </select>
-                            </p>
-                        
+                                <p>
+                                    <label>Access*</label>
+                                    <br />
+                                    <select id="access" name="access" required
+                                    value={formData().access}
+                                    onChange={(e) => setFormData({ ...formData(), access: e.target.value })}
+                                    >
+                                        <option value="admin">Admin</option>
+                                        <option value="supplier">Direktur Keuangan</option>
+                                        <option value="employee">Direktur Utama</option>
+                                    </select>
+                                </p>
 
-                                <div style={{display:'flex', "flex-direction":"column"}}>
-                                <label>Posisi*</label>
-                                <div class={`dropdown ${isDropdownOpen() ? "show" : ""}`}>
-                                    <button id="dropdown-toggle" class="drop-posisi" > {selectedItems().length > 0 ? selectedItems().join(", ") : "Pilih posisi"}</button>
-                                    <div class="dropdown-content" id="dropdown-content">
-                                        <div class="posisi-opsi">
-                                            <label for="customer">Customer</label>
-                                            <input type="checkbox" id="customer" value="Customer" />
-                                        </div>
 
-                                        <div class="posisi-opsi">
-                                            <label for="supplier">Supplier</label>
-                                            <input type="checkbox" id="supplier" value="Supplier" />
-                                        </div>
+                                {/* <div style={{ display: 'flex', "flex-direction": "column" }}>
+                                    <label>Posisi*</label>
+                                    <div>
+                                        <button class="drop-posisi" onChange={toggleDropdown}> {selectedItems().length > 0 ? selectedItems().join(", ") : "Pilih posisi"}</button>
+                                        <div class="dropdown-content" >
+                                            <div class="posisi-opsi">
+                                                <label for="customer">Customer</label>
+                                                <input type="checkbox" id="customer" value="Customer" />
+                                            </div>
 
-                                        <div class="posisi-opsi">
-                                            <label for="employee">Employee</label>
-                                            <input type="checkbox" id="employee" value="Employee" />
+                                            <div class="posisi-opsi">
+                                                <label for="supplier">Supplier</label>
+                                                <input type="checkbox" id="supplier" value="Supplier" />
+                                            </div>
+
+                                            <div class="posisi-opsi">
+                                                <label for="employee">Employee</label>
+                                                <input type="checkbox" id="employee" value="Employee" />
+                                            </div>
                                         </div>
                                     </div>
+                                </div> */}
+                                <div style={{ display: 'flex', "flex-direction": "column" }}>
+
+                                    <label>Posisi*</label>
+                                        <div class="dropdown dropdown-bottom">
+                                            <label tabindex="0" class="drop-posisi">
+                                                {selectedItems().length > 0 ? selectedItems().join(", ") : ""}
+                                            </label>
+                                            <ul tabindex="0" class="dropdown-content z-[1] 2 shadow bg-base-100 rounded-box w-44">
+                                                <li class="posisi-opsi">
+                                                    <label >
+                                                        <a style={{display: 'flex'}}>
+                                                            <input type="checkbox" value="Customer" 
+                                                            checked={selectedItems().includes("Customer")}
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) {
+                                                                    setSelectedItems([...selectedItems(), "Customer"]);
+                                                                } else {
+                                                                    setSelectedItems(selectedItems().filter(role => role !== "Customer"));
+                                                                }
+                                                            }}
+                                                            /> 
+                                                            <p style={{"margin-left": '20px'}}>Customer</p>
+                                                        </a>
+                                                    </label>
+                                                </li>
+                                                <li class="posisi-opsi">
+                                                    <label>
+                                                        <a style={{display: 'flex'}}>
+                                                            <input type="checkbox" value="Suplier" 
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) {
+                                                                    setSelectedItems([...selectedItems(), "Supplier"]);
+                                                                } else {
+                                                                    setSelectedItems(selectedItems().filter(role => role !== "Supplier"));
+                                                                }
+                                                            }}
+                                                            /> 
+                                                            <p style={{"margin-left": '20px'}}>Suplier</p>
+                                                        </a>
+                                                    </label>
+                                                </li>
+                                                <li class="posisi-opsi">
+                                                    <label >
+                                                        <a style={{display: 'flex'}}>
+                                                            <input type="checkbox" value="Employee" 
+                                                            checked={selectedItems().includes("Employee")}
+                                                            onChange={(e) => {
+                                                                if (e.target.checked) {
+                                                                    setSelectedItems([...selectedItems(), "Employee"]);
+                                                                } else {
+                                                                    setSelectedItems(selectedItems().filter(role => role !== "Employee"));
+                                                                }
+                                                            }}
+                                                            /> 
+                                                            <p style={{"margin-left": '20px'}}>Employee</p>
+                                                        </a>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                 </div>
-                                </div>
-                            
+
                             </div>
 
                             <p>
                                 <label>Kategori*</label>
                                 <br />
-                                <input type="text"  
-                                value={formData().category}
-                                onInput={(e) => setFormData({ ...formData(), category: e.target.value})}
+                                <input type="text" required
+                                    value={formData().category}
+                                    onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
                                 />
                             </p>
 
                             <p>
                                 <label>Password*</label>
                                 <br />
-                                <input type="text"  
+                                <input type="text" required
+                                value={formData().password}
+                                onInput={(e) => setFormData({ ...formData(), password: e.target.value })}
                                 />
                             </p>
-                
+
                         </div>
 
                         <br />
                         <div class="btn-add-acc">
-                            <button><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={handleFormSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>

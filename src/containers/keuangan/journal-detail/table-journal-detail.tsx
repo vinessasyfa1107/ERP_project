@@ -8,7 +8,7 @@ const TableJournalDetail: Component = () => {
 
     const columnDefs = [
         { field: 'id' , headerName: 'ID'}, // Menambahkan filter pada kolom "make"
-        { field: 'coa' }, // Menambahkan filter pada kolom "model"
+        { field: 'COA' }, // Menambahkan filter pada kolom "model"
         { field: 'debit' },
         { field: 'kredit' },
         { field: 'info' },
@@ -16,7 +16,7 @@ const TableJournalDetail: Component = () => {
       ];
     
       const rowData = [
-        { id: '1-T300', coa:'', debit:'Loren Ipsum', kredit:'' , info:'', balance:''}
+        { id: '1-T300', COA:'', debit:'Loren Ipsum', kredit:'' , info:'', balance:''}
       ];
     
     

@@ -3,14 +3,14 @@ import './neraca.css'
 import TableNeraca from './tables/table-neraca';
 import { Icon } from '@iconify-icon/solid';
 import { A } from '@solidjs/router';
-import NeracaNavbar from '../keuangan-navbar';
+import KeuanganNavbar from '../keuangan-navbar';
 
 
 const Neraca: Component = () => {
   return (
 
     <div class="neraca">
-        <NeracaNavbar/>
+        <KeuanganNavbar/>
         <div class="box-1">
             <div class="top-1">
                 <h1>Neraca</h1>

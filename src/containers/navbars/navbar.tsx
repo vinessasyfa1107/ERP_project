@@ -15,6 +15,11 @@ const Navbar: Component<NavbarProps> = (props) => {
     setpopUpPT(!popUpPT());
   }
 
+  const [pengeluaranPT, setPengeluaranPT] =  createSignal(false);
+
+  function handlePengeluaranPT() {
+    setPengeluaranPT(!pengeluaranPT());
+  }
 
     return (
         <div
@@ -153,12 +158,28 @@ const Navbar: Component<NavbarProps> = (props) => {
       </div>
     </div>
     <div class="flex flex-row mb-px gap-12 items-start">
-      <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col items-start">
+      {/* <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col items-start">
         <div class="bg-[#f56d59] flex flex-col justify-center w-32 h-10 shrink-0 items-center rounded-[23px]">
           <div class="text-xl font-['Inter'] font-bold text-white">
             + Create
           </div>
         </div>
+      </div> */}
+      {/* <div>
+        <button 
+       onClick={handlePengeluaranPT}>
+       <PengeluaranCreate isOpen={pengeluaranPT()} onClose={handlePengeluaranPT}/>
+       Create
+        </button>
+      </div> */}
+      <div class="dropdown dropdown-left">
+        <label tabindex="0" class="btn m-1 bg-[#f56d59] text-white">+ Create</label>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a>Master</a></li>
+          <li><a>Pengajuan</a></li>
+          <li><a>Pemasukan</a></li>
+          <li><a>Pengeluaran</a></li>
+        </ul>
       </div>
       <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
         <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-end gap-3 h-10 shrink-0 items-start pt-3 px-5 rounded-[20px]">
@@ -179,8 +200,7 @@ const Navbar: Component<NavbarProps> = (props) => {
     <div
       id="Ellipse"
       class="bg-[url(https://file.rendit.io/n/uDD9S64MFEoBlI4Pt9yw.svg)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-col ml-1 w-12 items-start p-1 cursor-pointer"
-      onClick={handlepopUpPT}
-    >
+      onClick={handlepopUpPT}>
        <PT_PopUp isOpen={popUpPT()} onClose={handlepopUpPT} />
       <img
         src="https://file.rendit.io/n/hlAlQ9Tuj0B7xjGjoFd1.svg"

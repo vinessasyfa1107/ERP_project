@@ -17,8 +17,6 @@ const Grafik_keuangan: Component = () => {
     createEffect(() => {
         let chart: am4charts.XYChart | null = null;
 
-        
-
         // Callback untuk menggambar chart
         const drawChart = () => {
             am4core.useTheme(am4themes_animated);

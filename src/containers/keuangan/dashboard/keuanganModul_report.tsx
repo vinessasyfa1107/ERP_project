@@ -1,17 +1,15 @@
 import { Component, createSignal } from 'solid-js';
-import Table_income_report from './table_report/table_income_report';
-import Table_expenses_report from './table_report/table_expenses_report';
-import Piechart_report from './piechart_report/piechart_report';
-import Barchart_inex_report from './barchart_inex_report/barchart_inex_report';
-import Barchart_aruskas_report from './barchart_aruskas_report/barchart_aruskas_report';
-import Barchart_labarugi_report from './barchart_labarugi_report/barchart_labarugi_report';
+import Table_income_report from '../../dashboard/report/table_report/table_income_report';
+import Table_expenses_report from '../../dashboard/report/table_report/table_expenses_report';
+import Piechart_report from '../../dashboard/report/piechart_report/piechart_report';
+import Barchart_inex_report2 from './barchart_inex_report2';
 // import ReportNavbar from '../reportNavbar';
 import { Icon } from '@iconify-icon/solid';
-import './report.css';
+import './keuanganModul_report.css';
 import Header from '../../header/header';
 
 
-const Report: Component = () => {
+const KeuanganModul_report: Component = () => {
     const [showIncomeTable, setShowIncomeTable] = createSignal(false);
     const [showExpensesTable, setShowExpensesTable] = createSignal(false);
 
@@ -27,40 +25,10 @@ const Report: Component = () => {
 
     return (
         <div>
-            <Header/>
-            {/* <div class="navbar-f-report">
-                <ReportNavbar />
-            </div> */}
-                <div class="card-module">
-                    <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
-                        Report
-                    </div>
-                </div>
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "160vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
-                {/* div untuk barchart container */}
+            <div class="report-container">
                 <div class="barchartReport-container">
-                    <div class="top-table">
-                        <div class="search-container">
-                            <div class="search-input">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="filter-text-box"
-                                    placeholder="Search..."
-                                />
-                                <span class="search-icon">
-                                    <Icon icon="ic:baseline-search" color="gray" width="16" height="16" />
-                                </span>
-                            </div>
-                            <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
-                        </div>
-                    </div>
-
-                    <div class="barchartInexReport">
-                        <Barchart_inex_report />
-                    </div>
+                    <Barchart_inex_report2 />
                 </div>
-
                 {/* div untuk income container dan expenses container */}
                 <div class="inex-container" style={{
                     "margin-top": "25px",
@@ -158,24 +126,10 @@ const Report: Component = () => {
                         <Piechart_report />
                     </div>
                 </div>
-
-                {/* div untuk barchart arus kas report */}
-                <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal" }}>Arus Kas</p>
-                <div class="barchart-aruskas-container" style={{ "margin-bottom": "5.5rem" }}>
-                    <Barchart_aruskas_report />
-                </div>
-
-                {/* div untuk barchart laba rugi */}
-                <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal" }}>Laba Rugi</p>
-                <div class="barchart-labarugi-container" >
-                    <Barchart_labarugi_report />
-                </div>
-
-
             </div>
         </div>
     );
 };
 
 
-export default Report;
+export default KeuanganModul_report;
