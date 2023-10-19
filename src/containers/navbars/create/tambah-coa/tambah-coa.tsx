@@ -1,42 +1,22 @@
-
 import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
 import { createSignal, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './form-edit-coa.css'
-
-interface FormEditAkunProps {
+import './tambah-coa.css'
+interface TambahCoaProps {
     OnClose: () => void;
-    dataId: number;
-    balance: number; // Tambahkan properti balance
 
 }
 
-const FormEditAkun: Component<FormEditAkunProps> = (props) => {
-
-    // const [formData, setFormData] = createSignal({
-    //     coa_kd: '',
-    //     coa_name: '',
-    //     category: ''
-    // });
-
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData((prevData) => ({ ...prevData, [name]: value }));
-    // };
-    const { dataId } = props;
-
+const TambahCoaCreate: Component<TambahCoaProps> = (props) => {
 
     const [coa_kd, setCoaKd] = createSignal('');
     const [coa_name, setCoaName] = createSignal('');
     const [category, setCategory] = createSignal('');
-    const [id, setId] = createSignal(dataId); // Inisialisasi dengan nilai default
 
     // Mengatur nilai id saat baris di tabel diklik atau data dimuat dari backend
-    setId(dataId); // dataId adalah nilai ID yang diteruskan sebagai prop
 
     // Kemudian, Anda dapat mengakses nilai id seperti ini:
-    const idValue = id(); // Mendapatkan nilai id
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -52,11 +32,9 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
     const saveChanges = async () => {
         try {
             const dataToSend = {
-                id: idValue,
                 coa_kd: coa_kd(),
                 coa_name: coa_name(),
                 category: category(),
-                balance: props.balance,
             };
     
             const response = await fetch(`/api/coa/update`, {
@@ -110,16 +88,16 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
         <div class="overlay">
 
 
-        <div class="edit-data">
+        <div class="tambah-coa-data">
          
-                <div class="edit-form">
+                <div class="tambah-coa-form">
                     <form method="dialog">
                         <div class="headakun">
-                            <h2>Edit COA</h2>
+                        <h2>Tambah COA <span>(*Tidak boleh kosong)</span></h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
-                        <div class="isi-form">
+                        <div class="isi-tambah-coa">
                          
                             <p>
                                 <label>Kode COA*</label>
@@ -169,4 +147,7 @@ const FormEditAkun: Component<FormEditAkunProps> = (props) => {
 };
 
 
-export default FormEditAkun;
+export default TambahCoaCreate;
+
+
+

@@ -31,7 +31,9 @@ const FormTambahCOA: Component = () => {
         if (response.ok) {
           console.log('Data berhasil diinput'); // Tampilkan pesan sukses
           alert('Data berhasil ditambah');
-          // Reset form
+          window.location.reload();
+          const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
+          modal.close();          // Reset form
           setFormData({
             id: 0,
             coa_kd: '',

@@ -9,12 +9,18 @@ import { A } from '@solidjs/router';
 import Header from '../../header/header';
 
 const Planning: Component = () => {
-    return (
-        <div class="plan">
-            <Header />
-            <A href="/master/master">
-                <button style={{ "background-color": "aqua" }}>ke master</button>
-            </A>
+  return (
+    <div class="plan">
+            <Header/>
+            <div class="card-module">
+                    <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
+                        Planning
+                    </div>
+                </div>
+        {/* <A href="/master/master">
+            <button style={{"background-color":"aqua"}}>ke master</button>
+        </A> */}
+
 
             <div class="box-1">
 
