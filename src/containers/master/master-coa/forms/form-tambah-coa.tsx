@@ -2,12 +2,11 @@ import { createSignal, type Component } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './form-tambah-coa.css'
 
-const FormTambahCOA: Component = () => {
+interface FormTambahCOAProps {
+    OnClose: () => void;
+}
 
-    const handleCloseClick = () => {
-        const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
-        modal.close();
-    };
+const FormTambahCOA: Component<FormTambahCOAProps> = (props) => {
 
     const [formData, setFormData] = createSignal({
         id: 0,
@@ -19,6 +18,11 @@ const FormTambahCOA: Component = () => {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!formData().coa_kd || !formData().coa_name || !formData().category) {
+            alert('Mohon isi semua kolom yang dibutuhkan.');
+            return; // Menghentikan pengiriman jika ada input yang kosong
+          }
     
         const response = await fetch('/api/coa/', {
           method: 'POST',
@@ -31,9 +35,9 @@ const FormTambahCOA: Component = () => {
         if (response.ok) {
           console.log('Data berhasil diinput'); // Tampilkan pesan sukses
           alert('Data berhasil ditambah');
+          window.location.href='/master/mastercoa';
           window.location.reload();
-          const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
-          modal.close();          // Reset form
+          props.OnClose()
           setFormData({
             id: 0,
             coa_kd: '',
@@ -49,17 +53,15 @@ const FormTambahCOA: Component = () => {
       };
 
     return (
-        <div class="form-coa">
-            <div class="btn-tambah-rencana">
-                <button onClick={() => (document.getElementById('form_modal_1') as HTMLDialogElement).showModal()}><Icon icon="fa:plus" color="white" width="10" height="11" /></button>
-            </div>
 
-            <dialog id="form_modal_1" class="modal">
+        <div class="overlay">
+        <div class="form-coa">
+ 
                 <div class="modal-form-coa">
                     <form method="dialog">
                         <div class="headrencana">
                             <h2>Tambah COA Master <span>(*Tidak boleh kosong)</span></h2>
-                            <button onClick={handleCloseClick}>✕</button>
+                            <button onClick={props.OnClose}>✕</button>
                         </div>
 
                         <div class="isian-form">
@@ -99,7 +101,7 @@ const FormTambahCOA: Component = () => {
                         </div>
                     </form>
                 </div>
-            </dialog>
+        </div>
         </div>
     );
 };

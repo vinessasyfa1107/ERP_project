@@ -14,35 +14,42 @@
     background-color: #fff;
 } */
 
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Warna latar belakang semi-transparan */
+    z-index: 2; /* Z-index lebih tinggi dari form popup */
+}
+
 .tambah-acc-master {
     margin: 0;
     padding: 0;
-}
-
-
-.tambah-acc-master .btn-tambah-akun button {
-    width: 76px;
-    height: 25px;
-    border-radius: 4px;
-    margin-top: 15px;
-    align-items: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    z-index: 3;
+    position: fixed;
     justify-content: center;
-    background-color: #8467FFCC;
-    color: white;
-    float: right;
+    align-items: center;
 }
+
 
 /*css untuk tabel form popup*/
 .tambah-acc-master .tambah-form {
     /*untuk mengatur radius pop up form*/
-    border-radius: 10px;
+    border-radius: 15px;
     width: 85vh;
-    height: 95vh;
+    height: 87vh;
     background-color: #fff;
     padding: 25px 20px;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    margin: auto;
 }
 
 .tambah-acc-master form .headakun {
@@ -182,7 +189,7 @@ select {
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
-    text-transform: initial;    
+    text-transform: capitalize;    
 }
 
 .tambah-acc-master .options .drop-posisi {

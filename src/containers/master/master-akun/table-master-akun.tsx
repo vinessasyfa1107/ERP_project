@@ -22,11 +22,22 @@ const TableAkunMaster: Component = () => {
     const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
   
     const [editedData, setEditedData] = createSignal(null);
-  
-    const showEditPopup = (rowData: any) => {
-      console.log("ID yang diklik:", id);
+
+    const [id, setId] = createSignal(0);
+    const [account_name, setAccount_name] = createSignal<string>();
+    const [role, setRole] = createSignal<string[]>([]);
+    const [username, setUsername] = createSignal<string>();
+    const [password, setPassword] = createSignal<string>();
+
+    
+    const showEditPopup = (data) => {
+      const { id, account_name, role, username, password } = data;
+      console.log("isi data: ", data);
       setId(id);
-      setEditedData(rowData);
+      setAccount_name(account_name);
+      setRole(role);
+      setUsername(username);
+      setPassword(password);
       setIsEditPopupOpen(!isEditPopupOpen());
     };
   
@@ -37,7 +48,7 @@ const TableAkunMaster: Component = () => {
 
     const [DeletePopUp, setDeletePopUp] = createSignal(false);
 
-    const [id, setId] = createSignal(0);
+
 
     const handleDeletePopUp = (id: number) => {
       console.log("ID yang diklik:", id);
@@ -52,7 +63,6 @@ const TableAkunMaster: Component = () => {
         { field: 'email' },
         { field: 'access', headerName: 'Akses'},
         { field: 'role', headerName: 'Posisi'},
-        { field: 'category', headerName: 'Kategori'},
         { field: 'aksi', cellRenderer: (params: any) => {
             return (
               <div style={{"margin-top": "8px", display:"flex", "justify-content":"space-between", width:"50px"}}>
@@ -90,10 +100,13 @@ const TableAkunMaster: Component = () => {
                 gridOptions={gridOptions}
             />
         </div>
-        <div>
-        <TambahAkunMaster/>
-        </div>
-      {isEditPopupOpen() && (<EditAkunMaster dataId={id()} OnClose={ClosePopUp}/>)}
+      {isEditPopupOpen() && (<EditAkunMaster 
+                              dataId={id()} 
+                              account_name={account_name()}
+                              role={role()}
+                              username={username()} 
+                              password={password()} 
+                              OnClose={ClosePopUp}/>)}
       {DeletePopUp() && (<ConfirmDeleteAkun dataId={id()} OnClose={ClosePopUp}/>)}
     </div>
   );

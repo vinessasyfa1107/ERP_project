@@ -1,19 +1,27 @@
 /*css untuk button tambah rencana*/
-.form-coa {
-    margin: 0;
-    padding: 0;
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Warna latar belakang semi-transparan */
+    z-index: 2; /* Z-index lebih tinggi dari form popup */
 }
 
-.form-coa .btn-tambah-rencana button {
-    width: 76px;
-    height: 25px;
-    border-radius: 4px;
-    margin-top: 15px;
-    align-items: center;
+.form-coa {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    padding: 5px;
+    position: fixed;
     justify-content: center;
-    background-color: #8467FFCC;
-    color: white;
-    float: right;
+    align-items: center;
+    z-index: 3;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px;
+    background-color: #fff;
 }
 
 /*css untuk tabel form popup*/
@@ -21,10 +29,13 @@
     /*untuk mengatur radius pop up form*/
     border-radius: 20px;
     width: 85vh;
-    height: 71vh;
+    height: 68vh;
     background-color: #fff;
     text-align: left;
     padding: 25px 20px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .modal-form-coa .isian-form {
@@ -86,7 +97,7 @@
     width: 29rem;
     height: 2rem;
     margin-top: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     padding: 12px 10px;
     border-radius: 5px;
     background: #F8F8F9;

@@ -1,15 +1,24 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-master-list.css'
+import { dataaccountmaster } from '../../../api/master/data-account-master';
 
 const TableListAkun: Component = () => {
+
+  const [RowData, setRowData] = createSignal([{"id":1}]);
+
+  onMount(async () => {
+    const accountmaster = await dataaccountmaster("data account master");
+    console.log("accountread", accountmaster);
+    setRowData(accountmaster)
+  })
+
     const columnDefs = [
         { field: 'account_name', headerName: 'Nama'},
         { field: 'email'},
-        { field: 'Role'},
-        { field: 'kategori'}
+        { field: 'role'},
       ];
     
       const rowData = [
@@ -38,7 +47,7 @@ const TableListAkun: Component = () => {
         <div class="ag-theme-alpine" style={{width:'70vh', height:'24vw'}}>
             <AgGridSolid
                 columnDefs={columnDefs}
-                rowData={rowData}
+                rowData={RowData()}
                 defaultColDef={defaultColDef}
                 gridOptions={gridOptions}
             />

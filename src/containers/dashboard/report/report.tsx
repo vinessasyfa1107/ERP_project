@@ -1,4 +1,4 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, onMount } from 'solid-js';
 import Table_income_report from './table_report/table_income_report';
 import Table_expenses_report from './table_report/table_expenses_report';
 import Piechart_report from './piechart_report/piechart_report';
@@ -9,9 +9,19 @@ import Barchart_labarugi_report from './barchart_labarugi_report/barchart_labaru
 import { Icon } from '@iconify-icon/solid';
 import './report.css';
 import Header from '../../header/header';
+import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 
 
 const Report: Component = () => {
+
+    const [, {changeTitleNavbar}] = useNavbarStore();
+
+
+    onMount(() => {
+        changeTitleNavbar("Dashboard");
+    })
+
+
     const [showIncomeTable, setShowIncomeTable] = createSignal(false);
     const [showExpensesTable, setShowExpensesTable] = createSignal(false);
 
