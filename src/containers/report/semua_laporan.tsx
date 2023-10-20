@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { onMount, type Component } from 'solid-js';
 import Semua_laporanNavbar from './semua_laporanNavbar';
 import './semua_laporan.css';
 import Pengeluaran_semualap from './pemasukan_pengeluaran_semualap/pengeluaran_semualap';
@@ -11,8 +11,17 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
 import AgGridSolid from 'ag-grid-solid';
+import { useNavbarStore } from '../../store/Navbar/NavbarStore';
 
 const Semua_laporan: Component = () => {
+
+  const [, {changeTitleNavbar}] = useNavbarStore();
+
+
+  onMount(() => {
+      changeTitleNavbar("Report");
+  })
+  
   return (
     <div>
       <Semua_laporanNavbar />
