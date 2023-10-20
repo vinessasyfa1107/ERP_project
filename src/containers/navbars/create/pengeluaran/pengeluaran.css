@@ -1,6 +1,13 @@
-/* .select-sm {
-    height: 35px;
-} */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 /*css untuk button tambah akun*/
 .pengeluaran-data {
     left: 50%;

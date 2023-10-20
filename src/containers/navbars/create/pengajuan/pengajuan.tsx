@@ -100,7 +100,7 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                     <label>COA*</label>
                                     <br />
                                     <input
-                                    type="text"
+                                    type="number"
                                     name="namaCOA" // Ganti cd_account dengan kodeAkun
                                     value={coa_pemasukan()}
                                     onChange={handleInputChange}

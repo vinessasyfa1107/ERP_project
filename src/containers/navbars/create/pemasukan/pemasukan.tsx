@@ -122,19 +122,18 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 <div>
                                     <label>Faktur*</label>
                                     <br />
-                                    <input
-                                    type="text"
-                                    name="kodeCOA" // Ganti cd_account dengan kodeAkun
-                                    value={faktur_pengeluaran()}
-                                    onChange={handleInputChange}
-                                    />
+                                    <input type="text" 
+                                        name="onlynumbers" 
+                                        pattern="\d{1,5}"  
+                                        maxlength="5">
+                                    </input>
                                 </div>
 
                                 <div style={{"margin-left":"3.5vw"}}>
                                     <label>COA*</label>
                                     <br />
                                     <input
-                                    type="text"
+                                    type="number"
                                     name="namaCOA" // Ganti cd_account dengan kodeAkun
                                     value={coa_pengeluaran()}
                                     onChange={handleInputChange}
@@ -182,10 +181,8 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                             </div>
 
                             <div>
-                                <label>Bukti*</label>
+                                <label>Bukti*<span style={{"font-size": "1.5vh"}}>(Pilih file dengan format .png atau .jpg ke dalam form)</span></label>
                                 <br />
-                                <div>Pilih file dengan format .png atau .jpg ke dalam form</div>
-                                <div>atau tarik dan lepas file tersebut</div>
                                 <input style={{"width":"30vw", "height":"6vh", "margin-top": "1vh"}}
                                 type="file" class="file-input file-input-ghost w-full max-w-xs" 
                                 />
