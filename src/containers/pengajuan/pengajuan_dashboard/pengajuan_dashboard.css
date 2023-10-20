@@ -1,24 +1,33 @@
-* {
+.pengajuanDashboard_container1 {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Manrope', sans-serif;
+    justify-content: center;
+    align-items: center;
 }
-.pengajuanDashboard_container {
-    background-color: #EFEFEF;
+
+.pengajuanDashboard_container1 .pengajuanDashboard_container2 {
     width: 150vh;
-    height: 115vh;
-    border-radius: 6px;
+    height: 687px;
+    border-radius: 10px;
+    background: #EFEFEF;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
     margin-bottom: 20px;
 }
 
-.pengajuanDashboard_container .component-1 {
+.pengajuanDashboard_container1 .pengajuanDashboard_container2 .component-1 {
     display: flex;
-    padding-top: 2rem;
-    padding-left: 2rem;
 }
 
-.pengajuanDashboard_container .tabel-keterangan .rightcp {
+.pengajuanDashboard_container1 .pengajuanDashboard_container2 h1 {
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.rightcp {
     display: inline-flex;
     align-items: center;
     position: relative;
@@ -26,7 +35,7 @@
     float: right;
 }
 
-.pengajuanDashboard_container .tabel-keterangan .rightcp input[type=text] {
+.rightcp input[type=text] {
     border: 1px solid #ccc; 
     width: 260px;
     height: 25px; 
@@ -39,14 +48,14 @@
     top: 0;
 }
 
-.pengajuanDashboard_container .tabel-keterangan .rightcp .search-icon {
+.pengajuanDashboard_container1 .rightcp .search-icon {
     position: absolute;
     display: inline-flex;
     right: 8vh;
     color: #ccc;
 }
 
-.pengajuanDashboard_container .tabel-keterangan .rightcp .btn-sort {
+.pengajuanDashboard_container1 .rightcp .btn-sort {
     margin: auto;
     width: 26px;
     height: 25px;
@@ -55,6 +64,3 @@
     border-radius: 5px;
 }
 
-.pengajuanDashboard_container .rencanaPengajuan-container {
-    padding-top: 2rem;
-}

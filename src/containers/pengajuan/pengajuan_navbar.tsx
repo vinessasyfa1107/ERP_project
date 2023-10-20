@@ -8,8 +8,8 @@ const Pengajuan_navbar: Component = () => {
   return (
     <div>
       <div class="navbar-pengajuan">
-        <A href='/pengajuan/pengajuan_dashboard' classList={{ active: location.pathname === '/pengajuan/pengajuan_dashboard' }}>Semua Laporan</A>
-        <A href='/pengajuan/pengajuan_laporan' classList={{ active: location.pathname === '/pengajuan/pengajuan_laporan' }}>Kas Besar</A>
+        <A href='/pengajuan/pengajuan_dashboard' classList={{ active: location.pathname === '/pengajuan/pengajuan_dashboard' }}>Dashboard</A>
+        <A href='/pengajuan/pengajuan_laporan' classList={{ active: location.pathname === '/pengajuan/pengajuan_laporan' }}>Laporan</A>
       </div>
     </div>
   );

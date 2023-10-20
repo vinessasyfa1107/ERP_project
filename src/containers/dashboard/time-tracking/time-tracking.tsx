@@ -1,5 +1,5 @@
 import { createSignal, type Component } from 'solid-js';
-import './time-tracking.css'
+import './time-tracking.css';
 import TableTime from './table-time';
 import { Icon } from '@iconify-icon/solid';
 import Header from '../../header/header';

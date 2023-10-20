@@ -12,7 +12,6 @@ import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
 import AgGridSolid from 'ag-grid-solid';
 
-
 const Semua_laporan: Component = () => {
   return (
     <div>
