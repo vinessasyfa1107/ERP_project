@@ -57,8 +57,8 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
             if (response.ok) {
               console.log('Data berhasil diinput');
               alert('Data berhasil ditambah');
-              window.location.reload();
               window.location.href='/master/masterakun';
+              window.location.reload();
               props.OnClose();
               setFormData({
                 id: 0,

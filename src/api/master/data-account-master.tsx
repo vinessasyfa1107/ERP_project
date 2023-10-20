@@ -16,7 +16,7 @@ export async function dataaccountmaster(query: string) {
     
              
     const response = await fetch(
-      `http://localhost:8001/api/account/`, {mode: 'no-cors'}
+      `/api/account/`, {mode: 'no-cors'}
     );
     
     const results = await response.json();
