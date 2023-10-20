@@ -10,7 +10,7 @@ const ConfirmDeleteAkun: Component<ConfirmDeleteAkunProps> = (props) => {
   
 
     const handleDelete = async () => {
-      const response = await fetch(`/api/accountread/${props.dataId}`, {
+      const response = await fetch(`/api/account/${props.dataId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

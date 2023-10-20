@@ -1,15 +1,23 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-master-list.css'
+import { datacoamaster } from '../../../api/master/data-coa-master';
 
 const TableListCOA: Component = () => {
+  const [RowData, setRowData] = createSignal([{}]);
+
+  onMount(async () => {
+    const data_coa = await datacoamaster("data coa master");
+    console.log("datacoa", data_coa);
+    setRowData(data_coa)
+  })
 
     const columnDefs = [
         { field: 'coa_kd', headerName: 'Kode Akun', minWidth: 10},
         { field: 'coa_name', headerName: 'Nama COA'},
-        { field: 'kategori'}
+        { field: 'category'}
       ];
     
       const rowData = [
@@ -41,7 +49,7 @@ const TableListCOA: Component = () => {
         <div class="ag-theme-alpine" style={{width:'70vh', height:'24vw'}}>
             <AgGridSolid
                 columnDefs={columnDefs}
-                rowData={rowData}
+                rowData={RowData()}
                 defaultColDef={defaultColDef}
                 gridOptions={gridOptions}
             />

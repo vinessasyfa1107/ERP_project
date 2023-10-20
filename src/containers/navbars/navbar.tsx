@@ -10,6 +10,9 @@ import PengajuanCreate from './create/pengajuan/pengajuan';
 import TambahCoaCreate from './create/tambah-coa/tambah-coa';
 import TambahAkunCreate from './create/tambah-akun/tambah-akun';
 import LogoutPopUp from "./pop-up/logout-pop-up";
+import { useStore } from "../../store";
+import TambahAkunMaster from "../master/master-akun/forms/tambah-akun-master";
+import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
 
 interface NavbarProps {
   children: JSX.Element
@@ -19,6 +22,8 @@ interface NavbarProps {
 
 const Navbar: Component<NavbarProps> = (props) => {
 
+  const [{navbarStore}] = useStore();
+  
   const [popUpPT, setpopUpPT] = createSignal(false);
 
   const [popUpLogout, setpopUpLogout] = createSignal(false);
@@ -109,22 +114,21 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/report/semua_laporan">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-start hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
-                <div class="flex flex-row gap-3 w-24 shrink-0 items-start mt-px mb-1">
+            <A href="">
+              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+                <div class="flex flex-row gap-2 w-3/5 items-center">
                   <img
-                    src="https://file.rendit.io/n/b0a3emC0YfSakhwnz7gH.svg"
-                    id="Tablerreport"
-                    class="w-6 shrink-0"
+                    src="https://file.rendit.io/n/h8cBAvKlGb8aqqxR1I9z.svg"
+                    class="self-start w-5 shrink-0"
                   />
-                  <div class="font-['Inter'] font-bold text-black/42 mt-px">
-                    Report
+                  <div class="font-['Inter'] font-bold text-black/42">
+                    Pengajuan
                   </div>
                 </div>
                 <img
                   src="https://file.rendit.io/n/ecNIkV3GbrJy8rFTPryt.svg"
-                  id="Radixiconscaretdown3"
-                  class="w-6 shrink-0"
+                  id="Radixiconscaretdown"
+                  class="self-start w-6 shrink-0 my-1"
                 />
               </div>
             </A>
@@ -151,19 +155,22 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
-                <div class="flex flex-row gap-2 w-3/5 items-center">
+            <A href="/report/semua_laporan">
+              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-start hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+                <div class="flex flex-row gap-3 w-24 shrink-0 items-start mt-px mb-1">
                   <img
-                    src="https://file.rendit.io/n/h8cBAvKlGb8aqqxR1I9z.svg"
-                    class="self-start w-5 shrink-0"
+                    src="https://file.rendit.io/n/b0a3emC0YfSakhwnz7gH.svg"
+                    id="Tablerreport"
+                    class="w-6 shrink-0"
                   />
-                  <div class="font-['Inter'] font-bold text-black/42">Pengajuan</div>
+                  <div class="font-['Inter'] font-bold text-black/42 mt-px">
+                    Report
+                  </div>
                 </div>
                 <img
                   src="https://file.rendit.io/n/ecNIkV3GbrJy8rFTPryt.svg"
-                  id="Radixiconscaretdown"
-                  class="self-start w-6 shrink-0 my-1"
+                  id="Radixiconscaretdown3"
+                  class="w-6 shrink-0"
                 />
               </div>
             </A>
@@ -203,7 +210,7 @@ const Navbar: Component<NavbarProps> = (props) => {
                 </div>
               </div>
               <div class="text-4xl font-['Inter'] font-bold text-[#a892f2] mt-2">
-                Report
+               {navbarStore.title_navbar}
               </div>
             </div>
 
@@ -343,8 +350,8 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </div> */}
           </div>
-          {tambahCoaPopup() && (<TambahCoaCreate OnClose={ClosePopUp} />)}
-          {tambahAkunPopup() && (<TambahAkunCreate OnClose={ClosePopUp} />)}
+          {tambahCoaPopup() && (<FormTambahCOA OnClose={ClosePopUp}/>)}
+          {tambahAkunPopup() && (<TambahAkunMaster OnClose={ClosePopUp} />)}
           {pengajuanPopup() && (<PengajuanCreate OnClose={ClosePopUp} />)}
           {pemasukanPopup() && (<PemasukanCreate OnClose={ClosePopUp} />)}
           {pengeluaranPopup() && (<PengeluaranCreate OnClose={ClosePopUp} />)}
