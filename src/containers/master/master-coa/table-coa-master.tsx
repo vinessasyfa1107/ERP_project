@@ -93,7 +93,6 @@ const TabelCOAMaster: Component = () => {
             />
       </div>
       <div>
-      <FormTambahCOA/>
       </div>
       {isEditPopup1Open() && (<FormEditAkun OnClose={CloseEditPopUp} dataId={id()} balance={balance()}/>)}
       {ConfirmPopUp() && (<ConfirmPopUP OnClose={CloseEditPopUp} dataId={id()}/>)}

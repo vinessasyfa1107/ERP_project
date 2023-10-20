@@ -7,6 +7,10 @@ import './edit-akun-master.css'
 interface EditAkunMasterProps {
     OnClose: () => void;
     dataId: number;
+    account_name: string;
+    role: string[],
+    username: string;
+    password: string;
 }
 
 const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
@@ -16,44 +20,27 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
 
     // const [id, setId] = createSignal(dataId); // Inisialisasi dengan nilai default
     const [formData, setFormData] = createSignal({
-        account_name: '',
         email: '',
         access: '',
-        role: [],
         category: ''
     });
 
-    // Mengatur nilai id saat baris di tabel diklik atau data dimuat dari backend
-    // setId(dataId); // dataId adalah nilai ID yang diteruskan sebagai prop
-
-    // Kemudian, Anda dapat mengakses nilai id seperti ini:
-    // const idValue = id(); // Mendapatkan nilai id
-
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     if (name === 'kodeCOA') {
-    //         setCoaKd(value);
-    //     } else if (name === 'namaCOA') {
-    //         setCoaName(value);
-    //     } else if (name === 'kategori') {
-    //         setCategory(value);
-    //     }
-    // };
 
     const saveChanges = async () => {
         try {
             const dataToSend = {
                 id: props.dataId,
-                account_name: formData().account_name,
+                account_name: props.account_name,
                 email: formData().email,
                 access: formData().access,
-                role: formData().role,
-                categoty: formData().category
+                role: props.role,
+                username: props.username,
+                password: props.password
             };
 
             console.log(dataToSend);
     
-            const response = await fetch(`/api/coa/update`, {
+            const response = await fetch(`/api/account/update`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,6 +51,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
             if (response.ok) {
                 // Data berhasil diubah, tampilkan alert
                 alert('Data berhasil diubah');
+                window.location.reload();
                 props.OnClose();
             } else {
                 // Gagal mengubah data, tampilkan pesan kesalahan dari respons
@@ -116,21 +104,11 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                         </div>
 
                         <div class="isi-form">
-
-                            <p>
-                                <label>Nama*</label>
-                                <br />
-                                <input type="text" required 
-                                value={formData().account_name}
-                                onInput={(e) => setFormData({ ...formData(), account_name: e.target.value })}
-                                />
-                            </p>
-
-                         
+      
                             <p>
                                 <label>Email*</label>
                                 <br />
-                                <input type="text" required 
+                                <input type="text"  
                                 value={formData().email}
                                 onInput={(e) => setFormData({ ...formData(), email: e.target.value })}
                                 />
@@ -139,17 +117,17 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                             <p>
                                 <label>Access*</label>
                                 <br />
-                                    <select id="access" name="access" required
+                                    <select id="access" name="access" 
                                     value={formData().access}
                                     onChange={(e) => setFormData({ ...formData(), access: e.target.value })}
                                     >
                                         <option value="admin">Admin</option>
-                                        <option value="direktur keuangan">Direktur Keuangan</option>
-                                        <option value="direktur utama">Direktur Utama</option>
+                                        <option value="direktur_keuangan">Direktur Keuangan</option>
+                                        <option value="direktur_utama">Direktur Utama</option>
                                     </select>  
                             </p>
                             
-                            <div class="edit-options">
+                            {/* <div class="edit-options">
                             <div style={{ display: 'flex', "flex-direction": "column" }}>
                             <label>Posisi*</label>
                                 <div class="dropdown dropdown-bottom">
@@ -160,14 +138,14 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                                         <li class="posisi-opsi">
                                             <label >
                                                 <a style={{display: 'flex'}}>
-                                                    <input type="checkbox" value="Customer" 
-                                                    checked={selectedItems().includes("Customer")}
+                                                    <input type="checkbox" value="customer" 
+                                                    checked={selectedItems().includes("customer")}
                                                     onChange={(e) => {
                                                         setSelectedItems((prevSelectedItems) => {
                                                             if (e.target.checked) {
-                                                                return [...prevSelectedItems, "Customer"];
+                                                                return [...prevSelectedItems, "customer"];
                                                             } else {
-                                                                return prevSelectedItems.filter(role => role !== "Customer");
+                                                                return prevSelectedItems.filter(role => role !== "customer");
                                                             }
                                                         });
                                                 
@@ -187,13 +165,13 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                                         <li class="posisi-opsi">
                                             <label>
                                                 <a style={{display: 'flex'}}>
-                                                    <input type="checkbox" value="Supplier" 
+                                                    <input type="checkbox" value="supplier" 
                                                     onChange={(e) => {
                                                         setSelectedItems((prevSelectedItems) => {
                                                             if (e.target.checked) {
-                                                                return [...prevSelectedItems, "Supplier"];
+                                                                return [...prevSelectedItems, "supplier"];
                                                             } else {
-                                                                return prevSelectedItems.filter(role => role !== "Supplier");
+                                                                return prevSelectedItems.filter(role => role !== "supplier");
                                                             }
                                                         });
                                                 
@@ -213,14 +191,14 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                                         <li class="posisi-opsi">
                                             <label >
                                                 <a style={{display: 'flex'}}>
-                                                    <input type="checkbox" value="Employee" 
-                                                    checked={selectedItems().includes("Employee")}
+                                                    <input type="checkbox" value="employee" 
+                                                    checked={selectedItems().includes("employee")}
                                                     onChange={(e) => {
                                                         setSelectedItems((prevSelectedItems) => {
                                                             if (e.target.checked) {
-                                                                return [...prevSelectedItems, "Employee"];
+                                                                return [...prevSelectedItems, "employee"];
                                                             } else {
-                                                                return prevSelectedItems.filter(role => role !== "Employee");
+                                                                return prevSelectedItems.filter(role => role !== "employee");
                                                             }
                                                         });
                                                 
@@ -240,16 +218,7 @@ const EditAkunMaster: Component<EditAkunMasterProps> = (props) => {
                                     </ul>
                                 </div>
                             </div>
-                            </div>
-
-                            <p>
-                                <label>Kategori*</label>
-                                <br />
-                                <input type="text" required
-                                    value={formData().category}
-                                    onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
-                                />
-                            </p>
+                            </div> */}
 
         
                         </div>

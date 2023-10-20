@@ -44,7 +44,7 @@
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
-    height: 90vh;
+    height: 55vh;
     background-color: #fff;
     padding: 25px 20px;
     justify-content: center;
@@ -150,7 +150,7 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%); /*Geser tombol ke tengah*/
-    top: 10px;
+    top: 25px;
     width: 80px;
     height: 42px;
     border-radius: 5px;
@@ -186,7 +186,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
-    text-transform: initial;    
+    text-transform: capitalize;    
 }
 
 .edit-acc-master .edit-options .drop-posisi {
@@ -200,7 +200,7 @@
 .edit-acc-master .edit-options .dropdown-content {
     margin-top: 2px;
     width: 78vh;
-    height: 8rem;
+    height: 7rem;
     background-color: white;
     border: 1px solid grey;
     border-radius: 10px;

@@ -4,97 +4,75 @@ import { createSignal, onCleanup, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './tambah-akun-master.css'
 
+interface TambahAkunMasterProps {
+    OnClose: () => void;
+}
 
-const TambahAkunMaster: Component = () => {
-    const handleCloseClick = () => {
-        const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
-        modal.close();
-    };
+const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
+
+  
 
     const [formData, setFormData] = createSignal({
-        account_id: 0,
         id: 0,
-        username: '',
         account_name: '',
         email: '',
         access: '',
         role: [],
-        category: '',
+        username: '',
         password: ''
     });
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        // Mendapatkan data dari form
-        const formValues = formData();
 
-        // Memisahkan data form untuk masing-masing tabel
-        const DataLogin = {
-            account_id: formValues.account_id,
-            username: formValues.username,
-            password: formValues.password,
-        };
-
-        const DataAccounRead = {
-            id: formValues.id,
-            account_name: formValues.account_name,
-            email: formValues.email,
-            access: formValues.access,
-            role: formValues.role,
-            category: formValues.category,
-        };
-
-        console.log(DataLogin);
-        console.log(DataAccounRead);
-        // Selanjutnya, Anda dapat mengirim data ke server untuk insert ke dua tabel
-        // Misalnya, Anda bisa menggunakan fetch atau library seperti axios.
-
-        const resetForm = () => {
-            setFormData({
-                account_id: 0,
-                id: 0,
-                username: '',
-                account_name: '',
-                email: '',
-                access: '',
-                role: [],
-                category: '',
-                password: ''
-            });
-        };
-
+        if (!formData().email || !formData().access || !formData().role) {
+            alert('Mohon isi semua kolom yang dibutuhkan.');
+            return; // Menghentikan pengiriman jika ada input yang kosong
+          }
+          
         try {
-            const responseTable1 = await fetch('/api/accountread/', {
+
+            const DataAccount = {
+                id: 0,
+                account_name: formData().account_name,
+                email: formData().email,
+                access: formData().access,
+                role: formData().role,
+                username: formData().username,
+                password: formData().password
+            };
+
+            console.log("Insert: ", DataAccount);
+
+            const response = await fetch('/api/account/', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(DataAccounRead),
+                body: JSON.stringify(DataAccount),
               });
-            // Kirim data ke tabel pertama
-            const responseTable2 = await fetch('/api/login/', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(DataLogin),
-            });
+
         
-            // Kirim data ke tabel kedua
         
-            if (responseTable1.ok && responseTable2.ok) {
+            if (response.ok) {
               console.log('Data berhasil diinput');
               alert('Data berhasil ditambah');
               window.location.reload();
-              const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
-              modal.close();
-              
+              window.location.href='/master/masterakun';
+              props.OnClose();
+              setFormData({
+                id: 0,
+                account_name: '',
+                email: '',
+                access: '',
+                role: [],
+                username: '',
+                password: ''
+              });
             } else {
-              const errorMessageTable1 = await responseTable1.text();
-              const errorMessageTable2 = await responseTable2.text();
-              const errorMessage = `Gagal mengubah data. Pesan kesalahan (Tabel 1): ${errorMessageTable1}, (Tabel 2): ${errorMessageTable2}`;
-              alert(errorMessage);
-              console.error('Gagal mengubah data:', errorMessage);
+              const errorMessage = await response.text();
+                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                console.error('Gagal mengubah data:', errorMessage);
             }
           } catch (error) {
             console.error('Gagal mengirim permintaan:', error);
@@ -154,17 +132,18 @@ const TambahAkunMaster: Component = () => {
 
 
     return (
-        <div class="tambah-acc-master">
-            <div class="btn-tambah-akun">
-                <button onClick={() => (document.getElementById('form_modal_1') as HTMLDialogElement).showModal()}><Icon icon="fa:plus" color="white" width="10" height="11" /></button>
-            </div>
+        <div class="overlay">
 
-            <dialog id="form_modal_1" class="modal">
+        <div class="tambah-acc-master">
+            {/* <div class="btn-tambah-akun">
+                <button onClick={() => (document.getElementById('form_modal_1') as HTMLDialogElement).showModal()}><Icon icon="fa:plus" color="white" width="10" height="11" /></button>
+            </div> */}
+
                 <div class="tambah-form">
                     <form method="dialog">
                         <div class="headakun">
                             <h2>Tambah Akun <span>(*)</span></h2>
-                            <button onClick={handleCloseClick}>✕</button>
+                            <button onClick={props.OnClose}>✕</button>
                         </div>
 
                         <div class="isi-form">
@@ -205,8 +184,8 @@ const TambahAkunMaster: Component = () => {
                                     onChange={(e) => setFormData({ ...formData(), access: e.target.value })}
                                     >
                                         <option value="admin">Admin</option>
-                                        <option value="direktur keuangan">Direktur Keuangan</option>
-                                        <option value="direktur utama">Direktur Utama</option>
+                                        <option value="direktur_keuangan">Direktur Keuangan</option>
+                                        <option value="direktur_utama">Direktur Utama</option>
                                     </select>
                                 </p>
 
@@ -244,14 +223,14 @@ const TambahAkunMaster: Component = () => {
                                                 <li class="posisi-opsi">
                                                     <label >
                                                         <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="Customer" 
-                                                            checked={selectedItems().includes("Customer")}
+                                                            <input type="checkbox" value="customer" 
+                                                            checked={selectedItems().includes("customer")}
                                                             onChange={(e) => {
                                                                 setSelectedItems((prevSelectedItems) => {
                                                                     if (e.target.checked) {
-                                                                        return [...prevSelectedItems, "Customer"];
+                                                                        return [...prevSelectedItems, "customer"];
                                                                     } else {
-                                                                        return prevSelectedItems.filter(role => role !== "Customer");
+                                                                        return prevSelectedItems.filter(role => role !== "customer");
                                                                     }
                                                                 });
                                                         
@@ -271,13 +250,14 @@ const TambahAkunMaster: Component = () => {
                                                 <li class="posisi-opsi">
                                                     <label>
                                                         <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="Supplier" 
+                                                            <input type="checkbox" value="supplier" 
+                                                            checked={selectedItems().includes("supplier")}
                                                             onChange={(e) => {
                                                                 setSelectedItems((prevSelectedItems) => {
                                                                     if (e.target.checked) {
-                                                                        return [...prevSelectedItems, "Supplier"];
+                                                                        return [...prevSelectedItems, "supplier"];
                                                                     } else {
-                                                                        return prevSelectedItems.filter(role => role !== "Supplier");
+                                                                        return prevSelectedItems.filter(role => role !== "supplier");
                                                                     }
                                                                 });
                                                         
@@ -297,14 +277,14 @@ const TambahAkunMaster: Component = () => {
                                                 <li class="posisi-opsi">
                                                     <label >
                                                         <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="Employee" 
-                                                            checked={selectedItems().includes("Employee")}
+                                                            <input type="checkbox" value="employee" 
+                                                            checked={selectedItems().includes("employee")}
                                                             onChange={(e) => {
                                                                 setSelectedItems((prevSelectedItems) => {
                                                                     if (e.target.checked) {
-                                                                        return [...prevSelectedItems, "Employee"];
+                                                                        return [...prevSelectedItems, "employee"];
                                                                     } else {
-                                                                        return prevSelectedItems.filter(role => role !== "Employee");
+                                                                        return prevSelectedItems.filter(role => role !== "employee");
                                                                     }
                                                                 });
                                                         
@@ -329,15 +309,6 @@ const TambahAkunMaster: Component = () => {
                             </div>
 
                             <p>
-                                <label>Kategori*</label>
-                                <br />
-                                <input type="text" required
-                                    value={formData().category}
-                                    onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
-                                />
-                            </p>
-
-                            <p>
                                 <label>Password*</label>
                                 <br />
                                 <input type="text" required
@@ -354,7 +325,7 @@ const TambahAkunMaster: Component = () => {
                         </div>
                     </form>
                 </div>
-            </dialog>
+        </div>
         </div>
     );
 };

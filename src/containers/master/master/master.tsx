@@ -1,12 +1,21 @@
-import { createSignal, type Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import './master.css'
 import TableListCOA from './table-list-coa';
 import TableListAkun from './table-list-akun';
 import { Icon } from '@iconify-icon/solid';
 import { A, useLocation } from '@solidjs/router';
+import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 
 
 const Master: Component = () => {
+
+    const [, {changeTitleNavbar}] = useNavbarStore();
+
+
+    onMount(() => {
+        changeTitleNavbar("Master");
+    })
+
 
     const [Table1, setTable1] = createSignal(false);
 
