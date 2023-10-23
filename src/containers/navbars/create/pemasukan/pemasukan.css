@@ -49,8 +49,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 15px;
-    margin-bottom: 2vh;
+    padding-bottom: 5px;
 }
 
 .pemasukan-data form .headakun button {
@@ -92,16 +91,31 @@ textarea {
     line-height: 2;
     font-weight: 600;
 }
-.pemasukan-data .isi-pemasukan input,
-select {
+.pemasukan-data .isi-pemasukan input {
     /*untuk kotak teks input*/
     background-color: #FFFFFF;
     border: none;
-    width: 17vw;
-    height: 6vh;
+    width: 37vh;
+    height: 5.5vh;
     margin-top: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 7px;
     padding: 12px 10px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pemasukan-data .isi-pemasukan select {
+    /*untuk kotak teks input*/
+    background-color: #FFFFFF;
+    border: none;
+    width: 37vh;
+    height: 5.5vh;
+    margin-top: 2px;
+    margin-bottom: 7px;
+    padding: 0 7px;
     border-radius: 5px;
     background: #F8F8F9;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
@@ -123,7 +137,7 @@ select {
     text-transform: capitalize;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 10%); /*Geser tombol ke tengah*/
+    transform: translate(-50%, 0%); /*Geser tombol ke tengah*/
     width: 80px;
     height: 42px;
     border-radius: 5px;
@@ -187,4 +201,52 @@ select {
     height: 100%;
     background: rgba(0, 0, 0, 0.3); /* Warna latar belakang semi-transparan */
     z-index: 2; /* Z-index lebih tinggi dari form popup */
+}
+
+.pemasukan-data .container-bukti {
+    display: flex;
+    flex-direction: row;
+}
+
+.pemasukan-data .box-bukti {
+    display: flex;
+    width: 160px; 
+    height: 80px;
+    border-radius: 5px;
+    border: 1px solid #808080;
+    background-color: #FFF;
+    justify-content: center;
+    align-items: center;
+}
+
+.pemasukan-data .container-bukti p {
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.pemasukan-data .icon-file {
+    margin: auto;
+    color: #D9D9D9;
+}
+
+.pemasukan-data .container-2 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.pemasukan-data .container-2 label {
+    width: 46px;
+    height: 31px;
+    border-radius: 4px;
+    background: #3B528D;
+    color: #FFF;
+    margin-top: 11px;
+    padding: auto;
+    cursor: pointer;
+    text-align: center;
 }

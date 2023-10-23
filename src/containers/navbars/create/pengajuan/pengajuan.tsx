@@ -85,18 +85,18 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
 
                         <div class="isi-pengajuan">
 
-                            <div style={{"display":"flex"}}>
-                                <div class='date' >
+                            <div style={{"display":"flex", "justify-content":"space-between"}}>
+                                <div>
                                     <label>Tanggal*</label>
-                                    <input type="date" name="trip-start" style={{ "border-radius": '5px', height: '3vw' }}
-                                    value="enter a date range"
-                                    class="input input-bordered bg-primary-content input-ghost input-xs w-full max-w-xs" >
-                                    <span class="iconify bg-primary-content" data-icon="mdi:clipboard-text-clock-outline"></span>
-                                    </input>
+                                    <br />
+                                    <input type="date" name="trip-start" 
+                                    value="enter a date range"/>
+                                    {/* <span class="iconify bg-primary-content" data-icon="mdi:clipboard-text-clock-outline"></span>
+                                    </input> */}
                                     {/* <input type="date" name="trip-start" /> */}
                                 </div>
 
-                                <div style={{"margin-right":"1vw"}}>
+                                <div>
                                     <label>COA*</label>
                                     <br />
                                     <input
@@ -114,16 +114,15 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 <textarea class="textarea textarea-bordered" 
                                 style={{ "background": '#F8F8F9',
                                          "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
-                                         "width": "37.5vw" }}>
+                                         "width": "78vh", margin:'auto' }}>
                                 </textarea>
                             </div>
 
-                            <div style={{"display":"flex"}}>
+                            <div style={{"display":"flex", "justify-content":"space-between"}}>
                                 <div>
                                 <label>Kategori*</label>
                                     <br />
-                                    <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select>
                                         <option disabled selected></option> 
                                         <option>Event</option>
                                         <option>Weekly</option>
@@ -133,11 +132,10 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 </div>
 
 
-                                <div style={{"margin-left":"2.5vw"}}>
+                                <div>
                                     <label>Jenis*</label>
                                     <br />
-                                    <select style={{  "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select>
                                         <option disabled selected></option>
                                         <option>Marketing</option>
                                         <option>Project</option>
@@ -148,12 +146,12 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{"display":"flex"}}>
+                            <div style={{"display":"flex", "justify-content":"space-between"}}>
                                 <div>
                                     <label>Jumlah*</label>
                                     <br />
                                     <input
-                                    type="text"
+                                    type="number"
                                     name="kodeCOA" // Ganti cd_account dengan kodeAkun
                                     value={faktur_pemasukan()}
                                     onChange={handleInputChange}
@@ -161,11 +159,10 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 </div>
 
 
-                                <div style={{"margin-left":"3.5vw"}}>
+                                <div>
                                     <label>Tag*</label>
                                     <br />
-                                    <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select>
                                         <option disabled selected></option>
                                         <option>VIP</option>
                                         <option>In Progress</option>
