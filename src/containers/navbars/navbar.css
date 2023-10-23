@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
 .selection A.active .menu-selection .name-selection {
     color: #6E49E9;
     opacity: 1;
