@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import { createSignal, onMount } from 'solid-js';
+import { createSignal, onCleanup, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './pengeluaran.css'
 
@@ -10,6 +10,17 @@ interface PengeluaranProps {
 
 const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
 
+    const [inputFile, setInputFile] = createSignal(null);
+
+    const handleFileInputChange = () => {
+      if (inputFile() && inputFile()!.files.length > 0) {
+        console.log("File yang dipilih:", inputFile()!.files[0].name);
+      }
+    };
+  
+    onCleanup(() => {
+      setInputFile(null);
+    });
 
     const [tanggal_pemasukan, setTanggalPemasukan] = createSignal('');
     const [kategori_pemasukan, setKategoriPemasukan] = createSignal('');
@@ -86,22 +97,17 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
 
                         <div class="isi-pengeluaran">
 
-                        <div style={{"display":"flex"}}>
+                            <div style={{"display":"flex", "justify-content":"space-between"}}>
                                 <div class='date' >
                                 <label>Tanggal*</label>
-                                    <input type="date" name="trip-start" style={{ "border-radius": '5px', height: '3vw' }}
-                                    value="enter a date range"
-                                    class="input input-bordered bg-primary-content input-ghost input-xs w-full max-w-xs" >
-                                    <span class="iconify bg-primary-content" data-icon="mdi:clipboard-text-clock-outline"></span>
-                                    </input>
+                                    <input type="date" name="trip-start" />
                                     {/* <input type="date" name="trip-start" /> */}
                                 </div>
 
-                                <div style={{"margin-left":"3.5vw"}}>
+                                <div>
                                     <label>Kategori*</label>
                                     <br />
-                                    <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select>
                                         <option disabled selected></option> 
                                         <option>Event</option>
                                         <option>Weekly</option>
@@ -111,7 +117,7 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{"display":"flex"}}>
+                            <div style={{"display":"flex", "justify-content":"space-between"}}>
                                 <div>
                                     <label>Faktur*</label>
                                     <br />
@@ -123,7 +129,7 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                     </input>
                                 </div>
 
-                                <div style={{"margin-left":"3.5vw"}}>
+                                <div>
                                     <label>COA*</label>
                                     <br />
                                     <input
@@ -136,23 +142,22 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{"display":"flex"}}>
+                            <div style={{"display":"flex", "justify-content":"space-between"}}>
                                 <div>
                                     <label>Jumlah*</label>
                                     <br />
                                     <input
-                                    type="text"
+                                    type="number"
                                     name="kodeCOA" // Ganti cd_account dengan kodeAkun
                                     value={jumlah_pemasukan()}
                                     onChange={handleInputChange}
                                     />
                                 </div>
 
-                                <div style={{"margin-left":"3.5vw"}}>
+                                <div>
                                     <label>Tag*</label>
                                     <br />
-                                    <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select>
                                         <option disabled selected></option>
                                         <option>VIP</option>
                                         <option>In Progress</option>
@@ -170,18 +175,33 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                     <textarea class="textarea textarea-bordered" 
                                     style={{ "background": '#F8F8F9',
                                              "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
-                                             "width": "37.5vw" }}>
+                                             "width": "78vh", height:'10vh' }}>
                                     </textarea>
                                 </div>
                             </div>
 
                             <div>
-                                <label>Bukti*<span style={{"font-size": "1.5vh"}}>(Pilih file dengan format .png atau .jpg ke dalam form)</span></label>
-                                <br />
-                                <input style={{"width":"30vw", "height":"6vh", "margin-top": "1vh"}}
-                                type="file" class="file-input file-input-ghost w-full max-w-xs" 
-                                />
+                                <label>Bukti*</label>
+                                <div class="container-bukti">
+                                <div class="box-bukti">
+                                    <Icon icon="bxs:image" class="icon-file" width="50" height="50" />
+                                </div>
+                                <div class="container-2">
+                                    <p>Pilih file dengan format .png atau .jpg ke dalam form atau tarik & lepas file tersebut.</p>
+                                    <label for="file-upload"><Icon icon="ic:baseline-folder" color="white" width="30" height="30" /></label>
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        accept=".png, .jpg"
+                                        style="display: none"
+                                        onChange={handleFileInputChange}
+                                        ref={inputFile}
+                                    />
+                                </div>
+                                </div>
                             </div>
+
+
 
 
                         </div>
