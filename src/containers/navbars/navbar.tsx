@@ -66,6 +66,7 @@ const Navbar: Component<NavbarProps> = (props) => {
       setpopUpLogout(!popUpLogout());
     }
 
+    const location = useLocation();
 
 
     return (
@@ -76,8 +77,8 @@ const Navbar: Component<NavbarProps> = (props) => {
           <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] w-5 h-5 absolute top-12 left-[1116px]" />
           <div class="w-[231px] h-full bg-[rgba(217,_217,_217,_0.2)] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-[176px]">
 
-            <A href="/master/master">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center mr-6 pt-1 gap-16 w-48 h-8 shrink-0 items-start hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+            <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
+              <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center mr-6 pt-1 gap-16 w-48 h-8 shrink-0 items-start hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row mt-1 gap-5 w-24 shrink-0 items-start">
                   <img
                     src="https://file.rendit.io/n/XxDPo7KbyfNGiflc38gM.svg"
@@ -95,8 +96,8 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/dashboard/report">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center pt-1 gap-8 w-48 items-start hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+            <A href="/dashboard/report" classList={{ active: location.pathname.startsWith('/dashboard') }}>
+              <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center pt-1 gap-8 w-48 items-start hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row mt-1 gap-3 w-3/5 items-start">
                   <img
                     src="https://file.rendit.io/n/phvOR3utndnvwetYe4BM.svg"
@@ -114,8 +115,8 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+            <A href="/pengajuan/pengajuan_dashboard" classList={{ active: location.pathname.startsWith('/pengajuan')}}>
+              <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-2 w-3/5 items-center">
                   <img
                     src="https://file.rendit.io/n/h8cBAvKlGb8aqqxR1I9z.svg"
@@ -133,8 +134,8 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/keuangan/keuanganModul_dashboard">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+            <A href="/keuangan/keuanganModul_dashboard" classList={{ active: location.pathname.startsWith('/keuangan') }}>
+              <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-10 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="self-start flex flex-row mb-1 gap-3 w-3/5 items-start">
                   <div class="relative flex flex-col w-6 shrink-0 items-start">
                     <div class="w-6 h-5 overflow-hidden bg-white/0 absolute top-px left-px" />
@@ -155,8 +156,8 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/report/semua_laporan">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-start hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+            <A href="/report/semua_laporan" classList={{ active: location.pathname.startsWith('/report') }}>
+              <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-start hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-3 w-24 shrink-0 items-start mt-px mb-1">
                   <img
                     src="https://file.rendit.io/n/b0a3emC0YfSakhwnz7gH.svg"
@@ -175,8 +176,8 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/kontak/tabel_kontak">
-              <div class="bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-center hover:bg-#ececec" style="box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.1);">
+            <A href="/kontak/tabel_kontak" classList={{ active: location.pathname.startsWith('/kontak') }}>
+              <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center ml-px pt-1 gap-16 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-2 w-20 shrink-0 items-center">
                   <img
                     src="https://file.rendit.io/n/RPwE1JFYLgOmgr7ppOEa.svg"

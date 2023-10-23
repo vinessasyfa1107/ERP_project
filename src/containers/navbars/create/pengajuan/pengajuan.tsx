@@ -10,6 +10,7 @@ interface PengajuanProps {
 
 const PengajuanCreate: Component<PengajuanProps> = (props) => {
 
+    const [id, setId] = createSignal(0);
     const [tanggal_pemasukan, setTanggalPemasukan] = createSignal('');
     const [kategori_pemasukan, setKategoriPemasukan] = createSignal('');
     const [faktur_pemasukan, setFakturPemasukan] = createSignal('');
@@ -33,6 +34,7 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
     const saveChanges = async () => {
         try {
             const dataToSend = {
+                id: 0,
                 tanggal_pemasukan: tanggal_pemasukan(),
                 kategori_pemasukan: kategori_pemasukan(),
                 faktur_pemasukan: faktur_pemasukan(),
@@ -45,7 +47,7 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
             };
     
             const response = await fetch(`/api/coa/update`, {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },

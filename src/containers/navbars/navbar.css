@@ -9,3 +9,7 @@
 .menu-item .submenu {
     left: 100%; /* Menyesuaikan jarak sesuai kebutuhan */
 }
+
+A.active .sidebars {
+    background-color: #e1e1e1b2;
+}
