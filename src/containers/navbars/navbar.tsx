@@ -75,7 +75,7 @@ const Navbar: Component<NavbarProps> = (props) => {
           class="overflow-hidden bg-white absolute flex flex-row justify-between pr-12 w-full items-center"
         >
           <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] w-5 h-5 absolute top-12 left-[1116px]" />
-          <div class="w-[231px] h-full bg-[rgba(217,_217,_217,_0.2)] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-[176px]">
+          <div class="w-[231px] h-full bg-[rgba(217,_217,_217,_0.2)] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-27">
 
             <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
               <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center mr-6 pt-1 gap-16 w-48 h-8 shrink-0 items-start hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
@@ -197,20 +197,20 @@ const Navbar: Component<NavbarProps> = (props) => {
           </div>
 
 
-          <div class="w-full h-24 bg-[#f7f7f7] fixed top-[-15px] left-1 flex flex-row justify-between items-end pb-4 pl-[113px] pr-24">
+          <div class="w-full h-20 bg-[#f7f7f7] fixed top-0 left-1 flex flex-row justify-between items-end pb-4 pl-[113px] pr-24">
             <div class="flex flex-row justify-between gap-32 items-start">
               <div class="flex flex-row mb-2 gap-2 items-start">
-                <div class="text-4xl font-['Exo_2'] font-bold text-[#6e49e9] mb-px">
+                <div class="text-4xl font-['Exo_2'] font-bold text-[#6e49e9] mb-px italic" style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
                   ERP
                   <div id="ERP" class="contents">
                     {" "}
                   </div>
                 </div>
-                <div class="text-2xl font-['Exo_2'] font-bold text-[#9f9f9f] self-end">
+                <div class="text-2xl font-['Exo_2'] font-bold text-[#9f9f9f] self-end italic">
                   TUS
                 </div>
               </div>
-              <div class="text-4xl font-['Inter'] font-bold text-[#a892f2] mt-2">
+              <div class="text-3xl font-['Inter'] font-bold text-[#a892f2] mt-2">
                {navbarStore.title_navbar}
               </div>
             </div>
@@ -259,7 +259,7 @@ const Navbar: Component<NavbarProps> = (props) => {
               {/* </div> */}
 
               <div class="dropdown dropdown-left">
-                <label tabindex="0" class="btn m-1 bg-[#f56d59] text-white">+ Create</label>
+                <label tabindex="0" class="btn m-auto bg-[#f56d59] text-white rounded-10 capitalize">+ Create</label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                   <li>
                     <details>
@@ -288,14 +288,14 @@ const Navbar: Component<NavbarProps> = (props) => {
                 </ul>
               </div>
 
-              <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0">
-                <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-end gap-3 h-10 shrink-0 items-start pt-3 px-5 rounded-[20px]">
+              <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0 rounded-[20px] m-auto">
+                <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-end gap-0 h-10 shrink-0 items-start pt-3 px-5 rounded-[20px]">
                   <img
                     src="https://file.rendit.io/n/JR4Z8I7HectTAgV0sox6.svg"
                     id="Uimcalender1"
-                    class="w-5 shrink-0"
+                    class="w-5 shrink-0 "
                   />
-                  <div class="text-sm font-['Inter'] text-[#909090] mt-1">
+                  <div class="text-sm font-['Inter'] text-[#909090] mx-auto mb-1 items-center">
                     09.25.2023 - 10.01.2023
                   </div>
                 </div>
