@@ -9,9 +9,7 @@ interface TambahAkunMasterProps {
 }
 
 const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
-
-  
-
+    
     const [formData, setFormData] = createSignal({
         id: 0,
         account_name: '',
@@ -28,8 +26,8 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
         if (!formData().email || !formData().access || !formData().role) {
             alert('Mohon isi semua kolom yang dibutuhkan.');
             return; // Menghentikan pengiriman jika ada input yang kosong
-          }
-          
+        }
+
         try {
 
             const DataAccount = {
@@ -47,36 +45,36 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
             const response = await fetch('/api/account/', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(DataAccount),
-              });
+            });
 
-        
-        
+
+
             if (response.ok) {
-              console.log('Data berhasil diinput');
-              alert('Data berhasil ditambah');
-              window.location.href='/master/masterakun';
-              window.location.reload();
-              props.OnClose();
-              setFormData({
-                id: 0,
-                account_name: '',
-                email: '',
-                access: '',
-                role: [],
-                username: '',
-                password: ''
-              });
+                console.log('Data berhasil diinput');
+                alert('Data berhasil ditambah');
+                window.location.href = '/master/masterakun';
+                window.location.reload();
+                props.OnClose();
+                setFormData({
+                    id: 0,
+                    account_name: '',
+                    email: '',
+                    access: '',
+                    role: [],
+                    username: '',
+                    password: ''
+                });
             } else {
-              const errorMessage = await response.text();
+                const errorMessage = await response.text();
                 alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
                 console.error('Gagal mengubah data:', errorMessage);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Gagal mengirim permintaan:', error);
-          }
+        }
 
     };
 
@@ -134,8 +132,8 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
     return (
         <div class="overlay">
 
-        <div class="tambah-acc-master">
-            {/* <div class="btn-tambah-akun">
+            <div class="tambah-acc-master">
+                {/* <div class="btn-tambah-akun">
                 <button onClick={() => (document.getElementById('form_modal_1') as HTMLDialogElement).showModal()}><Icon icon="fa:plus" color="white" width="10" height="11" /></button>
             </div> */}
 
@@ -170,8 +168,8 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                 <label>Email*</label>
                                 <br />
                                 <input type="text" required
-                                value={formData().email}
-                                onInput={(e) => setFormData({ ...formData(), email: e.target.value })}
+                                    value={formData().email}
+                                    onInput={(e) => setFormData({ ...formData(), email: e.target.value })}
                                 />
                             </p>
 
@@ -180,8 +178,8 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                     <label>Access*</label>
                                     <br />
                                     <select id="access" name="access" required
-                                    value={formData().access}
-                                    onChange={(e) => setFormData({ ...formData(), access: e.target.value })}
+                                        value={formData().access}
+                                        onChange={(e) => setFormData({ ...formData(), access: e.target.value })}
                                     >
                                         <option value="admin">Admin</option>
                                         <option value="direktur_keuangan">Direktur Keuangan</option>
@@ -215,15 +213,15 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                 <div style={{ display: 'flex', "flex-direction": "column" }}>
 
                                     <label>Posisi*</label>
-                                        <div class="dropdown dropdown-bottom">
-                                            <label tabindex="0" class="drop-posisi">
-                                                {selectedItems().length > 0 ? selectedItems().join(", ") : ""}
-                                            </label>
-                                            <ul tabindex="0" class="dropdown-content z-[1] 2 shadow bg-base-100 rounded-box w-44">
-                                                <li class="posisi-opsi">
-                                                    <label >
-                                                        <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="customer" 
+                                    <div class="dropdown dropdown-bottom">
+                                        <label tabindex="0" class="drop-posisi">
+                                            {selectedItems().length > 0 ? selectedItems().join(", ") : ""}
+                                        </label>
+                                        <ul tabindex="0" class="dropdown-content z-[1] 2 shadow bg-base-100 rounded-box w-44">
+                                            <li class="posisi-opsi">
+                                                <label >
+                                                    <a style={{ display: 'flex' }}>
+                                                        <input type="checkbox" value="customer"
                                                             checked={selectedItems().includes("customer")}
                                                             onChange={(e) => {
                                                                 setSelectedItems((prevSelectedItems) => {
@@ -233,7 +231,7 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                                                         return prevSelectedItems.filter(role => role !== "customer");
                                                                     }
                                                                 });
-                                                        
+
                                                                 // Perbarui formData
                                                                 setFormData((prevFormData) => {
                                                                     return {
@@ -242,15 +240,15 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                                                     };
                                                                 });
                                                             }}
-                                                            /> 
-                                                            <p style={{"margin-left": '20px'}}>Customer</p>
-                                                        </a>
-                                                    </label>
-                                                </li>
-                                                <li class="posisi-opsi">
-                                                    <label>
-                                                        <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="supplier" 
+                                                        />
+                                                        <p style={{ "margin-left": '20px' }}>Customer</p>
+                                                    </a>
+                                                </label>
+                                            </li>
+                                            <li class="posisi-opsi">
+                                                <label>
+                                                    <a style={{ display: 'flex' }}>
+                                                        <input type="checkbox" value="supplier"
                                                             checked={selectedItems().includes("supplier")}
                                                             onChange={(e) => {
                                                                 setSelectedItems((prevSelectedItems) => {
@@ -260,7 +258,7 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                                                         return prevSelectedItems.filter(role => role !== "supplier");
                                                                     }
                                                                 });
-                                                        
+
                                                                 // Perbarui formData
                                                                 setFormData((prevFormData) => {
                                                                     return {
@@ -269,15 +267,15 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                                                     };
                                                                 });
                                                             }}
-                                                            /> 
-                                                            <p style={{"margin-left": '20px'}}>Supplier</p>
-                                                        </a>
-                                                    </label>
-                                                </li>
-                                                <li class="posisi-opsi">
-                                                    <label >
-                                                        <a style={{display: 'flex'}}>
-                                                            <input type="checkbox" value="employee" 
+                                                        />
+                                                        <p style={{ "margin-left": '20px' }}>Supplier</p>
+                                                    </a>
+                                                </label>
+                                            </li>
+                                            <li class="posisi-opsi">
+                                                <label >
+                                                    <a style={{ display: 'flex' }}>
+                                                        <input type="checkbox" value="employee"
                                                             checked={selectedItems().includes("employee")}
                                                             onChange={(e) => {
                                                                 setSelectedItems((prevSelectedItems) => {
@@ -287,7 +285,7 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                                                         return prevSelectedItems.filter(role => role !== "employee");
                                                                     }
                                                                 });
-                                                        
+
                                                                 // Perbarui formData
                                                                 setFormData((prevFormData) => {
                                                                     return {
@@ -296,13 +294,13 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                                                     };
                                                                 });
                                                             }}
-                                                            /> 
-                                                            <p style={{"margin-left": '20px'}}>Employee</p>
-                                                        </a>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                        />
+                                                        <p style={{ "margin-left": '20px' }}>Employee</p>
+                                                    </a>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
 
                                 </div>
 
@@ -312,8 +310,8 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                 <label>Password*</label>
                                 <br />
                                 <input type="text" required
-                                value={formData().password}
-                                onInput={(e) => setFormData({ ...formData(), password: e.target.value })}
+                                    value={formData().password}
+                                    onInput={(e) => setFormData({ ...formData(), password: e.target.value })}
                                 />
                             </p>
 
@@ -325,7 +323,7 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                         </div>
                     </form>
                 </div>
-        </div>
+            </div>
         </div>
     );
 };

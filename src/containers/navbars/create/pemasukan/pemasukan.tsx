@@ -160,7 +160,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                     <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
                                         class="select select-bordered w-full max-w-xs">
                                         <option disabled selected></option>
-                                        <option>VIP</option>
+                                        <option>testVIP</option>
                                         <option>In Progress</option>
                                         <option>Urgen</option>
                                         <option>Bug</option>

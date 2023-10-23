@@ -69,139 +69,139 @@ const Pemasukan: Component = () => {
   };
 
 
-const columnDefs = [
-  { headerName: 'ID', field: 'id' },
-  { headerName: 'ID Pengajuan', field: 'id_pengajuan' },
-  { headerName: 'Faktur', field: 'faktur' },
-  { headerName: 'COA', field: 'COA' },
-  { headerName: 'Jumlah', field: 'jumlah' },
-  { headerName: 'Tanggal', field: 'tanggal' },
-  { headerName: 'Keterangan', field: 'keterangan' },
-  { headerName: 'Bukti', field: 'bukti', cellRenderer: agLinkCellRenderer },
-  {
-    headerName: 'Tags',
-    field: 'tags',
-    filter: 'agSetColumnFilter',
-    filterParams: {
-      applyMiniFilterWhileTyping: true,
-      values: ['VIP','In Progress','Urgent','Bug','VVIP'],
-    } as ISetFilterParams,
-    cellRenderer: tagsCellRenderer
-  }
-];
+  const columnDefs = [
+    { headerName: 'ID', field: 'id' },
+    { headerName: 'ID Pengajuan', field: 'id_pengajuan' },
+    { headerName: 'Faktur', field: 'faktur' },
+    { headerName: 'COA', field: 'COA' },
+    { headerName: 'Jumlah', field: 'jumlah' },
+    { headerName: 'Tanggal', field: 'tanggal' },
+    { headerName: 'Keterangan', field: 'keterangan' },
+    { headerName: 'Bukti', field: 'bukti', cellRenderer: agLinkCellRenderer },
+    {
+      headerName: 'Tags',
+      field: 'tags',
+      filter: 'agSetColumnFilter',
+      filterParams: {
+        applyMiniFilterWhileTyping: true,
+        values: ['VIP', 'In Progress', 'Urgent', 'Bug', 'VVIP'],
+      } as ISetFilterParams,
+      cellRenderer: tagsCellRenderer
+    }
+  ];
 
-const rowData = [
-  {
-    "id": 1,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "VIP"
-  },
-  {
-    "id": 2,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "In Progress"
-  },
-  {
-    "id": 3,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "Urgent"
-  },
-  {
-    "id": 4,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "Bug"
-  },
-  {
-    "id": 5,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "VVIP"
-  }
-];
+  const rowData = [
+    {
+      "id": 1,
+      "id_pengajuan": 123,
+      "faktur": "KM20231016",
+      "COA": "1-1000",
+      "jumlah": 2000000,
+      "tanggal": '10/12/22',
+      "keterangan": "Lorem Ipsum Dolor Sit Amet",
+      "bukti": "evidance.jpg",
+      "tags": "VIP"
+    },
+    {
+      "id": 2,
+      "id_pengajuan": 123,
+      "faktur": "KM20231016",
+      "COA": "1-1000",
+      "jumlah": 2000000,
+      "tanggal": '10/12/22',
+      "keterangan": "Lorem Ipsum Dolor Sit Amet",
+      "bukti": "evidance.jpg",
+      "tags": "In Progress"
+    },
+    {
+      "id": 3,
+      "id_pengajuan": 123,
+      "faktur": "KM20231016",
+      "COA": "1-1000",
+      "jumlah": 2000000,
+      "tanggal": '10/12/22',
+      "keterangan": "Lorem Ipsum Dolor Sit Amet",
+      "bukti": "evidance.jpg",
+      "tags": "Urgent"
+    },
+    {
+      "id": 4,
+      "id_pengajuan": 123,
+      "faktur": "KM20231016",
+      "COA": "1-1000",
+      "jumlah": 2000000,
+      "tanggal": '10/12/22',
+      "keterangan": "Lorem Ipsum Dolor Sit Amet",
+      "bukti": "evidance.jpg",
+      "tags": "Bug"
+    },
+    {
+      "id": 5,
+      "id_pengajuan": 123,
+      "faktur": "KM20231016",
+      "COA": "1-1000",
+      "jumlah": 2000000,
+      "tanggal": '10/12/22',
+      "keterangan": "Lorem Ipsum Dolor Sit Amet",
+      "bukti": "evidance.jpg",
+      "tags": "VVIP"
+    }
+  ];
 
-const defaultColDef = {
-  flex: 1,
-  filter: 'agTextColumnFilter',
-};
+  const defaultColDef = {
+    flex: 1,
+    filter: 'agTextColumnFilter',
+  };
 
-const gridOptions = {
-  pagination: true,
-  paginationPageSize: 5,
-  rowHeight: 40,
-  // frameworkComponents, // Tambahkan frameworkComponents ke dalam gridOptions
-};
+  const gridOptions = {
+    pagination: true,
+    paginationPageSize: 5,
+    rowHeight: 40,
+    // frameworkComponents, // Tambahkan frameworkComponents ke dalam gridOptions
+  };
 
-return (
-  <div>
-    <Semua_laporanNavbar />
-    <div class="pemasukan-container">
-      {/* div untuk mengatur top table pada pemasukan yang terdiri dari judul tabel, search, dan sorting icon */}
-      <div class="pemasukan-top-table">
-        <div class="tutup-buku-container">
-          <Tutup_buku />
-        </div>
-
-        <div class="search-container">
-          <div class="search-input">
-            <input
-              type="text"
-              class="form-control"
-              id="filter-text-box"
-              placeholder="Search..."
-            />
-            <span class="search-icon">
-              <Icon icon="ic:baseline-search" color="gray" width="16" height="16" />
-            </span>
+  return (
+    <div>
+      <Semua_laporanNavbar />
+      <div class="pemasukan-container">
+        {/* div untuk mengatur top table pada pemasukan yang terdiri dari judul tabel, search, dan sorting icon */}
+        <div class="pemasukan-top-table">
+          <div class="tutup-buku-container">
+            <Tutup_buku />
           </div>
-          <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
-        </div>
-      </div>
-      <p>Laporan Pemasukan</p>
 
-      {/* div untuk mengatur tabel kas besar dari ag grid */}
-      <div class="pemasukan-table">
-        <div class="ag-theme-alpine" style={{ width: '68vw' }}>
-          <AgGridSolid
-            columnDefs={columnDefs}
-            rowData={rowData}
-            defaultColDef={defaultColDef}
-            domLayout='autoHeight'
-            gridOptions={gridOptions}
-          />
+          <div class="search-container">
+            <div class="search-input">
+              <input
+                type="text"
+                class="form-control"
+                id="filter-text-box"
+                placeholder="Search..."
+              />
+              <span class="search-icon">
+                <Icon icon="ic:baseline-search" color="gray" width="16" height="16" />
+              </span>
+            </div>
+            <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+          </div>
+        </div>
+        <p>Laporan Pemasukan</p>
+
+        {/* div untuk mengatur tabel kas besar dari ag grid */}
+        <div class="pemasukan-table">
+          <div class="ag-theme-alpine" style={{ width: '68vw' }}>
+            <AgGridSolid
+              columnDefs={columnDefs}
+              rowData={rowData}
+              defaultColDef={defaultColDef}
+              domLayout='autoHeight'
+              gridOptions={gridOptions}
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default Pemasukan;

@@ -1,109 +1,122 @@
 import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
-import { createSignal, onMount } from 'solid-js';
+import { createSignal, onCleanup, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './pengajuan.css'
+import './pengajuan.css';
 
-interface PengajuanProps {
+interface TambahPengajuan {
     OnClose: () => void;
 }
 
-const PengajuanCreate: Component<PengajuanProps> = (props) => {
+const Pengajuan: Component<TambahPengajuan> = (props) => {
 
-    const [tanggal_pemasukan, setTanggalPemasukan] = createSignal('');
-    const [kategori_pemasukan, setKategoriPemasukan] = createSignal('');
-    const [faktur_pemasukan, setFakturPemasukan] = createSignal('');
-    const [coa_pemasukan, setCoaPengeluaran] = createSignal('');
-    const [jumlah_pemasukan, setJumlahPengeluaran] = createSignal('');
-    const [tag_pemasukan, setTagPengeluaran] = createSignal('');
-    const [deskripsi_pemasukan, setDeskripsiPengeluaran] = createSignal('');
-    const [bukti_pemasukan, setBuktiPengeluaran] = createSignal('');
+    const [formData, setFormData] = createSignal({
+        id: 0,
+        entry_ts: '',
+        category: '',
+        planningtype: '',
+        description: '',
+        amount: '',
+        status: '',
+        confirm: '',
+        coa_kd: ''
+    });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'kodeCOA') {
-            setTanggalPemasukan(value);
-        } else if (name === 'namaCOA') {
-            setKategoriPemasukan(value);
-        } else if (name === 'kategori') {
-            setFakturPemasukan(value);
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData().entry_ts || !formData().category || !formData().planningtype) {
+            alert('Mohon isi semua kolom yang dibutuhkan.');
+            return; // Menghentikan pengiriman jika ada input yang kosong
         }
-    };
 
-    const saveChanges = async () => {
         try {
-            const dataToSend = {
-                tanggal_pemasukan: tanggal_pemasukan(),
-                kategori_pemasukan: kategori_pemasukan(),
-                faktur_pemasukan: faktur_pemasukan(),
-                coa_pemasukan: coa_pemasukan(),
-                jumlah_pemasukan: jumlah_pemasukan(),
-                tag_pemasukan: tag_pemasukan(),
-                deskripsi_pemasukan: deskripsi_pemasukan(),
-                bukti_pemasukan: bukti_pemasukan(),
-                // balance: props.balance,
+            const DataPengajuan = {
+                id: 0,
+                entry_ts: formData().entry_ts,
+                category: formData().category,
+                planningtype: formData().planningtype,
+                description: formData().description,
+                amount: formData().amount,
+                status: formData().status,
+                confirm: formData().confirm,
+                coa_kd: formData().coa_kd
             };
-    
-            const response = await fetch(`/api/coa/update`, {
-                method: 'PUT',
+
+            console.log("Insert Data Planning: ", DataPengajuan);
+
+            const response = await fetch('/api/planning/', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(dataToSend),
+                body: JSON.stringify(DataPengajuan),
             });
-    
+
+
+
             if (response.ok) {
-                // Data berhasil diubah, tampilkan alert
-                alert('Data berhasil diubah');
+                console.log('Data berhasil diinput');
+                alert('Data berhasil ditambah');
+                // window.location.href = '/dashboard/plannings/planning';
                 window.location.reload();
                 props.OnClose();
+                setFormData({
+                    id: 0,
+                    entry_ts: '',
+                    category: '',
+                    planningtype: '',
+                    description: '',
+                    amount: '',
+                    status: '',
+                    confirm: '',
+                    coa_kd: ''
+                });
             } else {
-                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
                 const errorMessage = await response.text();
                 alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
                 console.error('Gagal mengubah data:', errorMessage);
             }
         } catch (error) {
-            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-            alert('Terjadi kesalahan. Silakan coba lagi.');
-            console.error('Terjadi kesalahan:', error);
+            console.error('Gagal mengirim permintaan:', error);
         }
+
     };
 
     return (
         <div class="overlay">
 
 
-        <div class="pengajuan-data">
-         
+            <div class="pengajuan-data">
                 <div class="pengajuan-form">
                     <form method="dialog">
                         <div class="headakun">
-                        <h2>Form Pengajuan </h2>
+                            <h2>Form Pengajuan </h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
                         <div class="isi-pengajuan">
-
-                            <div style={{"display":"flex"}}>
+                            <div style={{ "display": "flex" }}>
                                 <div class='date' >
                                     <label>Tanggal*</label>
-                                    <input type="date" name="trip-start" style={{ "border-radius": '5px', height: '3vw' }}
-                                    value="enter a date range"
-                                    class="input input-bordered bg-primary-content input-ghost input-xs w-full max-w-xs" >
-                                    <span class="iconify bg-primary-content" data-icon="mdi:clipboard-text-clock-outline"></span>
+                                    <input type="date"
+                                        name="trip-start"
+                                        style={{ "border-radius": '5px', height: '3vw' }}
+                                        value={formData().entry_ts}
+                                        onInput={(e) => setFormData({ ...formData(), entry_ts: e.target.value })}
+                                        class="input input-bordered bg-primary-content input-ghost input-xs w-full max-w-xs" >
+                                        <span class="iconify bg-primary-content" data-icon="mdi:clipboard-text-clock-outline"></span>
                                     </input>
-                                    {/* <input type="date" name="trip-start" /> */}
                                 </div>
 
-                                <div style={{"margin-right":"1vw"}}>
+                                <div style={{ "margin-right": "1vw" }}>
                                     <label>COA*</label>
                                     <br />
                                     <input
-                                    type="text"
-                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                    value={coa_pemasukan()}
-                                    onChange={handleInputChange}
+                                        type="text"
+                                        name="namaCOA" // Ganti cd_account dengan kodeAkun
+                                        value={formData().coa_kd}
+                                        onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -111,20 +124,28 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                             <div>
                                 <label>Keterangan*</label>
                                 <br />
-                                <textarea class="textarea textarea-bordered" 
-                                style={{ "background": '#F8F8F9',
-                                         "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
-                                         "width": "37.5vw" }}>
+                                <textarea class="textarea textarea-bordered"
+                                    style={{
+                                        "background": '#F8F8F9',
+                                        "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
+                                        "width": "37.5vw"
+                                    }}
+                                    value={formData().description}
+                                    onInput={(e) => setFormData({ ...formData(), description: e.target.value })}
+                                >
                                 </textarea>
                             </div>
 
-                            <div style={{"display":"flex"}}>
+                            <div style={{ "display": "flex" }}>
                                 <div>
-                                <label>Kategori*</label>
+                                    <label>Kategori*</label>
                                     <br />
-                                    <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
-                                        <option disabled selected></option> 
+                                    <select style={{ "margin-right": "1vw", "width": "17vw", "background": "#F8F8F9" }}
+                                        class="select select-bordered w-full max-w-xs"
+                                        value={formData().category}
+                                        onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
+                                    >
+                                        <option disabled selected></option>
                                         <option>Event</option>
                                         <option>Weekly</option>
                                         <option>Monthly</option>
@@ -133,11 +154,14 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 </div>
 
 
-                                <div style={{"margin-left":"2.5vw"}}>
+                                <div style={{ "margin-left": "2.5vw" }}>
                                     <label>Jenis*</label>
                                     <br />
-                                    <select style={{  "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select style={{ "width": "17vw", "background": "#F8F8F9" }}
+                                        class="select select-bordered w-full max-w-xs"
+                                        value={formData().planningtype}
+                                        onInput={(e) => setFormData({ ...formData(), planningtype: e.target.value })}
+                                    >
                                         <option disabled selected></option>
                                         <option>Marketing</option>
                                         <option>Project</option>
@@ -148,24 +172,27 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{"display":"flex"}}>
+                            <div style={{ "display": "flex" }}>
                                 <div>
                                     <label>Jumlah*</label>
                                     <br />
                                     <input
-                                    type="text"
-                                    name="kodeCOA" // Ganti cd_account dengan kodeAkun
-                                    value={faktur_pemasukan()}
-                                    onChange={handleInputChange}
+                                        type="text"
+                                        name="kodeCOA" // Ganti cd_account dengan kodeAkun
+                                        value={formData().amount}
+                                        onInput={(e) => setFormData({ ...formData(), amount: e.target.value })}
                                     />
                                 </div>
 
 
-                                <div style={{"margin-left":"3.5vw"}}>
+                                <div style={{ "margin-left": "3.5vw" }}>
                                     <label>Tag*</label>
                                     <br />
-                                    <select style={{ "margin-right": "1vw", "width":"17vw", "background": "#F8F8F9"}}
-                                        class="select select-bordered w-full max-w-xs">
+                                    <select style={{ "margin-right": "1vw", "width": "17vw", "background": "#F8F8F9" }}
+                                        class="select select-bordered w-full max-w-xs"
+                                        value={formData().status}
+                                        onInput={(e) => setFormData({ ...formData(), status: e.target.value })}
+                                        >
                                         <option disabled selected></option>
                                         <option>VIP</option>
                                         <option>In Progress</option>
@@ -176,23 +203,23 @@ const PengajuanCreate: Component<PengajuanProps> = (props) => {
                                 </div>
                             </div>
 
-        
+
                         </div>
 
                         <br />
                         <div class="btn-edit-coa">
-                            <button onClick={saveChanges}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={handleFormSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>
-        </div>
+            </div>
         </div>
     );
 };
 
 
 
-export default PengajuanCreate;
+export default Pengajuan;
 
 
 
