@@ -1,8 +1,8 @@
 import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
-import { createSignal, onCleanup, onMount } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './pengajuan.css';
+import './pengajuan.css'
 
 interface TambahPengajuan {
     OnClose: () => void;
@@ -58,7 +58,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
             if (response.ok) {
                 console.log('Data berhasil diinput');
                 alert('Data berhasil ditambah');
-                // window.location.href = '/dashboard/plannings/planning';
+                window.location.href = '/dashboard/plannings/planning';
                 window.location.reload();
                 props.OnClose();
                 setFormData({
@@ -96,6 +96,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                         </div>
 
                         <div class="isi-pengajuan">
+
                             <div style={{ "display": "flex" }}>
                                 <div class='date' >
                                     <label>Tanggal*</label>
@@ -109,16 +110,16 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     </input>
                                 </div>
 
-                                <div style={{ "margin-right": "1vw" }}>
+                                {/* <div style={{ "margin-right": "1vw" }}>
                                     <label>COA*</label>
                                     <br />
                                     <input
                                         type="text"
                                         name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                        value={formData().coa_kd}
-                                        onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
+                                        value={formData().account_name}
+                                        onInput={(e) => setFormData({ ...formData(), account_name: e.target.value })}
                                     />
-                                </div>
+                                </div> */}
                             </div>
 
                             <div>

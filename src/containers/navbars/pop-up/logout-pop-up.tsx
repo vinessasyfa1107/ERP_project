@@ -9,6 +9,8 @@ const ActionLogout = () => {
   window.location.reload();
 }
 
+
+
 const LogoutPopUp: Component = () => {
   return (
     <div>
