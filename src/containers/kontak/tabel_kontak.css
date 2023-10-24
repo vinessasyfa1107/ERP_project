@@ -5,7 +5,14 @@
     font-family: 'Manrope', sans-serif;
 }
 
-
+.tabel-kontak-container {
+    background-color: #EFEFEF;
+    width: 150vh;
+    height: fit-content;
+    border-radius: 6px;
+    border: 1px solid rgba(128, 128, 128, 0.20);
+    margin-bottom: 20px;
+}
 
 /*======== css untuk tabelnya ========*/
 .at-table {

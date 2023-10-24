@@ -19,6 +19,7 @@ const Keuangan_dashboard = lazy(() => import('../containers/dashboard/accounting
 const ArusKas = lazy(() => import('../containers/dashboard/arus-kas/arus-kas'));
 const Report = lazy(() => import('../containers/dashboard/report/report'));
 const Header = lazy(() => import('../containers/header/header'));
+const Example = lazy(() => import('../containers/dashboard/report/example'));
 
 const Pengajuan_dashboard = lazy(() => import('../containers/pengajuan/pengajuan_dashboard/pengajuan_dashboard'));
 const Pengajuan_laporan = lazy(() => import('../containers/pengajuan/pengajuan_laporan/pengajuan_laporan'));
@@ -27,6 +28,7 @@ const Kas_besar = lazy(() => import('../containers/report/kas_besar/kas_besar'))
 const Semua_laporan = lazy(() => import('../containers/report/semua_laporan'));
 const Pemasukan = lazy(() => import('../containers/report/pemasukan/pemasukan'));
 const Pengeluaran = lazy(() => import('../containers/report/pengeluaran/pengeluaran'));
+
 
 const Grafik_keuangan = lazy(() => import('../containers/keuangan/grafik-keuangan/grafik_keuangan'));
 const KeuanganModul_dashboard = lazy(() => import('../containers/keuangan/dashboard/keuanganModul_dashboard'));
@@ -58,6 +60,7 @@ const RouteData: Component = () => {
                 <Route path="/keuangan_dashboard" component={Keuangan_dashboard} />
                 <Route path="/header" component={Header} />
                 <Route path="/arus-kas" component={ArusKas} />
+                <Route path="/example" component={Example} />
             </Route>
 
             <Route path="/report">

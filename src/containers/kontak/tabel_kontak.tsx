@@ -124,23 +124,29 @@ const Tabel_kontak: Component = () => {
 
     return (
         <div>
-            <div class="top-container" style={{"color": "#8A8A8B", 
-            "font-size":"20px",
-            "font-style":"normal", "font-weight":"700", "line-height":"normal",
-            "margin":"20px"}}>
-                <p>Informasi</p>
-            </div>
-            <div class="table-kontak-container">
-                <div class="ag-theme-alpine" style={{ width: '72vw', height:'40.5vw' }}>
-                    <AgGridSolid
-                        columnDefs={columnDefs}
-                        rowData={rowData}
-                        defaultColDef={defaultColDef}
-                        domLayout='autoHeight'
-                        gridOptions={gridOptions}
-                    />
-
+            <div class="tabel-kontak-container">
+                <div class="top-container" style={{
+                    "color": "black",
+                    "font-size": "20px",
+                    "font-style": "normal", "font-weight": "700", "line-height": "normal",
+                    "margin": "20px"
+                }}>
+                    <p>Informasi</p>
                 </div>
+                <div class="table-kontak-container">
+                    <div class="ag-theme-alpine" style={{ width: '68vw', height: '40.5vw', 
+                    margin: 'auto' }}>
+                        <AgGridSolid
+                            columnDefs={columnDefs}
+                            rowData={rowData}
+                            defaultColDef={defaultColDef}
+                            domLayout='autoHeight'
+                            gridOptions={gridOptions}
+                        />
+
+                    </div>
+                </div>
+
             </div>
 
 

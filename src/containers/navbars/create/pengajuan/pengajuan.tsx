@@ -18,7 +18,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
         description: '',
         amount: '',
         status: '',
-        confirm: '',
+        confirm: null,
         coa_kd: ''
     });
 
@@ -39,7 +39,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                 description: formData().description,
                 amount: formData().amount,
                 status: formData().status,
-                confirm: formData().confirm,
+                confirm: null,
                 coa_kd: formData().coa_kd
             };
 
@@ -69,7 +69,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                     description: '',
                     amount: '',
                     status: '',
-                    confirm: '',
+                    confirm: null,
                     coa_kd: ''
                 });
             } else {
@@ -85,8 +85,6 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
 
     return (
         <div class="overlay">
-
-
             <div class="pengajuan-data">
                 <div class="pengajuan-form">
                     <form method="dialog">
@@ -101,7 +99,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                 <div class='date' >
                                     <label>Tanggal*</label>
                                     <input type="date"
-                                        name="trip-start"
+                                        name="entry_ts"
                                         style={{ "border-radius": '5px', height: '3vw' }}
                                         value={formData().entry_ts}
                                         onInput={(e) => setFormData({ ...formData(), entry_ts: e.target.value })}
@@ -110,16 +108,16 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     </input>
                                 </div>
 
-                                {/* <div style={{ "margin-right": "1vw" }}>
+                                <div style={{ "margin-right": "1vw" }}>
                                     <label>COA*</label>
                                     <br />
                                     <input
                                         type="text"
-                                        name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                        value={formData().account_name}
-                                        onInput={(e) => setFormData({ ...formData(), account_name: e.target.value })}
+                                        name="coa_kd" // Ganti cd_account dengan kodeAkun
+                                        value={formData().coa_kd}
+                                        onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
                                     />
-                                </div> */}
+                                </div>
                             </div>
 
                             <div>
@@ -131,6 +129,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                         "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
                                         "width": "37.5vw"
                                     }}
+                                    name="description"
                                     value={formData().description}
                                     onInput={(e) => setFormData({ ...formData(), description: e.target.value })}
                                 >
@@ -143,8 +142,9 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <br />
                                     <select style={{ "margin-right": "1vw", "width": "17vw", "background": "#F8F8F9" }}
                                         class="select select-bordered w-full max-w-xs"
-                                        value={formData().category}
-                                        onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
+                                        name="planning_type"
+                                        value={formData().planningtype}
+                                        onInput={(e) => setFormData({ ...formData(), planningtype: e.target.value })}
                                     >
                                         <option disabled selected></option>
                                         <option>Event</option>
@@ -160,15 +160,16 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <br />
                                     <select style={{ "width": "17vw", "background": "#F8F8F9" }}
                                         class="select select-bordered w-full max-w-xs"
-                                        value={formData().planningtype}
-                                        onInput={(e) => setFormData({ ...formData(), planningtype: e.target.value })}
+                                        name="category"
+                                        value={formData().category}
+                                        onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
                                     >
                                         <option disabled selected></option>
-                                        <option>Marketing</option>
-                                        <option>Project</option>
-                                        <option>Rutinitas</option>
-                                        <option>Event</option>
-                                        <option>DLL</option>
+                                        <option value="1">Marketing</option>
+                                        <option value="2">Project</option>
+                                        <option value="3">Rutinitas</option>
+                                        <option value="4">Event</option>
+                                        <option value="5">DLL</option>
                                     </select>
                                 </div>
                             </div>
@@ -179,7 +180,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <br />
                                     <input
                                         type="text"
-                                        name="kodeCOA" // Ganti cd_account dengan kodeAkun
+                                        name="amount" // Ganti cd_account dengan kodeAkun
                                         value={formData().amount}
                                         onInput={(e) => setFormData({ ...formData(), amount: e.target.value })}
                                     />
@@ -191,6 +192,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <br />
                                     <select style={{ "margin-right": "1vw", "width": "17vw", "background": "#F8F8F9" }}
                                         class="select select-bordered w-full max-w-xs"
+                                        name="status"
                                         value={formData().status}
                                         onInput={(e) => setFormData({ ...formData(), status: e.target.value })}
                                         >
