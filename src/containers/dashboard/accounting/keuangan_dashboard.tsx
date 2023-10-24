@@ -10,7 +10,7 @@ const Keuangan_dashboard: Component = () => {
             <Header />
             {/* div untuk memberikan judul keuangan dashboard */}
             <div class="card-module">
-                <div style={{ "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
+                <div style={{ "font-family":"Manrope", "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
                     Keuangan
                 </div>
             </div>

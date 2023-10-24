@@ -4,20 +4,16 @@ import { Icon } from '@iconify-icon/solid';
 import './master-coa.css'
 import TabelCOAMaster from './table-coa-master';
 import FormTambahCOA from './forms/form-tambah-coa';
+import NavbarMaster from '../navbar-master';
 
 const MasterCOA: Component = () => {
-  const location = useLocation();
 
   return (
     <div>
-      <div class="top-master-btn">
-        <A href='/master/master' classList={{ active: location.pathname === '/master/master' }}>Master</A>
-        <A href='/master/mastercoa' classList={{ active: location.pathname === '/master/mastercoa' }}>Master COA</A>
-        <A href='/master/masterakun' classList={{ active: location.pathname === '/master/masterakun' }}>Master Akun</A>
-      </div>
+      <NavbarMaster/>
 
         <div class="master-coa">
-          <h1>COA Master</h1>
+          <h1 style={{"font-family":"Exo"}}>COA Master</h1>
           <TabelCOAMaster/>
         </div>
     </div>

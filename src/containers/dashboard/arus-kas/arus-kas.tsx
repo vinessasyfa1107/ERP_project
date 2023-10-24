@@ -15,7 +15,7 @@ const ArusKas: Component = () => {
         <div class="arus-kas">
                 <Header/>
                 <div class="card-module">
-                    <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
+                    <div style={{"font-family":"Manrope","font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
                         Arus Kas
                     </div>
                 </div>
