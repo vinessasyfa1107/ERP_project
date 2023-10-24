@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo&family=Inter:wght@400&family=Manrope:wght@300&display=swap');
+
 .header {
     display: flex;
     /* text-align: center; */
     /* justify-content: center; */
+    font-family: 'Exo', sans-serif;
 }
 
 .selection {
@@ -33,12 +36,16 @@
     color: #bebebe;
     text-shadow: 0 2px 5px #bcbcbc;
     transition: all 0.7s ease;
+    font-family: 'Exo', sans-serif;
+
 }
 
 .menu-selection .name-selection {
     font-weight: 600;
     color: white;
     font-size: 15px;
+    font-family: 'Exo', sans-serif;
+
 }
 
 /* Saat SVG dihover */
@@ -63,6 +70,7 @@
     color: #6E49E9;
     opacity: 1;
     font-size: 15px;
+    font-family: 'Exo', sans-serif;
 }
 
 .selection A.active .menu-selection .svg-icon {

@@ -19,7 +19,6 @@ const Keuangan_dashboard = lazy(() => import('../containers/dashboard/accounting
 const ArusKas = lazy(() => import('../containers/dashboard/arus-kas/arus-kas'));
 const Report = lazy(() => import('../containers/dashboard/report/report'));
 const Header = lazy(() => import('../containers/header/header'));
-const Example = lazy(() => import('../containers/dashboard/report/example'));
 
 const Pengajuan_dashboard = lazy(() => import('../containers/pengajuan/pengajuan_dashboard/pengajuan_dashboard'));
 const Pengajuan_laporan = lazy(() => import('../containers/pengajuan/pengajuan_laporan/pengajuan_laporan'));
@@ -60,7 +59,6 @@ const RouteData: Component = () => {
                 <Route path="/keuangan_dashboard" component={Keuangan_dashboard} />
                 <Route path="/header" component={Header} />
                 <Route path="/arus-kas" component={ArusKas} />
-                <Route path="/example" component={Example} />
             </Route>
 
             <Route path="/report">

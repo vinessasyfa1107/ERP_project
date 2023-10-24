@@ -58,5 +58,11 @@
     background-color: transparent;
   }
   
-
+.tambah-kontak-btn {
+    justify-content: right;
+    width: 20vh;
+    height: 10vh;
+    color: white;
+    background-color: aqua;
+}
 
