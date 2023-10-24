@@ -16,3 +16,12 @@
 A.active .sidebars {
     background-color: #e1e1e1b2;
 }
+
+.dropdown.dropdown-left .btn {
+    color: white;
+    text-transform: capitalize;
+    background-color: #f56d59;
+    border-radius: 40px;
+    border: none;
+    height: 3rem;
+}
