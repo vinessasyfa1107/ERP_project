@@ -259,7 +259,7 @@ const Navbar: Component<NavbarProps> = (props) => {
               {/* </div> */}
 
               <div class="dropdown dropdown-left">
-                <label tabindex="0" class="btn m-auto bg-[#f56d59] text-white rounded-10 capitalize">+ Create</label>
+                <label tabindex="0" class="btn m-auto bg-[#f56d59] text-white rounded-10 capitalize ">+ Create</label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                   <li>
                     <details>
@@ -289,7 +289,17 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
 
               <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0 rounded-[20px] m-auto">
-                <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-end gap-0 h-10 shrink-0 items-start pt-3 px-5 rounded-[20px]">
+                <input type="date" class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row gap-0 h-10 pl-5 pr-5 border-none items-center font-['Inter'] text-[#909090] rounded-[20px]">
+                  {/* <img
+                    src="https://file.rendit.io/n/JR4Z8I7HectTAgV0sox6.svg"
+                    id="Uimcalender1"
+                    class="w-5 shrink-0 "
+                  /> */}
+                  {/* <div class="text-sm font-['Inter'] text-[#909090] mx-auto mb-1 items-center">
+                    09.25.2023 - 10.01.2023
+                  </div> */}
+                </input>
+                {/* <div class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row justify-end gap-0 h-10 shrink-0 items-start pt-3 px-5 rounded-[20px]">
                   <img
                     src="https://file.rendit.io/n/JR4Z8I7HectTAgV0sox6.svg"
                     id="Uimcalender1"
@@ -298,7 +308,7 @@ const Navbar: Component<NavbarProps> = (props) => {
                   <div class="text-sm font-['Inter'] text-[#909090] mx-auto mb-1 items-center">
                     09.25.2023 - 10.01.2023
                   </div>
-                </div>
+                </div> */}
               </div>
 
             </div>

@@ -10,7 +10,7 @@ const Header: Component = () => {
     const location = useLocation();
 
     return (
-        <div class="header">
+        <div class="header font-[Exo]">
             <div class="selection">
                 <A href='/dashboard/report' classList={{ active: location.pathname === '/dashboard/report' }}>
                     <div class="menu-selection">
