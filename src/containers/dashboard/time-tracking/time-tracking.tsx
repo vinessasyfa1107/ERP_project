@@ -103,7 +103,7 @@ const TimeTracking: Component = () => {
       <Header />
       <div class="teams">
         <div class="card-module">
-          <div style={{ "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
+          <div style={{ "font-family":"Manrope","font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
             Time Trackings
           </div>
           <div style={{ "font-size": "20px", "margin-left": "0.5vw", "margin-top": "2vh" }}>status Tracker</div>

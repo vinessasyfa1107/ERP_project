@@ -4,19 +4,42 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, onMount } from 'solid-js';
 import './tabel_kontak.css';
+import { datacontact } from '../../api/kontak/contact';
+import FormTambahKontak from './form-tambah-kontak';
 
 
 const Tabel_kontak: Component = () => {
+
+    const [popUp, setPopUp] = createSignal(false);
+
+    function openPopUp () {
+        setPopUp(true);
+    }
+
+    function closePopUp () {
+        setPopUp(false);
+    }
+
+
+
+    const [RowData, setRowData] = createSignal([{}]);
+
+    onMount(async () => {
+        const data_contact = await datacontact("data contact");
+        console.log("datacoa", data_contact);
+        setRowData(data_contact)
+    })
+
     const columnDefs = [
-        { headerName: 'Nama', field: 'Nama' },
-        { headerName: 'Nama Perusahaan', field: 'Nama_Perusahaan' },
-        { headerName: 'Alamat', field: 'Alamat' },
-        { headerName: 'Email', field: 'Email' },
-        { headerName: 'No. HP', field: 'No_HP' },
-        { headerName: 'NPWP', field: 'NPWP' },
-        { headerName: 'Saldo', field: 'Saldo' }
+        { headerName: 'Nama', field: 'nama' },
+        { headerName: 'Nama Perusahaan', field: 'nama_perusahaan' },
+        { headerName: 'Alamat', field: 'alamat' },
+        { headerName: 'Email', field: 'email' },
+        { headerName: 'No. HP', field: 'no_hp' },
+        { headerName: 'NPWP', field: 'npwp' },
+        { headerName: 'Saldo', field: 'saldo' }
     ];
 
     const rowData = [
@@ -134,16 +157,17 @@ const Tabel_kontak: Component = () => {
                 <div class="ag-theme-alpine" style={{ width: '72vw', height:'40.5vw' }}>
                     <AgGridSolid
                         columnDefs={columnDefs}
-                        rowData={rowData}
+                        rowData={RowData()}
                         defaultColDef={defaultColDef}
                         domLayout='autoHeight'
                         gridOptions={gridOptions}
                     />
-
+                </div>
+                <div>
+                    <button class="tambah-kontak-btn" onClick={openPopUp}>tambah</button>
                 </div>
             </div>
-
-
+            {popUp() && <FormTambahKontak OnClose={closePopUp}/>}
         </div>
     );
 };

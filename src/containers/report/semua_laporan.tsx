@@ -47,7 +47,9 @@ const Semua_laporan: Component = () => {
         </div>
 
         {/* div untuk judul tabel semua laporan */}
+        <div style={{"font-family":"Exo"}}>
         <p>Semua <span>Laporan</span></p>
+        </div>
 
         {/* div untuk table pemasukan dan pengeluaran */}
         <div class="inex-semualap-container" style={{ "display": "flex", "justify-content": "space-between" }}>

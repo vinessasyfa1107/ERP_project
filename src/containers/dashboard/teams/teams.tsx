@@ -30,14 +30,14 @@ const Admin: Component = () => {
         <div class="teams">
                 <Header/>
                 <div class="card-module">
-                    <div style={{"font-size": "20px","font-weight": "800","margin-top": "2vh", "margin-left": "2vw"}}>
+                    <div style={{"font-family":"Manrope","font-size": "20px","font-weight": "500","margin-top": "2vh", "margin-left": "2vw"}}>
                         Teams
                     </div>
                     <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>For Admin</div>
                 </div>
             <div class="card-teams">
                 <div class="nameheader">
-                    <div class="accountmaster">
+                    <div class="accountmaster font-[Exo]">
                         Account Master 
                     </div>
                     <div class="rightcp">
