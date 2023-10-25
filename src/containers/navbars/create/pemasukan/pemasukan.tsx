@@ -11,12 +11,6 @@ interface PemasukanProps {
 const PemasukanCreate: Component<PemasukanProps> = (props) => {
 
 
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData((prevData) => ({ ...prevData, [name]: value }));
-    // };
-    // const { dataId } = props;
-
     const [inputFile, setInputFile] = createSignal(null);
 
     const handleFileInputChange = () => {

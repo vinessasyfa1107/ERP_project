@@ -151,7 +151,10 @@ const Tabel_kontak: Component = () => {
                 <div class="top-container" style={{
                     "color": "#8A8A8B",
                     "font-size": "20px",
-                    "font-style": "normal", "font-family": "Exo", "font-weight": "700", "line-height": "normal",
+                    "font-style": "normal", 
+                    "font-family": "Exo", 
+                    "font-weight": "700", 
+                    "line-height": "normal",
                     "margin": "20px"
                 }}>
                     <p>Informasi</p>

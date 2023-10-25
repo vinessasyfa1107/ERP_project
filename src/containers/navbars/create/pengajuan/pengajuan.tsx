@@ -13,10 +13,10 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
     const [formData, setFormData] = createSignal({
         id: 0,
         entry_ts: '',
-        category: '',
+        category: 0,
         planningtype: '',
         description: '',
-        amount: '',
+        amount: 0,
         status: '',
         confirm: null,
         coa_kd: ''
@@ -31,9 +31,11 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
         }
 
         try {
+            const formattedDate = `${formData().entry_ts}T00:00:00`;
+
             const DataPengajuan = {
                 id: 0,
-                entry_ts: formData().entry_ts,
+                entry_ts: formattedDate,
                 category: formData().category,
                 planningtype: formData().planningtype,
                 description: formData().description,
@@ -64,10 +66,10 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                 setFormData({
                     id: 0,
                     entry_ts: '',
-                    category: '',
+                    category: 0,
                     planningtype: '',
                     description: '',
-                    amount: '',
+                    amount: 0,
                     status: '',
                     confirm: null,
                     coa_kd: ''
@@ -95,7 +97,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
 
                         <div class="isi-pengajuan">
 
-                            <div style={{"display":"flex", "justify-content":"space-between"}}>
+                            <div style={{ "display": "flex", "justify-content": "space-between" }}>
                                 <div>
                                     <label>Tanggal*</label>
                                     <br />
@@ -113,10 +115,10 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <label>COA*</label>
                                     <br />
                                     <input
-                                    type="number"
-                                    name="coa_kd" // Ganti cd_account dengan kodeAkun
-                                    value={formData().coa_kd}
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
+                                        type="text"
+                                        name="coa_kd" // Ganti cd_account dengan kodeAkun
+                                        value={formData().coa_kd}
+                                        onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -124,31 +126,33 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                             <div>
                                 <label>Keterangan*</label>
                                 <br />
-                                <textarea class="textarea textarea-bordered" 
-                                style={{ "background": '#F8F8F9',
-                                         "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
-                                         "width": "78vh", margin:'auto' }}
-                                name="description"
-                                value={formData().description}
-                                onInput={(e) => setFormData({ ...formData(), description: e.target.value })}
+                                <textarea class="textarea textarea-bordered"
+                                    style={{
+                                        "background": '#F8F8F9',
+                                        "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
+                                        "width": "78vh", margin: 'auto'
+                                    }}
+                                    name="description"
+                                    value={formData().description}
+                                    onInput={(e) => setFormData({ ...formData(), description: e.target.value })}
                                 >
                                 </textarea>
                             </div>
 
-                            <div style={{"display":"flex", "justify-content":"space-between"}}>
+                            <div style={{ "display": "flex", "justify-content": "space-between" }}>
                                 <div>
-                                <label>Kategori*</label>
+                                    <label>Kategori*</label>
                                     <br />
                                     <select
-                                    name="planning_type"
-                                    value={formData().planningtype}
-                                    onInput={(e) => setFormData({ ...formData(), planningtype: e.target.value })}
+                                        name="planning_type"
+                                        value={formData().planningtype}
+                                        onInput={(e) => setFormData({ ...formData(), planningtype: e.target.value })}
                                     >
-                                        <option disabled selected></option> 
-                                        <option>Event</option>
-                                        <option>Weekly</option>
-                                        <option>Monthly</option>
-                                        <option>Etc</option>
+                                        <option disabled selected></option>
+                                        <option value="Event">Event</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                        {/* <option>Etc</option> */}
                                     </select>
                                 </div>
 
@@ -157,9 +161,9 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <label>Jenis*</label>
                                     <br />
                                     <select
-                                    name="category"
-                                    value={formData().category}
-                                    onInput={(e) => setFormData({ ...formData(), category: e.target.value })}
+                                        name="category"
+                                        value={formData().category.toString()} // Konversi ke string karena tipe data dari `category` adalah number
+                                        onInput={(e) => setFormData({ ...formData(), category: parseInt(e.target.value, 10) })} // Konversi ke angka
                                     >
                                         <option disabled selected></option>
                                         <option value="1">Marketing</option>
@@ -171,15 +175,15 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{"display":"flex", "justify-content":"space-between"}}>
+                            <div style={{ "display": "flex", "justify-content": "space-between" }}>
                                 <div>
                                     <label>Jumlah*</label>
                                     <br />
                                     <input
-                                    type="number"
-                                    name="amount" // Ganti cd_account dengan kodeAkun
-                                    value={formData().amount}
-                                    onInput={(e) => setFormData({ ...formData(), amount: e.target.value })}
+                                        type="number"
+                                        name="amount" // Ganti cd_account dengan kodeAkun
+                                        value={formData().amount.toString()} // Konversi ke string karena tipe data dari `amount` adalah number
+                                        onInput={(e) => setFormData({ ...formData(), amount: parseFloat(e.target.value) })} // Konversi ke angka dengan parseFloat
                                     />
                                 </div>
 
@@ -187,18 +191,20 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                 <div>
                                     <label>Tag*</label>
                                     <br />
-                                    <select>
+                                    <select
+                                    name="status"
+                                    value={formData().status}
+                                    onInput={(e) => setFormData({ ...formData(), status: e.target.value })}>
                                         <option disabled selected></option>
-                                        <option>VIP</option>
-                                        <option>In Progress</option>
-                                        <option>Urgen</option>
-                                        <option>Bug</option>
-                                        <option>VVIP</option>
+                                        <option value="Waiting">Waiting</option>
+                                        <option value="InProgress">In Progress</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Rejected">Rejected</option>
                                     </select>
                                 </div>
                             </div>
 
-        
+
                         </div>
 
                         <br />
@@ -207,7 +213,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                         </div>
                     </form>
                 </div>
-        </div>
+            </div>
         </div>
     );
 };
