@@ -29,7 +29,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
       setInputFile(null);
     });
 
-
+    const [id, setId] = createSignal(0);
     const [tanggal_pengeluaran, setTanggalPengeluaran] = createSignal('');
     const [kategori_pengeluaran, setKategoriPengeluaran] = createSignal('');
     const [faktur_pengeluaran, setFakturPengeluaran] = createSignal('');
