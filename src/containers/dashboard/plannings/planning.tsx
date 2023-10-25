@@ -13,7 +13,7 @@ const Planning: Component = () => {
         <div class="plan">
             <Header />
             <div class="card-module">
-                <div style={{ "font-family":"Manrope", "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
+                <div style={{ "font-family":"Exo", "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
                     Planning
                 </div>
             </div>
