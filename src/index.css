@@ -16,3 +16,8 @@
     font-family: 'Manrope';
     src: url('./assets/font/Manrope-Medium.ttf') format('truetype');
 }
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./assets/font/Inter-Medium.ttf') format('truetype');
+}
