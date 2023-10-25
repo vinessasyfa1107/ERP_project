@@ -20,6 +20,7 @@
 }
 
 .journal-detail .box-1 h1 {
+    font-family: 'Exo';
     font-weight: 600;
     font-size: 17px;
     margin-bottom: 5px;
@@ -80,4 +81,5 @@
     margin-right: 90px;
     font-size: 14px;
     font-weight: 800;
+    font-family: 'Exo';
 }

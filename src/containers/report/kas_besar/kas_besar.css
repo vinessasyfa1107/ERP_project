@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Manrope', sans-serif;
+    /* font-family: 'Manrope'; */
 }
 
 /*======== css untuk top tabel ========*/
@@ -26,6 +26,7 @@
 .kasBesar-container .kasBesar-top-table .kasBesar-title p {
     font-size: 18px;
     color: #414141;
+    font-family: 'Exo';
     font-weight: 700;
     margin-left: 4px;
 }
@@ -155,7 +156,8 @@
 .totalSaldo-container .totalSaldo-title p {
     justify-content: center;
     color: #000000;
-    font-weight: 700;
+    font-family: 'Manrope';
+    font-weight: 800;
     text-align: center;
 }
 
@@ -179,5 +181,6 @@
     justify-content: center;
     text-align: center;
     color: #000000;
-    font-weight: 700;
+    font-family: 'Manrope';
+    font-weight: 800;
 }

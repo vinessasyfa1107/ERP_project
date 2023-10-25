@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo:wght@700&display=swap');
 
 .top-master-btn {
     width: 148vh;
@@ -10,7 +9,7 @@
     justify-content: left;
     align-items: center;
     padding: 0px 60px;
-    font-family: 'Exo', sans-serif;
+    font-family: 'Exo';
 }
 
 .top-master-btn A {
