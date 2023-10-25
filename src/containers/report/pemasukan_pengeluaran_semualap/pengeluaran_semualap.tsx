@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import { Grid, GridOptions, ISetFilterParams } from 'ag-grid-community';
 import 'ag-grid-enterprise';
@@ -10,14 +10,22 @@ import { ColDef, MenuItemDef } from 'ag-grid-enterprise';
 
 
 import './inex_semualap.css';
+import { DataExpense } from '../../../api/report/data-expense';
 
 
 const Pengeluaran_semualap: Component = () => {
+    const [RowData, setRowData] = createSignal([{}]);
+
+    onMount(async () => {
+      const expense = await DataExpense ("hallo");
+      console.log("expense", expense);
+      setRowData(expense);
+    })
 
     const columnDefs = [
-        { headerName: 'Tanggal', field: 'tanggal' },
+        { headerName: 'Tanggal', field: 'expense_ts' },
         { headerName: 'Keterangan', field: 'keterangan' },
-        { headerName: 'Jumlah', field: 'jumlah' }
+        { headerName: 'Jumlah', field: 'amount' }
     ];
 
     const rowData = [
@@ -50,7 +58,7 @@ const Pengeluaran_semualap: Component = () => {
                     <div class="ag-theme-alpine" style={{ width: '28vw' }}>
                         <AgGridSolid
                             columnDefs={columnDefs}
-                            rowData={rowData}
+                            rowData={RowData()}
                             defaultColDef={defaultColDef}
                             domLayout='autoHeight'
                             gridOptions={gridOptions}
