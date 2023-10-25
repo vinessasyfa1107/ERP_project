@@ -1,4 +1,3 @@
-
 export type resultplanning = {
   "id": number,
   "entry_ts": Date,

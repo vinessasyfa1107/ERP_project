@@ -148,25 +148,16 @@ const Tabel_kontak: Component = () => {
     return (
         <div>
             <div class="tabel-kontak-container">
-
-            <div class="top-container" style={{"color": "#8A8A8B", 
-            "font-size":"20px",
-            "font-style":"normal", "font-family":"Exo", "font-weight":"700", "line-height":"normal",
-            "margin":"20px"}}>
-                <p>Informasi</p>
-            </div>
-            <div class="table-kontak-container">
-                <div class="ag-theme-alpine" style={{ width: '72vw', height:'40.5vw' }}>
-                    <AgGridSolid
-                        columnDefs={columnDefs}
-                        rowData={RowData()}
-                        defaultColDef={defaultColDef}
-                        domLayout='autoHeight'
-                        gridOptions={gridOptions}
-                    />
+                <div class="top-container" style={{
+                    "color": "#8A8A8B",
+                    "font-size": "20px",
+                    "font-style": "normal", "font-family": "Exo", "font-weight": "700", "line-height": "normal",
+                    "margin": "20px"
+                }}>
+                    <p>Informasi</p>
                 </div>
                 <div class="table-kontak-container">
-                    <div class="ag-theme-alpine" style={{ width: '72vw', height: '40.5vw' }}>
+                    <div class="ag-theme-alpine" style={{ width: '69vw', height: '40.5vw', margin: 'auto' }}>
                         <AgGridSolid
                             columnDefs={columnDefs}
                             rowData={RowData()}
@@ -181,7 +172,6 @@ const Tabel_kontak: Component = () => {
                 </div>
                 {popUp() && <FormTambahKontak OnClose={closePopUp} />}
             </div>
-        </div>
         </div>
     );
 
