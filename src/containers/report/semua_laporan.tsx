@@ -47,7 +47,7 @@ const Semua_laporan: Component = () => {
         </div>
 
         {/* div untuk judul tabel semua laporan */}
-        <div style={{"font-family":"Exo"}}>
+        <div style={{"font-family":"Exo", "font-weight":"600"}}>
         <p>Semua <span>Laporan</span></p>
         </div>
 

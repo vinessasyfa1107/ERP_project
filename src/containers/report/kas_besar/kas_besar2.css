@@ -75,6 +75,7 @@
 .totalSaldo-container2 .totalSaldo-title2 p {
     justify-content: center;
     color: #000000;
+    font-family: 'Manrope';
     font-weight: 700;
     text-align: center;
 }
@@ -99,5 +100,6 @@
     justify-content: center;
     text-align: center;
     color: #000000;
+    font-family: 'Manrope';
     font-weight: 700;
 }

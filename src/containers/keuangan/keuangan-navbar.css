@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo:wght@700&display=swap');
 
 .navbar-keuangan {
     width: 150vh;
@@ -10,7 +9,7 @@
     justify-content: left;
     align-items: center;
     padding: 0px 50px;
-    font-family: 'Exo', sans-serif;
+
 }
 
 .navbar-keuangan A {
@@ -18,6 +17,7 @@
     color: #8A8A8B;;
     font-size: 18px;
     font-style: normal;
+    font-family: 'Exo';
     font-weight: 700;
     line-height: normal;
     text-align: left;

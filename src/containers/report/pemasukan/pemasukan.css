@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Manrope';
 }
 
 /*======== css untuk top tabel ========*/
@@ -20,6 +20,7 @@
 .pemasukan-container p { /*untuk mengatur judul pada pemasukan css*/
     font-size: 20px;
     color: #414141;
+    font-family: 'Exo';
     font-weight: 700;
     margin-left: 4px;
     margin-top: 1rem;

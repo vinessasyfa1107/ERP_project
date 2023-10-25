@@ -26,7 +26,7 @@
     font-style: italic;
     font-weight: 800;
     margin-top: 0;
-    font-family: 'Exo 2', sans-serif;
+    font-family: 'Exo 2';
 }
 
 .login-card .p2 {
@@ -35,7 +35,7 @@
     font-style: italic;
     font-weight: 800;
     margin-top: 15px;
-    font-family: 'Exo 2', sans-serif;
+    font-family: 'Exo 2';
 }
 
 .login-content {
@@ -58,7 +58,7 @@
     color: rgba(128, 128, 128, 0.50);
     font-size: 16px;
     font-weight: 500;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Manrope';;
 }
 
 .login-card .icon-user {
@@ -84,7 +84,7 @@
     font-weight: 500;
     margin-left: auto;
     margin-top: 8px;
-    font-family: 'Manrope', sans-serif
+    font-family: 'Manrope';
 }
 
 .login-card button {
@@ -97,7 +97,7 @@
     font-size: 20px;
     font-weight: 700;
     margin-top: 20px;
-    font-family: 'Manrope', sans-serif
+    font-family: 'Manrope';
 }
 
 /* "shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0" 
