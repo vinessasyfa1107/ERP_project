@@ -155,7 +155,7 @@ const Tabel_kontak: Component = () => {
             "margin":"20px"}}>
                 <p>Informasi</p>
             </div>
-            <div class="table-kontak-container">
+            {/* <div class="table-kontak-container">
                 <div class="ag-theme-alpine" style={{ width: '72vw', height:'40.5vw' }}>
                     <AgGridSolid
                         columnDefs={columnDefs}
@@ -164,9 +164,9 @@ const Tabel_kontak: Component = () => {
                         domLayout='autoHeight'
                         gridOptions={gridOptions}
                     />
-                </div>
+                </div> */}
                 <div class="table-kontak-container">
-                    <div class="ag-theme-alpine" style={{ width: '72vw', height: '40.5vw' }}>
+                    <div class="ag-theme-alpine" style={{ width: '62vw', height: '40.5vw', margin: 'auto' }}>
                         <AgGridSolid
                             columnDefs={columnDefs}
                             rowData={RowData()}
@@ -175,13 +175,12 @@ const Tabel_kontak: Component = () => {
                             gridOptions={gridOptions}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <button class="tambah-kontak-btn" onClick={openPopUp}>tambah</button>
-                    </div>
+                    </div> */}
                 </div>
                 {popUp() && <FormTambahKontak OnClose={closePopUp} />}
             </div>
-        </div>
         </div>
     );
 
