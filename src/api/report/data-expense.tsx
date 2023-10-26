@@ -15,7 +15,7 @@ export async function DataExpense (query: string) {
     
              
     const response = await fetch(
-      `/api/income/`, {mode: 'no-cors'}
+      `/api/expense/`, {mode: 'no-cors'}
     );
     
     const results = await response.json();
