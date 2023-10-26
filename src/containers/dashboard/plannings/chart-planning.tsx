@@ -6,7 +6,7 @@ import { dataplanning } from '../../../api/planning/dataplanning';
 
 const ChartPlanning: Component = () => {
 
-  const [RowData, setRowData] = createSignal([{"date":"2012-08-09"}]);
+  const [RowData, setRowData] = createSignal([]);
 
   onMount(async () => {
     const peng = await dataplanning("hallo");
@@ -31,7 +31,12 @@ const ChartPlanning: Component = () => {
         
       // chart.data = data;
 
-      chart.data = data1;
+      const chartData = data1.map(({ entry_ts, amount }) => ({
+        entry_ts,
+        amount,
+      }));
+    
+      chart.data = chartData;
 
           // Create axes
       let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -43,8 +48,8 @@ const ChartPlanning: Component = () => {
 
       // Create series
       let series = chart.series.push(new am4charts.LineSeries());
-      series.dataFields.valueY = "value";
-      series.dataFields.dateX = "date";
+      series.dataFields.valueY = "amount";
+      series.dataFields.dateX = "entry_ts";
       series.stroke = am4core.color("#5327AE");
       series.strokeWidth = 2;
       series.fill = am4core.color("#5327AE");

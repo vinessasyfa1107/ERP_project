@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import { Grid, GridOptions, ISetFilterParams } from 'ag-grid-community';
 import 'ag-grid-enterprise';
@@ -12,9 +12,18 @@ import { ColDef, MenuItemDef } from 'ag-grid-enterprise';
 import Semua_laporanNavbar from '../semua_laporanNavbar';
 import './pemasukan.css';
 import Tutup_buku from './tutup_buku';
+import { DataIncome } from '../../../api/report/data-income';
 
 
 const Pemasukan: Component = () => {
+
+  const [RowData, setRowData] = createSignal([{}]);
+
+  onMount(async () => {
+    const income = await DataIncome ("hallo");
+    console.log("income", income);
+    setRowData(income);
+  })
 
   const agLinkCellRenderer = (params: any) => {
     const bukti = params.data.bukti;
@@ -70,12 +79,12 @@ const Pemasukan: Component = () => {
 
 
   const columnDefs = [
-    { headerName: 'ID', field: 'id' },
-    { headerName: 'ID Pengajuan', field: 'id_pengajuan' },
-    { headerName: 'Faktur', field: 'faktur' },
-    { headerName: 'COA', field: 'COA' },
-    { headerName: 'Jumlah', field: 'jumlah' },
-    { headerName: 'Tanggal', field: 'tanggal' },
+    // { headerName: 'ID', field: 'planning_id' },
+    { headerName: 'ID Pengajuan', field: 'planning_id' },
+    { headerName: 'Faktur', field: 'faktur_ts' },
+    { headerName: 'COA', field: 'coa_kd' },
+    { headerName: 'Jumlah', field: 'amount' },
+    { headerName: 'Tanggal', field: 'income_ts' },
     { headerName: 'Keterangan', field: 'keterangan' },
     { headerName: 'Bukti', field: 'bukti', cellRenderer: agLinkCellRenderer },
     {
@@ -192,7 +201,7 @@ const Pemasukan: Component = () => {
           <div class="ag-theme-alpine" style={{ width: '68vw' }}>
             <AgGridSolid
               columnDefs={columnDefs}
-              rowData={rowData}
+              rowData={RowData()}
               defaultColDef={defaultColDef}
               domLayout='autoHeight'
               gridOptions={gridOptions}
