@@ -47,6 +47,8 @@ const TableDetailPlan: Component = () => {
       check = <button class="btn-approved" onClick={handlePopUpApproved}><Icon icon="icomoon-free:checkbox-checked" color="#7bc582" width="16.1" height="16.1" /></button>;
     } else if (params.data.status === 'Rejected') {
       check = <Icon icon="mdi:close-box" class="icon-rejected" width="21.5" height="21.5" />;
+    } else if (params.data.status === 'Waiting') {
+      check = <Icon icon="ic:round-square" class="icon-disabled" width="21" height="21" />;
     }
 
     return check;
