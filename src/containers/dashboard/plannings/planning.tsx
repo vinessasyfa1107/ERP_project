@@ -43,7 +43,6 @@ const Planning: Component = () => {
                 <div>
                     <h1>List Rencana Pengajuan</h1>
                     <TableDetailPlan />
-                    <FormPlanning />
                 </div>
 
             </div>
