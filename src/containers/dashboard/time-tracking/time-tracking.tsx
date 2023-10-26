@@ -26,7 +26,7 @@ const TimeTracking: Component = () => {
 
   const handleRowClick = (event: { data: any; node: any; }) => {
     const { data, node } = event;
-    setSelectedRow(() => ({ id: node.data.NO, status: data.Status }));
+    setSelectedRow(() => ({ id: node.data.planning_id, status: data.status }));
     setShowText(!showText());
     handleSteps();
   };
