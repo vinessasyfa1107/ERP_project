@@ -11,6 +11,7 @@ const MasterCOA = lazy(() => import('../containers/master/master-coa/master-coa'
 const MasterAkun = lazy(() => import('../containers/master/master-akun/master-akun'));
 
 const Plan = lazy(() => import('../containers/dashboard/plannings/plan'));
+const Confirm_role = lazy(() => import('../containers/confirm_role/confirm_role'));
 const Admin = lazy(() => import('../containers/dashboard/teams/teams'));
 const Login = lazy(() => import('../containers/login/login'));
 const Planning = lazy(() => import('../containers/dashboard/plannings/planning'));
@@ -43,6 +44,7 @@ const RouteData: Component = () => {
         <Routes>
             <Route path="/" element={<Navigate href={getPath} />} />
             <Route path="/login" component={Login} />
+            <Route path="/confirm_role" component={Confirm_role} />
 
             <Route path="/master">
                 <Route path="/master" component={Master} />
