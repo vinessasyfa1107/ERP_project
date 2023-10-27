@@ -15,11 +15,12 @@ const TableJournal: Component = () => {
     })
 
     const columnDefs = [
-        { field: 'journal_id' , headerName: 'ID'}, // Menambahkan filter pada kolom "make"
-        { field: 'faktur'}, 
+        { field: 'id' , headerName: 'ID'}, // Menambahkan filter pada kolom "make"
+        { field: 'faktur_ts', headerName: 'Faktur'}, 
         { field: 'journal_ts', headerName: 'Tanggal' }, // Menambahkan filter pada kolom "model"
-        { field: 'pemasukan' },
-        { field: 'amount', headerName: 'Pengeluaran' },
+        { field: 'income_id', headerName: 'Pemasukan' },
+        { field: 'expense_id', headerName: 'Pengeluaran' },
+        { field: 'keterangan' }
       ];  
     
       const rowData = [

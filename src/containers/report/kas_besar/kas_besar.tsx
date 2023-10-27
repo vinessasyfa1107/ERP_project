@@ -4,20 +4,42 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, onMount } from 'solid-js';
 import './kas_besar.css';
 import Kas_besar2 from './kas_besar2';
 import Semua_laporanNavbar from '../semua_laporanNavbar';
+import { DataBigCash } from '../../../api/keuangan/data-bigcash';
 
 const Kas_besar: Component = () => {
+    const [RowData, setRowData] = createSignal([{}]);
+    const [totalBalance, setTotalBalance] = createSignal(0);
+
+
+    // let formattedTotalBalance = ''; 
+    
+    onMount(async () => {
+      const big_cash = await DataBigCash ("hallo");
+      console.log("big cash", big_cash);
+      setRowData(big_cash);
+
+      const subsetOfData = big_cash.slice(0, 3);
+      setRowData(subsetOfData);
+
+       // Calculate the total balance
+       const calculatedTotalBalance = subsetOfData.reduce((total, entry) => total + entry.balance, 0);
+       setTotalBalance(calculatedTotalBalance);
+    })
+    
     const columnDefs = [
         { headerName: 'Date', field: 'date' },
-        { headerName: 'COA', field: 'COA' },
+        { headerName: 'COA', field: 'coa' },
         { headerName: 'Keterangan', field: 'keterangan' },
-        { headerName: 'Pemasukan', field: 'pemasukan' },
-        { headerName: 'Pengeluaran', field: 'pengeluaran' },
-        { headerName: 'Saldo Awal', field: 'saldo_awal' }
+        { headerName: 'Pemasukan', field: 'income' },
+        { headerName: 'Pengeluaran', field: 'expense' },
+        { headerName: 'Saldo Awal', field: 'balance' }
     ];
+
+
 
     const rowData = [
         {
@@ -102,26 +124,29 @@ const Kas_besar: Component = () => {
                     </div>
                 </div>
 
-                {/* div untuk mengatur tabel kas besar dari ag grid */}
-                <div class="kasBesar-table">
-                    <div class="ag-theme-alpine" style={{ width: '50vw' }}>
-                        <AgGridSolid
-                            columnDefs={columnDefs}
-                            rowData={rowData}
-                            defaultColDef={defaultColDef}
-                            domLayout='autoHeight'
-                            gridOptions={gridOptions}
-                        />
+                <div class="mx-auto" style={{display:"flex", "flex-direction":"column", width:"63vw"}}>
+                    {/* div untuk mengatur tabel kas besar dari ag grid */}
+                    <div class="kasBesar-table">
+                        <div class="ag-theme-alpine" style={{ width: '64vw', "margin-bottom":"0px" }}>
+                            <AgGridSolid
+                                columnDefs={columnDefs}
+                                rowData={RowData()}
+                                defaultColDef={defaultColDef}
+                                domLayout='autoHeight'
+                                gridOptions={gridOptions}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                {/* div untuk mengatur total saldo container */}
-                <div class="totalSaldo-container">
-                    <div class="totalSaldo-title">
-                        <p>Total Saldo</p>
-                    </div>
-                    <div class="totalSaldo-jumlah">
-                        <p>46.781.200</p>
+                    {/* div untuk mengatur total saldo container */}
+                    <div class="totalSaldo-container">
+                        <div class="totalSaldo-title">
+                            <p>Total Saldo</p>
+                        </div>
+                        <div class="totalSaldo-jumlah">
+                            {/* <p>46.781.200</p> */}
+                            <p>{new Intl.NumberFormat('id-ID').format(totalBalance())}</p>
+                        </div>
                     </div>
                 </div>
 
