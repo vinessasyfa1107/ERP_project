@@ -175,34 +175,37 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                 </div>
                             </div>
 
-                            <div style={{ "display": "flex", "justify-content": "space-between" }}>
-                                <div>
-                                    <label>Jumlah*</label>
-                                    <br />
-                                    <input
-                                        type="number"
-                                        name="amount" // Ganti cd_account dengan kodeAkun
-                                        value={formData().amount.toString()} // Konversi ke string karena tipe data dari `amount` adalah number
-                                        onInput={(e) => setFormData({ ...formData(), amount: parseFloat(e.target.value) })} // Konversi ke angka dengan parseFloat
-                                    />
-                                </div>
+                            <div >
+                                <label>Jumlah*</label>
+                                <br />
+                                <input
+                                    style={{ "width": "32rem" }}
+                                    type="number"
+                                    name="amount" // Ganti cd_account dengan kodeAkun
+                                    value={formData().amount.toString()} // Konversi ke string karena tipe data dari `amount` adalah number
+                                    onInput={(e) => setFormData({ ...formData(), amount: parseFloat(e.target.value) })} // Konversi ke angka dengan parseFloat
+                                />
+                            </div>
 
 
-                                <div>
-                                    <label>Tag*</label>
-                                    <br />
-                                    <select
+                            <div>
+                                <label>Tag</label>
+                                <br />
+                                <select
+                                    style={{ "width": "32rem" }}
                                     name="status"
                                     value={formData().status}
                                     onInput={(e) => setFormData({ ...formData(), status: e.target.value })}>
-                                        <option disabled selected></option>
-                                        <option value="Waiting">Waiting</option>
-                                        <option value="InProgress">In Progress</option>
-                                        <option value="Approved">Approved</option>
-                                        <option value="Rejected">Rejected</option>
-                                    </select>
-                                </div>
+                                    <option disabled selected></option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="Priority">Priority</option>
+                                    <option value="Urgent">Urgent</option>
+                                    <option value="Hold">Hold</option>
+                                    <option value="Todo">To Do</option>
+                                    <option value="WIP">Work In Progress</option>
+                                </select>
                             </div>
+
 
 
                         </div>

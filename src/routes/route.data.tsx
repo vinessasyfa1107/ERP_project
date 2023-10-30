@@ -6,6 +6,8 @@ const getPath = ({ navigate, location }) => {
     return "/dashboard/report";
 }
 
+const Du = lazy(() => import('../containers/master/master/master'));
+
 const Master = lazy(() => import('../containers/master/master/master'));
 const MasterCOA = lazy(() => import('../containers/master/master-coa/master-coa'));
 const MasterAkun = lazy(() => import('../containers/master/master-akun/master-akun'));
@@ -42,6 +44,7 @@ const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 const RouteData: Component = () => {
     return (
         <Routes>
+            <Route path="/" element={<Navigate href={getPath} />} />
             <Route path="/" element={<Navigate href={getPath} />} />
             <Route path="/login" component={Login} />
             <Route path="/confirm_role" component={Confirm_role} />
