@@ -154,7 +154,7 @@ const Login: Component = () => {
                     </div>
 
                     <User_Login class="mt-6 w-16 mb-5"/>
-                    <div class="login-content">
+                    <div class="login-content relative">
                         <input type="text" placeholder="Username" required
                         id="username"
                         value={username()}
