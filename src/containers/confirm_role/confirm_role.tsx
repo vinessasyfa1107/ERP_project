@@ -5,7 +5,7 @@ import { useStore } from '../../store';
 const Confirm_role: Component = () => {
   const [{ sessionStore }] = useStore();
   const navigate = useNavigate();
-  const [selectedRole, setSelectedRole] = createSignal('');
+  const [selectedRole, setSelectedRole] = createSignal("");
 
   const handleRoleConfirmation = () => {
     if (selectedRole()) {
@@ -27,7 +27,8 @@ const Confirm_role: Component = () => {
         <select value={selectedRole()} onChange={(e) => setSelectedRole(e.target.value)}>
           <option value="">Select Role</option>
           <option value="admin">Admin</option>
-          <option value="user">User</option>
+          <option value="direktur_utama">Direktur Utama</option>
+          <option value="direktur_keuangan">Direktur Keuangan</option>
           {/* Add more role options as needed */}
         </select>
       </label>
