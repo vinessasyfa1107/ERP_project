@@ -38,6 +38,16 @@ const JournalDetail = lazy(() => import('../containers/keuangan/journal-detail/j
 
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 
+
+//Untuk Direktur Utama
+
+const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/report/report-du'));
+
+
+
+
+
+
 const RouteData: Component = () => {
     return (
         <Routes>
@@ -86,6 +96,11 @@ const RouteData: Component = () => {
                 <Route path="/tabel_kontak" component={Tabel_kontak} />
             </Route>
 
+
+            <Route path="/dashboard-du">
+                <Route path="/report" component={ReportDU} />
+
+            </Route>
         </Routes>
     )
 }

@@ -16,6 +16,7 @@ const TableJournalDetail: Component = () => {
 
     const columnDefs = [
         { field: 'journal_id', headerName: 'ID'}, // Menambahkan filter pada kolom "make"
+        { field: 'faktur_ts', headerName: 'Faktur'},
         { field: 'coa_id', headerName: 'COA' }, // Menambahkan filter pada kolom "model"
         { field: 'debit' },
         { field: 'credit' },
