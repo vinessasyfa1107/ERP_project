@@ -1,7 +1,7 @@
 import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import { Grid, GridOptions, ISetFilterParams } from 'ag-grid-community';
-import 'ag-grid-enterprise';
+// import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'daisyui/dist/full.css';

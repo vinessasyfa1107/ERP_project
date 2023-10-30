@@ -88,7 +88,6 @@
     position: relative;
     display: flex;
     justify-content: center;
-    padding-bottom: 23px;
 }
 .ag-theme-alpine {
     text-align: center;
@@ -135,8 +134,9 @@
 .totalSaldo-container {
     display: flex;
     float: right;
-    margin-right: 3.7rem;
-    margin-bottom: 2rem;
+    /* position: absolute; */
+    top: 36%;
+    margin-left: auto;
 }
 
 .totalSaldo-container .totalSaldo-title {

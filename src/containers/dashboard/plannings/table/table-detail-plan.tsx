@@ -62,7 +62,7 @@ const TableDetailPlan: Component = () => {
     { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori',  cellClassRules: { 'bold-type': () => true } },
     { field: 'category', headerName: 'Jenis'},
     { field: 'amount', headerName: 'Jumlah' },
-    { field: 'status', headerName: 'Tag*' },
+    { field: 'status', headerName: 'Status' },
     { field: 'confirm', headerName: 'Konfirmasi', cellRenderer: confirmCellRenderer }
 
   ];
