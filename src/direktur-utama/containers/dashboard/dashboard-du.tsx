@@ -10,6 +10,9 @@ const DashboardDU: Component = () => {
     const location = useLocation();
 
     return (
+        <div style={{display:'flex', "flex-direction":"column"}}>
+
+        <div>
         <div class="header font-[Exo]">
             <div class="selection">
                 <A href='/dashboard/report' classList={{ active: location.pathname === '/dashboard-du/report' }}>
@@ -78,28 +81,15 @@ const DashboardDU: Component = () => {
                         </div>
                     </div>
                 </A>
-            </div>
-            
-
-
-
-
-
-            {/* <div class="form-control">
-                <label class="input-group input-group-lg">
-                    <span>
-                    <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11"/>
-
-                    </span>
-                    <input type="text" placeholder="Type here" class="input input-bordered input-lg" />
-                </label>
-            </div> */}
+            </div>  
+        </div>
         </div>
 
+        <div class="dashboard-title" style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600"}}>
+            Report
+        </div>
 
-
-
-            
+        </div>
     )
 }
 
