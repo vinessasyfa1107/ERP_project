@@ -1,17 +1,19 @@
 
 .header {
+    transform: translateX(4%);    
     display: flex;
     /* text-align: center; */
     /* justify-content: center; */
     font-family: 'Exo';
+    display: flex;
+    flex-direction: row;
+    gap: 11vh;
 }
-
+/* 
 .selection {
     margin-left: 5vw;
 
-    /* justify-content: center;
-    align-items: center; */
-}
+} */
 
 
 
@@ -52,13 +54,13 @@
 
 .menu-selection {
     display: flex;
+    gap: 3px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     /* margin: 3px; */
-    padding:15px 20px 10px 20px;
+    padding: 20px 25px 7px 25px;
 
-    background-color: #6E49E9;
 }
 
 A.active .menu-selection {
@@ -122,4 +124,15 @@ A.active .menu-selection {
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 14px;
+}
+
+.dashboard-title {
+    width: 150vh;
+    height: 75px;
+    background-color: #F5F5F5;
+    border-radius: 15px;
+    padding: 30px;
+    justify-content: left;
+    margin-bottom: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15)
 }

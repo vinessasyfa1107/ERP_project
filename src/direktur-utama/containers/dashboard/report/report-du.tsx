@@ -40,11 +40,7 @@ const ReportDU: Component = () => {
         </div>
         <div>
         <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
-                <div class="card-module">
-                    <div style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600", "margin-top": "2vh", "margin-left": "2vw" }}>
-                        Report
-                    </div>
-                </div>
+                
                 <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
                     {/* div untuk barchart container */}
                     <div class="barchartReport-container">
