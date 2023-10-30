@@ -6,7 +6,8 @@ export type resultdata = {
     "credit": string,
     "info": string,
     "balance": number,
-    "keterangan": string
+    "keterangan": string,
+    "faktur_ts": string
 }
 
 
@@ -23,7 +24,7 @@ export async function DataJournalDetail (query: string) {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents);
-    return documents.slice(0, documents.length).map(({ journal_id, coa_id, debit, credit, info, balance, keterangan }) => ({
-        journal_id, coa_id, debit, credit, info, balance, keterangan
+    return documents.slice(0, documents.length).map(({ journal_id, coa_id, debit, credit, info, balance, keterangan, faktur_ts }) => ({
+        journal_id, coa_id, debit, credit, info, balance, keterangan, faktur_ts
       }));
   }
