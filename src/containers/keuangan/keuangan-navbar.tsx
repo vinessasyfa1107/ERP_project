@@ -1,10 +1,15 @@
 import { A, useLocation } from '@solidjs/router';
 import { Icon } from '@iconify-icon/solid';
-import type { Component } from 'solid-js';
+import { onMount, type Component } from 'solid-js';
 import './keuangan-navbar.css'
+import { useStore } from '../../store';
+import { useSubNavbarStore } from '../../store/Navbar/SubNavbarStore';
 
 const KeuanganNavbar: Component = () => {
+  
+  const [{titleStore}] = useStore();
   const location = useLocation();
+  
 
   return (
     <div>
@@ -64,6 +69,9 @@ const KeuanganNavbar: Component = () => {
                 </A>
             </div>
 
+        </div>
+        <div class="dashboard-title" style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600"}}>
+            {titleStore.title_subnavbar}
         </div>
         </div>
   );

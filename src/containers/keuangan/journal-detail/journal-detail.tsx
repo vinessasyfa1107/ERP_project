@@ -1,18 +1,26 @@
-import type { Component } from 'solid-js';
+import { onMount, type Component, createSignal } from 'solid-js';
 import './journal-detail.css'
 import { Icon } from '@iconify-icon/solid';
 import KeuanganNavbar from '../keuangan-navbar';
 import TableJournalDetail from './table-journal-detail';
-
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const JournalDetail: Component = () => {
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+    
+    onMount(() => {
+        changeSubTitleNavbar("Journal Detail");
+    })
+    
+    const [RowData, setRowData] = createSignal([{}]);
+    const [totalBalance, setTotalBalance] = createSignal(0);
+    
   return (
 
     <div class="journal-detail">
         <KeuanganNavbar/>
         <div class="box-1">
             <div class="top-1">
-                <h1>Journal Detail</h1>
                 <div class="rightcp">
                     <input type="text" placeholder="Search.." name="search"/>
                         <span class="search-icon">
