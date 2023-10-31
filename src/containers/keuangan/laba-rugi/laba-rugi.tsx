@@ -1,19 +1,27 @@
-import type { Component } from 'solid-js';
+import { onMount, type Component, createSignal } from 'solid-js';
 import './laba-rugi.css'
 import { Icon } from '@iconify-icon/solid';
 import { A } from '@solidjs/router';
 import KeuanganNavbar from '../keuangan-navbar';
 import TableLabaRugi from './table-laba-rugi';
-
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const LabaRugi: Component = () => {
+        const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+    
+        onMount(() => {
+            changeSubTitleNavbar("Laba Rugi");
+        })
+        
+        const [RowData, setRowData] = createSignal([{}]);
+        const [totalBalance, setTotalBalance] = createSignal(0);
+        
   return (
 
     <div class="laba-rugi">
         <KeuanganNavbar/>
         <div class="box-1">
             <div class="top-1">
-                <h1>Laba Rugi</h1>
                 <div class="rightcp">
                     <input type="text" placeholder="Search.." name="search"/>
                         <span class="search-icon">
