@@ -2,14 +2,20 @@ import { Component, onMount } from "solid-js";
 import { useNavigate, A, Navigate, useLocation } from '@solidjs/router';
 import { Icon } from '@iconify-icon/solid';
 import './header.css';
+import { useStore } from "../../store";
+import { title } from 'process';
 
 
 
 const Header: Component = () => {
 
+    const [{titleStore}] = useStore();
+
     const location = useLocation();
 
     return (
+        <div>
+        <div>
         <div class="header font-[Exo]">
             <div class="selection">
                 <A href='/dashboard/report' classList={{ active: location.pathname === '/dashboard/report' }}>
@@ -85,27 +91,13 @@ const Header: Component = () => {
                     </div>
                 </A>
             </div>
-            
-
-
-
-
-
-            {/* <div class="form-control">
-                <label class="input-group input-group-lg">
-                    <span>
-                    <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11"/>
-
-                    </span>
-                    <input type="text" placeholder="Type here" class="input input-bordered input-lg" />
-                </label>
-            </div> */}
+        </div>
         </div>
 
-
-
-
-            
+        <div class="dashboard-title" style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600"}}>
+            {titleStore.title_subnavbar}
+        </div>
+        </div>            
     )
 }
 

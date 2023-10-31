@@ -9,8 +9,15 @@ import './kas_besar.css';
 import Kas_besar2 from './kas_besar2';
 import Semua_laporanNavbar from '../semua_laporanNavbar';
 import { DataBigCash } from '../../../api/keuangan/data-bigcash';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const Kas_besar: Component = () => {
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Kas Besar");
+    })
+    
     const [RowData, setRowData] = createSignal([{}]);
     const [totalBalance, setTotalBalance] = createSignal(0);
 
@@ -106,7 +113,7 @@ const Kas_besar: Component = () => {
                 {/* div untuk mengatur top table pada kasBesar yang terdiri dari judul tabel, search, dan sorting icon */}
                 <div class="kasBesar-top-table">
                     <div class="kasBesar-title">
-                        <p>Kas Besar</p>
+                        {/* <p>Kas Besar</p> */}
                     </div>
                     <div class="search-container">
                         <div class="search-input">
