@@ -18,6 +18,7 @@ const DashboardDU: Component = () => {
 
         <div>
         <div class="header font-[Exo]">
+            
             <div class="selection">
                 <A href='/dashboard/report' classList={{ active: location.pathname === '/dashboard-du/report' }}>
                     <div class="box-menu">
@@ -87,6 +88,7 @@ const DashboardDU: Component = () => {
                     </div>
                 </A>
             </div>  
+            
         </div>
         </div>
 
