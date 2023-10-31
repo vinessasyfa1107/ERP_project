@@ -10,13 +10,14 @@ import Barchart_aruskas_report from '../../../../containers/dashboard/report/bar
 import Barchart_labarugi_report from '../../../../containers/dashboard/report/barchart_labarugi_report/barchart_labarugi_report';
 import { Icon } from '@iconify-icon/solid';
 import './report-du.css'
+import { useNavbarStore1 } from '../../../../store/Navbar/NavbarStore-Menu';
 
 const ReportDU: Component = () => {
-    const [, {changeTitleNavbar}] = useNavbarStore();
+    const [, {changeTitleNavbar1} ] = useNavbarStore1();
 
 
     onMount(() => {
-        changeTitleNavbar("Dashboard");
+        changeTitleNavbar1("Report");
     })
 
 
