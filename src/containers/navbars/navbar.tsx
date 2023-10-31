@@ -78,11 +78,11 @@ const Navbar: Component<NavbarProps> = (props) => {
           <div class="z-1 w-[227px] h-full bg-[#f7f7f7] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-27">
 
             <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
-            <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+            <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center p-0.5 gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-4 w-3/5 items-center">
                   <img
                     src="https://file.rendit.io/n/XxDPo7KbyfNGiflc38gM.svg"
-                    class="w-5 shrink-0"
+                    class="w-6 shrink-0"
                   />
                   <div class="font-['Inter'] font-bold text-black/42 ">
                     Master

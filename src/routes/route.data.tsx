@@ -9,10 +9,12 @@ const getPath = ({ navigate, location }) => {
 
 //============= path untuk direktur utama ============= //
 
-const Du = lazy(() => import('../containers/master/master/master'));
+// const Du = lazy(() => import('../containers/master/master/master'));
 
 const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/report/report-du'));
-
+const PlanningDU = lazy(() => import('../direktur-utama/containers/dashboard/planning/planning-du'));
+const TimeTrackingDU = lazy(() => import('../direktur-utama/containers/dashboard/time-tracking/time-tracking-du'));
+const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'))
 
 //============= path untuk direktur keuangan ============= //
 const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/report/report_dk'));
@@ -121,7 +123,12 @@ const RouteData: Component = () => {
             </Route>
 
 
-
+            <Route path="/dashboard-du">
+                <Route path="/report" component={ReportDU} />
+                <Route path="/planning" component={PlanningDU}/>
+                <Route path="/time-tracking" component={TimeTrackingDU}/>
+                <Route path="/kas-approval" component={KasApproval}/>
+            </Route>
         </Routes>
     )
 }
