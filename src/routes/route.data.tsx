@@ -2,6 +2,7 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
 
+
 const getPath = ({ navigate, location }) => {
     return "/dashboard/report";
 }
@@ -14,7 +15,9 @@ const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/repor
 
 
 //============= path untuk direktur keuangan ============= //
-
+const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/report/report_dk'));
+const Planning_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/planning_dk'));
+const Form_approve = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/form_approve/form_approve'));
 
 
 //============= path untuk admin ============= //
@@ -54,11 +57,26 @@ const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 
 const RouteData: Component = () => {
     return (
+
+
         <Routes>
+
             <Route path="/" element={<Navigate href={getPath} />} />
             <Route path="/" element={<Navigate href={getPath} />} />
             <Route path="/login" component={Login} />
             {/* <Route path="/confirm_role" component={Confirm_role} /> */}
+
+            <Route path="/dashboard-du">
+                <Route path="/report" component={ReportDU} />
+
+            </Route>
+
+            <Route path="/dashboard-dk">
+                <Route path="/report_dk" component={Report_dk} />
+                <Route path="/planning_dk" component={Planning_dk} />
+                <Route path="/form_approve" component={Form_approve} />
+
+            </Route>
 
             <Route path="/master">
                 <Route path="/master" component={Master} />
@@ -103,10 +121,7 @@ const RouteData: Component = () => {
             </Route>
 
 
-            <Route path="/dashboard-du">
-                <Route path="/report" component={ReportDU} />
 
-            </Route>
         </Routes>
     )
 }

@@ -1,0 +1,98 @@
+
+.header {
+    display: flex;
+    /* text-align: center; */
+    /* justify-content: center; */
+    font-family: 'Exo';
+}
+
+.selection {
+    margin-left: 5vw;
+}
+
+.selection2 {
+    margin-left: 5vw;
+    margin-top: 5vh;
+    flex-shrink: 0;
+}
+/* Gaya SVG saat tidak dihover */
+.svg-icon {
+    fill: none; /* Menghilangkan warna fill saat tidak dihover */
+    /* stroke: #8A8A8B; Warna stroke saat tidak dihover */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: fill 0.3s, stroke 0.3s; /* Efek transisi untuk fill dan stroke saat dihover */
+}
+  
+/* Gaya SVG saat dihover */
+/* .svg-icon:hover {
+    stroke: #6E49E9; 
+    stroke-width: 1;
+} */
+ 
+.header:hover .name-selection {
+    font-weight: 600;
+    color: #bebebe;
+    text-shadow: 0 2px 5px #bcbcbc;
+    transition: all 0.7s ease;
+    font-family: 'Exo';
+
+}
+
+.menu-selection .name-selection {
+    font-weight: 600;
+    color: white;
+    font-size: 15px;
+    font-family: 'Exo';
+
+}
+
+/* Saat SVG dihover */
+/* .menu-selection:hover .name-selection {
+    color: #6E49E9;
+    stroke: #6E49E9;
+}
+
+.menu-selection:hover .svg-icon {
+    stroke: #6E49E9;
+} */
+
+/* Saat SVG tidak dihover */
+
+
+/* .selection A.active {
+    color: rgba(132, 103, 255, 0.80);
+}
+ */
+
+.selection A.active .menu-selection .name-selection {
+    color: #6E49E9;
+    opacity: 1;
+    font-size: 15px;
+    font-family: 'Exo';
+}
+
+.selection A.active .menu-selection .svg-icon {
+    stroke: #6E49E9;
+}
+.input-icon {
+    position: relative;
+}
+
+.iconify {
+    position: absolute;
+    left: 10px; /* Jarak antara ikon dan sisi kiri input */
+    top: 50%; /* Posisi vertikal tengah ikon */
+    transform: translateY(-50%); /* Pusatkan ikon secara vertikal */
+    color: #7E7F90; /* Warna ikon (sesuaikan dengan kebutuhan Anda) */
+    font-size: 16px; /* Ukuran ikon (sesuaikan dengan kebutuhan Anda) */
+}
+
+.input {
+    padding-left: 30px; /* Jarak antara ikon dan teks input */
+    /* Gaya input Anda */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
