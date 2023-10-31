@@ -13,9 +13,15 @@ import Semua_laporanNavbar from '../semua_laporanNavbar';
 import './pengeluaran.css';
 import Tutup_buku from '../pemasukan/tutup_buku';
 import { DataExpense } from '../../../api/report/data-expense';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 
 const Pengeluaran: Component = () => {
+  const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Laporan Pengeluaran");
+    })
 
   const [RowData, setRowData] = createSignal([{}]);
 
@@ -194,7 +200,7 @@ return (
           <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
         </div>
       </div>
-      <p>Laporan Pengeluaran</p>
+      {/* <p>Laporan Pengeluaran</p> */}
 
       {/* div untuk mengatur tabel kas besar dari ag grid */}
       <div class="pengeluaran-table">

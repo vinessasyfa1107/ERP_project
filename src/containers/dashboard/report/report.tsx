@@ -10,17 +10,23 @@ import { Icon } from '@iconify-icon/solid';
 import './report.css';
 import Header from '../../header/header';
 import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 
 const Report: Component = () => {
 
     const [, {changeTitleNavbar}] = useNavbarStore();
 
-
     onMount(() => {
         changeTitleNavbar("Dashboard");
     })
 
+
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Report");
+    }) 
 
     const [showIncomeTable, setShowIncomeTable] = createSignal(false);
     const [showExpensesTable, setShowExpensesTable] = createSignal(false);
@@ -44,11 +50,11 @@ const Report: Component = () => {
             </div> */}
 
             <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
-                <div class="card-module">
+                {/* <div class="card-module">
                     <div style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600", "margin-top": "2vh", "margin-left": "2vw" }}>
                         Report
                     </div>
-                </div>
+                </div> */}
                 <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
                     {/* div untuk barchart container */}
                     <div class="barchartReport-container">

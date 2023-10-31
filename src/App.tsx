@@ -20,6 +20,7 @@ const App: Component = () => {
             navigate('/dashboard/admin', {replace: true});
         }
     });
+    
     return (
       <>
         {!needLogin() ? <Navbar><RouteData/></Navbar> : <Login />}
