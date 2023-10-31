@@ -6,7 +6,18 @@ const getPath = ({ navigate, location }) => {
     return "/dashboard/report";
 }
 
+//============= path untuk direktur utama ============= //
+
 const Du = lazy(() => import('../containers/master/master/master'));
+
+const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/report/report-du'));
+
+
+//============= path untuk direktur keuangan ============= //
+
+
+
+//============= path untuk admin ============= //
 
 const Master = lazy(() => import('../containers/master/master/master'));
 const MasterCOA = lazy(() => import('../containers/master/master-coa/master-coa'));
@@ -40,16 +51,6 @@ const Journal = lazy(() => import('../containers/keuangan/journal/journal'));
 const JournalDetail = lazy(() => import('../containers/keuangan/journal-detail/journal-detail'));
 
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
-
-
-//Untuk Direktur Utama
-
-const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/report/report-du'));
-
-
-
-
-
 
 const RouteData: Component = () => {
     return (
