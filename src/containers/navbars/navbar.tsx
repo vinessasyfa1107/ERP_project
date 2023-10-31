@@ -72,10 +72,10 @@ const Navbar: Component<NavbarProps> = (props) => {
     return (
       <div>
         <div
-          class="z-3  bg-white absolute flex flex-row justify-between pr-12 w-full items-center"
+          class="z-1  bg-white absolute flex flex-row justify-between pr-12 w-full items-center"
         >
           <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] w-5 h-5 absolute top-12 left-[1116px]" />
-          <div class="z-3 w-[227px] h-full bg-[#f7f7f7] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-27">
+          <div class="z-1 w-[227px] h-full bg-[#f7f7f7] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-27">
 
             <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
             <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
@@ -227,7 +227,7 @@ const Navbar: Component<NavbarProps> = (props) => {
           </div>
 
 
-          <div class="z-3 w-full h-20 bg-[#f7f7f7] fixed top-0 left-1 flex flex-row justify-between items-end pb-4 pl-[113px] pr-24">
+          <div class="z-1 w-full h-20 bg-[#f7f7f7] fixed top-0 left-1 flex flex-row justify-between items-end pb-4 pl-[113px] pr-24">
             <div class="flex flex-row justify-between gap-32 items-start">
               <div class="flex flex-row mb-2 gap-2 items-start">
                 <div class="text-4xl font-['Exo_2'] font-bold text-[#6e49e9] mb-px italic" style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
@@ -344,7 +344,7 @@ const Navbar: Component<NavbarProps> = (props) => {
             </div>
           </div>
 
-          <div class="z-3 bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3"
+          <div class="z-1 bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3"
             style={{ "padding-bottom": "6vh" }}>
             <div
               id="Ellipse"

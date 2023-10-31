@@ -12,16 +12,22 @@ import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
 import AgGridSolid from 'ag-grid-solid';
 import { useNavbarStore } from '../../store/Navbar/NavbarStore';
+import { useSubNavbarStore } from '../../store/Navbar/SubNavbarStore';
 
 const Semua_laporan: Component = () => {
 
   const [, {changeTitleNavbar}] = useNavbarStore();
 
-
   onMount(() => {
       changeTitleNavbar("Report");
   })
   
+  const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Semua Laporan");
+    })
+    
   return (
     <div>
       <Semua_laporanNavbar />
@@ -47,9 +53,9 @@ const Semua_laporan: Component = () => {
         </div>
 
         {/* div untuk judul tabel semua laporan */}
-        <div style={{"font-family":"Exo", "font-weight":"600"}}>
+        {/* <div style={{"font-family":"Exo", "font-weight":"600"}}>
         <p>Semua <span>Laporan</span></p>
-        </div>
+        </div> */}
 
         {/* div untuk table pemasukan dan pengeluaran */}
         <div class="inex-semualap-container" style={{ "display": "flex", "justify-content": "space-between" }}>

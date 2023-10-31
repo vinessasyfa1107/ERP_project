@@ -1,12 +1,19 @@
-import { createSignal, type Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import './time-tracking.css';
 import TableTime from './table-time';
 import { Icon } from '@iconify-icon/solid';
 import Header from '../../header/header';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 
 
 const TimeTracking: Component = () => {
+  const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Approval Tracker");
+    })
+    
   const [selectedRow, setSelectedRow] = createSignal<{ id: any; status: any; } | null>(null);
 
   const [showText, setShowText] = createSignal(true);
@@ -102,12 +109,12 @@ const TimeTracking: Component = () => {
     <div class="time-tracking">
       <Header />
       <div class="teams">
-        <div class="card-module">
+        {/* <div class="card-module">
           <div style={{ "font-family":"Manrope","font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
             Time Trackings
           </div>
           <div style={{ "font-size": "20px", "margin-left": "0.5vw", "margin-top": "2vh" }}>status Tracker</div>
-        </div>
+        </div> */}
         <div class="card-time">
           <div class="nameheader">
             <div class="rightcp">

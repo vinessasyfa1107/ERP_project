@@ -6,10 +6,17 @@ import './teams.css'
 import TableTeams from './table-teams';
 import Header from '../../header/header';
 import { Icon } from '@iconify-icon/solid';
+import { useSubNavbarStore } from "../../../store/Navbar/SubNavbarStore";
 
 
 
 const Admin: Component = () => {
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Teams");
+    })
+    
     const navigate = useNavigate();
 
     onMount(() => {
@@ -29,12 +36,12 @@ const Admin: Component = () => {
     return (
         <div class="teams">
                 <Header/>
-                <div class="card-module">
+                {/* <div class="card-module">
                     <div style={{"font-family":"Manrope","font-size": "20px","font-weight": "500","margin-top": "2vh", "margin-left": "2vw"}}>
                         Teams
                     </div>
                     <div style={{"font-size": "20px","margin-left": "0.5vw","margin-top": "2vh"}}>For Admin</div>
-                </div>
+                </div> */}
             <div class="card-teams">
                 <div class="nameheader">
                     <div class="accountmaster font-[Exo]">

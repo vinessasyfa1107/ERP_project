@@ -65,16 +65,18 @@
     position: absolute;
     width: 5px;
     height: 5px;
-    top: 21%;
-    right: 6%;
+    bottom: 18%;
+    left: 44%;
+    position: relative;
 }
 
 .login-card .icon-pass {
     position: absolute;
     width: 5px;
     height: 5px;
-    top: 60%;
-    right: 6%;
+    bottom: 18%;
+    left: 44%;
+    position: relative;
 }
 
 .login-card p {

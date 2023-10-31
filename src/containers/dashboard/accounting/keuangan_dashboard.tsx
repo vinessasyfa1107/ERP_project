@@ -1,19 +1,26 @@
-import type { Component } from 'solid-js';
+import { onMount, type Component } from 'solid-js';
 import './keuangan_dashboard.css';
 import Grafik_keuangan_dashboard from './grafik_keuangan_dashboard';
 import { Icon } from '@iconify-icon/solid';
 import Header from '../../header/header';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const Keuangan_dashboard: Component = () => {
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Keuangan");
+    }) 
+    
     return (
         <div class="grafik_keuangan_dashboard">
             <Header />
             {/* div untuk memberikan judul keuangan dashboard */}
-            <div class="card-module">
+            {/* <div class="card-module">
                 <div style={{ "font-family":"Manrope", "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
                     Keuangan
                 </div>
-            </div>
+            </div> */}
 
             <div class="grafik_keuangan_dashboard2">
                 {/* div untuk container top table pada semua laporan */}
