@@ -171,7 +171,7 @@ const Login: Component = () => {
                         <p>Forgot Password?</p>
                     </div>
                     <div>
-                        <button  onclick={() => ActionLogin1()}>Log in</button>
+                        <button  onclick={() => ActionLogin()}>Log in</button>
                     </div>
                 </div>
             </div>
