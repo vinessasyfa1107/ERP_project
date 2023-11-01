@@ -1,4 +1,4 @@
-export type result = {
+export type resultdata = {
     "id": number,
     "kas_ts": Date,
     "dari": string,
@@ -20,7 +20,7 @@ export type result = {
   
     const results = await response.json();
     // console.log("response ", results)
-    const documents = results as result[];
+    const documents = results as resultdata[];
     console.log(documents, "test");
     return documents.slice(0, documents.length).map(({ id, kas_ts, dari, kepada, biaya, keterangan, status}) => ({
       id, kas_ts, dari, kepada, biaya, keterangan, status

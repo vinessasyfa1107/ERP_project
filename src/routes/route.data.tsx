@@ -14,7 +14,8 @@ const getPath = ({ navigate, location }) => {
 const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/report/report-du'));
 const PlanningDU = lazy(() => import('../direktur-utama/containers/dashboard/planning/planning-du'));
 const TimeTrackingDU = lazy(() => import('../direktur-utama/containers/dashboard/time-tracking/time-tracking-du'));
-const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'))
+const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'));
+const KeuanganDU = lazy(() => import('../direktur-utama/containers/dashboard/keuangan/keuangan-du'));
 
 //============= path untuk direktur keuangan ============= //
 const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/report/report_dk'));
@@ -128,6 +129,7 @@ const RouteData: Component = () => {
                 <Route path="/planning" component={PlanningDU}/>
                 <Route path="/time-tracking" component={TimeTrackingDU}/>
                 <Route path="/kas-approval" component={KasApproval}/>
+                <Route path="/keuangan" component={KeuanganDU}/>
             </Route>
         </Routes>
     )
