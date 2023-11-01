@@ -17,6 +17,7 @@ const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/repor
 //============= path untuk direktur keuangan ============= //
 const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/report/report_dk'));
 const Planning_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/planning_dk'));
+const Time_tracking_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/time_tracking/time_tracking_dk'));
 const Form_approve = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/form_approve/form_approve'));
 
 
@@ -75,6 +76,7 @@ const RouteData: Component = () => {
                 <Route path="/report_dk" component={Report_dk} />
                 <Route path="/planning_dk" component={Planning_dk} />
                 <Route path="/form_approve" component={Form_approve} />
+                <Route path="/time_tracking_dk" component={Time_tracking_dk} />
 
             </Route>
 
