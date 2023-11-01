@@ -10,12 +10,13 @@
     /* border-radius: 10px; */
     background: #EFEFEF;
     border-radius: 1vw;
-    height: 72vh;
-    padding-bottom: 4vh
+    width: 151vh;
+    padding-bottom: 4vh;
     /* justify-content: center;
     align-items: center; */
     /* padding: 30px; */
 }
+
 .card-module {
     display: flex;
     height: 8vh;

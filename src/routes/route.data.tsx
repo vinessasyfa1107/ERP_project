@@ -14,11 +14,13 @@ const getPath = ({ navigate, location }) => {
 const ReportDU = lazy(() => import('../direktur-utama/containers/dashboard/report/report-du'));
 const PlanningDU = lazy(() => import('../direktur-utama/containers/dashboard/planning/planning-du'));
 const TimeTrackingDU = lazy(() => import('../direktur-utama/containers/dashboard/time-tracking/time-tracking-du'));
-const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'))
+const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'));
+const KeuanganDU = lazy(() => import('../direktur-utama/containers/dashboard/keuangan/keuangan-du'));
 
 //============= path untuk direktur keuangan ============= //
 const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/report/report_dk'));
 const Planning_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/planning_dk'));
+const Time_tracking_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/time_tracking/time_tracking_dk'));
 const Form_approve = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/form_approve/form_approve'));
 
 
@@ -77,6 +79,7 @@ const RouteData: Component = () => {
                 <Route path="/report_dk" component={Report_dk} />
                 <Route path="/planning_dk" component={Planning_dk} />
                 <Route path="/form_approve" component={Form_approve} />
+                <Route path="/time_tracking_dk" component={Time_tracking_dk} />
 
             </Route>
 
@@ -128,6 +131,7 @@ const RouteData: Component = () => {
                 <Route path="/planning" component={PlanningDU}/>
                 <Route path="/time-tracking" component={TimeTrackingDU}/>
                 <Route path="/kas-approval" component={KasApproval}/>
+                <Route path="/keuangan" component={KeuanganDU}/>
             </Route>
         </Routes>
     )

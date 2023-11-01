@@ -1,30 +1,43 @@
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
-import { createSignal, onMount } from 'solid-js';
+import { Component, createSignal, onMount } from 'solid-js';
+import { dataplanning } from '../../../../../api/planning/dataplanning';
 // import { Icon } from '@iconify-icon/solid';
-import './table-kas.css'
-import { DataArusKas } from '../../../../../api/planning/data-aruskas';
+import './table-time-tracking-du.css'
 
+interface TbTimeTrackingDUProps {
+    onRowClicked: (event: { data: any; node: any }) => void;
+  }
+  
 
-
-const TableKasApproved = () => {
+const TbTimeTrackingDU: Component<TbTimeTrackingDUProps> = (props) => {
     const [RowData, setRowData] = createSignal([{}]);
 
     onMount(async () => {
-        const kas_app = await DataArusKas("data kas approved");
-        console.log("data kas approved", kas_app);
-        const filteredKas = kas_app.filter(item => item.status === "Approved");
-        setRowData(filteredKas)
+        const planning = await dataplanning("data approval");
+        console.log("data approval", planning);
+        setRowData(planning)
       })
+
+      function getCellStyle(params: { value: string; }) {
+        if (params.value === 'Weekly') {
+          return { color: '#FF6838' };
+        } else if (params.value === 'Monthly') {
+          return { color: '#00BA29' };
+        } else {
+          return { color: '#860089' };
+        }
+      }    
       
     const columnDefs = [
-        { field: "kas_ts", headerName: "Tanggal" },
         { field: "id" , headerName: "ID"},
-        { field: "dari" },
-        { field: "kepada" },
-        { field: "biaya" },
+        { field: "entry_ts", headerName: "Tanggal" },
         { field: "keterangan" },
+        { field: "category", headerName: "Kategori" },
+        { field: "planningtype", headerName: "Jenis" ,  cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }},
+        { field: "amount", headerName: "Jumlah" },
+        { field: "status" },
     ];
 
     const rowData = [
@@ -83,10 +96,11 @@ const TableKasApproved = () => {
                     rowSelection="single" // no signal, inline
                     defaultColDef={defaultColDef}
                     gridOptions={gridOptions}
+                    onRowClicked={props.onRowClicked}
                 />
             </div>
         </div>
     );
 };
 
-export default TableKasApproved;
+export default TbTimeTrackingDU;

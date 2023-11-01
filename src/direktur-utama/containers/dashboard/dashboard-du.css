@@ -59,7 +59,7 @@
     justify-content: center;
     align-items: center;
     /* margin: 3px; */
-    padding: 20px 25px 7px 25px;
+    padding: 20px 20px 7px 20px;
 
 }
 
@@ -74,6 +74,8 @@ A.active .menu-selection {
     font-size: 15px;
     font-family: 'Exo';
     transform: translateX(10%);
+    text-align: center;
+    align-items: center;
 }
 
 .selection A.active .menu-selection .name-selection {
@@ -81,11 +83,39 @@ A.active .menu-selection {
     opacity: 1;
     font-size: 15px;
     font-family: 'Exo';
+    text-align: center;
+    align-items: center;
 }
 
-.selection A.active .menu-selection .svg-icon {
+.selection .menu-selection .svg-icon {
+    margin: 0 auto;
+}
+
+/* .selection A.active .menu-selection .svg-icon {
+    stroke: #6E49E9;
+    fill: #6E49E9;
+} */
+
+/* .selection .menu-selection svg path {
+    stroke: #7E7F90;
+    
+}
+
+.selection A.active .menu-selection svg path {
+    fill: #6E49E9;
     stroke: #6E49E9;
 }
+
+/* .selection .menu-selection.report svg path {
+    stroke: #7E7F90;
+    
+}
+
+.selection A.active .menu-selection.report svg path {
+    fill: #6E49E9;
+    stroke: #6E49E9;
+} */ */
+
 .input-icon {
     position: relative;
 }

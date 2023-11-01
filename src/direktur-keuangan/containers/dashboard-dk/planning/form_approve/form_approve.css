@@ -111,6 +111,8 @@ select {
     margin-top: -1rem;
     text-align: center;
     justify-content: space-between;
+    font-weight: 500;
+    color: #FFFFFF;
 }
 
 
