@@ -1,12 +1,19 @@
 import { A, useLocation } from '@solidjs/router';
-import type { Component } from 'solid-js';
+import { onMount, type Component } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './master-akun.css'
 import TableAkunMaster from './table-master-akun';
 import NavbarMaster from '../navbar-master';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const MasterAkun: Component = () => {
   const location = useLocation();
+
+  const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Master Akun");
+    })
 
   return (
     <div>

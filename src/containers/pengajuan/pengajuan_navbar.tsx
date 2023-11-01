@@ -2,11 +2,15 @@ import { A, useLocation } from '@solidjs/router';
 import type { Component } from 'solid-js';
 import './pengajuan_navbar.css';
 import { Icon } from '@iconify-icon/solid';
+import { useStore } from '../../store';
 
 const Pengajuan_navbar: Component = () => {
-  const location = useLocation();
+    const [{titleStore}] = useStore();
+
+    const location = useLocation();
 
   return (
+    <div>
       <div class="header font-[Exo]">
             
             <div class="selection">
@@ -42,6 +46,12 @@ const Pengajuan_navbar: Component = () => {
         {/* <A href='/pengajuan/pengajuan_dashboard' classList={{ active: location.pathname === '/pengajuan/pengajuan_dashboard' }}>Dashboard</A> */}
         {/* <A href='/pengajuan/pengajuan_laporan' classList={{ active: location.pathname === '/pengajuan/pengajuan_laporan' }}>Laporan</A> */}
       </div>
+
+        <div class="dashboard-title" style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600"}}>
+            {titleStore.title_subnavbar}
+        </div>
+
+    </div>
   );
 };
 
