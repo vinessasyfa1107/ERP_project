@@ -13,7 +13,6 @@
     height: fit-content;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
-    width: 151vh;
 }
 
 /*======== css untuk top tabel search containernya ========*/
@@ -24,12 +23,9 @@
 
 .grafik_keuangan_dashboard .grafik_keuangan_dashboard2 .keuanganDashboard-top-table .search-container {
     /*css untuk mengatur list planning, kotak search, icon sorting*/
-    margin-left: 47vw;
-    display: inline-flex;
-    align-items: center;
     position: relative;
-    float: right;
-    margin-top: 18px;
+    display: flex;
+    margin-left: auto;
 }
 
 .grafik_keuangan_dashboard .grafik_keuangan_dashboard2 .keuanganDashboard-top-table .search-container .search-input {
@@ -54,7 +50,7 @@
     /*css untuk mengatur search icon*/
     position: absolute;
     top: 55%;
-    right: 3.3rem;
+    right: 3.6rem;
     transform: translateY(-50%);
     color: #999;
 }

@@ -101,9 +101,14 @@ A.active .menu-selection {
     font-family: 'Exo';
 }
 
-.selection A.active .menu-selection .svg-icon {
+.selection A.active .menu-selection svg g{
     stroke: #6E49E9;
 }
+
+.selection A.active .menu-selection svg path{
+    stroke: #6E49E9;
+}
+
 .input-icon {
     position: relative;
 }

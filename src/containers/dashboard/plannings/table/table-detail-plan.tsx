@@ -15,8 +15,7 @@ const TableDetailPlan: Component = () => {
     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
     console.log("dataplanning", data_planning);
     setRowData(data_planning)
-  }
-  )
+  })
 
   const [popUpApproved, setpopUpApproved] = createSignal(false);
 

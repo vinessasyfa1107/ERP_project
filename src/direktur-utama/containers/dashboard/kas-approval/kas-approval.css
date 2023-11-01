@@ -1,20 +1,28 @@
-.time-tracking {
+.arus-kas {
     margin: 0;
     padding: 0;
     justify-content: center;
     align-items: center;
-    width: 74vw;
+    width: 70vw;
 }
 
-.card-time {
-    background:
-    /* linear-gradient(45deg, #5e38d0, #25ec749c); */
-     #EFEFEF;
+.card-arus-kas {
+    /* border-radius: 10px; */
+    background: #EFEFEF;
     border-radius: 1vw;
-    /* height: 55vh; */
+    /* height: 72vh; */
+    padding: 10px 31px;
     padding-bottom: 4vh;
-    width: 150vh;
-    margin-bottom: 4vh;
+    margin-bottom: 2rem;
+    /* justify-content: center;
+    align-items: center; */
+    /* padding: 30px; */
+}
+
+.card-arus-kas h1 {
+    font-weight: 700;
+    font-family: 'Exo';
+    font-size: 17px;
 }
 
 .card-module {
@@ -25,49 +33,51 @@
     /* margin-left: 5vw; */
     /* margin-right: 5vw; */
 }
-
+.accountmaster {
+    margin-left: 2vw;
+    font-weight: 600;
+    font-size: 17px;
+}
 .nameheader {
     display: flex;
     margin-bottom: 2vh;
-    padding-top: 2vh
-}
-.rightcp {
-    margin-left: 51vw;
-    margin-top: 2vh;
     padding-top: 2vh;
 }
-
-.nameheader .rightcp {
+.rightcp {
+    margin-left: auto;
     display: inline-flex;
     align-items: center;
     position: relative;
-    margin-left: auto;
-    padding: 5px 0;
-    margin-right: 30px;
+    float: right;
 }
 
-.nameheader .rightcp input[type=text] {
+.rightcp input[type=text] {
     border: 1px solid #ccc; 
-    width: 260px;
+    border-radius: 1vh;
+    margin-right: 1vw;
+    background-color: transparent;
+    width: 13vw;
+    /* margin-left: 2vw; */
+
+    /* width: 260px;
     height: 25px; 
     font-size: 13px;
-    font-family: 'Inter';
     margin-right: 10px;
     border-radius: 4px;
     padding: 5px 10px;
     background-color: transparent;
     display: inline;
-    top: 0;
+    top: 0; */
 }
 
-.nameheader  .rightcp .search-icon {
+.rightcp .search-icon {
     position: absolute;
     display: inline-flex;
     right: 8vh;
     color: #ccc;
 }
 
-.nameheader  .rightcp .btn-sort {
+.rightcp .btn-sort {
     margin: auto;
     width: 26px;
     height: 25px;
@@ -75,6 +85,7 @@
     color: white;
     border-radius: 5px;
 }
+
 .card-bar {
     width: 140vh;
     height: 246px;
@@ -87,11 +98,6 @@
     border-radius: 1vw;
     padding-top: 6vh;
     padding-bottom: 6vh
-}
-
-.glass-table .ag-row {
-    background-color: white;
-
 }
 
 .card-bar p {
@@ -140,4 +146,3 @@
     padding: 0 20px;
     line-height: 1.3;
 }
-

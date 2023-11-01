@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { onMount, type Component } from 'solid-js';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -12,8 +12,15 @@ import ChartPlanning from '../../dashboard/plannings/chart-planning';
 import TablePlanning from '../../dashboard/plannings/table/table-planning';
 import TableDetailPlan from '../../dashboard/plannings/table/table-detail-plan';
 import FormPlanning from '../../dashboard/plannings/form/form-planning';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const Pengajuan_dashboard: Component = () => {
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Dashboard");
+    })
+
     return (
         <div>
             <Pengajuan_navbar />
@@ -43,7 +50,7 @@ const Pengajuan_dashboard: Component = () => {
 
                 </div>
             </div>
-
+            
         </div>
     );
 };

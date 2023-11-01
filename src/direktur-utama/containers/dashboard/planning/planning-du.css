@@ -1,57 +1,43 @@
-.teams {
+.plan {
     margin: 0;
     padding: 0;
     justify-content: center;
     align-items: center;
-    width: 73vw;
+    /* font-family: 'Exo', sans-serif; */
 }
 
-.card-teams {
-    /* border-radius: 10px; */
+.plan .box-1 {
+    width: 150vh;
+    height: 687px;
+    border-radius: 10px;
     background: #EFEFEF;
-    border-radius: 1vw;
-    width: 151vh;
-    padding-bottom: 4vh;
-    /* justify-content: center;
-    align-items: center; */
-    /* padding: 30px; */
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
 }
 
-.card-module {
+.plan .box-1 .component-1 {
     display: flex;
-    height: 8vh;
-    background: #EFEFEF;
-    border-radius: 1vw;
-    /* margin-left: 5vw; */
-    /* margin-right: 5vw; */
 }
-.accountmaster {
-    margin-left: 2vw;
+
+.plan .box-1 h1 {
     font-weight: 600;
     font-size: 17px;
+    margin-bottom: 5px;
+    font-family: 'Exo';
 }
-.nameheader {
-    display: flex;
-    margin-bottom: 2vh;
-    padding-top: 2vh
-}
+
 .rightcp {
-    margin-left: 41vw;
     display: inline-flex;
     align-items: center;
     position: relative;
+    margin-bottom: 20px;
     float: right;
 }
 
 .rightcp input[type=text] {
     border: 1px solid #ccc; 
-    border-radius: 1vh;
-    margin-right: 1vw;
-    background-color: transparent;
-    width: 13vw;
-    /* margin-left: 2vw; */
-
-    /* width: 260px;
+    width: 260px;
     height: 25px; 
     font-size: 13px;
     margin-right: 10px;
@@ -59,17 +45,17 @@
     padding: 5px 10px;
     background-color: transparent;
     display: inline;
-    top: 0; */
+    top: 0;
 }
 
-.rightcp .search-icon {
+.plan .rightcp .search-icon {
     position: absolute;
     display: inline-flex;
     right: 8vh;
     color: #ccc;
 }
 
-.rightcp .btn-sort {
+.plan .rightcp .btn-sort {
     margin: auto;
     width: 26px;
     height: 25px;
@@ -77,3 +63,4 @@
     color: white;
     border-radius: 5px;
 }
+

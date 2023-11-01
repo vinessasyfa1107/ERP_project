@@ -8,9 +8,12 @@ import { createEffect, createSignal, onMount } from 'solid-js';
 import './tabel_kontak.css';
 import { datacontact } from '../../api/kontak/contact';
 import FormTambahKontak from './form-tambah-kontak';
+import { useSubNavbarStore } from '../../store/Navbar/SubNavbarStore';
+import { useStore } from "../../store";
 
 
 const Tabel_kontak: Component = () => {
+
 
     const [popUp, setPopUp] = createSignal(false);
 
@@ -147,6 +150,10 @@ const Tabel_kontak: Component = () => {
 
     return (
         <div>
+            <div class="dashboard-title" style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600"}}>
+                Informasi Kontak
+            </div>
+
             <div class="tabel-kontak-container">
                 <div class="top-container" style={{
                     "color": "#8A8A8B",
@@ -157,8 +164,8 @@ const Tabel_kontak: Component = () => {
                     "line-height": "normal",
                     "margin": "20px"
                 }}>
-                    <p>Informasi</p>
                 </div>
+
                 <div class="table-kontak-container">
                     <div class="ag-theme-alpine" style={{ width: '62vw', height: '40.5vw', margin: 'auto' }}>
                         <AgGridSolid
@@ -176,8 +183,7 @@ const Tabel_kontak: Component = () => {
                 {popUp() && <FormTambahKontak OnClose={closePopUp} />}
             </div>
         </div>
-    );
-
+  );
 };
 
 export default Tabel_kontak;

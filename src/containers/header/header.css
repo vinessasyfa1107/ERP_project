@@ -7,7 +7,7 @@
     font-family: 'Exo';
     display: flex;
     flex-direction: row;
-    gap: 5vh;
+    gap: 30px;
 }
 /* 
 .selection {

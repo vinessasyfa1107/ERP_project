@@ -1,4 +1,4 @@
-import { onMount, type Component } from 'solid-js';
+import { onMount, type Component, createSignal } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 
 import './keuanganModul_dashboard.css';
@@ -6,6 +6,7 @@ import KeuanganNavbar from '../keuangan-navbar';
 import Grafik_keuangan_dashboard from '../../dashboard/accounting/grafik_keuangan_dashboard';
 import KeuanganModul_report from './keuanganModul_report';
 import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 
 
@@ -17,6 +18,15 @@ const Keuangan_dashboard: Component = () => {
     onMount(() => {
         changeTitleNavbar("Keuangan");
     })
+
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Dashboard");
+    })
+    
+    const [RowData, setRowData] = createSignal([{}]);
+    const [totalBalance, setTotalBalance] = createSignal(0);
 
     return (
 

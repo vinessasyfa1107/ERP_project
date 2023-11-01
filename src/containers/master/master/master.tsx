@@ -6,15 +6,15 @@ import { Icon } from '@iconify-icon/solid';
 import { A, useLocation } from '@solidjs/router';
 import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 import NavbarMaster from '../navbar-master';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 
 const Master: Component = () => {
 
-    const [, {changeTitleNavbar}] = useNavbarStore();
-
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
 
     onMount(() => {
-        changeTitleNavbar("Master");
+        changeSubTitleNavbar("Master");
     })
 
 
