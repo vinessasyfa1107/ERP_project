@@ -4,6 +4,7 @@ import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 import DashboardDU from '../dashboard-du';
 import { Icon } from '@iconify-icon/solid';
 import TableTime from '../../../../containers/dashboard/time-tracking/table-time';
+import TbTimeTrackingDU from './table-time-tracking-du/table-time-tracking-du';
 
 
 
@@ -85,7 +86,7 @@ const TimeTrackingDU: Component = () => {
             </div>
           </div>
         );
-      case "In Process":
+      case "InProgress":
         return (
           <div class="step-status">
             <div class="step-bar">
@@ -126,7 +127,7 @@ const TimeTrackingDU: Component = () => {
             </div>
           </div>
           <div>
-            <TableTime onRowClicked={handleRowClick} />
+            <TbTimeTrackingDU onRowClicked={handleRowClick} />
           </div>
           <div class="card-bar">
             {showText() && <p>Klik barisan untuk melihat tracker</p>}

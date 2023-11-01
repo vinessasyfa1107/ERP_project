@@ -8,15 +8,15 @@ import { DataArusKas } from '../../../../../api/planning/data-aruskas';
 
 
 
-const TableKasApproved = () => {
+const TableDaftarKas = () => {
     const [RowData, setRowData] = createSignal([{}]);
 
     onMount(async () => {
-        const kas = await DataArusKas("data kas approved");
-        console.log("dataplanning", kas);
-
+        const kas = await DataArusKas("data kas waiting");
+        console.log("data kas", kas);
+        // setRowData(kas);
         const filteredKas = kas.filter(item => item.status === "Waiting" || item.status === "InProgress");
-        setRowData(filteredKas);
+        setRowData(filteredKas);     
       })
       
     const columnDefs = [
@@ -75,7 +75,7 @@ const TableKasApproved = () => {
     };
 
     return (
-        <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
+        <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center', "margin-top":"10px" }}>
             <div style={{ height: '35vh', width: '65vw' }} class="ag-theme-alpine">
                 <AgGridSolid
                     rowData={RowData()} // use signal
@@ -89,4 +89,4 @@ const TableKasApproved = () => {
     );
 };
 
-export default TableKasApproved;
+export default TableDaftarKas;

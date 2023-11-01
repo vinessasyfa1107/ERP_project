@@ -5,7 +5,7 @@ import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 import DashboardDU from '../dashboard-du';
 import Grafik_keuangan_dashboard from '../../../../containers/dashboard/accounting/grafik_keuangan_dashboard';
 
-const Keuangan_dashboard: Component = () => {
+const KeuanganDU: Component = () => {
     const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
 
     onMount(() => {
@@ -98,4 +98,4 @@ const Keuangan_dashboard: Component = () => {
     );
 };
 
-export default Keuangan_dashboard;
+export default KeuanganDU;
