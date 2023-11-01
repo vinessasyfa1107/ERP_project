@@ -1,4 +1,4 @@
-import { createSignal, type Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -9,9 +9,17 @@ import AgGridSolid from 'ag-grid-solid';
 import './pengajuan_laporan.css';
 import Pengajuan_navbar from '../pengajuan_navbar';
 import TableTime from '../../dashboard/time-tracking/table-time';
+import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 
 const Pengajuan_laporan: Component = () => {
+
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("Report");
+    })
+
     const [selectedRow, setSelectedRow] = createSignal<{ id: any; status: any; } | null>(null);
 
     const [showText, setShowText] = createSignal(true);
