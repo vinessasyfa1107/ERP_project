@@ -3,7 +3,7 @@
     padding: 0;
     justify-content: center;
     align-items: center;
-    width: 73vw;
+    width: 74vw;
 }
 
 .card-time {
@@ -13,7 +13,7 @@
     border-radius: 1vw;
     /* height: 55vh; */
     padding-bottom: 4vh;
-    width: 153vh;
+    width: 150vh;
     margin-bottom: 4vh;
 }
 
