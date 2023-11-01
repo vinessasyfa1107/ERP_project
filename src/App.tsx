@@ -33,7 +33,7 @@ const App: Component = () => {
           navigate('/dashboard/report', { replace: true });
           break;
         case 'direktur_keuangan':
-          navigate('/dashboard-dk/report_dk', { replace: true });
+          navigate('/dashboard/direktur_keuangan', { replace: true });
           break;
         case 'direktur_utama':
           navigate('/dashboard-du/report', { replace: true });
