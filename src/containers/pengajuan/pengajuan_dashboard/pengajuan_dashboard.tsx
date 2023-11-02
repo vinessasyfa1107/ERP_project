@@ -28,7 +28,7 @@ const Pengajuan_dashboard: Component = () => {
                 <div class="pengajuanDashboard_container2">
                     <div class="component-1">
                         <ChartPlanning />
-                        <div class="tabel-keterangan">
+                        <div class="tabel-keterangan flex-col">
                             <div class="rightcp">
                                 <input type="text" placeholder="Search.." name="search" />
                                 <span class="search-icon">
@@ -36,9 +36,10 @@ const Pengajuan_dashboard: Component = () => {
                                 </span>
                                 <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
                             </div>
-                            <br />
-                            <h1>Keterangan</h1>
-                            <TablePlanning />
+                            <div>
+                                <h1>Keterangan</h1>
+                                <TablePlanning />
+                            </div>
                         </div>
                     </div>
 
