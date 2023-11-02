@@ -1,11 +1,14 @@
 import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/router';
 import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
+import { useStore } from '../store';
+interface UserData {
+    id: number;
+    account_name: string;
+    access: string;
+    email: string;
+  }
 
-
-const getPath = ({ navigate, location }) => {
-    return "/dashboard/report";
-}
 
 //============= path untuk direktur utama ============= //
 
@@ -59,6 +62,24 @@ const JournalDetail = lazy(() => import('../containers/keuangan/journal-detail/j
 const Tabel_kontak = lazy(() => import('../containers/kontak/tabel_kontak'));
 
 const RouteData: Component = () => {
+    const [{ sessionStore }] = useStore();
+
+    const userDataString = sessionStore.sessionData as unknown as string; // Ensure sessionData is a string
+    const userData = JSON.parse(userDataString) as UserData; // Parse the JSON string to an object
+    const userAccess = userData.access;
+
+    const getPath = ({ navigate, location }) => {
+        if (userData.access === 'direktur_utama') {
+            return "/dashboard-du/report";
+        } else if (userData.access === 'direktur_keuangan') {
+            return "/dashboard-dk/report_dk";
+        } else if (userData.access === 'admin') {
+            return "/dashboard/report";
+        } else {
+            return "/dashboard/report";
+        }
+    }
+
     return (
 
 
