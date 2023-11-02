@@ -28,25 +28,27 @@ const Pengajuan_dashboard: Component = () => {
                 <div class="pengajuanDashboard_container2">
                     <div class="component-1">
                         <ChartPlanning />
-                        <div class="tabel-keterangan flex-col">
-                            <div class="rightcp">
-                                <input type="text" placeholder="Search.." name="search" />
-                                <span class="search-icon">
-                                    <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
-                                </span>
-                                <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+                        <div>
+                            <div style={{display:"flex", "flex-direction":"row", "justify-content":"space-between", "margin-bottom":"5px"}}>
+                                <div>
+                                    <h1 style={{"padding-top":"5px"}}>Keterangan</h1>
+                                </div>
+                                <div class="rightcp">
+                                    <input type="text" placeholder="Search.." name="search" />
+                                    <span class="search-icon">
+                                        <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
+                                    </span>
+                                    <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+                                </div>
                             </div>
-                            <div>
-                                <h1>Keterangan</h1>
-                                <TablePlanning />
-                            </div>
+                            <TablePlanning />
                         </div>
                     </div>
 
                     <div class="rencanaPengajuan-container">
                         <h1>List Rencana Pengajuan</h1>
                         <TableDetailPlan />
-                        <FormPlanning />
+                        {/* <FormPlanning /> */}
                     </div>
 
                 </div>
