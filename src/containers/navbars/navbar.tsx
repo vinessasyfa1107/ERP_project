@@ -79,7 +79,7 @@ const Navbar: Component<NavbarProps> = (props) => {
 
             <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
             <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center p-0.5 gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
-                <div class="flex flex-row gap-4 w-3/5 items-center">
+                <div class="flex flex-row gap-2.7 w-3/5 items-center">
                   <img
                     src="https://file.rendit.io/n/XxDPo7KbyfNGiflc38gM.svg"
                     class="w-6 shrink-0"
