@@ -4,7 +4,6 @@ import './confirm-pop-up.css'
 interface ConfirmPopUpProps {
     OnClose: () => void;
     dataId: number;
-
 }
 
 const ConfirmPopUP: Component<ConfirmPopUpProps> = (props) => {

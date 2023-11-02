@@ -1,18 +1,25 @@
 import { Component, JSX, createSignal, onMount } from "solid-js";
-import PT_PopUp from "./pop-up/pt-pop-up";
 import './navbar.css';
 import { A, useLocation } from '@solidjs/router';
 import { Menu, useContextMenu, Item, Separator, Submenu } from 'solid-contextmenu';
 import 'solid-contextmenu/dist/style.css';
-import PengeluaranCreate from './create/pengeluaran/pengeluaran';
-import PemasukanCreate from './create/pemasukan/pemasukan';
-import PengajuanCreate from './create/pengajuan/pengajuan';
-import TambahCoaCreate from './create/tambah-coa/tambah-coa';
-import TambahAkunCreate from './create/tambah-akun/tambah-akun';
-import LogoutPopUp from "./pop-up/logout-pop-up";
-import { useStore } from "../../store";
-import TambahAkunMaster from "../master/master-akun/forms/tambah-akun-master";
-import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
+import { useStore } from "../../../store";
+import LogoutPopUp from "../../../containers/navbars/pop-up/logout-pop-up";
+import FormTambahCOA from "../../../containers/master/master-coa/forms/form-tambah-coa";
+import TambahAkunMaster from "../../../containers/master/master-akun/forms/tambah-akun-master";
+import PemasukanCreate from "../../../containers/navbars/create/pemasukan/pemasukan";
+import PengeluaranCreate from "../../../containers/navbars/create/pengeluaran/pengeluaran";
+import PengajuanCreate from "../../../containers/navbars/create/pengajuan/pengajuan";
+import PT_PopUp from "../../../containers/navbars/pop-up/pt-pop-up";
+// import PengeluaranCreate from './create/pengeluaran/pengeluaran';
+// import PemasukanCreate from './create/pemasukan/pemasukan';
+// import PengajuanCreate from './create/pengajuan/pengajuan';
+// import TambahCoaCreate from './create/tambah-coa/tambah-coa';
+// import TambahAkunCreate from './create/tambah-akun/tambah-akun';
+// import LogoutPopUp from "./pop-up/logout-pop-up";
+// import { useStore } from "../../store";
+// import TambahAkunMaster from "../master/master-akun/forms/tambah-akun-master";
+// import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
 
 interface NavbarProps {
   children: JSX.Element
@@ -20,7 +27,7 @@ interface NavbarProps {
 
 
 
-const Navbar: Component<NavbarProps> = (props) => {
+const NavbarDU: Component<NavbarProps> = (props) => {
 
   const [{navbarStore}] = useStore();
   
@@ -77,7 +84,7 @@ const Navbar: Component<NavbarProps> = (props) => {
           <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] w-5 h-5 absolute top-12 left-[1116px]" />
           <div class="z-1 w-[227px] h-full bg-[#f7f7f7] fixed top-0 left-20 flex flex-col gap-4 items-start pl-4 py-27">
 
-            <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
+            {/* <A href="/master/master" classList={{ active: location.pathname.startsWith('/master') }}>
             <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center p-0.5 gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-2.7 w-3/5 items-center">
                   <img
@@ -94,7 +101,7 @@ const Navbar: Component<NavbarProps> = (props) => {
                   class="mt-1 w-6 shrink-0"
                 />
               </div>
-            </A>
+            </A> */}
 
             <A href="/dashboard/report" classList={{ active: location.pathname.startsWith('/dashboard') }}>
             <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
@@ -405,4 +412,4 @@ const Navbar: Component<NavbarProps> = (props) => {
 
 
 
-export default Navbar;
+export default NavbarDU;
