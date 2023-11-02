@@ -24,11 +24,11 @@
     font-family: 'Exo';
     font-weight: 700;
     font-size: 15px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
     color: black;
 }
 
-.rightcp {
+.pengajuanDashboard_container1 .rightcp {
     display: inline-flex;
     align-items: center;
     position: relative;
@@ -40,6 +40,14 @@
 .rightcp input[type=text] {
     border: 1px solid #808080; 
     width: 260px;
+    margin-bottom: 5px;
+    margin-left: auto;
+    height: fit-content;
+}
+
+.pengajuanDashboard_container1 .rightcp input[type=text] {
+    border: 1px solid #ccc; 
+    width: 200px;
     height: 25px; 
     font-size: 13px;
     font-family: 'Inter';
@@ -51,7 +59,12 @@
     top: 0;
 }
 
-.pengajuanDashboard_container1 .rightcp .search-icon {
+.pengajuanDashboard_container1 .tabel-keterangan {
+    display: flex;
+    flex-direction: column;
+}
+
+.pengajuanDashboard_container1  .rightcp .search-icon {
     position: absolute;
     display: inline-flex;
     right: 8vh;

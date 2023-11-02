@@ -127,7 +127,8 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                     <input type="text" 
                                         name="onlynumbers" 
                                         pattern="\d{1,5}"  
-                                        maxlength="5">
+                                        // maxlength="5"
+                                    >
                                     </input>
                                 </div>
 
