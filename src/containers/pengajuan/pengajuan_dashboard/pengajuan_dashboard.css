@@ -34,10 +34,11 @@
     position: relative;
     margin-bottom: 20px;
     float: right;
+    margin-top: -8px;
 }
 
 .rightcp input[type=text] {
-    border: 1px solid #ccc; 
+    border: 1px solid #808080; 
     width: 260px;
     height: 25px; 
     font-size: 13px;
@@ -54,7 +55,7 @@
     position: absolute;
     display: inline-flex;
     right: 8vh;
-    color: #ccc;
+    color: #808080;
 }
 
 .pengajuanDashboard_container1 .rightcp .btn-sort {

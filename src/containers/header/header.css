@@ -1,14 +1,15 @@
-
 .header {
-    transform: translateX(4%);    
+    transform: translateX(4%);
+    width: 120vh; 
     display: flex;
     /* text-align: center; */
     /* justify-content: center; */
     font-family: 'Exo';
     display: flex;
     flex-direction: row;
-    gap: 62px;
+    justify-content: space-between;
 }
+
 /* 
 .selection {
     margin-left: 5vw;

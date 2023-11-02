@@ -23,8 +23,8 @@
 
 .report-container .barchartReport-container .top-table .search-input .form-control {
     /*css untuk mengatur kotak search input*/
-    width: 13rem;
     padding: 10px 30px 10px 10px;
+    width: 260px;
     height: 25px;
     border: 1px solid #808080;
     background-color: transparent;
@@ -33,6 +33,7 @@
     font-family: 'Inter';
     color: #808080;
     margin-right: 20px;
+    margin-top: -5px;
 }
 
 .report-container .barchartReport-container .top-table .search-container .search-input .search-icon {
@@ -41,7 +42,8 @@
     top: 55%;
     right: 3.6rem;
     transform: translateY(-50%);
-    color: #999;
+    color: #808080;
+    margin-top: -2px;
 }
 
 .report-container .barchartReport-container .top-table .search-container .btn-sort {
@@ -52,9 +54,8 @@
     color: white;
     border-radius: 5px;
     margin-right: 5px;
+    margin-top: -5px;
 }
-
-
 
 /*======== css untuk mengatur kotak income dan excome ampunt ========*/
 
