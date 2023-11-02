@@ -194,7 +194,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                 <select
                                     style={{ "width": "32rem" }}
                                     name="status"
-                                    value={formData().status}
+                                    // value={formData().status}
                                     onInput={(e) => setFormData({ ...formData(), status: e.target.value })}>
                                     <option disabled selected></option>
                                     <option value="VIP">VIP</option>
