@@ -116,15 +116,6 @@ const Login: Component = () => {
         // Login berhasil, Anda dapat menyimpan data pengguna di sessionStorage atau localStorage
         sessionStorage.setItem('userData', JSON.stringify(data));
         // Redirect ke halaman utama atau halaman lain yang sesuai
-        if (data.access === 'direktur_utama'){
-          window.location.assign('/dashboard-du/report');
-        } else if (data.access === 'direktur_keuangan') {
-          window.location.assign('/dashboard-dk/report_dk');
-        } else if (data.access === 'admin') {
-          window.location.assign('/dashboard/report');
-        } else {
-          console.error('Login failed1'); 
-        }
         window.location.assign('/');
       } else {
         // Handle login gagal di sini
@@ -180,7 +171,7 @@ const Login: Component = () => {
               <p>Forgot Password?</p>
             </div>
             <div>
-              <button onclick={() => ActionLogin()}>Log in</button>
+              <button onclick={() => ActionLogin1()}>Log in</button>
             </div>
           </div>
         </div>
