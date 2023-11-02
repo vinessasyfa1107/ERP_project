@@ -5,27 +5,28 @@ import { Icon } from '@iconify-icon/solid';
 interface EditPopUpProps {
     OnClose: () => void;
     data: {
-      entry_ts: string;
-      description: string;
-      planningtype: string;
-      category: string;
-      amount: number;
-      // Tambahkan properti lain yang sesuai
+        id: number;
+        entry_ts: number;
+        description: string;
+        planningtype: string;
+        category: number;
+        amount: number;
+        // Tambahkan properti lain yang sesuai
     };
-    updateStatus: (status: string) => void;
-  }
+    updateStatus: (data : object, status: string) => void;
+}
 
 const Form_approve: Component<EditPopUpProps> = (props) => {
 
     const handleApprove = () => {
-        props.updateStatus('approved'); // Call the function to update status as 'approved'
+        props.updateStatus(props.data, 'Approved'); // Call the function to update status as 'approved'
         props.OnClose(); // Close the popup
-      };
-    
-      const handleReject = () => {
-        props.updateStatus('rejected'); // Call the function to update status as 'rejected'
+    };
+
+    const handleReject = () => {
+        props.updateStatus(props.data, 'Rejected'); // Call the function to update status as 'rejected'
         props.OnClose(); // Close the popup
-      };
+    };
 
     return (
         <div class="overlay">
@@ -41,7 +42,7 @@ const Form_approve: Component<EditPopUpProps> = (props) => {
 
                             <label>Tanggal</label>
                             <br />
-                            <input type="text" value={props.data.entry_ts} readonly />
+                            <input type="number" value={props.data.entry_ts} readonly />
 
 
                             <p>
@@ -59,21 +60,21 @@ const Form_approve: Component<EditPopUpProps> = (props) => {
                                 </textarea>
                             </p>
 
-                            <div style={{ "display": "flex", "justify-content":"space-between","padding-right":"10px" }}>
+                            <div style={{ "display": "flex", "justify-content": "space-between", "padding-right": "10px" }}>
                                 <div>
                                     <label>Kategori</label>
                                     <br />
-                                    <input type="text" 
-                                    value={props.data.planningtype}
-                                    readonly style={{"width":"13rem"}} />
+                                    <input type="text"
+                                        value={props.data.planningtype}
+                                        readonly style={{ "width": "13rem" }} />
                                 </div>
 
                                 <div>
                                     <label>Jenis</label>
                                     <br />
-                                    <input type="text" 
-                                    value={props.data.category}
-                                    readonly style={{"width":"13rem"}}/>
+                                    <input type="text"
+                                        value={props.data.category}
+                                        readonly style={{ "width": "13rem" }} />
                                 </div>
 
                             </div>
@@ -81,9 +82,9 @@ const Form_approve: Component<EditPopUpProps> = (props) => {
                             <p>
                                 <label>Jumlah</label>
                                 <br />
-                                <input type="number" 
-                                value={props.data.amount}
-                                readonly />
+                                <input type="number"
+                                    value={props.data.amount}
+                                    readonly />
                             </p>
 
                             <p>
@@ -96,15 +97,19 @@ const Form_approve: Component<EditPopUpProps> = (props) => {
 
                         <br />
                         <div class="btn-add-acc">
-                            <button style={{"background-color":"rgba(132, 103, 255, 0.80)", 
-                            "border-radius":"5px", 
-                            "width":"7rem",
-                            "height":"2rem", 
-                            "margin-right":"30px"}} onClick={handleApprove}>Approved</button>
-                            <button style={{"background-color":"#F56D59", 
-                            "border-radius":"5px", 
-                            "width":"7rem",
-                            "height":"2rem"}} onClick={handleReject}>Rejected</button>
+                            <button style={{
+                                "background-color": "rgba(132, 103, 255, 0.80)",
+                                "border-radius": "5px",
+                                "width": "7rem",
+                                "height": "2rem",
+                                "margin-right": "30px"
+                            }} onClick={handleApprove}>Approved</button>
+                            <button style={{
+                                "background-color": "#F56D59",
+                                "border-radius": "5px",
+                                "width": "7rem",
+                                "height": "2rem"
+                            }} onClick={handleReject}>Rejected</button>
                         </div>
                     </form>
 
