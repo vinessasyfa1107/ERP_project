@@ -33,6 +33,7 @@
     position: relative;
     margin-bottom: 20px;
     float: right;
+    margin-top: -8px; 
 }
 
 .rightcp input[type=text] {
@@ -53,6 +54,8 @@
     display: inline-flex;
     right: 8vh;
     color: #808080;
+    margin-top: -3px;
+    font-size: 10px;
 }
 
 .plan .rightcp .btn-sort {
