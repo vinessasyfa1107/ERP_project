@@ -8,35 +8,71 @@ import Form_approve from '../form_approve/form_approve';
 import { dataplanning } from '../../../../../api/planning/dataplanning';
 
 const TableDetailPlan: Component = () => {
-
-  const [RowData, setRowData] = createSignal([{}]);
+  const [RowData, setRowData] = createSignal([]);
+  const [popUpOpen, setPopUpOpen] = createSignal(false);
+  const [popupData, setPopupData] = createSignal(null);
 
   onMount(async () => {
     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
     console.log("dataplanning", data_planning);
-    setRowData(data_planning)
+    setRowData(data_planning);
   }
   )
 
-  const [popUpApproved, setpopUpApproved] = createSignal(false);
-
-  function handlePopUpApproved() {
-    setpopUpApproved(!popUpApproved());
+  function ForPopup(data) {
+    // Ekstrak data dari RowData di sini dan kembalikan sebagai objek
+    return {
+      id: data.id,
+      entry_ts: data.entry_ts,
+      description: data.description,
+      planningtype: data.planningtype,
+      category: data.category,
+      amount: data.amount
+      // Tambahkan field lain yang Anda butuhkan
+    };
   }
 
-  function ClosePopUp() {
-    setpopUpApproved(false);
-  }
+  const updateStatus = async (id) => {
+    if (id()) {
+      try {
+        const response = await fetch(`/api/planning/${id()}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: id(),
+          }),
+        });
 
-  function getCellStyle(params: { value: string; }) {
-    if (params.value === 'Weekly') {
-      return { color: '#FF6838' };
-    } else if (params.value === 'Monthly') {
-      return { color: '#00BA29' };
-    } else {
-      return { color: '#860089' };
+        if (response.ok) {
+          // Data berhasil diubah, tampilkan alert
+          alert('Data berhasil diubah');
+          setPopUpOpen(false); // Close the popup
+        } else {
+          // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+          const errorMessage = await response.text();
+          alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+          console.error('Gagal mengubah data:', errorMessage);
+        }
+      } catch (error) {
+        // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+        alert('Terjadi kesalahan. Silakan coba lagi.');
+        console.error('Terjadi kesalahan:', error);
+      }
     }
-  }
+  };
+
+  const handlePopUpApproved = (data) => {
+    if (data.status === 'Waiting') {
+      setPopupData(data);
+      setPopUpOpen(true);
+    }
+  };
+
+  const ClosePopUp = () => {
+    setPopUpOpen(false);
+  };
 
   const confirmCellRenderer = (params: { data: any }) => {
     let check = null;
@@ -56,28 +92,16 @@ const TableDetailPlan: Component = () => {
 
   const columnDefs = [
     { field: 'id', headerName: 'ID' },
-    { field: 'entry_ts', headerName: 'Tanggal' }, 
+    { field: 'entry_ts', headerName: 'Tanggal' },
     { field: 'coa_kd', headerName: 'COA' },
     { field: 'description', headerName: 'Keterangan' },
-    { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori',  cellClassRules: { 'bold-type': () => true } },
-    { field: 'category', headerName: 'Jenis'},
+    { field: 'planningtype', headerName: 'Kategori' },
+    { field: 'category', headerName: 'Jenis' },
     { field: 'amount', headerName: 'Jumlah' },
     { field: 'status', headerName: 'Status' },
     { field: 'confirm', headerName: 'Konfirmasi', cellRenderer: confirmCellRenderer }
 
   ];
-
-  // const rowData = [
-  //   { id: '11C7D', tanggal: '10-2-22', COA: '1-0000', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
-  //   { id: '11C7C', tanggal: '10-2-22', COA: '1-1000', kategori: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Event' , status: 'Approved', confirm: true },
-  //   { id: '11C7B', tanggal: '10-2-22', COA: '2-1001', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly', status: 'Rejected' },
-  //   { id: '11C7A', tanggal: '9-2-22', COA: '2-2000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-  //   { id: '11C7D', tanggal: '10-2-22', COA: '3-4001', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-  //   { id: '11C7C', tanggal: '10-2-22', COA: '3-5000', kategori: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Weekly' },
-  //   { id: '11C7B', tanggal: '10-2-22', COA: '4-1000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly' },
-  //   { id: '11C7A', tanggal: '9-2-22', COA: '4-2000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' }
-  // ];
-
 
   const defaultColDef = {
     flex: 1,
@@ -101,8 +125,9 @@ const TableDetailPlan: Component = () => {
           rowData={RowData()}
           defaultColDef={defaultColDef}
           gridOptions={gridOptions}
+          onRowClicked={(event) => handlePopUpApproved(event.data)}
         />
-        {popUpApproved() && (<Form_approve OnClose={ClosePopUp} />)}
+        {popUpOpen() && <Form_approve data={popupData()} OnClose={ClosePopUp} updateStatus={updateStatus} />}
       </div>
     </div>
   );
