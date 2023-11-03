@@ -1,14 +1,23 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css';
+import { data_detailplanning } from '../../../../api/planning/data-detailplanning';
 
 const TablePlanning: Component = () => {
 
+  const [RowData, setRowData] = createSignal([{}]);
+
+  onMount(async () => {
+    const data_planning = await data_detailplanning("data detail plan");
+    console.log("data detail plan", data_planning);
+    setRowData(data_planning)
+  })
+
   const columnDefs = [
-    { field: 'Tanggal'},
-    { field: 'Jumlah'}
+    { field: 'date', headerName: 'Tanggal'},
+    { field: 'number_planning', headerName: 'Jumlah'}
   ];
 
   const rowData = [
@@ -32,15 +41,15 @@ const TablePlanning: Component = () => {
   const gridOptions = {
     pagination: true,
     paginationPageSize: 3,
-    rowHeight: 33
+    rowHeight: 37
   }
 
   return (
     <div>
-      <div class="ag-theme-alpine" style={{width:'60vh', height:'30vh'}}>
+      <div class="ag-theme-alpine" style={{width:'60vh', height:'28vh', "margin-top":"10px"}}>
         <AgGridSolid
             columnDefs={columnDefs}
-            rowData={rowData}
+            rowData={RowData()}
             defaultColDef={defaultColDef}
             gridOptions={gridOptions}
         />

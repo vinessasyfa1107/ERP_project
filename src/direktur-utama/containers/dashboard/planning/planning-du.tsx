@@ -8,7 +8,7 @@ import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 import DashboardDU from '../dashboard-du';
 import ChartPlanning from '../../../../containers/dashboard/plannings/chart-planning';
 import TablePlanning from '../../../../containers/dashboard/plannings/table/table-planning';
-import TableDetailPlan from '../../../../containers/dashboard/plannings/table/table-detail-plan';
+import TableDetailPlan from '../../../../direktur-utama/containers/dashboard/planning/table/table-detail-plan-du';
 // import FormPlanning from './form/form-planning';
 // import { A } from '@solidjs/router';
 // import Header from '../../header/header';

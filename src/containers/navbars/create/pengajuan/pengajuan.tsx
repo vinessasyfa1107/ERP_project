@@ -191,7 +191,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                             <div>
                                 <label>Tag</label>
                                 <br />
-                                <select
+                                {/* <select
                                     style={{ "width": "32rem" }}
                                     name="status"
                                     // value={formData().status}
@@ -203,7 +203,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <option value="Hold">Hold</option>
                                     <option value="Todo">To Do</option>
                                     <option value="WIP">Work In Progress</option>
-                                </select>
+                                </select> */}
                             </div>
 
 

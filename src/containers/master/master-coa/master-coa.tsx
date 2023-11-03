@@ -17,7 +17,6 @@ const MasterCOA: Component = () => {
   return (
     <div>
       <NavbarMaster/>
-
         <div class="master-coa">
           <h1 style={{"font-family":"Exo"}}>COA Master</h1>
           <TabelCOAMaster/>
