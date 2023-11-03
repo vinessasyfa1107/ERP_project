@@ -45,3 +45,41 @@
     font-size: 18px;
     line-height: 2;
 }
+
+.rightcp {
+    margin-left: 45vw;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    float: right;
+}
+
+.rightcp input[type=text] {
+    border: 1px solid #808080; 
+    width: 260px;
+    height: 25px; 
+    font-size: 13px;
+    font-family: 'Inter';
+    margin-right: 10px;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: transparent;
+    display: inline;
+    top: 0;
+}
+
+.rightcp .search-icon {
+    position: absolute;
+    display: inline-flex;
+    right: 8vh;
+    color: #808080;
+}
+
+.rightcp .btn-sort {
+    margin: auto;
+    width: 26px;
+    height: 25px;
+    background-color: #8467FF;
+    color: white;
+    border-radius: 5px;
+}

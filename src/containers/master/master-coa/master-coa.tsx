@@ -18,9 +18,18 @@ const MasterCOA: Component = () => {
     <div>
       <NavbarMaster/>
         <div class="master-coa">
+        <div class="nameheader">
+            <div class="rightcp">
+              <input type="text" placeholder="Search.." name="search" />
+                <span class="search-icon">
+                  <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
+                </span>
+                  <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+            </div>
           <h1 style={{"font-family":"Exo"}}>COA Master</h1>
           <TabelCOAMaster/>
         </div>
+    </div>
     </div>
   );
 };
