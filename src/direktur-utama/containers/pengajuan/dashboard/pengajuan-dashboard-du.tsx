@@ -1,20 +1,28 @@
 import { onMount, type Component } from 'solid-js';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+// import 'ag-grid-enterprise';
+// import 'ag-grid-community/styles/ag-grid.css';
+// import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
 import AgGridSolid from 'ag-grid-solid';
+import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
+import ChartPlanning from '../../../../containers/dashboard/plannings/chart-planning';
+import TablePlanning from '../../../../containers/dashboard/plannings/table/table-planning';
+import TableDetailPlan from '../../dashboard/planning/table/table-detail-plan-du';
+import './pengajuan-dashboard-du.css';
+import NavbarPengajuanDU from '../navbar-pengajuan-du';
+import { useNavbarStore } from '../../../../store/Navbar/NavbarStore';
 
-import './pengajuan_dashboard.css';
-import Pengajuan_navbar from '../pengajuan_navbar';
-import ChartPlanning from '../../dashboard/plannings/chart-planning';
-import TablePlanning from '../../dashboard/plannings/table/table-planning';
-import TableDetailPlan from '../../dashboard/plannings/table/table-detail-plan';
-import FormPlanning from '../../dashboard/plannings/form/form-planning';
-import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
-const Pengajuan_dashboard: Component = () => {
+const PengajuanDashboardDU: Component = () => {
+    const [, {changeTitleNavbar}] = useNavbarStore();
+
+    onMount(() => {
+        changeTitleNavbar("Pengajuan");
+    })
+
+
+
     const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
 
     onMount(() => {
@@ -23,17 +31,19 @@ const Pengajuan_dashboard: Component = () => {
 
     return (
         <div>
-            <Pengajuan_navbar />
+            <NavbarPengajuanDU />
             <div class="pengajuanDashboard_container1">
                 <div class="pengajuanDashboard_container2">
-                    <div class="component-1">
-                        <ChartPlanning />
+                    <div class="component-1" style={{"justify-content":"space-between"}}>
+                        <div>
+                            <ChartPlanning />
+                        </div>
                         <div>
                             <div style={{display:"flex", "flex-direction":"row", "justify-content":"space-between", "margin-bottom":"5px", height:"auto"}}>
                                 <div>
                                     <h1 style={{"padding-top":"5px"}}>Keterangan</h1>
                                 </div>
-                                <div class="rightcp">
+                                <div class="right-cp">
                                     <input type="text" placeholder="Search.." name="search" />
                                     <span class="search-icon">
                                         <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
@@ -59,4 +69,4 @@ const Pengajuan_dashboard: Component = () => {
 };
 
 
-export default Pengajuan_dashboard;
+export default PengajuanDashboardDU;

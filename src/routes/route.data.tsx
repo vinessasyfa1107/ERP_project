@@ -20,6 +20,9 @@ const TimeTrackingDU = lazy(() => import('../direktur-utama/containers/dashboard
 const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'));
 const KeuanganDU = lazy(() => import('../direktur-utama/containers/dashboard/keuangan/keuangan-du'));
 
+const PengajuanDashboardDU = lazy(() => import('../direktur-utama/containers/pengajuan/dashboard/pengajuan-dashboard-du'));
+const PengajuanReportDU = lazy(() => import('../direktur-utama/containers/pengajuan/report/pengajuan-report-du'));
+
 //============= path untuk direktur keuangan ============= //
 const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/report/report_dk'));
 const Planning_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/planning_dk'));
@@ -71,7 +74,7 @@ const RouteData: Component = () => {
 
     const getPath = ({ navigate, location }) => {
         if (userData.access === 'direktur_utama') {
-            return "/dashboard-du/report";
+            return "/direktur-utama/dashboard/report";
         } else if (userData.access === 'direktur_keuangan') {
             return "/dashboard-dk/report_dk";
         } else if (userData.access === 'admin') {
@@ -147,12 +150,18 @@ const RouteData: Component = () => {
             </Route>
 
 
-            <Route path="/dashboard-du">
+            <Route path="/direktur-utama/dashboard">
                 <Route path="/report" component={ReportDU} />
                 <Route path="/planning" component={PlanningDU}/>
                 <Route path="/time-tracking" component={TimeTrackingDU}/>
                 <Route path="/kas-approval" component={KasApproval}/>
                 <Route path="/keuangan" component={KeuanganDU}/>
+            </Route>
+
+            <Route path="/direktur-utama/pengajuan">
+                 <Route path="/dashboard" component={PengajuanDashboardDU} />
+                 <Route path="/report" component={PengajuanReportDU} />
+
             </Route>
         </Routes>
     )

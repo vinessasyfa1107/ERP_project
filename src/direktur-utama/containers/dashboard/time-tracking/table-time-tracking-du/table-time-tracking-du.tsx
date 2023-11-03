@@ -33,7 +33,7 @@ const TbTimeTrackingDU: Component<TbTimeTrackingDUProps> = (props) => {
     const columnDefs = [
         { field: "id" , headerName: "ID"},
         { field: "entry_ts", headerName: "Tanggal" },
-        { field: "keterangan" },
+        { field: "description", headerName: "keterangan" },
         { field: "category", headerName: "Kategori" },
         { field: "planningtype", headerName: "Jenis" ,  cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }},
         { field: "amount", headerName: "Jumlah" },

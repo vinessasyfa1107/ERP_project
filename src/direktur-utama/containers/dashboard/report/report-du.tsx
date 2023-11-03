@@ -13,6 +13,12 @@ import './report-du.css'
 import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 
 const ReportDU: Component = () => {
+    const [, {changeTitleNavbar}] = useNavbarStore();
+
+    onMount(() => {
+        changeTitleNavbar("Dashboard");
+    })
+
     const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
 
     onMount(() => {

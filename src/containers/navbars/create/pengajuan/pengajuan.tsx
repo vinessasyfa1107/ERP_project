@@ -116,6 +116,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <br />
                                     <input
                                         type="text"
+                                        class = "input input-bordered"
                                         name="coa_kd" // Ganti cd_account dengan kodeAkun
                                         value={formData().coa_kd}
                                         onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
@@ -179,6 +180,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                 <label>Jumlah*</label>
                                 <br />
                                 <input
+                                    class="input input-bordered"
                                     style={{ "width": "32rem" }}
                                     type="number"
                                     name="amount" // Ganti cd_account dengan kodeAkun
