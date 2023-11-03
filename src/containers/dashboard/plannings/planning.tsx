@@ -29,7 +29,7 @@ const Planning: Component = () => {
         </A> */}
 
 
-            <div class="box-1">
+            <div class="box-1" style={{"justify-content":"center"}}>
 
                 <div class="component-1">
                     <ChartPlanning />

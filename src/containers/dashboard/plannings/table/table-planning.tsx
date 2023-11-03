@@ -41,12 +41,12 @@ const TablePlanning: Component = () => {
   const gridOptions = {
     pagination: true,
     paginationPageSize: 3,
-    rowHeight: 37
+    rowHeight: 33
   }
 
   return (
     <div>
-      <div class="ag-theme-alpine" style={{width:'60vh', height:'28vh', "margin-top":"10px"}}>
+      <div class="ag-theme-alpine" style={{width:'60vh', height:'30vh', "margin-top":"10px"}}>
         <AgGridSolid
             columnDefs={columnDefs}
             rowData={RowData()}

@@ -1,5 +1,5 @@
 import { Component, JSX, createSignal, onMount } from "solid-js";
-import './navbar-du.css';
+import './navbar-dk.css';
 import { A, useLocation } from '@solidjs/router';
 import { Menu, useContextMenu, Item, Separator, Submenu } from 'solid-contextmenu';
 import 'solid-contextmenu/dist/style.css';
@@ -27,7 +27,7 @@ interface NavbarProps {
 
 
 
-const NavbarDU: Component<NavbarProps> = (props) => {
+const NavbarDK: Component<NavbarProps> = (props) => {
 
   const [{navbarStore}] = useStore();
   
@@ -103,7 +103,7 @@ const NavbarDU: Component<NavbarProps> = (props) => {
               </div>
             </A> */}
 
-            <A href="/direktur-utama/dashboard/report" classList={{ active: location.pathname.startsWith('/direktur-utama/dashboard') }}>
+            <A href="/dashboard/report" classList={{ active: location.pathname.startsWith('/dashboard') }}>
             <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-3 w-3/5 items-center">
                   <img
@@ -122,7 +122,7 @@ const NavbarDU: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/direktur-utama/pengajuan/dashboard" classList={{ active: location.pathname.startsWith('/direktur-utama/pengajuan')}}>
+            <A href="/pengajuan/pengajuan_dashboard" classList={{ active: location.pathname.startsWith('/pengajuan')}}>
               <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-4 w-3/5 items-center">
                   <img
@@ -247,7 +247,7 @@ const NavbarDU: Component<NavbarProps> = (props) => {
                   TUS
                 </div>
                 <div>
-                direktur utama
+                direktur keuangan
 
                 </div>
               </div>
@@ -299,9 +299,22 @@ const NavbarDU: Component<NavbarProps> = (props) => {
                 </ul> */}
               {/* </div> */}
 
-              {/* <div class="dropdown dropdown-left">
+              <div class="dropdown dropdown-left">
                 <label tabindex="0" class="btn m-auto bg-[#f56d59] text-white rounded-10 capitalize ">+ Create</label>
                 <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                  <li>
+                    <details>
+                      <summary>Master</summary>
+                      <ul>
+                        <li onClick={() => showTambahAkunPopup()}>
+                          <a>Tambah Akun</a>
+                        </li>
+                        <li onClick={() => showTambahCoaPopup()}>
+                          <a>Tambah Coa</a>
+                        </li>
+                      </ul>
+                    </details>
+                  </li>
                   <li onClick={() => showPengajuanPopup()}>
                     <a>Pengajuan </a>
                   </li>
@@ -314,7 +327,7 @@ const NavbarDU: Component<NavbarProps> = (props) => {
                     </a>
                   </li>
                 </ul>
-              </div> */}
+              </div>
 
               <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0 rounded-[20px] m-auto">
                 <input type="date" class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row gap-0 h-10 pl-5 pr-5 border-none items-center font-['Inter'] text-[#909090] rounded-[20px]">
@@ -364,7 +377,7 @@ const NavbarDU: Component<NavbarProps> = (props) => {
             {popUpLogout() && <LogoutPopUp />}
           </div>
 
-          <div class="w-full ml-82 mt-25 bg-white">
+          <div class="w-full ml-82 mt-25 ">
             {props.children}
             {/* <div class="w-[1450px] h-[687px] bg-[#efefef] absolute top-20 left-px flex flex-col gap-4 items-start pt-3 pb-[177px] px-4 rounded-lg mt-[110px] ml-[350px]">
               <div class="text-lg font-['Manrope'] font-bold text-[#414141] ml-2">
@@ -403,4 +416,4 @@ const NavbarDU: Component<NavbarProps> = (props) => {
 
 
 
-export default NavbarDU;
+export default NavbarDK;

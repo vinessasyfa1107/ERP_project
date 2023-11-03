@@ -4,6 +4,8 @@ import { useStore } from './store';
 import { useNavigate } from '@solidjs/router';
 import Login from './containers/login/login';
 import Navbar from './containers/navbars/navbar';
+import NavbarDU from './direktur-utama/containers/navbar/navbar-du';
+import NavbarDK from './direktur-keuangan/containers/navbar/navbar-dk';
 
 interface UserData {
   id: number;
@@ -24,14 +26,33 @@ const App: Component = () => {
     }
     console.log('need login ' + needLogin());
     if (needLogin()) {
-      navigate('/dashboard/admin', { replace: true });
+      navigate('/dashboard/login', { replace: true });
+      
     }
+    
+
   });
+
+  function getPagebyAccess () {
+    const userDataString = sessionStore.sessionData as unknown as string; // Ensure sessionData is a string
+    const userData = JSON.parse(userDataString) as UserData; // Parse the JSON string to an object
+    const userAccess = userData.access; 
+  
+    let selectedNavbar;
+  
+    if (userAccess === 'direktur_utama') {
+      return <NavbarDU><RouteData /></NavbarDU>;
+    } else if (userAccess === 'direktur_keuangan') {
+      return <NavbarDK><RouteData /></NavbarDK>;
+    } else {
+      return <Navbar><RouteData /></Navbar>;
+    }
+  }
 
 
   return (
     <>
-      {!needLogin() ? <Navbar><RouteData /></Navbar> : <Login />}
+      {!needLogin() ? getPagebyAccess() : <Login />}
     </>
   );
 };

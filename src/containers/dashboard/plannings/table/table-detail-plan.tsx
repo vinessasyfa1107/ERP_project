@@ -93,8 +93,8 @@ const TableDetailPlan: Component = () => {
 
 
   return (
-    <div>
-      <div class="ag-theme-alpine" style={{ width: '140vh', height: '21vw' }}>
+    <div style={{"justify-content":"center"}}>
+      <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin:"auto"}}>
         <AgGridSolid
           columnDefs={columnDefs}
           rowData={RowData()}

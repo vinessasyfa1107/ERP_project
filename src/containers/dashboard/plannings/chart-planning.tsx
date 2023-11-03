@@ -78,7 +78,7 @@ const ChartPlanning: Component = () => {
     return (
         <div>
           <div>
-            <div id="planchart" style={{width: '77vh', height:'45vh', "margin-right":"10px"}}></div>
+            <div id="planchart" style={{width: '75vh', height:'45vh', "margin-right":"10px"}}></div>
           </div>
         </div>
     )

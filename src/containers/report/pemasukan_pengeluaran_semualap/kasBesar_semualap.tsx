@@ -4,18 +4,39 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'daisyui/dist/full.css';
 import { Icon } from '@iconify-icon/solid';
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, onMount } from 'solid-js';
 import './kasBesar_semualap.css';
 import Semua_laporanNavbar from '../semua_laporanNavbar';
+import { DataBigCash } from '../../../api/keuangan/data-bigcash';
 
 const KasBesar_semualap: Component = () => {
+
+    const [RowData, setRowData] = createSignal([{}]);
+    const [totalBalance, setTotalBalance] = createSignal(0);
+
+
+    // let formattedTotalBalance = ''; 
+    
+    onMount(async () => {
+      const big_cash = await DataBigCash ("hallo");
+      console.log("big cash", big_cash);
+      setRowData(big_cash);
+
+      const subsetOfData = big_cash.slice(0, 3);
+      setRowData(subsetOfData);
+
+       // Calculate the total balance
+       const calculatedTotalBalance = subsetOfData.reduce((total, entry) => total + entry.balance, 0);
+       setTotalBalance(calculatedTotalBalance);
+    })
+    
     const columnDefs = [
-        { headerName: 'Tanggal', field: 'tanggal' },
-        { headerName: 'COA', field: 'COA' },
+        { headerName: 'Tanggal', field: 'date' },
+        { headerName: 'COA', field: 'coa' },
         { headerName: 'Keterangan', field: 'keterangan' },
-        { headerName: 'Pemasukan', field: 'pemasukan' },
-        { headerName: 'Pengeluaran', field: 'pengeluaran' },
-        { headerName: 'Saldo Awal', field: 'saldo_awal' }
+        { headerName: 'Pemasukan', field: 'income' },
+        { headerName: 'Pengeluaran', field: 'expense' },
+        { headerName: 'Saldo Awal', field: 'balance' }
     ];
 
     const rowData = [
@@ -81,12 +102,13 @@ const KasBesar_semualap: Component = () => {
             <div class="kasBesar-semualap-container" >
                 <p>Kas Besar</p>
 
+            
                 {/* div untuk mengatur tabel kas besar dari ag grid */}
                 <div class="kasBesar-semualap-table">
                     <div class="ag-theme-alpine" style={{ width: '69vw' }}>
                         <AgGridSolid
                             columnDefs={columnDefs}
-                            rowData={rowData}
+                            rowData={RowData()}
                             defaultColDef={defaultColDef}
                             domLayout='autoHeight'
                             gridOptions={gridOptions}
@@ -100,7 +122,7 @@ const KasBesar_semualap: Component = () => {
                         <p>Total Saldo</p>
                     </div>
                     <div class="totalSaldo-jumlah">
-                        <p>46.781.200</p>
+                        <p>{new Intl.NumberFormat('id-ID').format(totalBalance())}</p>
                     </div>
                 </div>
 
