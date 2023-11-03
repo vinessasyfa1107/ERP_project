@@ -6,27 +6,39 @@ interface EditPopUpProps {
     OnClose: () => void;
     data: {
         id: number;
-        entry_ts: number;
+        entry_ts: Date;
         description: string;
         planningtype: string;
         category: number;
         amount: number;
         // Tambahkan properti lain yang sesuai
     };
-    updateStatus: (data : object, status: string) => void;
+    updateStatusButton: (data: object, status: string) => void;
 }
 
 const Form_approve: Component<EditPopUpProps> = (props) => {
 
+    const timestampString = props.data.entry_ts; // "2023-10-23T00:00:00"
+    const dateObject = new Date(timestampString); // Mengonversi ke objek Date
+
+    // Anda dapat menggunakan dateObject untuk menampilkan tanggal dalam format yang sesuai
+    const formattedDate = dateObject.toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+    });
+
     const handleApprove = () => {
-        props.updateStatus(props.data, 'Approved'); // Call the function to update status as 'approved'
+        props.updateStatusButton(props.data, 'Approved'); // Call the function to update status as 'approved'
         props.OnClose(); // Close the popup
     };
 
     const handleReject = () => {
-        props.updateStatus(props.data, 'Rejected'); // Call the function to update status as 'rejected'
+        props.updateStatusButton(props.data, 'Rejected'); // Call the function to update status as 'rejected'
         props.OnClose(); // Close the popup
     };
+
+    
 
     return (
         <div class="overlay">
@@ -42,7 +54,7 @@ const Form_approve: Component<EditPopUpProps> = (props) => {
 
                             <label>Tanggal</label>
                             <br />
-                            <input type="number" value={props.data.entry_ts} readonly />
+                            <input type="text" value={formattedDate} readonly />
 
 
                             <p>

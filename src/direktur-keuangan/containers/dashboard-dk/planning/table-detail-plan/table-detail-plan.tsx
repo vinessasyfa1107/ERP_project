@@ -19,22 +19,9 @@ const TableDetailPlan: Component = () => {
   }
   )
 
-  // function ForPopup(data) {
-  //   // Ekstrak data dari RowData di sini dan kembalikan sebagai objek
-  //   console.log(data,'test')
-  //   return {
-  //     id: data.id,
-  //     entry_ts: data.entry_ts,
-  //     description: data.description,
-  //     planningtype: data.planningtype,
-  //     category: data.category,
-  //     amount: data.amount,
 
-  //     // Tambahkan field lain yang Anda butuhkan
-  //   };
-  // }
 
-  const updateStatus = async (data, isApproved) => {
+  const updateStatus = async (data, updateStatusButton) => {
     try {
       const updateStatusToSend = {
         id: data.id,
@@ -44,7 +31,7 @@ const TableDetailPlan: Component = () => {
         planningtype: data.planningtype,
         category: data.category,
         amount: data.amount,
-        status: isApproved,
+        status: updateStatusButton,
       }
 
       console.log(updateStatusToSend,'test');
@@ -141,7 +128,7 @@ const TableDetailPlan: Component = () => {
           gridOptions={gridOptions}
           onRowClicked={(event) => handlePopUpApproved(event.data)}
         />
-        {popUpOpen() && <Form_approve data={popupData()} OnClose={ClosePopUp} updateStatus={updateStatus} />}
+        {popUpOpen() && <Form_approve data={popupData()} OnClose={ClosePopUp} updateStatusButton={updateStatus} />}
       </div>
     </div>
   );
