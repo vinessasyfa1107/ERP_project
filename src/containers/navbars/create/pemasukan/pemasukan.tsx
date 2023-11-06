@@ -9,19 +9,18 @@ interface PemasukanProps {
 }
 
 const PemasukanCreate: Component<PemasukanProps> = (props) => {
+    const [selectedFile, setSelectedFile] = createSignal<File | null>(null);
 
-
-    const [inputFile, setInputFile] = createSignal(null);
-
-    const handleFileInputChange = () => {
-      if (inputFile() && inputFile()!.files.length > 0) {
-        console.log("File yang dipilih:", inputFile   ()!.files[0].name);
-      }
-    };
-  
-    onCleanup(() => {
-      setInputFile(null);
-    });
+    const handleFileChange = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        const file = target.files && target.files[0];
+    
+        if (file) {
+            setSelectedFile(() => file);
+        } else {
+          setSelectedFile(null);
+        }
+      };
 
     const [formData, setFormData] = createSignal({
         id: 0,
@@ -30,21 +29,27 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
         faktur_ts: '',
         coa_kd: '',
         keterangan: '',
-        // evidence:''
+        // evidence: null
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (!formData().coa_kd || !formData().coa_name || !formData().category) {
-        //     alert('Mohon isi semua kolom yang dibutuhkan.');
-        //     return; // Menghentikan pengiriman jika ada input yang kosong
-        const saveChanges = async () => {
-            try {
-                const dataToSend = {
-                    
+            const formattedDate = `${formData().income_ts}T00:00:00`;
+
+            const dataToSend = {
+                id: 0,
+                income_ts: formattedDate,
+                amount: formData().amount,
+                faktur_ts: formData().faktur_ts,
+                coa_kd: formData().coa_kd,
+                keterangan: formData().keterangan,
+                evidence: selectedFile()
                 };
-        
+
+            console.log('data income: ', dataToSend);
+
+            try {
                 const response = await fetch(`/api/income/`, {
                     method: 'POST',
                     headers: {
@@ -56,6 +61,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                 if (response.ok) {
                     // Data berhasil diubah, tampilkan alert
                     alert('Data berhasil diubah');
+                        window.location.href = '/report/pemasukan';
                     window.location.reload();
                     props.OnClose();
                 } else {
@@ -70,9 +76,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                 console.error('Terjadi kesalahan:', error);
             }
         };
-    }
-
-
+    
 
     return (
         <div class="overlay">
@@ -99,23 +103,6 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 </div>
 
                                 <div>
-                                    <label>Kategori*</label>
-                                    <br />
-                                    <select
-                                    value={formData().coa_kd} 
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    >
-                                        <option disabled selected></option>
-                                        <option>Event</option>
-                                        <option>Weekly</option>
-                                        <option>Monthly</option>
-                                        <option>Etc</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div style={{"display":"flex", "justify-content":"space-between"}}>
-                                <div>
                                     <label>Faktur*</label>
                                     <br />
                                     <input type="text" 
@@ -126,17 +113,6 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                         onInput={(e) => setFormData({ ...formData(), faktur_ts: e.target.value })}
                                     >
                                     </input>
-                                </div>
-
-                                <div>
-                                    <label>COA*</label>
-                                    <br />
-                                    <input
-                                    type="number"
-                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                    value={formData().coa_kd} 
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    />
                                 </div>
                             </div>
 
@@ -160,16 +136,14 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 </div>
 
                                 <div>
-                                    <label>Tag*</label>
+                                    <label>COA*</label>
                                     <br />
-                                    <select>
-                                        <option disabled selected></option>
-                                        <option>testVIP</option>
-                                        <option>In Progress</option>
-                                        <option>Urgen</option>
-                                        <option>Bug</option>
-                                        <option>VVIP</option>
-                                    </select>
+                                    <input
+                                    type="text"
+                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
+                                    value={formData().coa_kd} 
+                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
+                                    />
                                 </div>
                             </div>
 
@@ -202,9 +176,12 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                         id="file-upload"
                                         accept=".png, .jpg"
                                         style="display: none"
-                                        onChange={handleFileInputChange}
-                                        ref={inputFile}
-                                    />
+                                        onChange={handleFileChange}
+                                        />
+                                  
+                                  {selectedFile() && (
+                                                        <p>File yang dipilih: {selectedFile().name}</p>
+                                                    )}                                          
                             </div>
                         </div>
                             </div>
@@ -213,7 +190,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                         </div>
 
                         <br />
-                        <div class="btn-edit-coa">
+                        <div class="btn-kirim-data">
                             <button onClick={handleSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
