@@ -5,6 +5,7 @@ import { Component, createSignal, onMount } from 'solid-js';
 import { dataplanning } from '../../../../../api/planning/dataplanning';
 // import { Icon } from '@iconify-icon/solid';
 import './table-time-tracking-du.css'
+import { dataTimeTracking } from '../../../../../api/time_tracking/dataTimeTracking';
 
 interface TbTimeTrackingDUProps {
     onRowClicked: (event: { data: any; node: any }) => void;
@@ -15,9 +16,9 @@ const TbTimeTrackingDU: Component<TbTimeTrackingDUProps> = (props) => {
     const [RowData, setRowData] = createSignal([{}]);
 
     onMount(async () => {
-        const planning = await dataplanning("data approval");
-        console.log("data approval", planning);
-        setRowData(planning)
+        const approval = await dataTimeTracking ("data approval");
+        console.log("data approval", approval);
+        setRowData(approval)
       })
 
       function getCellStyle(params: { value: string; }) {
@@ -29,16 +30,22 @@ const TbTimeTrackingDU: Component<TbTimeTrackingDUProps> = (props) => {
           return { color: '#860089' };
         }
       }    
-      
-    const columnDefs = [
-        { field: "id" , headerName: "ID"},
-        { field: "entry_ts", headerName: "Tanggal" },
-        { field: "description", headerName: "keterangan" },
-        { field: "category", headerName: "Kategori" },
-        { field: "planningtype", headerName: "Jenis" ,  cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }},
-        { field: "amount", headerName: "Jumlah" },
-        { field: "status" },
-    ];
+
+      const columnDefs = [
+        { field: 'approval_ts', headerName: 'Tanggal' },
+        { field: 'planning_id', headerName: 'ID' },
+        { field: 'realization', headerName: 'Jumlah' },
+        { field: 'status', headerName: 'Status' }
+      ];
+    // const columnDefs = [
+    //     { field: "id" , headerName: "ID"},
+    //     { field: "entry_ts", headerName: "Tanggal" },
+    //     { field: "description", headerName: "keterangan" },
+    //     { field: "category", headerName: "Kategori" },
+    //     { field: "planningtype", headerName: "Jenis" ,  cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }},
+    //     { field: "amount", headerName: "Jumlah" },
+    //     { field: "status" },
+    // ];
 
     const rowData = [
         {   

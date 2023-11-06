@@ -1,4 +1,4 @@
-.plan {
+.plan-du {
     margin: 0;
     padding: 0;
     justify-content: center;
@@ -6,21 +6,23 @@
     /* font-family: 'Exo', sans-serif; */
 }
 
-.plan .box-1 {
+.plan-du .box-1 {
     width: 150vh;
     height: 687px;
     border-radius: 10px;
     background: #EFEFEF;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding: 35px;
+    margin-bottom: 4vh;
 }
 
-.plan .box-1 .component-1 {
+.plan-du .box-1 .component-1 {
     display: flex;
+    justify-content: space-between;
 }
 
-.plan .box-1 h1 {
+.plan-du .box-1 h1 {
     font-weight: 600;
     font-size: 17px;
     margin-bottom: 5px;
@@ -32,7 +34,7 @@
     align-items: center;
     position: relative;
     margin-bottom: 20px;
-    float: right;
+    margin-left: auto;
 }
 
 .rightcp input[type=text] {
@@ -48,14 +50,14 @@
     top: 0;
 }
 
-.plan .rightcp .search-icon {
+.plan-du .rightcp .search-icon {
     position: absolute;
     display: inline-flex;
     right: 8vh;
     color: #ccc;
 }
 
-.plan .rightcp .btn-sort {
+.plan-du .rightcp .btn-sort {
     margin: auto;
     width: 26px;
     height: 25px;
@@ -64,3 +66,7 @@
     border-radius: 5px;
 }
 
+.tabel-keterangan {
+    display: flex;
+    flex-direction: column;
+}

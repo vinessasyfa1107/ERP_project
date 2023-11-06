@@ -39,6 +39,20 @@ const ReportDU: Component = () => {
         setShowIncomeTable(false); // Pastikan tabel Income disembunyikan saat menampilkan tabel Expenses
     };
 
+    // const currentDate = new Date();
+    // const formattedDate = currentDate.toISOString().slice(0, 11);
+
+    // const hours = String(currentDate.getHours()).padStart(2, '0');
+    // const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    // const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    // const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    // const dateTimeString = `${formattedDate}${formattedTime}`;
+
+    // console.log("tanggal dan waktu: ", dateTimeString);
+
+
+
   return (
     <div>
         <div>
