@@ -22,7 +22,7 @@ const PlanningDU: Component = () => {
     })
     
     return (
-        <div class="plan">
+        <div class="plan-du">
             <DashboardDU />
             {/* <div class="card-module">
                 <div style={{ "font-family":"Exo", "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
@@ -37,7 +37,9 @@ const PlanningDU: Component = () => {
             <div class="box-1">
 
                 <div class="component-1">
-                    <ChartPlanning />
+                    <div>
+                        <ChartPlanning />
+                    </div>
                     <div class="tabel-keterangan">
                         <div class="rightcp">
                             <input type="text" placeholder="Search.." name="search" />
@@ -46,9 +48,10 @@ const PlanningDU: Component = () => {
                             </span>
                             <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
                         </div>
-                        <br />
-                        <h1>Keterangan</h1>
-                        <TablePlanning />
+                        <div>
+                            <h1>Keterangan</h1>
+                            <TablePlanning />
+                        </div>
                     </div>
                 </div>
 
