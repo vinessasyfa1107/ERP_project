@@ -19,51 +19,6 @@ const TableDetailPlan: Component = () => {
   }
   )
 
-
-
-  const updateStatus = async (data, updateStatusButton) => {
-    try {
-      const updateStatusToSend = {
-        id: data.id,
-        entry_ts: data.entry_ts,
-        coa_kd: data.coa_kd,
-        description: data.description,
-        planningtype: data.planningtype,
-        category: data.category,
-        amount: data.amount,
-        status: updateStatusButton,
-      }
-
-      console.log(updateStatusToSend,'test');
-      const response = await fetch(`/api/planning/${(data.id)}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateStatusToSend),
-      });
-
-      if (response.ok) {
-        // Data berhasil diubah, tampilkan alert
-        alert('Data berhasil diubah');
-
-        const updatedData = await dataplanning("data planning dashboard dan modul pengajuan");
-        setRowData(updatedData);
-
-
-      } else {
-        // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-        const errorMessage = await response.text();
-        alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-        console.error('Gagal mengubah data:', errorMessage);
-      }
-    } catch (error) {
-      // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-      alert('Terjadi kesalahan. Silakan coba lagi.');
-      console.error('Terjadi kesalahan:', error);
-    }
-  };
-
   const handlePopUpApproved = (data) => {
     if (data.status === 'Waiting') {
       setPopupData(data);
@@ -128,7 +83,7 @@ const TableDetailPlan: Component = () => {
           gridOptions={gridOptions}
           onRowClicked={(event) => handlePopUpApproved(event.data)}
         />
-        {popUpOpen() && <Form_approve data={popupData()} OnClose={ClosePopUp} updateStatusButton={updateStatus} />}
+        {popUpOpen() && <Form_approve data={popupData()} OnClose={ClosePopUp} />}
       </div>
     </div>
   );
