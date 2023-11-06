@@ -40,7 +40,22 @@ const PlanningDU: Component = () => {
                     <div>
                         <ChartPlanning />
                     </div>
-                    <div class="tabel-keterangan">
+                    <div>
+                        <div style={{display:"flex", "flex-direction":"row", "justify-content":"space-between", "margin-bottom":"5px", height:"auto"}}>
+                            <div>
+                                <h1 style={{"padding-top":"5px"}}>Keterangan</h1>
+                            </div>
+                            <div class="rightcp">
+                                <input type="text" placeholder="Search.." name="search" />
+                                <span class="search-icon">
+                                    <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
+                                </span>
+                                <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+                            </div>
+                        </div>
+                        <TablePlanning />
+                    </div>
+                    {/* <div class="tabel-keterangan">
                         <div class="rightcp">
                             <input type="text" placeholder="Search.." name="search" />
                             <span class="search-icon">
@@ -52,7 +67,7 @@ const PlanningDU: Component = () => {
                             <h1>Keterangan</h1>
                             <TablePlanning />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div>
