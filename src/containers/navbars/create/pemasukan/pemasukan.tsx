@@ -15,7 +15,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
 
     const handleFileInputChange = () => {
       if (inputFile() && inputFile()!.files.length > 0) {
-        console.log("File yang dipilih:", inputFile()!.files[0].name);
+        console.log("File yang dipilih:", inputFile   ()!.files[0].name);
       }
     };
   
@@ -23,66 +23,56 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
       setInputFile(null);
     });
 
-    const [id, setId] = createSignal(0);
-    const [tanggal_pengeluaran, setTanggalPengeluaran] = createSignal('');
-    const [kategori_pengeluaran, setKategoriPengeluaran] = createSignal('');
-    const [faktur_pengeluaran, setFakturPengeluaran] = createSignal('');
-    const [coa_pengeluaran, setCoaPengeluaran] = createSignal('');
-    const [jumlah_pengeluaran, setJumlahPengeluaran] = createSignal('');
-    const [tag_pengeluaran, setTagPengeluaran] = createSignal('');
-    const [deskripsi_pengeluaran, setDeskripsiPengeluaran] = createSignal('');
-    const [bukti_pengeluaran, setBuktiPengeluaran] = createSignal('');
+    const [formData, setFormData] = createSignal({
+        id: 0,
+        income_ts:'',
+        amount: 0,
+        faktur_ts: '',
+        coa_kd: '',
+        keterangan: '',
+        // evidence:''
+    });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'kodeCOA') {
-            setTanggalPengeluaran(value);
-        } else if (name === 'namaCOA') {
-            setKategoriPengeluaran(value);
-        } else if (name === 'kategori') {
-            setFakturPengeluaran(value);
-        }
-    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    const saveChanges = async () => {
-        try {
-            const dataToSend = {
-                tanggal_pengeluaran: tanggal_pengeluaran(),
-                kategori_pengeluaran: kategori_pengeluaran(),
-                faktur_pengeluaran: faktur_pengeluaran(),
-                coa_pengeluaran: coa_pengeluaran(),
-                jumlah_pengeluaran: jumlah_pengeluaran(),
-                tag_pengeluaran: tag_pengeluaran(),
-                deskripsi_pengeluaran: deskripsi_pengeluaran(),
-                bukti_pengeluaran: bukti_pengeluaran(),
-                // balance: props.balance,
-            };
-    
-            const response = await fetch(`/api/coa/update`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataToSend),
-            });
-    
-            if (response.ok) {
-                // Data berhasil diubah, tampilkan alert
-                alert('Data berhasil diubah');
-                window.location.reload();
-                props.OnClose();
-            } else {
-                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-                const errorMessage = await response.text();
-                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-                console.error('Gagal mengubah data:', errorMessage);
+        // if (!formData().coa_kd || !formData().coa_name || !formData().category) {
+        //     alert('Mohon isi semua kolom yang dibutuhkan.');
+        //     return; // Menghentikan pengiriman jika ada input yang kosong
+        const saveChanges = async () => {
+            try {
+                const dataToSend = {
+                    
+                };
+        
+                const response = await fetch(`/api/income/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataToSend),
+                });
+        
+                if (response.ok) {
+                    // Data berhasil diubah, tampilkan alert
+                    alert('Data berhasil diubah');
+                    window.location.reload();
+                    props.OnClose();
+                } else {
+                    // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+                    const errorMessage = await response.text();
+                    alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                    console.error('Gagal mengubah data:', errorMessage);
+                }
+            } catch (error) {
+                // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+                console.error('Terjadi kesalahan:', error);
             }
-        } catch (error) {
-            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-            alert('Terjadi kesalahan. Silakan coba lagi.');
-            console.error('Terjadi kesalahan:', error);
-        }
-    };
+        };
+    }
+
+
 
     return (
         <div class="overlay">
@@ -103,14 +93,18 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 <div class='date' >
                                 <label>Tanggal*</label>
                                     <input type="date" name="trip-start"
-                                    value="enter a date range"/>
-                                    {/* <input type="date" name="trip-start" /> */}
+                                    value={formData().income_ts} 
+                                    onInput={(e) => setFormData({ ...formData(), income_ts: e.target.value })}
+                                    />
                                 </div>
 
                                 <div>
                                     <label>Kategori*</label>
                                     <br />
-                                    <select>
+                                    <select
+                                    value={formData().coa_kd} 
+                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
+                                    >
                                         <option disabled selected></option>
                                         <option>Event</option>
                                         <option>Weekly</option>
@@ -128,6 +122,8 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                         name="onlynumbers" 
                                         pattern="\d{1,5}"  
                                         // maxlength="5"
+                                        value={formData().faktur_ts} 
+                                        onInput={(e) => setFormData({ ...formData(), faktur_ts: e.target.value })}
                                     >
                                     </input>
                                 </div>
@@ -138,8 +134,8 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                     <input
                                     type="number"
                                     name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                    value={coa_pengeluaran()}
-                                    onChange={handleInputChange}
+                                    value={formData().coa_kd} 
+                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -151,8 +147,15 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                     <input
                                     type="number"
                                     name="kodeCOA" // Ganti cd_account dengan kodeAkun
-                                    value={jumlah_pengeluaran()}
-                                    onChange={handleInputChange}
+                                    value={formData().amount !== 0 ? formData().amount.toString() : ''} // Render an empty string for 0 value
+                                    onInput={(e) => {
+                                        const newAmount = parseFloat(e.target.value);
+                                        if (!isNaN(newAmount)) {
+                                            setFormData({ ...formData(), amount: newAmount });
+                                        } else {
+                                            // Handle invalid input here (e.g., show an error message)
+                                        }
+                                    }}
                                     />
                                 </div>
 
@@ -177,7 +180,10 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                     <textarea class="textarea textarea-bordered" 
                                     style={{ "background": '#F8F8F9',
                                              "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
-                                             "width": "78vh", height:"10vh"}}>
+                                             "width": "78vh", height:"10vh"}}
+                                    value={formData().keterangan} 
+                                    onInput={(e) => setFormData({ ...formData(), keterangan: e.target.value })}
+                                    >
                                     </textarea>
                                 </div>
                             </div>
@@ -208,7 +214,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
 
                         <br />
                         <div class="btn-edit-coa">
-                            <button onClick={saveChanges}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={handleSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>

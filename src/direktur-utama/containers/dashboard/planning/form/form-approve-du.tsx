@@ -29,25 +29,64 @@ const FormApproveDU: Component<FormApproveDUProps> = (props) => {
     //     props.OnClose(); // Close the popup
     //   };
     const [status, setStatus] = createSignal('');
+    const [timestamp, setTimestamp] = createSignal('');
+
+    // const handleInputChange = (e) => {
+    //     const { value } = e.target; 
+    //     setStatus(value);
+    //     updateStatus(); 
+    //   };
 
     const handleInputChange = (e) => {
-        const { value } = e.target; 
-        setStatus(value);
-        updateStatus(); 
+      const { value } = e.target;
+      setStatus(value);
+      if (value === 'Approved' || value === 'Rejected') {
+        // Menggunakan timestamp saat ini dalam format ISO 8601
+
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 11);
+    
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
+    
+        const timestamp = `${formattedDate}${formattedTime}`;
+    
+        console.log("tanggal dan waktu: ", timestamp);
+        setTimestamp(timestamp);
+        }
+      
+      updateStatus();
+    };
+    
+      const categoryValueMap = {
+        "Marketing": 1,
+        "Project": 2,
+        "Rutinitas": 3,
+        "Event": 4
       };
       
+      // Fungsi bantuan untuk mendapatkan nilai dari category string
+      function getCategoryValue(category) {
+        return categoryValueMap[category] || 0; // Nilai default jika tidak ada pemetaan
+      }
+      
+      // Menggunakan fungsi getCategoryValue untuk mendapatkan nilai
+      const category = props.data.category;
+      const categoryValue = getCategoryValue(category);
 
       const updateStatus = async () => {
         console.log("ini id ", props.data.id)
         const gebi = {
             id: props.data.id,
-                entry_ts: props.data.entry_ts,
-                description: props.data.description,
-                planningtype: props.data.planningtype,
-                category: props.data.category,
-                amount: props.data.amount,
-                coa_kd: props.data.coa_kd,
-                status: status()
+            entry_ts: timestamp(),
+            description: props.data.description,
+            planningtype: props.data.planningtype,
+            category: categoryValue,
+            amount: props.data.amount,
+            coa_kd: props.data.coa_kd,
+            status: status()
         }
         console.log("ini status", gebi);
 
@@ -59,10 +98,10 @@ const FormApproveDU: Component<FormApproveDUProps> = (props) => {
               },
               body: JSON.stringify({
                 id: props.data.id,
-                entry_ts: props.data.entry_ts,
+                entry_ts: timestamp(),
                 description: props.data.description,
                 planningtype: props.data.planningtype,
-                category: props.data.category,
+                category: categoryValue,
                 amount: props.data.amount,
                 coa_kd: props.data.coa_kd,
                 status: status()
@@ -72,6 +111,8 @@ const FormApproveDU: Component<FormApproveDUProps> = (props) => {
             if (response.ok) {
               // Data berhasil diubah, tampilkan alert
               alert('Data berhasil diubah');
+              props.OnClose();
+              window.location.reload();
             //   setPopUpOpen(false); // Close the popup
             } else {
               // Gagal mengubah data, tampilkan pesan kesalahan dari respons
