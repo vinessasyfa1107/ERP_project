@@ -2,25 +2,23 @@ import type { Component } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './form-planning.css';
 
-const FormPlanning: Component = () => {
-
-    const handleCloseClick = () => {
-        const modal = document.getElementById('form_modal_1') as HTMLDialogElement;
-        modal.close();
-    };
+interface EditPopUpProps {
+    OnClose: () => void;
+}
+const FormPlanning: Component<EditPopUpProps> = (props) => {
 
     return (
         <div class="form-plan">
-            <div class="btn-tambah-rencana">
+            {/* <div class="btn-tambah-rencana">
                 <button onClick={() => (document.getElementById('form_modal_1') as HTMLDialogElement).showModal()}><Icon icon="fa:plus" color="white" width="10" height="11" /></button>
-            </div>
+            </div> */}
 
             <dialog id="form_modal_1" class="modal">
                 <div class="modal-form">
                     <form method="dialog">
                         <div class="headrencana">
                             <h2>Tambah Rencana <span>(*Tidak boleh kosong)</span></h2>
-                            <button onClick={handleCloseClick}>✕</button>
+                            <button onClick={props.OnClose}>✕</button>
                         </div>
 
                         <div class="isian-form">
