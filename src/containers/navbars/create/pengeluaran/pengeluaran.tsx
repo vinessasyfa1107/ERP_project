@@ -138,12 +138,49 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                 <div>
                                     <label>COA*</label>
                                     <br />
-                                    <input
-                                    type="text"
+                                    <select
                                     name="namaCOA" // Ganti cd_account dengan kodeAkun
                                     value={formData().coa_kd} 
                                     onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    />
+                                    >
+                                        <option value="2-1001">2-1001</option>
+                                        <option value="2-2000">2-2000</option>
+                                        <option value="2-3000">2-3000</option>
+                                        <option value="2-3001">2-3001</option>
+                                        <option value="2-3016">2-3016</option>
+                                        <option value="2-4000">2-4000</option>
+                                        <option value="2-4001">2-4001</option>
+                                        <option value="2-5000">2-5000</option>
+                                        <option value="2-5001">2-5001</option>
+                                        <option value="2-6000">2-6000</option>
+                                        <option value="2-8001">2-8001</option>
+                                        <option value="2-8002">2-8002</option>
+                                        <option value="2-8003">2-8003</option>
+                                        <option value="2-8004">2-8004</option>
+                                        <option value="2-8005">2-8005</option>
+                                        <option value="2-9000">2-9000</option>
+                                        <option value="2-9993">2-9993</option>
+
+                                        <option value="6-0000">6-0000</option>
+                                        <option value="6-1001">6-1001</option>
+                                        <option value="6-1002">6-1002</option>
+                                        <option value="6-1003">6-1003</option>
+                                        <option value="6-1004">6-1004</option>
+                                        <option value="6-1005">6-1005</option>
+
+                                        <option value="6-2003">6-2003</option>
+                                        <option value="6-2004">6-2004</option>
+                                        <option value="6-2005">6-2005</option>
+                                        <option value="6-2006">6-2006</option>
+                                        <option value="6-2007">6-2007</option>
+                                        <option value="6-2008">6-2008</option>
+                                        <option value="6-2009">6-2009</option>
+                                        <option value="6-2010">6-2010</option>
+
+                                        <option value="8-0000">8-0000</option>
+                                        <option value="8-1001">8-1001</option>
+
+                                    </select>
                                 </div>
                             </div>
 

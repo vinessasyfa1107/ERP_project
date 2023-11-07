@@ -138,12 +138,46 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 <div>
                                     <label>COA*</label>
                                     <br />
-                                    <input
-                                    type="text"
+                                    <select class="scrollable-select-coa-income"
                                     name="namaCOA" // Ganti cd_account dengan kodeAkun
                                     value={formData().coa_kd} 
                                     onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    />
+                                    >
+                                        <option value="1-0000">1-0000</option>
+                                        <option value="1-1000">1-1000</option>
+                                        <option value="1-1100">1-1100</option>
+                                        <option value="1-1101">1-1101</option>
+                                        <option value="1-1102">1-1102</option>
+
+                                        <option value="1-1201">1-1201</option>
+                                        <option value="1-1202">1-1202</option>
+                                        <option value="1-1203">1-1203</option>
+                                        <option value="1-1204">1-1204</option>
+                                        <option value="1-1300">1-1300</option>
+                                        <option value="1-1400">1-1400</option>
+                                        <option value="1-1401">1-1401</option>
+                                        <option value="1-1402">1-1402</option>
+                                        <option value="1-1403">1-1403</option>
+                                        <option value="1-1404">1-1404</option>
+
+                                        <option value="1-1600">1-1600</option>
+                                        <option value="1-1700">1-1700</option>
+
+                                        <option value="1-1801">1-1801</option>
+                                        <option value="1-1801">1-1801</option>
+                                        <option value="1-1802">1-1802</option>
+                                        <option value="1-1803">1-1803</option>
+                                        
+                                        <option value="3-0000">3-0000</option>
+                                        <option value="3-7000">3-7000</option>
+                                        <option value="3-8000">3-8000</option>
+                                        <option value="3-9000">3-9000</option>
+                                        <option value="3-9999">3-9999</option>
+
+                                        <option value="8-0000">8-0000</option>
+                                        <option value="8-1001">8-1001</option>
+
+                                    </select>
                                 </div>
                             </div>
 

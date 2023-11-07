@@ -304,7 +304,7 @@ const Navbar: Component<NavbarProps> = (props) => {
 
               <div class="dropdown dropdown-left">
                 <label tabindex="0" class="btn m-auto bg-[#f56d59] text-white rounded-10 capitalize ">+ Create</label>
-                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabindex="0" class="dropdown-content z-[1] menu left-23 p-2 shadow bg-base-100 rounded-box w-52">
                   <li>
                     <details>
                       <summary>Master</summary>
