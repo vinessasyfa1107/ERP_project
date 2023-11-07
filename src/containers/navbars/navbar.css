@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 
-.selection A.active .menu-selection .name-selection {
+.selection A.active .notifications-selection .name-selection {
     color: #6E49E9;
     opacity: 50px; /* Menggeser teks ke kanan */
 }
 
-.selection A.active .menu-selection .svg-icon {
+.selection A.active .notifications-selection .svg-icon {
     stroke: #6E49E9;
 }
 
-.menu-item .submenu {
+.notifications-item .subnotifications {
     left: 100%; /* Menyesuaikan jarak sesuai kebutuhan */
 }
 
@@ -28,11 +28,12 @@ A.active .sidebars {
     margin-left: 300px;
 }
 
-.notification-count {
+/* navbar.css */
+
+.notifications-count {
     position: absolute;
-    top: 10px; /* Sesuaikan posisinya di atas ikon */
-    right: 20px; /* Sesuaikan posisinya di kanan ikon */
-    /* Warna latar belakang angka notifikasi */
+    top: 15px; /* Sesuaikan posisinya di atas ikon */
+    right: 112px; /* Sesuaikan posisinya di kanan ikon */
     width: 20px;
     height: 20px;
     display: flex;
@@ -42,9 +43,8 @@ A.active .sidebars {
     color: black;
     transition: display 0.3s ease; /* Transisi agar perubahan tampilan halus */
 }
-
   
-.menu-selection {
+.notifications-selection {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,12 +53,12 @@ A.active .sidebars {
     padding: 20px 25px 7px 25px;
 }
 
-A.active .menu-selection {
+A.active .notifications-selection {
     background-color: #F5F5F5;
     border-radius: 15px 15px 0 0;
 }
 
-.menu-selection .name-selection {
+.notifications-selection .name-selection {
     font-weight: 600;
     color: white;
     font-size: 15px;
@@ -66,23 +66,41 @@ A.active .menu-selection {
     transform: translateX(10%);
 }
 
-.notification-count.hidden {
+/* Saat SVG dihover */
+/* .notifications-selection:hover .name-selection {
+    color: #6E49E9;
+    stroke: #6E49E9;
+}
+
+.notifications-selection:hover .svg-icon {
+    stroke: #6E49E9;
+} */
+
+/* Saat SVG tidak dihover */
+
+
+/* .selection A.active {
+    color: rgba(132, 103, 255, 0.80);
+}
+ */
+
+.notifications-count.hidden {
     display: none; /* Menyembunyikan elemen dengan class hidden */
 }
 
-.selection A.active .menu-selection .name-selection {
+.selection A.active .notifications-selection .name-selection {
     color: #6E49E9;
     opacity: 1;
     font-size: 15px;
     font-family: 'Exo';
 }
 
-.selection A.active .menu-selection svg {
+.selection A.active .notifications-selection svg {
     stroke: #6E49E9;
     fill: #6E49E9;
 }
 
-.menu-selection svg {
+.notifications-selection svg {
     fill: #8A8A8B;
 }
 
