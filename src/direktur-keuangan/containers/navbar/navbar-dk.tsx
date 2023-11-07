@@ -353,6 +353,18 @@ const NavbarDK: Component<NavbarProps> = (props) => {
               </div>
 
             </div>
+
+            <div class="selection">
+                <A href='/navbar/notification' classList={{ active: location.pathname === '/navbar/notification' }}>
+                    <div class="notifikasi-selection">    
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"  viewBox="0 0 24 24" fill="none">
+                          <path d="M4 19v-2h2v-7q0-2.075 1.25-3.688T10.5 4.2v-.7q0-.625.438-1.063T12 2q.625 0 1.063.438T13.5 3.5v.7q2 .5 3.25 2.113T18 10v7h2v2H4Zm8 3q-.825 0-1.413-.588T10 20h4q0 .825-.588 1.413T12 22Z"/>
+                        </svg>
+                    </div>
+                    <span class="notifikasi-count">2</span> 
+                </A>
+            </div>
+
           </div>
 
           <div class="z-1 bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3"
