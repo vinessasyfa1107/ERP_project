@@ -9,19 +9,18 @@ interface PemasukanProps {
 }
 
 const PemasukanCreate: Component<PemasukanProps> = (props) => {
+    const [selectedFile, setSelectedFile] = createSignal<File | null>(null);
 
-
-    const [inputFile, setInputFile] = createSignal(null);
-
-    const handleFileInputChange = () => {
-      if (inputFile() && inputFile()!.files.length > 0) {
-        console.log("File yang dipilih:", inputFile   ()!.files[0].name);
-      }
-    };
-  
-    onCleanup(() => {
-      setInputFile(null);
-    });
+    const handleFileChange = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        const file = target.files && target.files[0];
+    
+        if (file) {
+            setSelectedFile(() => file);
+        } else {
+          setSelectedFile(null);
+        }
+      };
 
     const [formData, setFormData] = createSignal({
         id: 0,
@@ -30,49 +29,85 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
         faktur_ts: '',
         coa_kd: '',
         keterangan: '',
-        // evidence:''
+        // evidence: null
     });
+
+    const [isOpen, setIsOpen] = createSignal(false);
+    const [selectedOption, setSelectedOption] = createSignal('');
+    const options = [
+        "1-0000", "1-1000", "1-1100", "1-1101", "1-1102",
+        "1-1200", "1-1201", "1-1202", "1-1203", "1-1204",
+        "1-1300", "1-1400", "1-1401", "1-1402", "1-1403", "1-1404",
+        "1-1500", "1-1501", "1-1506",
+        "1-1600", "1-1700",
+        "1-1801", "1-1801", "1-1802", "1-1803",
+        "1-9000", "1-9001", "1-2000", "1-2001", "1-2002", "1-2003",
+        "3-0000", "3-7000", "3-8000", "3-9000", "3-9999",
+        "8-0000",
+        "8-1001"
+      ];   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // if (!formData().coa_kd || !formData().coa_name || !formData().category) {
-        //     alert('Mohon isi semua kolom yang dibutuhkan.');
-        //     return; // Menghentikan pengiriman jika ada input yang kosong
-        const saveChanges = async () => {
-            try {
-                const dataToSend = {
-                    
+            const formattedDate = `${formData().income_ts}T00:00:00`;
+
+            const dataToSend = {
+                id: 0,
+                income_ts: formattedDate,
+                amount: formData().amount,
+                faktur_ts: formData().faktur_ts,
+                coa_kd: selectedOption(),
+                keterangan: formData().keterangan,
+                evidence: selectedFile()
                 };
+
+            console.log('data income: ', dataToSend);
+
+            // try {
+            //     const response = await fetch(`/api/income/`, {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify(dataToSend),
+            //     });
         
-                const response = await fetch(`/api/income/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(dataToSend),
-                });
-        
-                if (response.ok) {
-                    // Data berhasil diubah, tampilkan alert
-                    alert('Data berhasil diubah');
-                    window.location.reload();
-                    props.OnClose();
-                } else {
-                    // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-                    const errorMessage = await response.text();
-                    alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-                    console.error('Gagal mengubah data:', errorMessage);
+            //     if (response.ok) {
+            //         // Data berhasil diubah, tampilkan alert
+            //         alert('Data berhasil diubah');
+            //             window.location.href = '/report/pemasukan';
+            //         window.location.reload();
+            //         props.OnClose();
+            //     } else {
+            //         // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+            //         const errorMessage = await response.text();
+            //         alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+            //         console.error('Gagal mengubah data:', errorMessage);
+            //     }
+            // } catch (error) {
+            //     // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+            //     alert('Terjadi kesalahan. Silakan coba lagi.');
+            //     console.error('Terjadi kesalahan:', error);
+            // }
+        };
+
+      
+
+        const dropdownRef = (el) => {
+            if (el) {
+            const handleDocumentClick = (e) => {
+                if (!el.contains(e.target)) {
+                setIsOpen(false);
                 }
-            } catch (error) {
-                // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-                alert('Terjadi kesalahan. Silakan coba lagi.');
-                console.error('Terjadi kesalahan:', error);
+            };
+            document.addEventListener('click', handleDocumentClick);
+            onCleanup(() => {
+                document.removeEventListener('click', handleDocumentClick);
+            });
             }
         };
-    }
-
-
+    
 
     return (
         <div class="overlay">
@@ -99,23 +134,6 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 </div>
 
                                 <div>
-                                    <label>Kategori*</label>
-                                    <br />
-                                    <select
-                                    value={formData().coa_kd} 
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    >
-                                        <option disabled selected></option>
-                                        <option>Event</option>
-                                        <option>Weekly</option>
-                                        <option>Monthly</option>
-                                        <option>Etc</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div style={{"display":"flex", "justify-content":"space-between"}}>
-                                <div>
                                     <label>Faktur*</label>
                                     <br />
                                     <input type="text" 
@@ -126,17 +144,6 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                         onInput={(e) => setFormData({ ...formData(), faktur_ts: e.target.value })}
                                     >
                                     </input>
-                                </div>
-
-                                <div>
-                                    <label>COA*</label>
-                                    <br />
-                                    <input
-                                    type="number"
-                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                    value={formData().coa_kd} 
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    />
                                 </div>
                             </div>
 
@@ -160,16 +167,79 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 </div>
 
                                 <div>
-                                    <label>Tag*</label>
+                                    <label>COA*</label>
                                     <br />
-                                    <select>
-                                        <option disabled selected></option>
-                                        <option>testVIP</option>
-                                        <option>In Progress</option>
-                                        <option>Urgen</option>
-                                        <option>Bug</option>
-                                        <option>VVIP</option>
-                                    </select>
+                                    <div class="custom-dropdown-coa" ref={dropdownRef}>
+                                    <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
+                                        <div>{selectedOption() || ""}</div>
+                                        <div>
+                                            {isOpen() ? 
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
+                                            : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
+                                            }
+                                        </div>
+                                        {/* {isOpen() ? "▲" : "▼"} */}
+                                    </div>
+                                    <div>
+                                    {isOpen() && (
+                                        <div class="dropdown-options-coa">
+                                        <div class="options-list" >
+                                            {options.map((option, index) => (
+                                            <div
+                                                class="option"
+                                                onClick={() => {
+                                                setSelectedOption(option);
+                                                setIsOpen(false);
+                                                }}
+                                            >
+                                                {option}
+                                            </div>
+                                            ))}
+                                        </div>
+                                        </div>
+                                    )}
+                                    </div>
+                                    </div>
+                                    {/* <select class="scrollable-select-coa-income"
+                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
+                                    value={formData().coa_kd} 
+                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
+                                    >
+                                        <option value="1-0000">1-0000</option>
+                                        <option value="1-1000">1-1000</option>
+                                        <option value="1-1100">1-1100</option>
+                                        <option value="1-1101">1-1101</option>
+                                        <option value="1-1102">1-1102</option>
+
+                                        <option value="1-1201">1-1201</option>
+                                        <option value="1-1202">1-1202</option>
+                                        <option value="1-1203">1-1203</option>
+                                        <option value="1-1204">1-1204</option>
+                                        <option value="1-1300">1-1300</option>
+                                        <option value="1-1400">1-1400</option>
+                                        <option value="1-1401">1-1401</option>
+                                        <option value="1-1402">1-1402</option>
+                                        <option value="1-1403">1-1403</option>
+                                        <option value="1-1404">1-1404</option>
+
+                                        <option value="1-1600">1-1600</option>
+                                        <option value="1-1700">1-1700</option>
+
+                                        <option value="1-1801">1-1801</option>
+                                        <option value="1-1801">1-1801</option>
+                                        <option value="1-1802">1-1802</option>
+                                        <option value="1-1803">1-1803</option>
+                                        
+                                        <option value="3-0000">3-0000</option>
+                                        <option value="3-7000">3-7000</option>
+                                        <option value="3-8000">3-8000</option>
+                                        <option value="3-9000">3-9000</option>
+                                        <option value="3-9999">3-9999</option>
+
+                                        <option value="8-0000">8-0000</option>
+                                        <option value="8-1001">8-1001</option>
+                                    </select> */}
+
                                 </div>
                             </div>
 
@@ -202,9 +272,12 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                         id="file-upload"
                                         accept=".png, .jpg"
                                         style="display: none"
-                                        onChange={handleFileInputChange}
-                                        ref={inputFile}
-                                    />
+                                        onChange={handleFileChange}
+                                        />
+                                  
+                                  {selectedFile() && (
+                                                        <p>File yang dipilih: {selectedFile().name}</p>
+                                                    )}                                          
                             </div>
                         </div>
                             </div>
@@ -213,7 +286,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                         </div>
 
                         <br />
-                        <div class="btn-edit-coa">
+                        <div class="btn-kirim-data">
                             <button onClick={handleSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>

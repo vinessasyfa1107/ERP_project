@@ -256,7 +256,7 @@ const NavbarDU: Component<NavbarProps> = (props) => {
               </div>
             </div>
 
-            <div class="flex flex-row mb-px gap-12 items-start">
+            <div class="flex flex-row mb-px gap-2 items-start">
               {/* <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col items-start">
                 <div class="bg-[#f56d59] flex flex-col justify-center w-32 h-10 shrink-0 items-center rounded-[23px]">
                   <div class="text-xl font-['Inter'] font-bold text-white">
@@ -316,8 +316,8 @@ const NavbarDU: Component<NavbarProps> = (props) => {
                 </ul>
               </div> */}
 
-              <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0 rounded-[20px] m-auto">
-                <input type="date" class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white flex flex-row gap-0 h-10 pl-5 pr-5 border-none items-center font-['Inter'] text-[#909090] rounded-[20px]">
+            <div class="shadow-[0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] flex flex-col w-64 shrink-0 rounded-[20px] mt-4">
+                <input type="date" class="shadow-[inset_0px_4px_4px_0px_rgba(0,_0,_0,_0.1)] bg-white my-auto flex flex-row gap-0 h-10 pl-5 pr-5 border-none items-center font-['Inter'] text-[#909090] rounded-[20px]">
                   {/* <img
                     src="https://file.rendit.io/n/JR4Z8I7HectTAgV0sox6.svg"
                     id="Uimcalender1"
@@ -338,8 +338,19 @@ const NavbarDU: Component<NavbarProps> = (props) => {
                   </div>
                 </div> */}
               </div>
+              <div class="selection">
+                <A href='/navbar/notification' classList={{ active: location.pathname === '/navbar/notification' }}>
+                    <div class="notif-selection">    
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"  viewBox="0 0 24 24" fill="none">
+                          <path d="M4 19v-2h2v-7q0-2.075 1.25-3.688T10.5 4.2v-.7q0-.625.438-1.063T12 2q.625 0 1.063.438T13.5 3.5v.7q2 .5 3.25 2.113T18 10v7h2v2H4Zm8 3q-.825 0-1.413-.588T10 20h4q0 .825-.588 1.413T12 22Z"/>
+                        </svg>
+                    </div>
+                    <span class="notif-count">2</span> 
+                </A>
+            </div>
 
             </div>
+
           </div>
 
           <div class="z-1 bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3"

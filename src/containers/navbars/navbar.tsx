@@ -68,6 +68,20 @@ const Navbar: Component<NavbarProps> = (props) => {
 
     const location = useLocation();
 
+    // Contoh dengan JavaScript
+    const notifCount = document.querySelector('.notification-count');
+
+    // Fungsi untuk menyembunyikan notifikasi
+    function hideNotification() {
+        notifCount.classList.add('hidden');
+    }
+
+    // Fungsi untuk menampilkan notifikasi
+    function showNotification() {
+        notifCount.classList.remove('hidden');
+    }
+
+
 
     return (
       <div>
@@ -290,7 +304,7 @@ const Navbar: Component<NavbarProps> = (props) => {
 
               <div class="dropdown dropdown-left">
                 <label tabindex="0" class="btn m-auto bg-[#f56d59] text-white rounded-10 capitalize ">+ Create</label>
-                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabindex="0" class="dropdown-content z-[1] menu left-23 p-2 shadow bg-base-100 rounded-box w-52">
                   <li>
                     <details>
                       <summary>Master</summary>
@@ -342,6 +356,18 @@ const Navbar: Component<NavbarProps> = (props) => {
               </div>
 
             </div>
+
+            <div class="selection">
+                <A href='/navbar/notification' classList={{ active: location.pathname === '/navbar/notification' }}>
+                    <div class="notifications-selection">    
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"  viewBox="0 0 24 24" fill="none">
+                          <path d="M4 19v-2h2v-7q0-2.075 1.25-3.688T10.5 4.2v-.7q0-.625.438-1.063T12 2q.625 0 1.063.438T13.5 3.5v.7q2 .5 3.25 2.113T18 10v7h2v2H4Zm8 3q-.825 0-1.413-.588T10 20h4q0 .825-.588 1.413T12 22Z"/>
+                        </svg>
+                    </div>
+                    <span class="notifications-count">2</span> 
+                </A>
+            </div>
+
           </div>
 
           <div class="z-1 bg-[#ebebeb] self-start fixed flex flex-col justify-between mb-[147px] w-20 shrink-0 h-full items-start pt-5 pb-[270px] pl-3"
