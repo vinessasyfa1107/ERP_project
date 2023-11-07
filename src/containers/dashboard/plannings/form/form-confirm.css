@@ -88,13 +88,13 @@
 .form-confirm .isi-form input,
 select {
     /*untuk kotak teks input*/
-    width: 29rem;
     background-color: #FFFFFF;
     border: none;
-    width: 29rem;
+    width: 36.5vw;
     height: 35px;
-    margin-top: 2px;
-    margin-bottom: 20px;
+    /* margin-top: 2px; */
+    margin: 2px auto 20px auto;
+    /* margin-bottom: 20px; */
     padding: 12px 10px;
     border-radius: 5px;
     background: #F8F8F9;

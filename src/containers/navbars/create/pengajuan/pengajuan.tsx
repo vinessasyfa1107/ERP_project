@@ -17,7 +17,6 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
         planningtype: '',
         description: '',
         amount: 0,
-        status: '',
         confirm: null,
         coa_kd: ''
     });
@@ -40,7 +39,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                 planningtype: formData().planningtype,
                 description: formData().description,
                 amount: formData().amount,
-                status: formData().status,
+                status: 'Waiting',
                 confirm: null,
                 coa_kd: formData().coa_kd
             };
@@ -70,7 +69,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                     planningtype: '',
                     description: '',
                     amount: 0,
-                    status: '',
+                    status: 'Waiting',
                     confirm: null,
                     coa_kd: ''
                 });
@@ -116,7 +115,7 @@ const Pengajuan: Component<TambahPengajuan> = (props) => {
                                     <br />
                                     <input
                                         type="text"
-                                        class = "input input-bordered"
+                                        class="input input-bordered"
                                         name="coa_kd" // Ganti cd_account dengan kodeAkun
                                         value={formData().coa_kd}
                                         onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}

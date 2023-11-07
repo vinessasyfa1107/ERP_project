@@ -29,7 +29,7 @@
     font-family: 'Exo';
 }
 
-.rightcp {
+.plan-du .rightcp {
     display: inline-flex;
     align-items: center;
     position: relative;
@@ -39,7 +39,7 @@
 
 .rightcp input[type=text] {
     border: 1px solid #ccc; 
-    width: 260px;
+    width: 200px;
     height: 25px; 
     font-size: 13px;
     margin-right: 10px;

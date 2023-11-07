@@ -78,11 +78,12 @@ const TimeTrackingDU: Component = () => {
               <div class="bar reject"></div>
               <div class="bar reject"></div>
               <div class="bar reject"></div>
+              
             </div>
             <div class="step-bar">
               <div class="step-label">Transmit Request/Planning For Status</div>
-              <div class="step-label">Approval by Direktur Keuangan</div>
-              <div class="step-label">Approval by Direktur Utama</div>
+              <div class="step-label">Approval by DK & DU</div>
+              <div class="step-label">Rejected</div>
             </div>
           </div>
         );

@@ -5,6 +5,7 @@ import { Icon } from '@iconify-icon/solid';
 import TableTime from '../../../../containers/dashboard/time-tracking/table-time';
 import TablePengajuanReportDU from './table-pengajuan-report';
 import NavbarPengajuanDU from '../navbar-pengajuan-du';
+import TbTimeTrackingDU from '../../dashboard/time-tracking/table-time-tracking-du/table-time-tracking-du';
 
 
 
@@ -128,7 +129,7 @@ const PengajuanReportDU: Component = () => {
               <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
             </div>
           </div>
-            <TablePengajuanReportDU onRowClicked={handleRowClick} />
+            <TbTimeTrackingDU onRowClicked={handleRowClick} />
           </div>
           <div class="card-bar">
             {showText() && <p>Klik barisan untuk melihat tracker</p>}

@@ -44,7 +44,7 @@ input[type=number] {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
-    height: 96vh;
+    height: 85vh;
     background-color: #fff;
     text-align: left;
     padding: 25px 20px;
@@ -138,11 +138,12 @@ textarea {
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.pemasukan-data .btn-edit-coa button {
+.pemasukan-data .btn-kirim-data button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
     position: absolute;
+    top: 84%;
     left: 50%;
     transform: translate(-50%, 0%); /*Geser tombol ke tengah*/
     width: 80px;
@@ -256,4 +257,9 @@ textarea {
     padding: auto;
     cursor: pointer;
     text-align: center;
+}
+
+.pemasukan-data textarea {
+    font-size: 16px;
+    font-weight: 600;
 }
