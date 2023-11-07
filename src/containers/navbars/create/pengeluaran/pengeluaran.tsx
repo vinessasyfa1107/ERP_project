@@ -32,6 +32,30 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
         // evidence: null
     });
 
+    const [isOpen, setIsOpen] = createSignal(false);
+    const [selectedOption, setSelectedOption] = createSignal('');
+    const options = [
+        "2-1001", "2-2000", "2-2001", "2-3000",
+        "2-3016", "2-4000", "2-4001", "2-5000", "2-5001", "2-6000",
+        "2-8001", "2-8002", "2-9000", "2-9993",
+        "5-0000", "5-1010", "5-1020",
+        "6-0000", "6-1001", "6-1002",
+        "6-1003",
+        "6-1004",
+        "6-1005",
+        "6-2003",
+        "6-2004",
+        "6-2005",
+        "6-2006",
+        "6-2007",
+        "6-2008",
+        "6-2009",
+        "6-2010",
+        "9-0000",
+        "9-1001"
+      ];
+       
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -42,7 +66,7 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                 expense_ts: formattedDate,
                 amount: formData().amount,
                 faktur_ts: formData().faktur_ts,
-                coa_kd: formData().coa_kd,
+                coa_kd: selectedOption(),
                 keterangan: formData().keterangan,
                 evidence: selectedFile()
                 };
@@ -76,6 +100,21 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                 console.error('Terjadi kesalahan:', error);
             }
         };
+
+        const dropdownRef = (el) => {
+            if (el) {
+            const handleDocumentClick = (e) => {
+                if (!el.contains(e.target)) {
+                setIsOpen(false);
+                }
+            };
+            document.addEventListener('click', handleDocumentClick);
+            onCleanup(() => {
+                document.removeEventListener('click', handleDocumentClick);
+            });
+            }
+        };
+    
     
 
     return (
@@ -138,7 +177,36 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                 <div>
                                     <label>COA*</label>
                                     <br />
-                                    <select
+                                    <div class="custom-dropdown-coa" ref={dropdownRef}>
+                                    <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
+                                        <div>{selectedOption() || ""}</div>
+                                        <div>
+                                            {isOpen() ? 
+                                            <svg xmlns="http://www.w3.org/2000/svg"  width="13" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
+                                            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
+                                            }
+                                        </div>
+                                        {/* {isOpen() ? "▲" : "▼"} */}
+                                    </div>
+                                    {isOpen() && (
+                                        <div class="dropdown-options-coa">
+                                        <div class="options-list" >
+                                            {options.map((option, index) => (
+                                            <div
+                                                class="option"
+                                                onClick={() => {
+                                                setSelectedOption(option);
+                                                setIsOpen(false);
+                                                }}
+                                            >
+                                                {option}
+                                            </div>
+                                            ))}
+                                        </div>
+                                        </div>
+                                    )}
+                                    </div>
+                                    {/* <select
                                     name="namaCOA" // Ganti cd_account dengan kodeAkun
                                     value={formData().coa_kd} 
                                     onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
@@ -180,7 +248,7 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                         <option value="8-0000">8-0000</option>
                                         <option value="8-1001">8-1001</option>
 
-                                    </select>
+                                    </select> */}
                                 </div>
                             </div>
 
