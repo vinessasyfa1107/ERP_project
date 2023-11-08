@@ -3,6 +3,8 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './operasional-tamanhas.css'
+import PengajuanMonthly from '../pengajuan-monthly';
+import { setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 
 type RowData = {
     kebutuhan: string;
@@ -14,6 +16,16 @@ type RowData = {
   };
 
 const OperasionalTamanhas: Component = () => {
+    const [popUp, setPopUp] = createSignal(false);
+
+    function handlePopUp(){
+        setPopUp(true);
+    }
+
+    function ClosePopUp(){
+        setPopUp(false);
+    }
+
     const [isOpen, setIsOpen] = createSignal(false);
     const [selectedOption, setSelectedOption] = createSignal('');
     const options = [
@@ -104,16 +116,37 @@ const OperasionalTamanhas: Component = () => {
       setPrice(0);
       setCOA("");
     };
+
+    // const calculateTotal = () => {
+    //     const gridData = rowData();
+    //     let total = 0;
+    //     for (const row of gridData) {
+    //       total += row.total;
+    //     }
+    //     return total;
+    //   };
+
+    const calculateTotal = () => {
+        const gridData = rowData();
+        let Total = 0;
+        for (const row of gridData) {
+          Total += row.total;
+        }
+        setTotal(Total); // Simpan total di toko
+        return Total;
+      };
   
-    onMount(() => {
-      // Bersihkan localStorage saat komponen di-unmount
-      onCleanup(() => {
-        localStorage.removeItem('tableData');
-      });
-    });
+    // onMount(() => {
+    //   // Bersihkan localStorage saat komponen di-unmount
+    //   onCleanup(() => {
+    //     localStorage.removeItem('tableData');
+    //   });
+    // });
 
   return (
     <div>
+        <div>
+            
         <div class="container-data-operasional" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
@@ -208,13 +241,16 @@ const OperasionalTamanhas: Component = () => {
             />
             <div class="detail-total-operasional">
                 <div>TOTAL</div>
-                <div>Rp(Totaldari seluruh total)</div>
+                <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
         <div class="btn-simpan-data-operasional">
-            <button>Simpan</button>
+            <button onClick={handlePopUp}>Simpan</button>
         </div>
+
+        </div>
+        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} total={calculateTotal()}/>}
     </div>
   );
 };

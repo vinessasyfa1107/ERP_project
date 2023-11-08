@@ -16,6 +16,7 @@ import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
 import Pengajuan from './create/pengajuan/pengajuan';
 import PengajuanEvent from "./create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event";
 import PengajuanMonthly from "./create/kategori_pengajuanmonthly/pengajuan-monthly";
+import { Total } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
 
 interface NavbarProps {
   children: JSX.Element
@@ -439,7 +440,7 @@ const Navbar: Component<NavbarProps> = (props) => {
           {tambahCoaPopup() && (<FormTambahCOA OnClose={ClosePopUp}/>)}
           {tambahAkunPopup() && (<TambahAkunMaster OnClose={ClosePopUp} />)}
           {pengajuanPopup() && (<PengajuanEvent OnClose={ClosePopUp} />)}
-          {pengajuanPopup() && (<PengajuanMonthly OnClose={ClosePopUp} />)}
+          {pengajuanPopup() && (<PengajuanMonthly OnClose={ClosePopUp} total={Total()}/>)}
           {pemasukanPopup() && (<PemasukanCreate OnClose={ClosePopUp} />)}
           {pengeluaranPopup() && (<PengeluaranCreate OnClose={ClosePopUp} />)}
 

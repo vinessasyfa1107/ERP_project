@@ -2,7 +2,7 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
 import { useStore } from '../store';
-import OperasionalTamanhas from '../containers/navbars/create/monthly-pengajuan/operasional-tamanhas';
+import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-operasional/operasional-tamanhas';
 interface UserData {
     id: number;
     account_name: string;

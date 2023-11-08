@@ -7,6 +7,7 @@ import { A, useLocation } from '@solidjs/router';
 
 interface PengajuanMonthlyProps {
     OnClose: () => void;
+    total: number
 }
 
 const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
@@ -47,8 +48,8 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Operasional Rutin Tamanhas</td>
-                    <td>Rp</td>
+                    <td><A href='/pengajuan-weekly/operasional-rutin-tamanhas'>Operasional Rutin Tamanhas</A></td>
+                    <td>Rp{props.total}</td>
                 </tr>
                 <tr>
                     <td>2</td>
