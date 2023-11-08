@@ -13,6 +13,9 @@ import LogoutPopUp from "./pop-up/logout-pop-up";
 import { useStore } from "../../store";
 import TambahAkunMaster from "../master/master-akun/forms/tambah-akun-master";
 import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
+import Pengajuan from './create/pengajuan/pengajuan';
+import PengajuanEvent from "./create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event";
+import PengajuanMonthly from "./create/kategori_pengajuanmonthly/pengajuan-monthly";
 
 interface NavbarProps {
   children: JSX.Element
@@ -44,7 +47,10 @@ const Navbar: Component<NavbarProps> = (props) => {
   const showPemasukanPopup = () => {
     setPemasukanPopup(!pemasukanPopup());
   };
-  const showPengajuanPopup = () => {
+  const showPengajuan1Popup = () => {
+    setPengajuanPopup(!pengajuanPopup());
+  };
+  const showPengajuan3Popup = () => {
     setPengajuanPopup(!pengajuanPopup());
   };
   const showTambahAkunPopup = () => {
@@ -316,10 +322,23 @@ const Navbar: Component<NavbarProps> = (props) => {
                           <a>Tambah Coa</a>
                         </li>
                       </ul>
-                    </details>
+                    </details>    
                   </li>
-                  <li onClick={() => showPengajuanPopup()}>
-                    <a>Pengajuan </a>
+                  <li>
+                    <details>
+                      <summary>Pengajuan</summary>
+                      <ul>
+                        <li onClick={() => showPengajuan1Popup()}>
+                          <a>Event</a>
+                        </li>
+                        <li onClick={() => showTambahCoaPopup()}>
+                          <a>Weekly</a>
+                        </li>
+                        <li onClick={() => showPengajuan3Popup()}>
+                          <a>Monthly</a>
+                        </li>
+                      </ul>
+                    </details>
                   </li>
                   <li onClick={() => showPemasukanPopup()}>
                     <a>Pemasukan</a>
@@ -419,7 +438,8 @@ const Navbar: Component<NavbarProps> = (props) => {
           </div>
           {tambahCoaPopup() && (<FormTambahCOA OnClose={ClosePopUp}/>)}
           {tambahAkunPopup() && (<TambahAkunMaster OnClose={ClosePopUp} />)}
-          {pengajuanPopup() && (<PengajuanCreate OnClose={ClosePopUp} />)}
+          {pengajuanPopup() && (<PengajuanEvent OnClose={ClosePopUp} />)}
+          {pengajuanPopup() && (<PengajuanMonthly OnClose={ClosePopUp} />)}
           {pemasukanPopup() && (<PemasukanCreate OnClose={ClosePopUp} />)}
           {pengeluaranPopup() && (<PengeluaranCreate OnClose={ClosePopUp} />)}
 
