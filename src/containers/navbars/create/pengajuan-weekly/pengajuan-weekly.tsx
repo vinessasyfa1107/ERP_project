@@ -1,17 +1,17 @@
 import { createSignal, type Component, onMount } from 'solid-js';
-import './pengajuan-monthly.css'
+import './pengajuan-weekly.css'
 import { Icon } from '@iconify-icon/solid';
 import { A, useLocation } from '@solidjs/router';
 // import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 // import { useSubNavbarStore } from '../../../../../../store/Navbar/SubNavbarStore';
 
-interface PengajuanMonthlyProps {
+interface PengajuanWeeklyProps {
     OnClose: () => void;
-    total: number,
-    total2: number
+    total?: number,
+    total2?: number
 }
 
-const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
+const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
 
 
@@ -32,12 +32,12 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
   return (
     <div class="overlay">
       
-      <div class="pengajuan-monthly-1">
+      <div class="pengajuan-weekly-1">
     <div class="keterangan">
-        <h2>Monthly  <span>(*Tidak boleh kosong)</span></h2>
+        <h2>Weekly  <span>(*Tidak boleh kosong)</span></h2>
         <button onClick={props.OnClose}>✕</button>
     </div>
-    <div class="pengajuan-monthly">
+    <div class="pengajuan-weekly">
         <table>
             <thead>
                 <tr>
@@ -49,12 +49,12 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td><A href='/pengajuan-monthly/operasional-rutin-tamanhas'>Operasional Rutin Tamanhas</A></td>
+                    <td><A href='/pengajuan-weekly/operasional-rutin-tamanhas'>Operasional Rutin Tamanhas</A></td>
                     <td>Rp{props.total}</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td><A href='/pengajuan-monthly/operasional-rutin-purwokerto'>Operasional Rutin Purwokerto</A></td>
+                    <td><A href='/pengajuan-weekly/operasional-rutin-purwokerto'>Operasional Rutin Purwokerto</A></td>
                     <td>Rp{props.total2}</td>
                 </tr>
                 <tr>
@@ -80,4 +80,4 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
   );
 };
 
-export default PengajuanMonthly;
+export default PengajuanWeekly;
