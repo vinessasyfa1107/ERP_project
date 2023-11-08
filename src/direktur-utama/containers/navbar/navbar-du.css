@@ -27,10 +27,10 @@ A.active .sidebars {
     height: 1rem;
 }
 
-.notification-count {
+.notif-count {
     position: absolute;
     top: 15px; /* Sesuaikan posisinya di atas ikon */
-    right: 109px; /* Sesuaikan posisinya di kanan ikon */
+    right: 113px; /* Sesuaikan posisinya di kanan ikon */
     /* Warna latar belakang angka notifikasi */
     width: 20px;
     height: 20px;
@@ -82,7 +82,7 @@ A.active .notif-selection {
 }
  */
 
-.notification-count.hidden {
+.notif-count.hidden {
     display: none; /* Menyembunyikan elemen dengan class hidden */
 }
 

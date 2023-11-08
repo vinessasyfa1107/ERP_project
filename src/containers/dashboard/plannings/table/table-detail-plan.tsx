@@ -1,15 +1,16 @@
-import { createSignal, type Component, onMount } from 'solid-js';
+import { createSignal, type Component, onMount, onCleanup } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
-import FormApproved from '../form/form-confirm';
+import FormPlanning from '../form/form-planning';
 import { dataplanning } from '../../../../api/planning/dataplanning';
 
 const TableDetailPlan: Component = () => {
 
   const [RowData, setRowData] = createSignal([{}]);
+  const [updatedData, setUpdatedData] = createSignal([]);
 
   onMount(async () => {
     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
@@ -17,15 +18,45 @@ const TableDetailPlan: Component = () => {
     setRowData(data_planning)
   })
 
-  const [popUpApproved, setpopUpApproved] = createSignal(false);
+  function handleConfirmChange(params) {
+    const data = params.data;
 
-  function handlePopUpApproved() {
-    setpopUpApproved(!popUpApproved());
+    if (data.status === 'Approved' && data.confirm) {
+      const updatedDataArray = updatedData();
+      const updatedDataIndex = updatedDataArray.findIndex((item) => item.id === data.id);
+
+      if (updatedDataIndex === -1) {
+        updatedDataArray.push({ ...data });
+        setUpdatedData(updatedDataArray);
+
+        // Kirim data yang diperbarui ke backend
+        sendUpdatedDataToBackend(updatedDataArray);
+      }
+    }
   }
 
-  function ClosePopUp() {
-    setpopUpApproved(false);
+  async function sendUpdatedDataToBackend(updatedDataArray) {
+    console.log("julpa", updatedDataArray);
+    try {
+      const response = await fetch('/api/planning/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedDataArray),
+      });
+
+      if (response.ok) {
+        console.log('Data terkirim ke backend:', updatedDataArray);
+      } else {
+        console.error('Gagal mengirim data ke backend:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Gagal mengirim data ke backend:', error);
+    }
   }
+
+
 
   function getCellStyle(params: { value: string; }) {
     if (params.value === 'Weekly') {
@@ -37,32 +68,18 @@ const TableDetailPlan: Component = () => {
     }
   }
 
-  const confirmCellRenderer = (params: { data: any }) => {
-    let check = null;
-
-    if (params.data.status === 'InProgress') {
-      check = <Icon icon="ic:round-square" class="icon-disabled" width="21" height="21" />;
-    } else if (params.data.status === 'Approved') {
-      check = <button class="btn-approved" onClick={handlePopUpApproved}><Icon icon="icomoon-free:checkbox-checked" color="#7bc582" width="16.1" height="16.1" /></button>;
-    } else if (params.data.status === 'Rejected') {
-      check = <Icon icon="mdi:close-box" class="icon-rejected" width="21.5" height="21.5" />;
-    } else if (params.data.status === 'Waiting') {
-      check = <Icon icon="ic:round-square" class="icon-disabled" width="21" height="21" />;
-    }
-
-    return check;
-  };
 
   const columnDefs = [
     { field: 'id', headerName: 'ID' },
-    { field: 'entry_ts', headerName: 'Tanggal' }, 
+    { field: 'entry_ts', headerName: 'Tanggal' },
     { field: 'coa_kd', headerName: 'COA' },
     { field: 'description', headerName: 'Keterangan' },
-    { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori',  cellClassRules: { 'bold-type': () => true } },
-    { field: 'category', headerName: 'Jenis'},
+    { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true } },
+    { field: 'category', headerName: 'Jenis' },
     { field: 'amount', headerName: 'Jumlah' },
     { field: 'status', headerName: 'Status' },
-    { field: 'confirm', headerName: 'Konfirmasi', cellRenderer: confirmCellRenderer }
+    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, onCellValueChanged: handleConfirmChange },
+
 
   ];
 
@@ -93,15 +110,17 @@ const TableDetailPlan: Component = () => {
 
 
   return (
-    <div style={{"justify-content":"center"}}>
-      <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin:"auto"}}>
+    <div style={{ "justify-content": "center" }}>
+      <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
           columnDefs={columnDefs}
           rowData={RowData()}
           defaultColDef={defaultColDef}
           gridOptions={gridOptions}
+          rowSelection="multiple"
+          rowMultiSelectWithClick={true}
         />
-        {popUpApproved() && (<FormApproved OnClose={ClosePopUp} />)}
+
       </div>
     </div>
   );
