@@ -2,6 +2,7 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
 import { useStore } from '../store';
+import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-operasional/operasional-tamanhas';
 interface UserData {
     id: number;
     account_name: string;
@@ -122,6 +123,7 @@ const RouteData: Component = () => {
                 <Route path="/keuangan_dashboard" component={Keuangan_dashboard} />
                 <Route path="/header" component={Header} />
                 <Route path="/arus-kas" component={ArusKas} />
+                <Route path="/" component={ArusKas} />                
             </Route>
 
             <Route path="/report">
@@ -161,8 +163,14 @@ const RouteData: Component = () => {
             <Route path="/direktur-utama/pengajuan">
                  <Route path="/dashboard" component={PengajuanDashboardDU} />
                  <Route path="/report" component={PengajuanReportDU} />
-
             </Route>
+
+            <Route path="/pengajuan-weekly">
+                <Route path="/operasional-rutin-tamanhas" component={OperasionalTamanhas} />
+                <Route path="/mastercoa" component={MasterCOA} />
+                <Route path="/masterakun" component={MasterAkun} />
+            </Route>
+
         </Routes>
     )
 }

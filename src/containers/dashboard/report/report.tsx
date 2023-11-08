@@ -11,6 +11,7 @@ import './report.css';
 import Header from '../../header/header';
 import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
+import { A } from '@solidjs/router';
 
 
 const Report: Component = () => {
@@ -44,6 +45,9 @@ const Report: Component = () => {
 
     return (
         <div>
+            <div>
+                <A href='/pengajuan-weekly/operasional-rutin-tamanhas'>pengajuan</A>
+            </div>
             <Header />
             {/* <div class="navbar-f-report">
                 <ReportNavbar />
