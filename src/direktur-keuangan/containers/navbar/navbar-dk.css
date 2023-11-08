@@ -51,6 +51,7 @@ A.active .sidebars {
     align-items: center;
 /* Menambahkan margin kiri negatif */
     padding: 20px 25px 7px 25px;
+    margin-left: -20px;
 }
 
 
