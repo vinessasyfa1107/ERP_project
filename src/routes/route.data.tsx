@@ -2,6 +2,7 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
 import { useStore } from '../store';
+
 interface UserData {
     id: number;
     account_name: string;
@@ -28,6 +29,8 @@ const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-d
 const Planning_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/planning_dk'));
 const Time_tracking_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/time_tracking/time_tracking_dk'));
 const Form_approve = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/form_approve/form_approve'));
+const Transfer_dana = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/transfer_dana/transfer_dana'));
+const Keuangan_dashboard_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/keuangan_dk/keuangan_dashboard_dk'));
 
 
 //============= path untuk admin ============= //
@@ -80,7 +83,7 @@ const RouteData: Component = () => {
         } else if (userData.access === 'admin') {
             return "/dashboard/report";
         } else {
-            return "/dashboard/report";
+            return "/dashboard-dk/report_dk";
         }
     }
 
@@ -104,6 +107,8 @@ const RouteData: Component = () => {
                 <Route path="/planning_dk" component={Planning_dk} />
                 <Route path="/form_approve" component={Form_approve} />
                 <Route path="/time_tracking_dk" component={Time_tracking_dk} />
+                <Route path="/keuangan_dashboard_dk" component={Keuangan_dashboard_dk} />
+                <Route path="/transfer_dana" component={Transfer_dana} />
 
             </Route>
 
