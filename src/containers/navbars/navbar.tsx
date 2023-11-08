@@ -13,6 +13,12 @@ import LogoutPopUp from "./pop-up/logout-pop-up";
 import { useStore } from "../../store";
 import TambahAkunMaster from "../master/master-akun/forms/tambah-akun-master";
 import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
+import Pengajuan from './create/pengajuan/pengajuan';
+import PengajuanEvent from "./create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event";
+import PengajuanMonthly from "./create/kategori_pengajuanmonthly/pengajuan-monthly";
+import { Total } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
+import { Total2 } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
+import PengajuanWeekly from "./create/pengajuan-weekly/pengajuan-weekly";
 
 interface NavbarProps {
   children: JSX.Element
@@ -34,7 +40,9 @@ const Navbar: Component<NavbarProps> = (props) => {
 
   const [pengeluaranPopup, setPengeluaranPopup] = createSignal(false);
   const [pemasukanPopup, setPemasukanPopup] = createSignal(false);
-  const [pengajuanPopup, setPengajuanPopup] = createSignal(false);
+  const [pengajuanPopup1, setPengajuanPopup1] = createSignal(false);
+  const [pengajuanPopup2, setPengajuanPopup2] = createSignal(false);
+  const [pengajuanPopup3, setPengajuanPopup3] = createSignal(false);
   const [tambahAkunPopup, setTambahAkunPopup] = createSignal(false);
   const [tambahCoaPopup, setTambahCoaPopup] = createSignal(false);
 
@@ -44,8 +52,14 @@ const Navbar: Component<NavbarProps> = (props) => {
   const showPemasukanPopup = () => {
     setPemasukanPopup(!pemasukanPopup());
   };
-  const showPengajuanPopup = () => {
-    setPengajuanPopup(!pengajuanPopup());
+  const showPengajuan1Popup = () => {
+    setPengajuanPopup1(!pengajuanPopup1());
+  };
+  const showPengajuan2Popup = () => {
+    setPengajuanPopup2(!pengajuanPopup2());
+  };
+  const showPengajuan3Popup = () => {
+    setPengajuanPopup3(!pengajuanPopup3());
   };
   const showTambahAkunPopup = () => {
     setTambahAkunPopup(!tambahAkunPopup());
@@ -53,11 +67,14 @@ const Navbar: Component<NavbarProps> = (props) => {
   const showTambahCoaPopup = () => {
     setTambahCoaPopup(!tambahCoaPopup());
   };
-  
+
   function ClosePopUp() {
     setTambahAkunPopup(false);
     setTambahCoaPopup(false);
-    setPengajuanPopup(false);
+    setPengajuanPopup1(false);
+    setPengajuanPopup2(false);
+    setPengajuanPopup3(false);
+
     setPemasukanPopup(false);
     setPengeluaranPopup(false);
   }
@@ -316,10 +333,23 @@ const Navbar: Component<NavbarProps> = (props) => {
                           <a>Tambah Coa</a>
                         </li>
                       </ul>
-                    </details>
+                    </details>    
                   </li>
-                  <li onClick={() => showPengajuanPopup()}>
-                    <a>Pengajuan </a>
+                  <li>
+                    <details>
+                      <summary>Pengajuan</summary>
+                      <ul>
+                        <li onClick={() => showPengajuan1Popup()}>
+                          <a>Event</a>
+                        </li>
+                        <li onClick={() => showPengajuan2Popup()}>
+                          <a>Weekly</a>
+                        </li>
+                        <li onClick={() => showPengajuan3Popup()}>
+                          <a>Monthly</a>
+                        </li>
+                      </ul>
+                    </details>
                   </li>
                   <li onClick={() => showPemasukanPopup()}>
                     <a>Pemasukan</a>
@@ -419,7 +449,9 @@ const Navbar: Component<NavbarProps> = (props) => {
           </div>
           {tambahCoaPopup() && (<FormTambahCOA OnClose={ClosePopUp}/>)}
           {tambahAkunPopup() && (<TambahAkunMaster OnClose={ClosePopUp} />)}
-          {pengajuanPopup() && (<PengajuanCreate OnClose={ClosePopUp} />)}
+          {pengajuanPopup1() && (<PengajuanEvent OnClose={ClosePopUp} />)}
+          {pengajuanPopup2() && (<PengajuanWeekly OnClose={ClosePopUp}/>)}
+          {pengajuanPopup3() && (<PengajuanMonthly OnClose={ClosePopUp} total={Total()} total2={Total2()}/>)}
           {pemasukanPopup() && (<PemasukanCreate OnClose={ClosePopUp} />)}
           {pengeluaranPopup() && (<PengeluaranCreate OnClose={ClosePopUp} />)}
 

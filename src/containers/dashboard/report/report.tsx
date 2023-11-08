@@ -11,6 +11,7 @@ import './report.css';
 import Header from '../../header/header';
 import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
+import { A } from '@solidjs/router';
 
 
 const Report: Component = () => {

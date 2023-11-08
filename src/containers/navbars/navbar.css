@@ -33,7 +33,7 @@ A.active .sidebars {
 .notifications-count {
     position: absolute;
     top: 15px; /* Sesuaikan posisinya di atas ikon */
-    right: 112px; /* Sesuaikan posisinya di kanan ikon */
+    right: 145px; /* Sesuaikan posisinya di kanan ikon */
     width: 20px;
     height: 20px;
     display: flex;
@@ -51,6 +51,7 @@ A.active .sidebars {
     align-items: center;
     /* margin: 3px; */
     padding: 20px 25px 7px 25px;
+    margin-left: -150px;
 }
 
 A.active .notifications-selection {

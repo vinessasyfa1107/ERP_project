@@ -25,14 +25,15 @@ A.active .sidebars {
     border-radius: 40px;
     border: none;
     height: 1rem;
-    margin-left: 220px;
+    margin-left: 120px;
 }
+
+/* navbar.css */
 
 .notifikasi-count {
     position: absolute;
     top: 15px; /* Sesuaikan posisinya di atas ikon */
-    right: 85px; /* Sesuaikan posisinya di kanan ikon */
-    /* Warna latar belakang angka notifikasi */
+    right: 111px; /* Sesuaikan posisinya di kanan ikon */
     width: 20px;
     height: 20px;
     display: flex;
@@ -48,9 +49,11 @@ A.active .sidebars {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* margin: 3px; */
+/* Menambahkan margin kiri negatif */
     padding: 20px 25px 7px 25px;
+    margin-left: -20px;
 }
+
 
 A.active .notifikasi-selection {
     background-color: #F5F5F5;
