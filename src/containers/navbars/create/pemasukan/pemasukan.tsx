@@ -22,6 +22,37 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
         }
       };
 
+
+      const [message, setMessage] = createSignal('');
+
+      const handleDragEnter = (e: DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.dataTransfer.dropEffect = 'copy';
+        // Ubah tampilan area drop jika diperlukan
+      };
+    
+      const handleDragOver = (e: DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+      };
+    
+      const handleDragLeave = () => {
+        // Kembalikan tampilan area drop ke kondisi awal jika diperlukan
+      };
+    
+      const handleDrop = (e: DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+    
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          const file = files[0];
+          setMessage(`File yang diunggah: ${file.name}`);
+          // Anda dapat menangani file yang diunggah di sini, misalnya mengunggahnya ke server atau melakukan operasi lain.
+        }
+      };
+
     const [formData, setFormData] = createSignal({
         id: 0,
         income_ts:'',
@@ -31,6 +62,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
         keterangan: '',
         // evidence: null
     });
+
 
     const [isOpen, setIsOpen] = createSignal(false);
     const [selectedOption, setSelectedOption] = createSignal('');
@@ -107,6 +139,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
             });
             }
         };
+
     
 
     return (
@@ -170,75 +203,36 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                     <label>COA*</label>
                                     <br />
                                     <div class="custom-dropdown-coa" ref={dropdownRef}>
-                                    <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
-                                        <div>{selectedOption() || ""}</div>
-                                        <div>
-                                            {isOpen() ? 
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
-                                            : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
-                                            }
-                                        </div>
-                                        {/* {isOpen() ? "▲" : "▼"} */}
-                                    </div>
-                                    <div>
-                                    {isOpen() && (
-                                        <div class="dropdown-options-coa">
-                                        <div class="options-list" >
-                                            {options.map((option, index) => (
-                                            <div
-                                                class="option"
-                                                onClick={() => {
-                                                setSelectedOption(option);
-                                                setIsOpen(false);
-                                                }}
-                                            >
-                                                {option}
+                                        <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
+                                            <div>{selectedOption() || ""}</div>
+                                            <div>
+                                                {isOpen() ? 
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
+                                                : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
+                                                }
                                             </div>
-                                            ))}
+                                            {/* {isOpen() ? "▲" : "▼"} */}
                                         </div>
+                                        <div>
+                                        {isOpen() && (
+                                            <div class="dropdown-options-coa">
+                                            <div class="options-list" >
+                                                {options.map((option, index) => (
+                                                <div
+                                                    class="option"
+                                                    onClick={() => {
+                                                    setSelectedOption(option);
+                                                    setIsOpen(false);
+                                                    }}
+                                                >
+                                                    {option}
+                                                </div>
+                                                ))}
+                                            </div>
+                                            </div>
+                                        )}
                                         </div>
-                                    )}
                                     </div>
-                                    </div>
-                                    {/* <select class="scrollable-select-coa-income"
-                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                    value={formData().coa_kd} 
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    >
-                                        <option value="1-0000">1-0000</option>
-                                        <option value="1-1000">1-1000</option>
-                                        <option value="1-1100">1-1100</option>
-                                        <option value="1-1101">1-1101</option>
-                                        <option value="1-1102">1-1102</option>
-
-                                        <option value="1-1201">1-1201</option>
-                                        <option value="1-1202">1-1202</option>
-                                        <option value="1-1203">1-1203</option>
-                                        <option value="1-1204">1-1204</option>
-                                        <option value="1-1300">1-1300</option>
-                                        <option value="1-1400">1-1400</option>
-                                        <option value="1-1401">1-1401</option>
-                                        <option value="1-1402">1-1402</option>
-                                        <option value="1-1403">1-1403</option>
-                                        <option value="1-1404">1-1404</option>
-
-                                        <option value="1-1600">1-1600</option>
-                                        <option value="1-1700">1-1700</option>
-
-                                        <option value="1-1801">1-1801</option>
-                                        <option value="1-1801">1-1801</option>
-                                        <option value="1-1802">1-1802</option>
-                                        <option value="1-1803">1-1803</option>
-                                        
-                                        <option value="3-0000">3-0000</option>
-                                        <option value="3-7000">3-7000</option>
-                                        <option value="3-8000">3-8000</option>
-                                        <option value="3-9000">3-9000</option>
-                                        <option value="3-9999">3-9999</option>
-
-                                        <option value="8-0000">8-0000</option>
-                                        <option value="8-1001">8-1001</option>
-                                    </select> */}
 
                                 </div>
                             </div>
@@ -261,8 +255,14 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                             <div>
                                 <label>Bukti*</label>
                                 <div class="container-bukti">
-                                <div class="box-bukti">
+                                <div class="box-bukti"
+                                 onDragEnter={handleDragEnter}
+                                 onDragOver={handleDragOver}
+                                 onDragLeave={handleDragLeave}
+                                 onDrop={handleDrop}
+                                >
                                     <Icon icon="bxs:image" class="icon-file" width="50" height="50" />
+                                    <p>{message()}</p>
                                 </div>
                                 <div class="container-2">
                                     <p>Pilih file dengan format .png atau .jpg ke dalam form atau tarik & lepas file tersebut.</p>
