@@ -36,24 +36,39 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         <button onClick={props.OnClose}>✕</button>
     </div>
     <div class="pengajuan-event">
-        <table>
+    <table>
             <thead>
                 <tr>
-                    <th>Company</th>
-                    <th>Contact</th>
-                    <th>Country</th>
+                    <th>No</th>
+                    <th>Keterangan</th>
+                    <th>Plan</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
+                    <td>1</td>
+                    <td><A href='/pengajuan-weekly/operasional-rutin-tamanhas'>Operasional Rutin Tamanhas</A></td>
+                    <td>Rp</td>
                 </tr>
                 <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
+                    <td>2</td>
+                    <td><A href='/pengajuan-weekly/operasional-rutin-purwokerto'>Operasional Rutin Purwokerto</A></td>
+                    <td>Rp</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Kebutuhan Project</td>
+                    <td>Rp</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Kebutuhan Marketing</td>
+                    <td>Rp</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Kebutuhan Maintenance & Tools</td>
+                    <td>Rp</td>
                 </tr>
             </tbody>
         </table>

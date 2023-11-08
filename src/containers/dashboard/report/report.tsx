@@ -45,9 +45,6 @@ const Report: Component = () => {
 
     return (
         <div>
-            <div>
-                <A href='/pengajuan-weekly/operasional-rutin-tamanhas'>pengajuan</A>
-            </div>
             <Header />
             {/* <div class="navbar-f-report">
                 <ReportNavbar />
