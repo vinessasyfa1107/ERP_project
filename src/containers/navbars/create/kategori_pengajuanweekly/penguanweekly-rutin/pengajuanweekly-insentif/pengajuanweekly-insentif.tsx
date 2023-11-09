@@ -1,21 +1,19 @@
-import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
+ import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './operasional-purwokerto.css'
-import PengajuanMonthly from '../pengajuan-monthly';
-import { setTotal2, Total } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import './pengajuanweekly-insentif.css';
+import PengajuanWeeklyRutin from '../pengajuanweekly-rutin';
+import { Totall, setTotall2 } from '../../../../../../store/Pengajuan/Weekly-satu/weekly-insen-satu';
 
 type RowData = {
-    kebutuhan: string;
-    qty: number;
-    unit: string;
-    price: number;
     total: number;
+    kebutuhan: string;
+    price: number;
     coa: string;
   };
 
-const OperasionalPurwokerto: Component = () => {
+const PengajuanWeeklyInsentif: Component = () => {
     const [popUp, setPopUp] = createSignal(false);
 
     function handlePopUp(){
@@ -49,8 +47,8 @@ const OperasionalPurwokerto: Component = () => {
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
-      
-    const dropdownRef = (el) => {
+    
+      const dropdownRef = (el) => {
         if (el) {
         const handleDocumentClick = (e) => {
             if (!el.contains(e.target)) {
@@ -64,10 +62,7 @@ const OperasionalPurwokerto: Component = () => {
         }
     };
 
-      
     const [need, setNeed] = createSignal("");
-    const [qty, setQty] = createSignal(0);
-    const [unit, setUnit] = createSignal("");
     const [price, setPrice] = createSignal(0);
     const [coa, setCOA] = createSignal("");
   
@@ -75,10 +70,8 @@ const OperasionalPurwokerto: Component = () => {
       columnDefs: [
         { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
         { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 100 },
-        { field: "unit", headerName: "Unit", width: 120 },
         { field: "price", headerName: "Price", width: 130 },
-        { field: "total", headerName: "Total", width: 150},
+        // { field: "total", headerName: "Total", width: 130 },
       ],
     };
   
@@ -87,15 +80,12 @@ const OperasionalPurwokerto: Component = () => {
     };
   
     const addRow = () => {
-      if (need() && qty() && unit() && price() ) {
-        const total = qty() * price();
+      if (need() && price() ) {
         const newRow: RowData = {
-          kebutuhan: need(),
-          qty: qty(),
-          unit: unit(),
-          price: price(),
-          total: total,
-          coa: selectedOption(),
+            kebutuhan: need(),
+            price: price(),
+            total: 0,
+            coa: selectedOption()
         };
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
@@ -109,10 +99,7 @@ const OperasionalPurwokerto: Component = () => {
   
     const clearInputs = () => {
       setNeed("");
-      setQty(0);
-      setUnit("");
       setPrice(0);
-      setCOA("");
     };
 
     // const calculateTotal = () => {
@@ -126,12 +113,12 @@ const OperasionalPurwokerto: Component = () => {
 
     const calculateTotal = () => {
         const gridData = rowData();
-        let Total2 = 0;
+        let Totall2 = 0;
         for (const row of gridData) {
-          Total2 += row.total;
+          Totall2 += row.price;
         }
-        setTotal2(Total2); // Simpan total di toko
-        return Total2;
+        setTotall2(Totall2); // Simpan total di toko
+        return Totall2;
       };
   
     // onMount(() => {
@@ -145,7 +132,7 @@ const OperasionalPurwokerto: Component = () => {
     <div>
         <div>
             
-        <div class="container-operasional-pwk" style={{display:'flex', "flex-direction":"row"}}>
+        <div class="container-weekly-insent" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
             <br />
@@ -192,28 +179,6 @@ const OperasionalPurwokerto: Component = () => {
                 </div>
             </div> 
             </div>
-
-            <div>
-            <label>Qty</label>
-            <br />
-            <input style={{width:"6vw"}}
-            type="number"
-            placeholder="Qty"
-            value={qty()}
-            onInput={(e) => setQty(Number(e.target.value))}
-            />
-            </div>
-
-            <div>
-            <label>Unit</label>
-            <br />
-            <input style={{width:"7.5vw"}}
-            type="text"
-            placeholder="Unit"
-            value={unit()}
-            onInput={(e) => setUnit(e.target.value)}
-            />
-            </div>
             
             <div>
             <label>Price</label>
@@ -227,7 +192,7 @@ const OperasionalPurwokerto: Component = () => {
             </div>
 
             
-            <div class="tambah-data-1">
+            <div class="tambah-data-weekly">
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
@@ -237,20 +202,20 @@ const OperasionalPurwokerto: Component = () => {
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
             />
-            <div class="detail-total-operasional-pwk">
+            <div class="detail-total-weekly-insent">
                 <div>TOTAL</div>
                 <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
-        <div class="btn-simpan-operasional-pwk">
+        <div class="btn-simpan-weekly-insent">
             <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} total={Total()} total2={calculateTotal()}/>}
+        {popUp() && <PengajuanWeeklyRutin OnClose={ClosePopUp} total2={Totall()} total={calculateTotal()}/>}
     </div>
   );
 };
 
-export default OperasionalPurwokerto;
+export default PengajuanWeeklyInsentif;

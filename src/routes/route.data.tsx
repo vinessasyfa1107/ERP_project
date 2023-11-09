@@ -7,6 +7,8 @@ import { useStore } from '../store';
 
 import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
 import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-purwokerto/operasional-purwokerto';
+import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
+import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 
 interface UserData {
     id: number;
@@ -172,6 +174,13 @@ const RouteData: Component = () => {
             <Route path="/direktur-utama/pengajuan">
                  <Route path="/dashboard" component={PengajuanDashboardDU} />
                  <Route path="/report" component={PengajuanReportDU} />
+            </Route>
+
+            <Route path="/pengajuan-weekly">
+                <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
+                <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
+                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
+                <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
             <Route path="/pengajuan-monthly">
