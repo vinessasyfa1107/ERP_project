@@ -5,6 +5,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './pengajuanweekly-insentif.css';
 import PengajuanWeeklyRutin from '../pengajuanweekly-rutin';
 import { Totall, setTotall2 } from '../../../../../../store/Pengajuan/Weekly-satu/weekly-insen-satu';
+import PengajuanWeekly from '../../pengajuan-weekly/pengajuan-weekly';
 
 type RowData = {
     total: number;
@@ -213,7 +214,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanWeeklyRutin OnClose={ClosePopUp} total2={Totall()} total={calculateTotal()}/>}
+        {popUp() && <PengajuanWeekly OnClose={ClosePopUp} total2={Totall()} total={calculateTotal()}/>}
     </div>
   );
 };
