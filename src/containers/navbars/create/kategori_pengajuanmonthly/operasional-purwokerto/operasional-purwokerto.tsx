@@ -4,8 +4,9 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './operasional-purwokerto.css'
 import PengajuanMonthly from '../pengajuan-monthly';
-import { setTotal2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total3, Total4, Total5, setTotal2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+// import { setTotal2, Total } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 
 type RowData = {
     kebutuhan: string;
@@ -66,8 +67,6 @@ const OperasionalPurwokerto: Component = () => {
     };
 
       
-      
-      
     const [need, setNeed] = createSignal("");
     const [qty, setQty] = createSignal(0);
     const [unit, setUnit] = createSignal("");
@@ -76,6 +75,7 @@ const OperasionalPurwokerto: Component = () => {
   
     const gridOptions = {
       columnDefs: [
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width:55 },
         { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
         { field: "coa", headerName: "COA", width: 130 },
         { field: "qty", headerName: "Qty", width: 100 },
@@ -146,6 +146,9 @@ const OperasionalPurwokerto: Component = () => {
 
   return (
     <div>
+      <div class='operasional-rutin-pwk'>
+        <h1>Operasional Rutin Purwokerto</h1>
+      </div>
         <div>
             
         <div class="container-operasional-pwk" style={{display:'flex', "flex-direction":"row"}}>
@@ -234,7 +237,7 @@ const OperasionalPurwokerto: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "126vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "134vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
@@ -251,7 +254,8 @@ const OperasionalPurwokerto: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} total={Total()} total2={calculateTotal()}/>}
+        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} 
+        total={Total()} total2={calculateTotal()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
     </div>
   );
 };

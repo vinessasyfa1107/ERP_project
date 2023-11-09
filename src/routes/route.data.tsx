@@ -2,8 +2,18 @@ import { Router, Routes, Route, Navigate, hashIntegration } from '@solidjs/route
 import { AsyncResource } from 'async_hooks';
 import { Component, lazy } from 'solid-js';
 import { useStore } from '../store';
+
+
+
 import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
 import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-purwokerto/operasional-purwokerto';
+import KebutuhanProject from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-project/kebutuhan-project';
+import KebutuhanMarketing from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-marketing/kebutuhan-marketing';
+import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-maintenance-tools/kebutuhan-maintenance';
+import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
+import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
+
+import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
 interface UserData {
     id: number;
     account_name: string;
@@ -30,6 +40,8 @@ const Report_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-d
 const Planning_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/planning_dk'));
 const Time_tracking_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/time_tracking/time_tracking_dk'));
 const Form_approve = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/form_approve/form_approve'));
+const Transfer_dana = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/transfer_dana/transfer_dana'));
+const Keuangan_dashboard_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/keuangan_dk/keuangan_dashboard_dk'));
 
 
 //============= path untuk admin ============= //
@@ -82,7 +94,7 @@ const RouteData: Component = () => {
         } else if (userData.access === 'admin') {
             return "/dashboard/report";
         } else {
-            return "/dashboard/report";
+            return "/dashboard-dk/report_dk";
         }
     }
 
@@ -106,6 +118,8 @@ const RouteData: Component = () => {
                 <Route path="/planning_dk" component={Planning_dk} />
                 <Route path="/form_approve" component={Form_approve} />
                 <Route path="/time_tracking_dk" component={Time_tracking_dk} />
+                <Route path="/keuangan_dashboard_dk" component={Keuangan_dashboard_dk} />
+                <Route path="/transfer_dana" component={Transfer_dana} />
 
             </Route>
 
@@ -166,12 +180,24 @@ const RouteData: Component = () => {
                  <Route path="/report" component={PengajuanReportDU} />
             </Route>
 
-            <Route path="/pengajuan-monthly">
-                <Route path="/operasional-rutin-tamanhas" component={OperasionalTamanhas} />
+            <Route path="/pengajuan-weekly">
+                <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
+                <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
                 <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
                 <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
+            <Route path="/pengajuan-monthly">
+                <Route path="/operasional-rutin-tamanhas" component={OperasionalTamanhas} />
+                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
+                <Route path="/kebutuhan-project" component={KebutuhanProject} />                
+                <Route path="/kebutuhan-marketing" component={KebutuhanMarketing} />
+                <Route path="/kebutuhan-maintenance-tools" component={KebutuhanMaintenance} />
+            </Route>
+
+            <Route path="/pengajuan-event">
+                <Route path="/kick-off-meeting" component={KickOffMeeting} />
+            </Route>
         </Routes>
     )
 }

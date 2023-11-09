@@ -8,7 +8,10 @@ import { A, useLocation } from '@solidjs/router';
 interface PengajuanMonthlyProps {
     OnClose: () => void;
     total: number,
-    total2: number
+    total2: number,
+    total3: number,
+    total4: number,
+    total5: number
 }
 
 const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
@@ -26,6 +29,11 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     function handleTable2() {
         setTable2(!Table2())
     }
+
+    const CalculateAllTotal = () => {
+        let AllTotal = props.total + props.total2 + props.total3 + props.total4 + props.total5;
+        return AllTotal;
+    };
 
   const location = useLocation();
 
@@ -49,28 +57,33 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td><A href='/pengajuan-monthly/operasional-rutin-tamanhas'>Operasional Rutin Tamanhas</A></td>
+                    <td><A href='/pengajuan-monthly/operasional-rutin-tamanhas' onClick={props.OnClose}>Operasional Rutin Tamanhas</A></td>
                     <td>Rp{props.total}</td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td><A href='/pengajuan-monthly/operasional-rutin-purwokerto'>Operasional Rutin Purwokerto</A></td>
+                    <td><A href='/pengajuan-monthly/operasional-rutin-purwokerto' onClick={props.OnClose}>Operasional Rutin Purwokerto</A></td>
                     <td>Rp{props.total2}</td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td>Kebutuhan Project</td>
-                    <td>Rp</td>
+                    <td><A href='/pengajuan-monthly/kebutuhan-project' onClick={props.OnClose}>Kebutuhan Project</A></td>
+                    <td>Rp{props.total3}</td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td>Kebutuhan Marketing</td>
-                    <td>Rp</td>
+                    <td><A href='/pengajuan-monthly/kebutuhan-marketing' onClick={props.OnClose}>Kebutuhan Marketing</A></td>
+                    <td>Rp{props.total4}</td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td>Kebutuhan Maintenance & Tools</td>
-                    <td>Rp</td>
+                    <td><A href='/pengajuan-monthly/kebutuhan-maintenance-tools' onClick={props.OnClose}>Kebutuhan Maintenance & Tools</A></td>
+                    <td>Rp{props.total5}</td>
+                </tr>
+                <tr class="isi-total-monthly">
+                    <td></td>
+                    <td>TOTAL ESTIMASI</td>
+                    <td>Rp{CalculateAllTotal()}</td>
                 </tr>
             </tbody>
         </table>

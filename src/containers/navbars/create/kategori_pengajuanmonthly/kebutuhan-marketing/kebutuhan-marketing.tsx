@@ -2,10 +2,13 @@ import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './operasional-tamanhas.css'
 import PengajuanMonthly from '../pengajuan-monthly';
-import { Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { setTotal4 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total5 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total3 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import './kebutuhan-marketing.css'
 
 type RowData = {
     kebutuhan: string;
@@ -16,7 +19,7 @@ type RowData = {
     coa: string;
   };
 
-const OperasionalTamanhas: Component = () => {
+const KebutuhanMarketing: Component = () => {
     const [popUp, setPopUp] = createSignal(false);
 
     function handlePopUp(){
@@ -46,7 +49,7 @@ const OperasionalTamanhas: Component = () => {
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
           // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableData');
+          const savedData = localStorage.getItem('tableMonthly4');
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
@@ -76,11 +79,11 @@ const OperasionalTamanhas: Component = () => {
   
     const gridOptions = {
       columnDefs: [
-        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width:55 },
         { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
         { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 80 },
-        { field: "unit", headerName: "Unit", width: 100 },
+        { field: "qty", headerName: "Qty", width: 100 },
+        { field: "unit", headerName: "Unit", width: 120 },
         { field: "price", headerName: "Price", width: 130 },
         { field: "total", headerName: "Total", width: 150},
       ],
@@ -91,7 +94,7 @@ const OperasionalTamanhas: Component = () => {
     };
   
     const addRow = () => {
-      if (need() && qty() && unit() && price() ) {
+      if (need() && price() ) {
         const total = qty() * price();
         const newRow: RowData = {
           kebutuhan: need(),
@@ -104,7 +107,7 @@ const OperasionalTamanhas: Component = () => {
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableMonthly4', JSON.stringify(newData));
           return newData;
         });
         clearInputs();
@@ -130,12 +133,12 @@ const OperasionalTamanhas: Component = () => {
 
     const calculateTotal = () => {
         const gridData = rowData();
-        let Total = 0;
+        let Total4 = 0;
         for (const row of gridData) {
-          Total += row.total;
+          Total4 += row.total;
         }
-        setTotal(Total); // Simpan total di toko
-        return Total;
+        setTotal4(Total4); // Simpan total di toko
+        return Total4;
       };
   
     // onMount(() => {
@@ -146,13 +149,13 @@ const OperasionalTamanhas: Component = () => {
     // });
 
   return (
-    <div class="operasional-rutin-tamanhas">
-      <div>
-        <h1>Operasional Rutin Tamanhas</h1>
-      </div>
+    <div>
+        <div style={{"margin-bottom":"20px", "font-size":"24px", "font-weight":"700"}}>
+            <h1>Kebutuhan Marketing</h1>
+        </div>
         <div>
             
-        <div class="container-data-operasional" style={{display:'flex', "flex-direction":"row"}}>
+        <div class="container-marketing-needs" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
             <br />
@@ -238,27 +241,27 @@ const OperasionalTamanhas: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "130vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "134vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
             />
-            <div class="detail-total-operasional">
+            <div class="detail-total-marketing-needs">
                 <div>TOTAL</div>
                 <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
-        <div class="btn-simpan-data-operasional">
+        <div class="btn-simpan-marketing-needs">
             <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
         {popUp() && <PengajuanMonthly OnClose={ClosePopUp} 
-        total={calculateTotal()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
+        total={Total()} total2={Total2()} total3={Total3()} total4={calculateTotal()} total5={Total5()}/>}
     </div>
   );
 };
 
-export default OperasionalTamanhas;
+export default KebutuhanMarketing;

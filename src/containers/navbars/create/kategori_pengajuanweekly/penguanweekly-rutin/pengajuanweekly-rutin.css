@@ -1,4 +1,4 @@
-.pengajuan-monthly-1 {
+.pengajuan-weekly-1-rutin {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -14,7 +14,7 @@
 }
 
 /*css untuk tabel form popup*/
-.pengajuan-monthly-1 .pengajuan-monthly {
+.pengajuan-weekly-1-rutin .pengajuan-weekly-rutin {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
@@ -25,41 +25,41 @@
     overflow: hidden;
 }
 
-.pengajuan-monthly table {
+.pengajuan-weekly-rutin table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.pengajuan-monthly thead {
+.pengajuan-weekly-rutin thead {
     background-color: #333;
     color: #fff;
 }
 
-.pengajuan-monthly th {
+.pengajuan-weekly-rutin th {
     padding: 10px;
     text-align: left;
 }
 
-.pengajuan-monthly tbody tr:nth-child(even) {
+.pengajuan-weekly-rutin tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.pengajuan-monthly td {
+.pengajuan-weekly-rutin td {
     padding: 10px;
 }
 
-.pengajuan-monthly a {
+.pengajuan-weekly-rutin a {
     text-decoration: none;
     color: #0074d9;
 }
 
-.pengajuan-monthly a:hover {
+.pengajuan-weekly-rutin a:hover {
     text-decoration: underline;
     color: #0056b3;
 }
 
 /* CSS untuk judul "monthly" */
-.keterangan {
+.keterangan-rutin {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,7 +69,7 @@
 }
 
 
-.keterangan button {
+.keterangan-rutin button {
     background-color: #AE0000;
     color: #FFFFFF;
     border-radius: 5px;
@@ -79,7 +79,7 @@
     float: right;
 }
 
-.keterangan h2 {
+.keterangan-rutin h2 {
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
@@ -89,7 +89,7 @@
 }
 
 
-.keterangan span {
+.keterangan-rutin span {
     font-size: 8px;
 }
 
@@ -103,12 +103,3 @@
     background: rgba(0, 0, 0, 0.3);
     z-index: 2;
 }
-
-.isi-total-monthly {
-    font-weight: 700;
-}
-/* 
-.isi-total-monthly td {
-    background-color: rgb(233, 73, 201);
-    
-} */
