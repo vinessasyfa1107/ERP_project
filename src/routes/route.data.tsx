@@ -4,7 +4,6 @@ import { Component, lazy } from 'solid-js';
 import { useStore } from '../store';
 
 
-
 import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
 import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-purwokerto/operasional-purwokerto';
 
@@ -36,6 +35,7 @@ const Time_tracking_dk = lazy(() => import('../direktur-keuangan/containers/dash
 const Form_approve = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/planning/form_approve/form_approve'));
 const Transfer_dana = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/transfer_dana/transfer_dana'));
 const Keuangan_dashboard_dk = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/keuangan_dk/keuangan_dashboard_dk'));
+const Form_transfer = lazy(() => import('../direktur-keuangan/containers/dashboard-dk/transfer_dana/form_transfer'));
 
 
 //============= path untuk admin ============= //
@@ -88,7 +88,7 @@ const RouteData: Component = () => {
         } else if (userData.access === 'admin') {
             return "/dashboard/report";
         } else {
-            return "/dashboard-dk/report_dk";
+            return "/dashboard/report";
         }
     }
 
@@ -114,6 +114,7 @@ const RouteData: Component = () => {
                 <Route path="/time_tracking_dk" component={Time_tracking_dk} />
                 <Route path="/keuangan_dashboard_dk" component={Keuangan_dashboard_dk} />
                 <Route path="/transfer_dana" component={Transfer_dana} />
+                <Route path="/form_transfer" component={Form_transfer} />
 
             </Route>
 
