@@ -4,7 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './operasional-purwokerto.css'
 import PengajuanMonthly from '../pengajuan-monthly';
-import { setTotal2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total3, Total4, Total5, setTotal2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 
 type RowData = {
@@ -146,6 +146,9 @@ const OperasionalPurwokerto: Component = () => {
 
   return (
     <div>
+      <div class='operasional-rutin-pwk'>
+        <h1>Operasional Rutin Purwokerto</h1>
+      </div>
         <div>
             
         <div class="container-operasional-pwk" style={{display:'flex', "flex-direction":"row"}}>
@@ -251,7 +254,8 @@ const OperasionalPurwokerto: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} total={Total()} total2={calculateTotal()}/>}
+        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} 
+        total={Total()} total2={calculateTotal()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
     </div>
   );
 };

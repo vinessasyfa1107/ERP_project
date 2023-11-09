@@ -103,3 +103,12 @@
     background: rgba(0, 0, 0, 0.3);
     z-index: 2;
 }
+
+.isi-total-monthly {
+    font-weight: 700;
+}
+/* 
+.isi-total-monthly td {
+    background-color: rgb(233, 73, 201);
+    
+} */
