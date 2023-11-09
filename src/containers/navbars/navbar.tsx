@@ -15,6 +15,7 @@ import TambahAkunMaster from "../master/master-akun/forms/tambah-akun-master";
 import FormTambahCOA from "../master/master-coa/forms/form-tambah-coa";
 import Pengajuan from './create/pengajuan/pengajuan';
 import PengajuanEvent from "./create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event";
+import { TotalE1 } from "../../store/Pengajuan/Event/event-total-store";
 import PengajuanMonthly from "./create/kategori_pengajuanmonthly/pengajuan-monthly";
 import { Total, Total3, Total4, Total5 } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
 import { Total2 } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
@@ -449,7 +450,7 @@ const Navbar: Component<NavbarProps> = (props) => {
           </div>
           {tambahCoaPopup() && (<FormTambahCOA OnClose={ClosePopUp}/>)}
           {tambahAkunPopup() && (<TambahAkunMaster OnClose={ClosePopUp} />)}
-          {pengajuanPopup1() && (<PengajuanEvent OnClose={ClosePopUp} />)}
+          {pengajuanPopup1() && (<PengajuanEvent OnClose={ClosePopUp} totalE1={TotalE1()} />)}
           {pengajuanPopup2() && (<PengajuanWeekly OnClose={ClosePopUp}/>)}
           {pengajuanPopup3() && (<PengajuanMonthly OnClose={ClosePopUp} 
           total={Total()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>)}

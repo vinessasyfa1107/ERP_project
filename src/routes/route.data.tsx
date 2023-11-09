@@ -7,6 +7,7 @@ import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengaju
 import KebutuhanProject from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-project/kebutuhan-project';
 import KebutuhanMarketing from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-marketing/kebutuhan-marketing';
 import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-maintenance-tools/kebutuhan-maintenance';
+import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
 interface UserData {
     id: number;
     account_name: string;
@@ -172,12 +173,14 @@ const RouteData: Component = () => {
             <Route path="/pengajuan-monthly">
                 <Route path="/operasional-rutin-tamanhas" component={OperasionalTamanhas} />
                 <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
-                <Route path="/kebutuhan-project" component={KebutuhanProject} />                <Route path="/kebutuhan-project" component={KebutuhanProject} />
+                <Route path="/kebutuhan-project" component={KebutuhanProject} />                
                 <Route path="/kebutuhan-marketing" component={KebutuhanMarketing} />
                 <Route path="/kebutuhan-maintenance-tools" component={KebutuhanMaintenance} />
-
             </Route>
 
+            <Route path="/pengajuan-event">
+                <Route path="/kick-off-meeting" component={KickOffMeeting} />
+            </Route>
         </Routes>
     )
 }
