@@ -29,6 +29,11 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         setTable2(!Table2())
     }
 
+    const CalculateAllTotal = () => {
+        let AllTotal = Totall2()
+        return AllTotal;
+    };
+
   const location = useLocation();
 
   return (
@@ -58,6 +63,11 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
                     <td>2</td>
                     <td><A href='/pengajuan-weekly/operasional-rutin-purwokerto'>Keperluan Reimburse (Project & Marketing)</A></td>
                     <td>Rp{props.total2}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>TOTAL</td>
+                    <td>Rp{CalculateAllTotal()}</td>
                 </tr>
             </tbody>
         </table>
