@@ -1,20 +1,13 @@
-.operasional-rutin-pwk h1 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    /* color: #9F9F9F; */
-}
-
-.container-operasional-pwk {
+.container-marketing-needs {
     gap: 1.5vh;
     margin-bottom: 10px;
 }
 
-.container-operasional-pwk label {
+.container-marketing-needs label {
     font-weight: 600;
 }
 
-.container-operasional-pwk input {
+.container-marketing-needs input {
     background-color: #FFFFFF;
     border: none;
     /* width: 20vh; */
@@ -28,7 +21,7 @@
     font-weight: 600;
     align-items: center;
 }
-.container-operasional-pwk .custom-dropdown-coa {
+.container-marketing-needs .custom-dropdown-coa {
     background-color: #FFFFFF;
     border: none;
     width: 9vw;
@@ -43,11 +36,11 @@
     align-items: center;
 }
 
-.container-operasional-pwk .dropdown-selected {
+.container-marketing-needs .dropdown-selected {
     height: 4.5vh;
 }
 
-.container-operasional-pwk .dropdown-options-coa {
+.container-marketing-needs .dropdown-options-coa {
     padding: 7px;
     height: 25vh;
     width: 8vw;
@@ -60,15 +53,15 @@
     cursor: pointer;
 }
 
-.container-operasional-pwk .custom-dropdown-coa .dropdown-selected {
+.container-marketing-needs .custom-dropdown-coa .dropdown-selected {
     align-items: center;
 }
 
-.container-operasional-pwk .dropdown-options-coa .option {
+.container-marketing-needs .dropdown-options-coa .option {
     padding-left: 12px;
 }
 
-.container-operasional-pwk .dropdown-options-coa .option:hover {
+.container-marketing-needs .dropdown-options-coa .option:hover {
     background-color: rgb(87, 129, 255);
     padding-left: 14px;
     color: white;
@@ -91,7 +84,7 @@
     margin-left: 10px;
 }
 
-.btn-simpan-operasional-pwk button {
+.btn-simpan-marketing-needs button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -102,7 +95,7 @@
     margin-top: 26px;
 }
 
-.detail-total-operasional-pwk {
+.detail-total-marketing-needs {
     padding: 5px 10px;
     width: 15vw;
     margin-left: auto;

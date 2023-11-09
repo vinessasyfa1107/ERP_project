@@ -7,6 +7,8 @@ import { A, useLocation } from '@solidjs/router';
 
 interface PengajuanEventProps {
     OnClose: () => void;
+    totalE1: number;
+    // totalE2: number;
 }
 
 const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
@@ -24,6 +26,11 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
     function handleTable2() {
         setTable2(!Table2())
     }
+
+    const CalculateAllTotal = () => {
+        let AllTotal = props.totalE1;
+        return AllTotal;
+    };
 
   const location = useLocation();
 
@@ -47,10 +54,10 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td><A href='/pengajuan-weekly/operasional-rutin-tamanhas'>Operasional Rutin Tamanhas</A></td>
-                    <td>Rp</td>
+                    <td><A href='/pengajuan-event/kick-off-meeting' onClick={props.OnClose}>Kick Off Meeting</A></td>
+                    <td>Rp{props.totalE1}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                     <td>2</td>
                     <td><A href='/pengajuan-weekly/operasional-rutin-purwokerto'>Operasional Rutin Purwokerto</A></td>
                     <td>Rp</td>
@@ -69,6 +76,11 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
                     <td>5</td>
                     <td>Kebutuhan Maintenance & Tools</td>
                     <td>Rp</td>
+                </tr> */}
+                <tr>
+                    <td></td>
+                    <td style={{"font-weight":"700"}}>TOTAL ESTIMASI</td>
+                    <td style={{"font-weight":"700"}}>Rp{CalculateAllTotal()}</td>
                 </tr>
             </tbody>
         </table>

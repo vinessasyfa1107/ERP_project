@@ -2,21 +2,23 @@ import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './operasional-tamanhas.css'
-import PengajuanMonthly from '../pengajuan-monthly';
-import { Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
-import { Total2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import './kickoff-meeting.css'
+import { setTotalE1 } from '../../../../../store/Pengajuan/Event/event-total-store';
+import PengajuanEvent from '../pengajuan_event/pengajuan-event/pengajuan-event';
 
 type RowData = {
-    kebutuhan: string;
+    deskripsi: string;
     qty: number;
-    unit: string;
+    unit: number;
+    uom: string;
     price: number;
     total: number;
     coa: string;
+    notes: string;
+    ref: string;
   };
 
-const OperasionalTamanhas: Component = () => {
+const KickOffMeeting: Component = () => {
     const [popUp, setPopUp] = createSignal(false);
 
     function handlePopUp(){
@@ -46,7 +48,7 @@ const OperasionalTamanhas: Component = () => {
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
           // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableData');
+          const savedData = localStorage.getItem('tableEvent1');
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
@@ -68,22 +70,29 @@ const OperasionalTamanhas: Component = () => {
       
       
       
-    const [need, setNeed] = createSignal("");
-    const [qty, setQty] = createSignal(0);
-    const [unit, setUnit] = createSignal("");
-    const [price, setPrice] = createSignal(0);
+    const [desc, setDesc] = createSignal("");
     const [coa, setCOA] = createSignal("");
+    const [qty, setQty] = createSignal(0);
+    const [unit, setUnit] = createSignal(0);
+    const [uom, setUoM] = createSignal("");
+    const [price, setPrice] = createSignal(0);
+    const [notes, setNotes] = createSignal("");
+    const [ref, setRef] = createSignal("");
   
     const gridOptions = {
       columnDefs: [
-        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
-        { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
-        { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 80 },
-        { field: "unit", headerName: "Unit", width: 100 },
-        { field: "price", headerName: "Price", width: 130 },
-        { field: "total", headerName: "Total", width: 150},
-      ],
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width:55},
+        { field: "deskripsi", headerName: "Deskripsi", width: 180 },
+        { field: "coa", headerName: "COA", width: 90 },
+        { field: "qty", headerName: "Qty", width: 70 },
+        { field: "unit", headerName: "Unit", width: 70 },
+        { field: "uom", headerName: "UoM", width: 75 },
+        // { field: "unit", headerName: "Unit", width: 120 },
+        { field: "price", headerName: "Unit Price", width: 100 },
+        { field: "total", headerName: "Sub Total", width: 100},
+        { field: "notes", width: 130 },
+        { field: "ref", headerName:"Reference", width: 158 },
+    ],
     };
   
     const onGridReady = (params: any) => {
@@ -91,20 +100,23 @@ const OperasionalTamanhas: Component = () => {
     };
   
     const addRow = () => {
-      if (need() && qty() && unit() && price() ) {
-        const total = qty() * price();
+      if (desc() && price() ) {
+        const total = qty() * unit() * price();
         const newRow: RowData = {
-          kebutuhan: need(),
+          deskripsi: desc(),
           qty: qty(),
           unit: unit(),
+          uom: uom(),
           price: price(),
           total: total,
           coa: selectedOption(),
+          notes: notes(),
+          ref: ref(),
         };
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableEvent1', JSON.stringify(newData));
           return newData;
         });
         clearInputs();
@@ -112,11 +124,14 @@ const OperasionalTamanhas: Component = () => {
     };
   
     const clearInputs = () => {
-      setNeed("");
+      setDesc("");
       setQty(0);
-      setUnit("");
+      setUnit(0);
+      setUoM("");
       setPrice(0);
       setCOA("");
+      setNotes("");
+      setRef("")
     };
 
     // const calculateTotal = () => {
@@ -130,12 +145,12 @@ const OperasionalTamanhas: Component = () => {
 
     const calculateTotal = () => {
         const gridData = rowData();
-        let Total = 0;
+        let TotalE1 = 0;
         for (const row of gridData) {
-          Total += row.total;
+          TotalE1 += row.total;
         }
-        setTotal(Total); // Simpan total di toko
-        return Total;
+        setTotalE1(TotalE1); // Simpan total di toko
+        return TotalE1;
       };
   
     // onMount(() => {
@@ -146,29 +161,29 @@ const OperasionalTamanhas: Component = () => {
     // });
 
   return (
-    <div class="operasional-rutin-tamanhas">
-      <div>
-        <h1>Operasional Rutin Tamanhas</h1>
+    <div>
+      <div style={{"margin-bottom":"20px", "font-size":"24px", "font-weight":"700"}}>
+        <h1>Kick Off Meeting</h1>
       </div>
         <div>
             
-        <div class="container-data-operasional" style={{display:'flex', "flex-direction":"row"}}>
+        <div class="container-kickoff-meeting" style={{display:'flex', "flex-direction":"row"}}>
             <div>
-            <label>Kebutuhan</label>
+            <label>Deskripsi</label>
             <br />
             <input style={{width:"14vw"}}
             type="text"
-            placeholder="Kebutuhan"
-            value={need()}
-            onInput={(e) => setNeed(e.target.value)}
+            // placeholder=""
+            value={desc()}
+            onInput={(e) => setDesc(e.target.value)}
             />
             </div>
 
             <div>
             <label>COA</label>
             <br />
-               <div class="custom-dropdown-coa" ref={dropdownRef}>
-                <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
+               <div class="custom-dropdown-coa"  onClick={() => setIsOpen(!isOpen())} ref={dropdownRef}>
+                <div class="dropdown-selected" style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
                     <div>{selectedOption() || ""}</div>
                     <div>
                         {isOpen() ? 
@@ -203,7 +218,7 @@ const OperasionalTamanhas: Component = () => {
             <div>
             <label>Qty</label>
             <br />
-            <input style={{width:"6vw"}}
+            <input style={{width:"5vw"}}
             type="number"
             placeholder="Qty"
             value={qty()}
@@ -214,22 +229,55 @@ const OperasionalTamanhas: Component = () => {
             <div>
             <label>Unit</label>
             <br />
-            <input style={{width:"7.5vw"}}
+            <input style={{width:"5vw"}}
             type="text"
             placeholder="Unit"
             value={unit()}
-            onInput={(e) => setUnit(e.target.value)}
+            onInput={(e) => setUnit(Number(e.target.value))}
+            />
+            </div>
+
+            <div>
+            <label>UoM</label>
+            <br />
+            <input style={{width:"6vw"}}
+            type="text"
+            // placeholder="Unit"
+            value={uom()}
+            onInput={(e) => setUoM(e.target.value)}
             />
             </div>
             
             <div>
             <label>Price</label>
             <br />
-            <input style={{width:"8vw"}}
+            <input style={{width:"7vw"}}
             type="number"
             placeholder="Price"
             value={price()}
             onInput={(e) => setPrice(Number(e.target.value))}
+            />
+            </div>
+
+            <div>
+            <label>Notes</label>
+            <br />
+            <input style={{width:"8vw"}}
+            type="text"
+            // placeholder="Notes"
+            value={notes()}
+            onInput={(e) => setNotes(e.target.value)}
+            />
+            </div>
+
+            <div>
+            <label>References</label>
+            <br />
+            <input style={{width:"8vw"}}
+            type="text"
+            // placeholder="Notes"
+            value={ref()}
+            onInput={(e) => setRef(e.target.value)}
             />
             </div>
 
@@ -238,27 +286,26 @@ const OperasionalTamanhas: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "130vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "156vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
             />
-            <div class="detail-total-operasional">
+            <div class="detail-total-kickoff-meeting">
                 <div>TOTAL</div>
                 <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
-        <div class="btn-simpan-data-operasional">
+        <div class="btn-simpan-kickoff-meeting">
             <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} 
-        total={calculateTotal()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
+        {popUp() && <PengajuanEvent OnClose={ClosePopUp} totalE1={calculateTotal()} />}
     </div>
   );
 };
 
-export default OperasionalTamanhas;
+export default KickOffMeeting;
