@@ -13,6 +13,7 @@ import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajua
 import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
 import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 
+import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
 interface UserData {
     id: number;
     account_name: string;
@@ -192,9 +193,11 @@ const RouteData: Component = () => {
                 <Route path="/kebutuhan-project" component={KebutuhanProject} />                
                 <Route path="/kebutuhan-marketing" component={KebutuhanMarketing} />
                 <Route path="/kebutuhan-maintenance-tools" component={KebutuhanMaintenance} />
-
             </Route>
 
+            <Route path="/pengajuan-event">
+                <Route path="/kick-off-meeting" component={KickOffMeeting} />
+            </Route>
         </Routes>
     )
 }

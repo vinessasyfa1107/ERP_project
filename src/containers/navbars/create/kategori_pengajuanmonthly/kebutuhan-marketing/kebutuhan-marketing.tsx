@@ -79,6 +79,7 @@ const KebutuhanMarketing: Component = () => {
   
     const gridOptions = {
       columnDefs: [
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width:55 },
         { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
         { field: "coa", headerName: "COA", width: 130 },
         { field: "qty", headerName: "Qty", width: 100 },
@@ -240,7 +241,7 @@ const KebutuhanMarketing: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "126vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "134vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 

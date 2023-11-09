@@ -76,10 +76,11 @@ const OperasionalTamanhas: Component = () => {
   
     const gridOptions = {
       columnDefs: [
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
         { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
         { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 100 },
-        { field: "unit", headerName: "Unit", width: 120 },
+        { field: "qty", headerName: "Qty", width: 80 },
+        { field: "unit", headerName: "Unit", width: 100 },
         { field: "price", headerName: "Price", width: 130 },
         { field: "total", headerName: "Total", width: 150},
       ],
@@ -237,7 +238,7 @@ const OperasionalTamanhas: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "126vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "130vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
