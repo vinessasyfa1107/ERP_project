@@ -10,6 +10,9 @@ import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengaju
 import KebutuhanProject from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-project/kebutuhan-project';
 import KebutuhanMarketing from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-marketing/kebutuhan-marketing';
 import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-maintenance-tools/kebutuhan-maintenance';
+import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
+import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
+
 interface UserData {
     id: number;
     account_name: string;
@@ -174,6 +177,13 @@ const RouteData: Component = () => {
             <Route path="/direktur-utama/pengajuan">
                  <Route path="/dashboard" component={PengajuanDashboardDU} />
                  <Route path="/report" component={PengajuanReportDU} />
+            </Route>
+
+            <Route path="/pengajuan-weekly">
+                <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
+                <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
+                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
+                <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
             <Route path="/pengajuan-monthly">

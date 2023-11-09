@@ -18,9 +18,10 @@ import PengajuanEvent from "./create/kategori_pengajuan/pengajuan_event/pengajua
 import PengajuanMonthly from "./create/kategori_pengajuanmonthly/pengajuan-monthly";
 import { Total, Total3, Total4, Total5 } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
 import { Total2 } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
-import PengajuanWeekly from "./create/pengajuan-weekly/pengajuan-weekly";
+import PengajuanWeekly from "./create/kategori_pengajuanweekly/pengajuan-weekly/pengajuan-weekly";
+import PengajuanWeeklyInsentif from "./create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif";
 
-interface NavbarProps {
+interface NavbarProps { 
   children: JSX.Element
 }
 
