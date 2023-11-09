@@ -2,10 +2,11 @@ import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './operasional-tamanhas.css'
 import PengajuanMonthly from '../pengajuan-monthly';
-import { Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total4, Total5, setTotal3 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import './kebutuhan-project.css'
 
 type RowData = {
     kebutuhan: string;
@@ -16,7 +17,7 @@ type RowData = {
     coa: string;
   };
 
-const OperasionalTamanhas: Component = () => {
+const KebutuhanProject: Component = () => {
     const [popUp, setPopUp] = createSignal(false);
 
     function handlePopUp(){
@@ -46,7 +47,7 @@ const OperasionalTamanhas: Component = () => {
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
           // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableData');
+          const savedData = localStorage.getItem('tableMonthly3');
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
@@ -90,7 +91,7 @@ const OperasionalTamanhas: Component = () => {
     };
   
     const addRow = () => {
-      if (need() && qty() && unit() && price() ) {
+      if (need() && price() ) {
         const total = qty() * price();
         const newRow: RowData = {
           kebutuhan: need(),
@@ -103,7 +104,7 @@ const OperasionalTamanhas: Component = () => {
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableMonthly3', JSON.stringify(newData));
           return newData;
         });
         clearInputs();
@@ -129,12 +130,12 @@ const OperasionalTamanhas: Component = () => {
 
     const calculateTotal = () => {
         const gridData = rowData();
-        let Total = 0;
+        let Total3 = 0;
         for (const row of gridData) {
-          Total += row.total;
+          Total3 += row.total;
         }
-        setTotal(Total); // Simpan total di toko
-        return Total;
+        setTotal3(Total3); // Simpan total di toko
+        return Total3;
       };
   
     // onMount(() => {
@@ -145,13 +146,13 @@ const OperasionalTamanhas: Component = () => {
     // });
 
   return (
-    <div class="operasional-rutin-tamanhas">
-      <div>
-        <h1>Operasional Rutin Tamanhas</h1>
-      </div>
+    <div>
+        <div style={{"margin-bottom":"20px", "font-size":"24px", "font-weight":"700"}}>
+            <h1>Kebutuhan Project</h1>
+        </div>
         <div>
             
-        <div class="container-data-operasional" style={{display:'flex', "flex-direction":"row"}}>
+        <div class="container-project-needs" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
             <br />
@@ -243,21 +244,21 @@ const OperasionalTamanhas: Component = () => {
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
             />
-            <div class="detail-total-operasional">
+            <div class="detail-total-project-needs">
                 <div>TOTAL</div>
                 <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
-        <div class="btn-simpan-data-operasional">
+        <div class="btn-simpan-project-needs">
             <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
         {popUp() && <PengajuanMonthly OnClose={ClosePopUp} 
-        total={calculateTotal()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
+        total={Total()} total2={Total2()} total3={calculateTotal()} total4={Total4()} total5={Total5()}/>}
     </div>
   );
 };
 
-export default OperasionalTamanhas;
+export default KebutuhanProject;

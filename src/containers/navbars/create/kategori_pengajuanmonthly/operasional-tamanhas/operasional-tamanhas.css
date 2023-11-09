@@ -1,3 +1,9 @@
+.operasional-rutin-tamanhas h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    /* color: #9F9F9F; */
+}
 .container-data-operasional {
     gap: 1.5vh;
     margin-bottom: 10px;
