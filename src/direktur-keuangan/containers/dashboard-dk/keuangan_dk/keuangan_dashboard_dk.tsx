@@ -9,7 +9,7 @@ const Keuangan_dashboard_dk: Component = () => {
     const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
 
     onMount(() => {
-        changeSubTitleNavbar("Keuangan");
+        changeSubTitleNavbar("Financial");
     }) 
     
     return (

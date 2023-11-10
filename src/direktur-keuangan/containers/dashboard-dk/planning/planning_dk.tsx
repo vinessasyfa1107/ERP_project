@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { createSignal, type Component, onMount } from 'solid-js';
 import './planning_dk.css';
 import TablePlanning from './table-detail-plan/table-planning';
 import ChartPlanning from './chart-planning';
@@ -6,16 +6,19 @@ import TableDetailPlan from './table-detail-plan/table-detail-plan';
 import { Icon } from '@iconify-icon/solid';
 import { A } from '@solidjs/router';
 import Header from '../header/header';
+import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 
 const Planning_dk: Component = () => {
+
+    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+
+    onMount(() => {
+        changeSubTitleNavbar("List Planning");
+    })
+    
     return (
         <div class="plan">
             <Header />
-            <div class="card-module">
-                <div style={{ "font-family":"Exo", "font-size": "20px", "font-weight": "800", "margin-top": "2vh", "margin-left": "2vw" }}>
-                    Planning
-                </div>
-            </div>
             {/* <A href="/master/master">
             <button style={{"background-color":"aqua"}}>ke master</button>
         </A> */}
