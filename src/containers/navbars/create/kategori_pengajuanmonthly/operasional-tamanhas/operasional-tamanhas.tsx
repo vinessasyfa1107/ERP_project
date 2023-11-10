@@ -6,6 +6,9 @@ import './operasional-tamanhas.css'
 import PengajuanMonthly from '../pengajuan-monthly';
 import { Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Icon } from '@iconify-icon/solid';
+import EditMonthlyPlan from './popup/edit-monthly-plan';
+
 
 type RowData = {
     kebutuhan: string;
@@ -14,6 +17,7 @@ type RowData = {
     price: number;
     total: number;
     coa: string;
+    aksi?: object;
   };
 
 const OperasionalTamanhas: Component = () => {
@@ -23,9 +27,9 @@ const OperasionalTamanhas: Component = () => {
         setPopUp(true);
     }
 
-    function ClosePopUp(){
-        setPopUp(false);
-    }
+    // function ClosePopUp(){
+    //     setPopUp(false);
+    // }
 
     const [isOpen, setIsOpen] = createSignal(false);
     const [selectedOption, setSelectedOption] = createSignal('');
@@ -74,6 +78,24 @@ const OperasionalTamanhas: Component = () => {
     const [price, setPrice] = createSignal(0);
     const [coa, setCOA] = createSignal("");
   
+
+    const [EditPopUp, setEditPopUp] = createSignal(false);
+    const [DeletePopUp, setDeletePopUp] = createSignal(false);
+
+    function showEditPopUp(){
+      setEditPopUp(true);
+    }
+
+    function showDeletePopUp(){
+      setDeletePopUp(true);
+    }
+
+    function closePopUp(){
+      setEditPopUp(false);
+      setDeletePopUp(false);
+      setPopUp(false);
+    }
+
     const gridOptions = {
       columnDefs: [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
@@ -83,6 +105,16 @@ const OperasionalTamanhas: Component = () => {
         { field: "unit", headerName: "Unit", width: 100 },
         { field: "price", headerName: "Price", width: 130 },
         { field: "total", headerName: "Total", width: 150},
+        {
+          field: 'aksi', cellRenderer: (params: any) => {
+            return (
+              <div style={{  display: "flex", "justify-content": "space-between", width: "9vh" }}>
+                <button onClick={showEditPopUp}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={showDeletePopUp}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+              </div>
+            );
+          }
+        }
       ],
     };
   
@@ -144,14 +176,55 @@ const OperasionalTamanhas: Component = () => {
     //     localStorage.removeItem('tableData');
     //   });
     // });
+  //   const [keteranganOptions, setKeteranganOptions] = createSignal<string[] | (() => any)>(() => {
+  //     const savedData = localStorage.getItem('tableKetMonth');
+  //     return savedData ? JSON.parse(savedData).map((row) => row.keterangan) : [];
+  // });
+  const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
+    localStorage.getItem('tableKetMonth')
+        ? JSON.parse(localStorage.getItem('tableKetMonth')!).map((row: any) => row.keterangan)
+        : []
+  );
+
+  
+  
 
   return (
     <div class="operasional-rutin-tamanhas">
       <div>
         <h1>Operasional Rutin Tamanhas</h1>
       </div>
-        <div>
-            
+      <div class="dropdown-keterangan">
+        <label for="keteranganDropdown">Keterangan:</label>
+        <br />
+        {/* Gunakan dropdown di sini */}
+        <select
+            id="keteranganDropdown"
+            // value={selectedOption()}
+            // onChange={(e) => setSelectedOption(e.target.value)}
+            style={{width:"45vh"}}
+        >
+          <option value="" disabled selected></option>
+          {typeof keteranganOptions() === 'function' ? (
+              // Handle the case where keteranganOptions is a function
+              // You might want to provide a default value or handle this case differently
+              <option value="">Default Option</option>
+          ) : (
+              // Handle the case where keteranganOptions is an array
+              keteranganOptions().map((option) => (
+                  <option value={option}>{option}</option>
+              ))
+          )}
+            {/* <option value="" disabled selected>
+                Pilih Keterangan
+            </option>
+            {keteranganOptions().map((option) => (
+                <option value={option}>{option}</option>
+            ))} */}
+        </select>      
+      </div>
+
+      <div> 
         <div class="container-data-operasional" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
@@ -255,8 +328,9 @@ const OperasionalTamanhas: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={ClosePopUp} 
+        {popUp() && <PengajuanMonthly OnClose={closePopUp} 
         total={calculateTotal()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
+        {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}/>}
     </div>
   );
 };
