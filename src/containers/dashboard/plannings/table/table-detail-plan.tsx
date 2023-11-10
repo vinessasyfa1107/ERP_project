@@ -4,13 +4,15 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
-import FormPlanning from '../form/form-planning';
+import FormConfirm from '../form/form-confirm';
 import { dataplanning } from '../../../../api/planning/dataplanning';
 
 const TableDetailPlan: Component = () => {
 
-  const [RowData, setRowData] = createSignal([{}]);
-  const [updatedData, setUpdatedData] = createSignal([]);
+  const [RowData, setRowData] = createSignal([]);
+  const [popUpOpen, setPopUpOpen] = createSignal(false);
+  const [popupData, setPopupData] = createSignal(null);
+
 
   onMount(async () => {
     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
@@ -18,43 +20,26 @@ const TableDetailPlan: Component = () => {
     setRowData(data_planning)
   })
 
-  function handleConfirmChange(params) {
-    const data = params.data;
-
-    if (data.status === 'Approved' && data.confirm) {
-      const updatedDataArray = updatedData();
-      const updatedDataIndex = updatedDataArray.findIndex((item) => item.id === data.id);
-
-      if (updatedDataIndex === -1) {
-        updatedDataArray.push({ ...data });
-        setUpdatedData(updatedDataArray);
-
-        // Kirim data yang diperbarui ke backend
-        sendUpdatedDataToBackend(updatedDataArray);
-      }
+  const handlePopUpApproved = (data) => {
+    if (data.status === 'Approved') {
+      setPopupData(data);
+      setPopUpOpen(true);
     }
-  }
+  };
 
-  async function sendUpdatedDataToBackend(updatedDataArray) {
-    console.log("julpa", updatedDataArray);
-    try {
-      const response = await fetch('/api/planning/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedDataArray),
-      });
+  const ClosePopUp = () => {
+    setPopUpOpen(false);
+  };
 
-      if (response.ok) {
-        console.log('Data terkirim ke backend:', updatedDataArray);
-      } else {
-        console.error('Gagal mengirim data ke backend:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Gagal mengirim data ke backend:', error);
+  const handleSelectionChanged = (event) => {
+    const selectedRows = event.api.getSelectedRows();
+    if (selectedRows.length > 0) {
+      // Mengasumsikan Anda ingin membuka formulir konfirmasi untuk baris pertama yang dipilih
+      const selectedRowData = selectedRows[0];
+      handlePopUpApproved(selectedRowData);
     }
-  }
+  };
+
 
 
 
@@ -78,7 +63,7 @@ const TableDetailPlan: Component = () => {
     { field: 'category', headerName: 'Jenis' },
     { field: 'amount', headerName: 'Jumlah' },
     { field: 'status', headerName: 'Status' },
-    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, onCellValueChanged: handleConfirmChange },
+    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true },
 
 
   ];
@@ -104,7 +89,8 @@ const TableDetailPlan: Component = () => {
     // domLayout: 'autoHeight' as DomLayoutType,
     pagination: true,
     paginationPageSize: 4,
-    rowHeight: 40
+    rowHeight: 40,
+    onSelectionChanged: handleSelectionChanged
   }
 
 
@@ -120,8 +106,8 @@ const TableDetailPlan: Component = () => {
           rowSelection="multiple"
           rowMultiSelectWithClick={true}
         />
-
       </div>
+      {popUpOpen() && <FormConfirm data={popupData()} OnClose={ClosePopUp} />}
     </div>
   );
 };

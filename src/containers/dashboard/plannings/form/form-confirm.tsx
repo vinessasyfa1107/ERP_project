@@ -4,6 +4,16 @@ import { Icon } from '@iconify-icon/solid';
 
 interface EditPopUpProps {
     OnClose: () => void;
+    data: {
+        id: number,
+        entry_ts: string,
+        description: string,
+        planningtype: string,
+        category: number,
+        amount: number,
+        coa_kd: string,
+        status: string
+    }
 }
 
 const FormConfirm: Component<EditPopUpProps> = (props) => {
@@ -18,6 +28,103 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
     onCleanup(() => {
         setInputFile(null);
     });
+
+    const [status, setStatus] = createSignal('');
+    const [timestamp, setTimestamp] = createSignal('');
+
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        setStatus(value);
+        if (value === 'InProgress' || value === 'Rejected') {
+            // Menggunakan timestamp saat ini dalam format ISO 8601
+
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().slice(0, 11);
+
+            const hours = String(currentDate.getHours()).padStart(2, '0');
+            const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+            const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+            const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+            const timestamp = `${formattedDate}${formattedTime}`;
+
+            console.log("tanggal dan waktu: ", timestamp);
+            setTimestamp(timestamp);
+        }
+
+        updateStatus();
+    };
+
+    const categoryValueMap = {
+        "Marketing": 1,
+        "Project": 2,
+        "Rutinitas": 3,
+        "Event": 4
+    };
+
+    // Fungsi bantuan untuk mendapatkan nilai dari category string
+    function getCategoryValue(category) {
+        return categoryValueMap[category] || 0; // Nilai default jika tidak ada pemetaan
+    }
+
+    // Menggunakan fungsi getCategoryValue untuk mendapatkan nilai
+    const category = props.data.category;
+    const categoryValue = getCategoryValue(category);
+
+
+    const updateStatus = async () => {
+        const updateStatusToSend = {
+            id: props.data.id,
+            entry_ts: timestamp(),
+            coa_kd: props.data.coa_kd,
+            description: props.data.description,
+            planningtype: props.data.planningtype,
+            category: categoryValue,
+            amount: props.data.amount,
+            status: status()
+        }
+        console.log("test", updateStatusToSend);
+
+        try {
+            const response = await fetch(`/api/planning/${(props.data.id)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: props.data.id,
+                    entry_ts: timestamp(),
+                    coa_kd: props.data.coa_kd,
+                    description: props.data.description,
+                    planningtype: props.data.planningtype,
+                    category: categoryValue,
+                    amount: props.data.amount,
+                    status: status()
+                }),
+            });
+
+            if (response.ok) {
+                // Data berhasil diubah, tampilkan alert
+                alert('Data berhasil diubah');
+                props.OnClose();
+                window.location.reload();
+            } else {
+                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+                const errorMessage = await response.text();
+                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                console.error('Gagal mengubah data:', errorMessage);
+            }
+        } catch (error) {
+            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+            alert('Terjadi kesalahan. Silakan coba lagi.');
+            console.error('Terjadi kesalahan:', error);
+        }
+    };
+
+    
+
+
     return (
         <div class="overlay">
             <div class="form-confirm">
@@ -33,19 +140,25 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
                             <label>ID Perencanaan*</label>
                             <br />
-                            <input type="text" required />
+                            <input type="text" 
+                            value={props.data.id}
+                            readonly />
 
 
                             <p>
                                 <label>Keterangan*</label>
                                 <br />
-                                <input type="text" required />
+                                <input type="text" 
+                                value={props.data.description}
+                                readonly />
                             </p>
 
                             <p>
                                 <label>Status*</label>
                                 <br />
-                                <input type="text" required />
+                                <input type="text" 
+                                value={props.data.status}
+                                readonly />
                             </p>
 
                             <div>
@@ -77,7 +190,7 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
                         <br />
                         <div class="btn-add-acc">
-                            <button><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={handleInputChange}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
 
