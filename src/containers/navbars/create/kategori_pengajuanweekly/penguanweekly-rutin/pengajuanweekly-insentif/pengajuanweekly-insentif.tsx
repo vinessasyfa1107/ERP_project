@@ -1,4 +1,4 @@
- import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
+import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -6,12 +6,16 @@ import './pengajuanweekly-insentif.css';
 import PengajuanWeeklyRutin from '../pengajuanweekly-rutin';
 import { Totall, setTotall2 } from '../../../../../../store/Pengajuan/Weekly-satu/weekly-insen-satu';
 import PengajuanWeekly from '../../pengajuan-weekly/pengajuan-weekly';
+import { Icon } from '@iconify-icon/solid';
+import FormEditWeekly from './forms/form-edit-weeklyinsen';
+import ConfirmPopUpWeeklyInsen from './popup/confirmpopup';
 
 type RowData = {
     total: number;
     kebutuhan: string;
     price: number;
     coa: string;
+    // aksi: object;
   };
 
 const PengajuanWeeklyInsentif: Component = () => {
@@ -66,6 +70,42 @@ const PengajuanWeeklyInsentif: Component = () => {
     const [need, setNeed] = createSignal("");
     const [price, setPrice] = createSignal(0);
     const [coa, setCOA] = createSignal("");
+
+    const [isEditPopupInsenOpen, setisEditPopupInsenOpen] = createSignal(false);
+    const [isDeletePopupInsenOpen, setisDeletePopupInsenOpen] = createSignal(false);
+
+  //   const showEditPopupInsen = () => {
+  //     // console.log("Kebutuhan:", editedKebutuhan);
+  //     // setKebutuhan(editedKebutuhan);
+  
+  //     // console.log("Price:", editedPrice);
+  //     // setPrice(editedPrice);
+  
+  //     // console.log("Coa:", editedCoa);
+  //     // setCOA(editedCoa);
+  
+  //     setisEditPopupInsenOpen(!isEditPopupInsenOpen());
+  // };
+  
+  function showEditPopupInsen() {
+    setisEditPopupInsenOpen(!isEditPopupInsenOpen());
+  }
+
+  function showDeletePopupInsen() {
+    setisDeletePopupInsenOpen(!isDeletePopupInsenOpen());
+  }
+
+  function CloseEditPopUpInsen() {
+    setisEditPopupInsenOpen(false);
+    setConfirmPopUp(false);
+  }
+
+  function CloseDeletePopUpInsen() {
+    setisDeletePopupInsenOpen(false);
+    setConfirmPopUp(false);
+  }
+
+  const [ConfirmPopUp, setConfirmPopUp] = createSignal(false);
   
     const gridOptions = {
       columnDefs: [
@@ -73,6 +113,24 @@ const PengajuanWeeklyInsentif: Component = () => {
         { field: "coa", headerName: "COA", width: 130 },
         { field: "price", headerName: "Price", width: 130 },
         // { field: "total", headerName: "Total", width: 130 },
+        {
+          field: 'aksi', cellRenderer: (params: any) => {
+            // function showEditPopupInsen(id: any, balance: any): void {
+            //   throw new Error('Function not implemented.');
+            // }
+  
+            // function showDeletePopupInsen(id: any): void {
+            //   throw new Error('Function not implemented.');
+            // }
+  
+            return (
+              <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
+                <button onClick={showEditPopupInsen}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={showDeletePopupInsen}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+              </div>
+            );
+          }
+        }
       ],
     };
   
@@ -86,7 +144,8 @@ const PengajuanWeeklyInsentif: Component = () => {
             kebutuhan: need(),
             price: price(),
             total: 0,
-            coa: selectedOption()
+            coa: selectedOption(),
+            // aksi: aksi()
         };
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
@@ -103,15 +162,6 @@ const PengajuanWeeklyInsentif: Component = () => {
       setPrice(0);
     };
 
-    // const calculateTotal = () => {
-    //     const gridData = rowData();
-    //     let total = 0;
-    //     for (const row of gridData) {
-    //       total += row.total;
-    //     }
-    //     return total;
-    //   };
-
     const calculateTotal = () => {
         const gridData = rowData();
         let Totall2 = 0;
@@ -121,13 +171,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         setTotall2(Totall2); // Simpan total di toko
         return Totall2;
       };
-  
-    // onMount(() => {
-    //   // Bersihkan localStorage saat komponen di-unmount
-    //   onCleanup(() => {
-    //     localStorage.removeItem('tableData');
-    //   });
-    // });
+
 
   return (
     <div>
@@ -191,7 +235,6 @@ const PengajuanWeeklyInsentif: Component = () => {
             onInput={(e) => setPrice(Number(e.target.value))}
             />
             </div>
-
             
             <div class="tambah-data-weekly">
                 <button onClick={addRow}>Tambah</button>
@@ -215,6 +258,8 @@ const PengajuanWeeklyInsentif: Component = () => {
 
         </div>
         {popUp() && <PengajuanWeekly OnClose={ClosePopUp} total2={Totall()} total={calculateTotal()}/>}
+        {isEditPopupInsenOpen() && <FormEditWeekly OnClose={CloseEditPopUpInsen} />}
+        {isDeletePopupInsenOpen() && <ConfirmPopUpWeeklyInsen OnClose={CloseDeletePopUpInsen} />}
     </div>
   );
 };

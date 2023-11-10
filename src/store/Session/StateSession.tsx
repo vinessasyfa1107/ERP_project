@@ -5,7 +5,7 @@ type userDataType = {
 }
 
 export interface SessionStoreState {
-    setRole(arg0: string): unknown;
+   // setRole(arg0: string): unknown;
     sessionData: object;
     changeSessionStore: (userData: object) => void;
 }
