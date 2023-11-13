@@ -3,7 +3,7 @@ import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
 import { createSignal, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-// import './form-edit-coa.css'
+import './edit-monthly-plan.css'
 
 interface EditMonthlyPlanProps {
     OnClose: () => void;
@@ -86,16 +86,16 @@ const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
         <div class="overlay">
 
 
-        <div class="edit-data">
+        <div class="edit-monthly-plan">
          
-                <div class="edit-form">
+                <div class="form-edit">
                     <form method="dialog">
-                        <div class="headakun">
+                        <div class="head-acc">
                             <h2>Edit Data Pengajuan</h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
-                        <div class="isi-form">
+                        <div class="form-pengajuan">
                          
                             <p>
                                 <label>Kebutuhan*</label>
@@ -145,7 +145,7 @@ const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
                         </div>
 
                         <br />
-                        <div class="btn-edit-coa">
+                        <div class="btn-save-edit">
                             <button ><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>

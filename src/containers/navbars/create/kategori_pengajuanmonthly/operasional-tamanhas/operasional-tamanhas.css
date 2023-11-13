@@ -64,8 +64,8 @@
 
 .container-data-operasional .dropdown-options-coa {
     padding: 7px;
-    height: 25vh;
-    width: 8vw;
+    height: 45vh;
+    width: 18vw;
     overflow-y: auto;
     position: absolute;
     z-index: 3;
@@ -79,11 +79,22 @@
     align-items: center;
 }
 
-.container-data-operasional .dropdown-options-coa .option {
+/* .container-data-operasional .dropdown-options-coa .option {
     padding-left: 12px;
 }
 
 .container-data-operasional .dropdown-options-coa .option:hover {
+    background-color: rgb(87, 129, 255);
+    padding-left: 14px;
+    color: white;
+    border-radius: 5px;
+} */
+
+.container-data-operasional .dropdown-options-coa .option-label {
+    padding-left: 12px;
+}
+
+.container-data-operasional .dropdown-options-coa .option-label:hover {
     background-color: rgb(87, 129, 255);
     padding-left: 14px;
     color: white;
