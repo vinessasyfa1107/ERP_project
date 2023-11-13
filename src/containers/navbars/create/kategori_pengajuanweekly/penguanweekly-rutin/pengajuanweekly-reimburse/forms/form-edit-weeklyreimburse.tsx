@@ -2,13 +2,13 @@ import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
 import { createSignal, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './form-edit-weeklyinsen.css'
+import './form-edit-weeklyreimburse.css'
 
-interface FormEditWeeklyProps {
+interface FormEditReimburseProps {
     OnClose: () => void; // Tambahkan properti balance
 }
 
-const FormEditWeekly: Component<FormEditWeeklyProps> = (props) => {
+const FormEditReimburse: Component<FormEditReimburseProps> = (props) => {
 
     // const [formData, setFormData] = createSignal({
     //     coa_kd: '',
@@ -22,23 +22,23 @@ const FormEditWeekly: Component<FormEditWeeklyProps> = (props) => {
     // };
    // const { dataId } = props;
 
-   const [keterangan, setKeterangan] = createSignal('');
-   const [kebutuhan, setKebutuhan] = createSignal('');
-   const [coa_kd, setCoaKd] = createSignal('');
-   const [price, setPrice] = createSignal('');
+    const [keterangan, setKeterangan] = createSignal('');
+    const [kebutuhan, setKebutuhan] = createSignal('');
+    const [coa_kd, setCoaKd] = createSignal('');
+    const [price, setPrice] = createSignal('');
 
-   const handleInputChange = (e) => {
-       const { name, value } = e.target;
-       if (name === 'keterangan') {
-           setKeterangan(value);
-       } else if (name === 'kebutuhan') {
-           setKebutuhan(value);
-       } else if (name === 'kodeCOA') {
-           setCoaKd(value);
-       } else if (name === 'price') {
-           setPrice(value);
-       }
-   };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'keterangan') {
+            setKeterangan(value);
+        } else if (name === 'kebutuhan') {
+            setKebutuhan(value);
+        } else if (name === 'kodeCOA') {
+            setCoaKd(value);
+        } else if (name === 'price') {
+            setPrice(value);
+        }
+    };
 
     const saveChanges = async () => {
         try {
@@ -104,7 +104,7 @@ const FormEditWeekly: Component<FormEditWeeklyProps> = (props) => {
                 <div class="form-edit">
                     <form method="dialog">
                         <div class="akunhead">
-                            <h2>Edit Weekly Insentif</h2>
+                            <h2>Edit Weekly Reimburse</h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
@@ -160,7 +160,7 @@ const FormEditWeekly: Component<FormEditWeeklyProps> = (props) => {
                         </div>
 
                         <br />
-                        <div class="btn-edit-weeklyinsen">
+                        <div class="btn-edit-reimburse">
                             <button onClick={saveChanges}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
@@ -171,4 +171,4 @@ const FormEditWeekly: Component<FormEditWeeklyProps> = (props) => {
 };
 
 
-export default FormEditWeekly;
+export default FormEditReimburse;
