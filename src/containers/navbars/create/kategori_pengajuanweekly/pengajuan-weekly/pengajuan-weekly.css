@@ -77,7 +77,7 @@
 }
 
 /* CSS untuk judul "monthly" */
-.keterangan {
+.pengajuan-weekly .keterangan {
     display: flex;
     justify-content: space-between;
     align-items: center;

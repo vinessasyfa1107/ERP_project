@@ -1,7 +1,7 @@
 import { createSignal, type Component, onMount } from 'solid-js';
 import './pengajuan-monthly.css'
 import { Icon } from '@iconify-icon/solid';
-import { A, useLocation } from '@solidjs/router';
+import { A, useLocation, useNavigate } from '@solidjs/router';
 // import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 // import { useSubNavbarStore } from '../../../../../../store/Navbar/SubNavbarStore';
 import AgGridSolid from 'ag-grid-solid';
@@ -46,6 +46,19 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     const onGridReady = (params: any) => {
         setGridApi(() => params.api);
       };
+
+    const navigate = useNavigate();
+
+    const onCellClicked = (event: any) => {
+        if (event.columnApi.getColumn(event.column.colId).getColId() === 'keterangan') {
+            // Assuming 'keterangan' is the column containing the link
+            // Redirect to the specified URL when the 'keterangan' column is clicked
+            // You can adjust this logic based on your column configuration
+            props.OnClose();
+            // Use router navigation here
+            navigate('/pengajuan-monthly/operasional-rutin-tamanhas');
+        }
+    };
     
     const addRow = () => {
     if (keterangan()) {
@@ -67,6 +80,17 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     };
 
 
+    const [tambahKeterangan, setTambahKeterangan] = createSignal(false);
+
+    function showTambahKeterangan(){
+        setTambahKeterangan(true);
+    };
+
+    function closeTambahKeterangan(){
+        setTambahKeterangan(false);
+    };
+
+
   const location = useLocation();
 
   return (
@@ -77,20 +101,33 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             <h2>Monthly  <span>(*Tidak boleh kosong)</span></h2>
             <button onClick={props.OnClose}>✕</button>
         </div>
-        <div class="pengajuan-monthly">
+        <div class="pengajuan-monthly" >
             <div>
-            <div>
-                <label>Kebutuhan</label>
-                <br />
-                <input style={{width:"14vw"}}
-                type="text"
-                placeholder="Kebutuhan"
-                value={keterangan()}
-                onInput={(e) => setKeterangan(e.target.value)}
-                />
-            </div>
-            <div>
-                <button onClick={addRow}>Tambah</button>
+                {tambahKeterangan() && 
+                <div class="tambah-keterangan-group">
+                    <div>
+                    {/* <label>Kebutuhan</label> */}
+                    <br />
+                    <input 
+                    type="text"
+                    placeholder="Keterangan"
+                    value={keterangan()}
+                    onInput={(e) => setKeterangan(e.target.value)}
+                    />
+                    </div>
+                    <div>
+                        <button class="btn-tambah" onClick={addRow}>Tambah</button>
+                    </div>
+                    <div>
+                        <button class="btn-cancel" onClick={closeTambahKeterangan}>Selesai</button>
+                    </div>
+                </div>
+                }
+            
+            <div class="btn-show-keterangan">
+                {!tambahKeterangan() && 
+                  <button onClick={showTambahKeterangan}><Icon icon="fa-solid:plus" width="11" class="mr-2"/>Keterangan</button>
+                }
             </div>
             </div>
             <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
@@ -98,15 +135,16 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
+                onCellClicked={onCellClicked}
             />
-            {/* <div class="detail-total-operasional">
+            <div class="detail-total-operasional">
                 <div>TOTAL</div>
-                <div>Rp{calculateTotal()}</div>
-            </div> */}
+                <div>Rp</div>
             </div>
-            <div>
+            </div>
+            {/* <div>
                 <A href='/pengajuan-monthly/operasional-rutin-tamanhas' onClick={props.OnClose}>Tambah Pengajuan</A>
-            </div>
+            </div> */}
         </div>
     </div>
     </div>
