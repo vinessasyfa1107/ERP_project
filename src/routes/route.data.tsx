@@ -11,6 +11,7 @@ import KebutuhanMarketing from '../containers/navbars/create/kategori_pengajuanm
 import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-maintenance-tools/kebutuhan-maintenance';
 import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
 import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
+import PengajuanReimburse from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-reimburse/popup/pengajuanweekly-reimburse';
 
 import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
 interface UserData {
@@ -181,9 +182,12 @@ const RouteData: Component = () => {
                  <Route path="/report" component={PengajuanReportDU} />
             </Route>
 
+            C:\Users\user2022\OneDrive\Documents\belajar-solid-dua\fe-new-erp\src\containers\navbars\create\kategori_pengajuanweekly\penguanweekly-rutin\pengajuanweekly-insentif\pengajuan-reimburse.tsx
+
             <Route path="/pengajuan-weekly">
                 <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
                 <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
+                <Route path="/pengajuan-reimburse" component={PengajuanReimburse} />
                 <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
                 <Route path="/masterakun" component={MasterAkun} />
             </Route>
