@@ -1,4 +1,4 @@
-import { createSignal, type Component, onMount, onCleanup } from 'solid-js';
+import { createSignal, type Component, onMount, onCleanup, createEffect } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -12,13 +12,23 @@ const TableDetailPlan: Component = () => {
   const [RowData, setRowData] = createSignal([]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
+  const [confirmationStatus, setConfirmationStatus] = createSignal(false);
 
 
   onMount(async () => {
     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
     console.log("dataplanning", data_planning);
-    setRowData(data_planning)
+    setRowData(data_planning);
   })
+
+  const fetchData = async () => {
+    const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+    setRowData(data_planning);
+  };
+
+  onMount(() => {
+    fetchData();
+  });
 
   const handlePopUpApproved = (data) => {
     if (data.status === 'Approved') {
@@ -29,14 +39,16 @@ const TableDetailPlan: Component = () => {
 
   const ClosePopUp = () => {
     setPopUpOpen(false);
+    fetchData();
   };
 
   const handleSelectionChanged = (event) => {
     const selectedRows = event.api.getSelectedRows();
     if (selectedRows.length > 0) {
-      // Mengasumsikan Anda ingin membuka formulir konfirmasi untuk baris pertama yang dipilih
       const selectedRowData = selectedRows[0];
       handlePopUpApproved(selectedRowData);
+      // Step 2: Update confirmationStatus based on checkbox
+      setConfirmationStatus(selectedRowData.confirm || false);
     }
   };
 
@@ -55,15 +67,15 @@ const TableDetailPlan: Component = () => {
 
 
   const columnDefs = [
-    { field: 'id', headerName: 'ID' },
-    { field: 'entry_ts', headerName: 'Tanggal' },
-    { field: 'coa_kd', headerName: 'COA' },
-    { field: 'description', headerName: 'Keterangan' },
-    { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true } },
-    { field: 'category', headerName: 'Jenis' },
-    { field: 'amount', headerName: 'Jumlah' },
-    { field: 'status', headerName: 'Status' },
-    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true },
+    { field: 'id', headerName: 'ID', editable: false },
+    { field: 'entry_ts', headerName: 'Tanggal', editable: false },
+    { field: 'coa_kd', headerName: 'COA', editable: false },
+    { field: 'description', headerName: 'Keterangan', editable: false },
+    { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
+    { field: 'category', headerName: 'Jenis', editable: false },
+    { field: 'amount', headerName: 'Jumlah', editable: params => !params.data.confirm },
+    { field: 'status', headerName: 'Status', editable: false },
+    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
 
 
   ];
@@ -90,7 +102,14 @@ const TableDetailPlan: Component = () => {
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
-    onSelectionChanged: handleSelectionChanged
+    onSelectionChanged: handleSelectionChanged,
+    onCellEditingStopped: (event) => {
+      // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
+      if (event.column.getColId() === 'amount' && event.data.confirm) {
+        // Reset nilai ke nilai asli
+        event.api.applyTransaction({ update: [{ ...event.data }] });
+      }
+    },
   }
 
 
@@ -107,7 +126,7 @@ const TableDetailPlan: Component = () => {
           rowMultiSelectWithClick={true}
         />
       </div>
-      {popUpOpen() && <FormConfirm data={popupData()} OnClose={ClosePopUp} />}
+      {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />}
     </div>
   );
 };
