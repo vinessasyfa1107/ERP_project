@@ -2,14 +2,14 @@ import { createSignal, type Component, onCleanup, onMount } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './pengajuanweekly-insentif.css';
-import PengajuanWeeklyRutin from '../pengajuanweekly-rutin';
-import { Totall, setTotall2 } from '../../../../../../store/Pengajuan/Weekly-satu/weekly-insen-satu';
-import PengajuanWeekly from '../../pengajuan-weekly/pengajuan-weekly';
+import './pengajuanweekly-reimburse.css';
+import { Totalll, setTotall3 } from '../../../../../../../store/Pengajuan/Reimburse-satu/weekly-reimburse-satu';
 import { Icon } from '@iconify-icon/solid';
-import FormEditWeekly from './forms/form-edit-weeklyinsen';
-import ConfirmPopUpWeeklyInsen from './popup/confirmpopup';
-
+// import FormEditWeekly from './forms/form-edit-weeklyinsen'; //
+// import ConfirmPopUpReimburse from './popup/confirmpopup'; //
+import PengajuanWeekly from '../../../pengajuan-weekly/pengajuan-weekly';
+import FormEditReimburse from '../forms/form-edit-weeklyreimburse';
+import ConfirmPopUpReimburse from './confirmpopup-reimburse';
 
 type RowData = {
     total: number;
@@ -19,7 +19,7 @@ type RowData = {
     // aksi: object;
   };
 
-const PengajuanWeeklyInsentif: Component = () => {
+const PengajuanReimburse: Component = () => {
     const [popUp, setPopUp] = createSignal(false);
 
     function handlePopUp(){
@@ -49,7 +49,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
           // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableData1');
+          const savedData = localStorage.getItem('tableData2');
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
@@ -72,8 +72,8 @@ const PengajuanWeeklyInsentif: Component = () => {
     const [price, setPrice] = createSignal(0);
     const [coa, setCOA] = createSignal("");
 
-    const [isEditPopupInsenOpen, setisEditPopupInsenOpen] = createSignal(false);
-    const [isDeletePopupInsenOpen, setisDeletePopupInsenOpen] = createSignal(false);
+    const [isEditPopupReimburseOpen, setisEditPopupReimburseOpen] = createSignal(false);
+    const [isDeletePopupReimburseOpen, setisDeletePopupReimburseOpen] = createSignal(false);
 
   //   const showEditPopupInsen = () => {
   //     // console.log("Kebutuhan:", editedKebutuhan);
@@ -88,21 +88,21 @@ const PengajuanWeeklyInsentif: Component = () => {
   //     setisEditPopupInsenOpen(!isEditPopupInsenOpen());
   // };
   
-  function showEditPopupInsen() {
-    setisEditPopupInsenOpen(!isEditPopupInsenOpen());
+  function showEditPopupReimburse() {
+    setisEditPopupReimburseOpen(!isEditPopupReimburseOpen());
   }
 
-  function showDeletePopupInsen() {
-    setisDeletePopupInsenOpen(!isDeletePopupInsenOpen());
+  function showDeletePopupReimburse() {
+    setisDeletePopupReimburseOpen(!isDeletePopupReimburseOpen());
   }
 
-  function CloseEditPopUpInsen() {
-    setisEditPopupInsenOpen(false);
+  function CloseEditPopUpReimburse() {
+    setisEditPopupReimburseOpen(false);
     setConfirmPopUp(false);
   }
 
-  function CloseDeletePopUpInsen() {
-    setisDeletePopupInsenOpen(false);
+  function CloseDeletePopUpReimburse() {
+    setisDeletePopupReimburseOpen(false);
     setConfirmPopUp(false);
   }
 
@@ -126,8 +126,8 @@ const PengajuanWeeklyInsentif: Component = () => {
   
             return (
               <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
-                <button onClick={showEditPopupInsen}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button onClick={showDeletePopupInsen}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                <button onClick={showEditPopupReimburse}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={showDeletePopupReimburse}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
           }
@@ -151,7 +151,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableData1', JSON.stringify(newData));
+          localStorage.setItem('tableData2', JSON.stringify(newData));
           return newData;
         });
         clearInputs();
@@ -165,60 +165,66 @@ const PengajuanWeeklyInsentif: Component = () => {
 
     const calculateTotal = () => {
         const gridData = rowData();
-        let Totall2 = 0;
+        let Totall3 = 0;
         for (const row of gridData) {
-          Totall2 += row.price;
+          Totall3 += row.price;
         }
-        setTotall2(Totall2); // Simpan total di toko
-        return Totall2;
+        setTotall3(Totall3); // Simpan total di toko
+        return Totall3;
       };
 
-      const initialKeteranganOptions = [
-        "Insentif week 43",
-        "Token Tamanhas",
-        "Token Purwokerto week 43",
-        "Transport Alvin",
-        "Gaji David 26-Okt",
-        "Gaji OB Sukaraja 30-Okt",
-        "Gaji pak Min 1-Nov",
-        "Iuran kebersihan Tamanahas 1-Nov",
-        "Iuran keamanan Tamanhas 1-Nov",
-        "Iuran kebersihan Purwokerto 1-Nov",
-        "Iuran keamanan Purwokerto 1-Nov",
-        "Pettycash 27-Okt"
+      const initialKeteranganReimburseOptions = [
+        "Transpor + parkir TSO (meeting pak Arson)",
+        "Benin CRV 24-Okt",
+        "Meeting INAP 24-Okt",
+        "Reimburse pak Singgih",
+        "Reimburse Rizki",
+        "Reimburse Zaki",
+        "Reimburse Rendy",
+        "Reimburse Nafis",
+        "Reimburse Nanda",
+        "Reimburse Arif",
+        "Reimburse Bagas",
+        "Reimburse Ayyas",
+        "Reimburse Arya",
+        "Reimburse Alfath",
+        "Reimburse Grace",
+        "Reimburse Garry",
+        "Reimburse Maya",
+        "Reimburse Ramdan",
       ];
       
       // Fungsi untuk mendapatkan opsi keterangan dari local storage atau nilai default jika tidak ada
-      const getKeteranganOptions = () => {
+      const getKeteranganReimburseOptions = () => {
         const storedOptions = localStorage.getItem('tableKetMonth');
-        return storedOptions ? JSON.parse(storedOptions).map((row) => row.keterangan) : initialKeteranganOptions;
+        return storedOptions ? JSON.parse(storedOptions).map((row) => row.keterangan) : initialKeteranganReimburseOptions;
       };
       
       // Inisialisasi sinyal dengan opsi keterangan
-      const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(getKeteranganOptions());
+      const [keteranganReimburseOptions, setKeteranganOptions] = createSignal<string[]>(getKeteranganReimburseOptions());
 
   return (
     <div>
         <div>
         
-        <div class="dropdown-keterangan">
-        <label for="keteranganDropdown">Keterangan:</label>
+        <div class="dropdown-keterangan-reimburse">
+        <label for="keteranganDropdown-reimburse">Keterangan:</label>
         <br />
         {/* Gunakan dropdown di sini */}
         <select
-            id="keteranganDropdown"
+            id="keteranganDropdown-reimburse"
             // value={selectedOption()}
             // onChange={(e) => setSelectedOption(e.target.value)}
             style={{width:"45vh"}}
         >
           <option value="" disabled selected></option>
-          {typeof keteranganOptions() === 'function' ? (
+          {typeof keteranganReimburseOptions() === 'function' ? (
               // Handle the case where keteranganOptions is a function
               // You might want to provide a default value or handle this case differently
               <option value="">Pilih Keterangan</option>
           ) : (
               // Handle the case where keteranganOptions is an array
-              keteranganOptions().map((option) => (
+              keteranganReimburseOptions().map((option) => (
                   <option value={option}>{option}</option>
               ))
           )}
@@ -231,7 +237,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         </select>      
       </div>  
             
-        <div class="container-weekly-insent" style={{display:'flex', "flex-direction":"row"}}>
+        <div class="container-reimburse" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
             <br />
@@ -246,8 +252,8 @@ const PengajuanWeeklyInsentif: Component = () => {
             <div>
             <label>COA</label>
             <br />
-               <div class="custom-dropdown-coa" ref={dropdownRef}>
-                <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
+               <div class="custom-dropdown-coa-reimburse" ref={dropdownRef}>
+                <div class="dropdown-selected-reimburse" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
                     <div>{selectedOption() || ""}</div>
                     <div>
                         {isOpen() ? 
@@ -259,7 +265,7 @@ const PengajuanWeeklyInsentif: Component = () => {
                 </div>
                 <div>
                 {isOpen() && (
-                    <div class="dropdown-options-coa">
+                    <div class="dropdown-options-coa-reimburse">
                     <div class="options-list" >
                         {options.map((option, index) => (
                         <div
@@ -290,7 +296,7 @@ const PengajuanWeeklyInsentif: Component = () => {
             />
             </div>
             
-            <div class="tambah-data-weekly">
+            <div class="tambah-data-weekly-reimburse">
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
@@ -300,22 +306,22 @@ const PengajuanWeeklyInsentif: Component = () => {
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
             />
-            <div class="detail-total-weekly-insent">
+            <div class="detail-total-weekly-reimburse">
                 <div>TOTAL</div>
                 <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
-        <div class="btn-simpan-weekly-insent">
+        <div class="btn-simpan-weekly-reimburse">
             <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
-        {popUp() && <PengajuanWeekly OnClose={ClosePopUp} total2={Totall()} total={calculateTotal()}/>}
-        {isEditPopupInsenOpen() && <FormEditWeekly OnClose={CloseEditPopUpInsen} />}
-        {isDeletePopupInsenOpen() && <ConfirmPopUpWeeklyInsen OnClose={CloseDeletePopUpInsen} />}
+        {popUp() && <PengajuanWeekly OnClose={ClosePopUp} total2={Totalll()} total={calculateTotal()}/>}
+        {isEditPopupReimburseOpen() && <FormEditReimburse OnClose={CloseEditPopUpReimburse} />}
+        {isDeletePopupReimburseOpen() && <ConfirmPopUpReimburse OnClose={CloseDeletePopUpReimburse} />}
     </div>
   );
 };
 
-export default PengajuanWeeklyInsentif;
+export default PengajuanReimburse;

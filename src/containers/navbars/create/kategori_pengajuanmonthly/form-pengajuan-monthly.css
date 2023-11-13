@@ -1,13 +1,19 @@
-.container-weekly-insent {
+.operasional-rutin-tamanhas h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    /* color: #9F9F9F; */
+}
+.container-data-operasional {
     gap: 1.5vh;
     margin-bottom: 10px;
 }
 
-.container-weekly-insent label {
+.container-data-operasional label {
     font-weight: 600;
 }
 
-.container-weekly-insent input {
+.container-data-operasional input {
     background-color: #FFFFFF;
     border: none;
     /* width: 20vh; */
@@ -21,12 +27,26 @@
     font-weight: 600;
     align-items: center;
 }
+.container-data-operasional .custom-dropdown-coa {
+    background-color: #FFFFFF;
+    border: none;
+    width: 9vw;
+    height: 5vh;
+    margin-top: 2px;
+    padding: 2px 12px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+    align-items: center;
+}
 
-.container-weekly-insent .dropdown-selected {
+.container-data-operasional .dropdown-selected {
     height: 4.5vh;
 }
 
-.container-weekly-insent .dropdown-options-coa {
+.container-data-operasional .dropdown-options-coa {
     padding: 7px;
     height: 25vh;
     width: 8vw;
@@ -39,26 +59,26 @@
     cursor: pointer;
 }
 
-.container-weekly-insent .custom-dropdown-coa .dropdown-selected {
+.container-data-operasional .custom-dropdown-coa .dropdown-selected {
     align-items: center;
 }
 
-.container-weekly-insent .dropdown-options-coa .option {
+.container-data-operasional .dropdown-options-coa .option {
     padding-left: 12px;
 }
 
-.container-weekly-insent .dropdown-options-coa .option:hover {
+.container-data-operasional .dropdown-options-coa .option:hover {
     background-color: rgb(87, 129, 255);
     padding-left: 14px;
     color: white;
     border-radius: 5px;
 }
 
-.tambah-data-weekly {
+.tambah-data-1 {
     align-items: center;
 }
 
-.tambah-data-weekly button {
+.tambah-data-1 button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -70,7 +90,7 @@
     margin-left: 10px;
 }
 
-.btn-simpan-weekly-insent button {
+.btn-simpan-data-operasional button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -81,7 +101,7 @@
     margin-top: 26px;
 }
 
-.detail-total-weekly-insent {
+.detail-total-operasional {
     padding: 5px 10px;
     width: 15vw;
     margin-left: auto;
@@ -92,19 +112,4 @@
     color: black;
     font-size: 15px;
     font-weight: 700;
-}
-
-.dropdown-keterangan select {
-    background-color: #FFFFFF;
-    border: none;
-    /* width: 20vh; */
-    height: 5vh;
-    margin-top: 2px;
-    padding: 0 12px;
-    border-radius: 5px;
-    background: #F8F8F9;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    font-size: 16px;
-    font-weight: 600;
-    align-items: center;
 }
