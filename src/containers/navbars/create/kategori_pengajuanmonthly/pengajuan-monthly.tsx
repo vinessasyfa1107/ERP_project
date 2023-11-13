@@ -4,7 +4,9 @@ import { Icon } from '@iconify-icon/solid';
 import { A, useLocation } from '@solidjs/router';
 // import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 // import { useSubNavbarStore } from '../../../../../../store/Navbar/SubNavbarStore';
-
+import AgGridSolid from 'ag-grid-solid';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 interface PengajuanMonthlyProps {
     OnClose: () => void;
     total: number,
@@ -14,26 +16,56 @@ interface PengajuanMonthlyProps {
     total5: number
 }
 
+type RowData = {
+    keterangan: string;
+    totalplan?: number;
+  };
+
 const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
 
+    const [gridApi, setGridApi] = createSignal(null);
+    const [rowData, setRowData] = createSignal<RowData[]>(
+        (() => {
+          // Coba ambil data dari localStorage saat komponen diinisialisasi
+          const savedData = localStorage.getItem('tableKetMonth');
+          return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+        })()
+      );
 
+    const [keterangan, setKeterangan] = createSignal("");
+    const [totalplan, setTotalplan] = createSignal(0);
 
-    const [Table1, setTable1] = createSignal(false);
-
-    const [Table2, setTable2] = createSignal(false);
-
-    function handleTable1() {
-        setTable1(!Table1())
-    }
-
-    function handleTable2() {
-        setTable2(!Table2())
-    }
-
-    const CalculateAllTotal = () => {
-        let AllTotal = props.total + props.total2 + props.total3 + props.total4 + props.total5;
-        return AllTotal;
+    const gridOptions = {
+        columnDefs: [
+            { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
+            { field: "keterangan", width: 350},
+            { field: "totalplan", headerName:"Total", width: 97}
+        ]
     };
+
+    const onGridReady = (params: any) => {
+        setGridApi(() => params.api);
+      };
+    
+    const addRow = () => {
+    if (keterangan()) {
+        // const total = qty() * price();
+        const newRow: RowData = {
+        keterangan: keterangan()
+        };
+        setRowData((prevData) => {
+        const newData = [...prevData, newRow];
+        // Simpan data ke localStorage saat menambahkan data baru
+        localStorage.setItem('tableKetMonth', JSON.stringify(newData));
+        return newData;
+        });
+        clearInputs();
+    }};
+
+    const clearInputs = () => {
+        setKeterangan("")
+    };
+
 
   const location = useLocation();
 
@@ -41,55 +73,43 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     <div class="overlay">
       
       <div class="pengajuan-monthly-1">
-    <div class="keterangan">
-        <h2>Monthly  <span>(*Tidak boleh kosong)</span></h2>
-        <button onClick={props.OnClose}>✕</button>
+        <div class="keterangan">
+            <h2>Monthly  <span>(*Tidak boleh kosong)</span></h2>
+            <button onClick={props.OnClose}>✕</button>
+        </div>
+        <div class="pengajuan-monthly">
+            <div>
+            <div>
+                <label>Kebutuhan</label>
+                <br />
+                <input style={{width:"14vw"}}
+                type="text"
+                placeholder="Kebutuhan"
+                value={keterangan()}
+                onInput={(e) => setKeterangan(e.target.value)}
+                />
+            </div>
+            <div>
+                <button onClick={addRow}>Tambah</button>
+            </div>
+            </div>
+            <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
+            <AgGridSolid 
+                gridOptions={gridOptions} 
+                onGridReady={onGridReady} 
+                rowData={rowData()} 
+            />
+            {/* <div class="detail-total-operasional">
+                <div>TOTAL</div>
+                <div>Rp{calculateTotal()}</div>
+            </div> */}
+            </div>
+            <div>
+                <A href='/pengajuan-monthly/operasional-rutin-tamanhas' onClick={props.OnClose}>Tambah Pengajuan</A>
+            </div>
+        </div>
     </div>
-    <div class="pengajuan-monthly">
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Keterangan</th>
-                    <th>Plan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><A href='/pengajuan-monthly/operasional-rutin-tamanhas' onClick={props.OnClose}>Operasional Rutin Tamanhas</A></td>
-                    <td>Rp{props.total}</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><A href='/pengajuan-monthly/operasional-rutin-purwokerto' onClick={props.OnClose}>Operasional Rutin Purwokerto</A></td>
-                    <td>Rp{props.total2}</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><A href='/pengajuan-monthly/kebutuhan-project' onClick={props.OnClose}>Kebutuhan Project</A></td>
-                    <td>Rp{props.total3}</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><A href='/pengajuan-monthly/kebutuhan-marketing' onClick={props.OnClose}>Kebutuhan Marketing</A></td>
-                    <td>Rp{props.total4}</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td><A href='/pengajuan-monthly/kebutuhan-maintenance-tools' onClick={props.OnClose}>Kebutuhan Maintenance & Tools</A></td>
-                    <td>Rp{props.total5}</td>
-                </tr>
-                <tr class="isi-total-monthly">
-                    <td></td>
-                    <td>TOTAL ESTIMASI</td>
-                    <td>Rp{CalculateAllTotal()}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-</div>
-</div>
   );
 };
 

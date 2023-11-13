@@ -11,7 +11,7 @@ const Time_tracking_dk: Component = () => {
     const [, { changeSubTitleNavbar }] = useSubNavbarStore();
 
     onMount(() => {
-        changeSubTitleNavbar("Approval Tracker");
+        changeSubTitleNavbar("Time Trackings Approval Tracker");
     })
 
     const [selectedRow, setSelectedRow] = createSignal<{ id: any; status: any; } | null>(null);

@@ -4,31 +4,22 @@ import 'ag-grid-community/styles/ag-grid.css'; // grid core CSS
 import "ag-grid-community/styles/ag-theme-alpine.css"; // optional theme
 import { createSignal } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
+import './tabel_transfer_dana.css';
+import Form_transfer from './form_transfer';
 
+const [isFormOpen, setIsFormOpen] = createSignal(false);
+const [formDataToTransfer, setFormDataToTransfer] = createSignal(null);
 
-const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
-
-const [editedData, setEditedData] = createSignal(null);
-
-const showEditPopup = (rowData: any) => {
-    setEditedData(rowData);
-    setIsEditPopupOpen(!isEditPopupOpen());
+const showEditPopup = (rowData) => {
+    setFormDataToTransfer(rowData);
+    setIsFormOpen(true);
 };
-
-function CloseEditPopUp() {
-    setIsEditPopupOpen(false);
-}
 
 const TransferButtonRenderer = ({ data }) => {
     const handleTransferClick = () => {
-        // Handle the transfer button click here
-        console.log('Transfer clicked for row data:', data);
+        showEditPopup(data);
     };
-
-    return (
-        <button onClick={handleTransferClick}>Transfer</button>
-    );
-};
+}
 
 
 const Tabel_transfer_dana = () => {
@@ -37,18 +28,17 @@ const Tabel_transfer_dana = () => {
         { field: "Tanggal" },
         { field: "Keterangan" },
         { field: "Kategori" },
-        { field: "Jenis" },
+        { field: "Jenis", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
         { field: "Jumlah" },
         { field: "Status" },
         {
-            field: "Transfer", headerName: "", cellRendererFramework: TransferButtonRenderer, // Use the custom cell renderer
-            cellRendererParams: { onClick: showEditPopup }
-        },
-        {
-            field: 'aksi', cellRenderer: (params: any) => {
+            field: "Transfer", headerName: "", cellRendererFramework: TransferButtonRenderer, cellRenderer: (params: any) => {
                 return (
-                    <div style={{"display":"flex", "justify-content":"center","align-items":"center"}}>
-                        <button style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "6px","width":"7rem","height":"2rem","color":"white","align-items":"center" }}>Transfer &gt</button>
+                    <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
+                        <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Transfer &gt</button>
+                        {params.value}
+                        
+
                     </div>
                 );
             }
@@ -105,6 +95,16 @@ const Tabel_transfer_dana = () => {
         console.log('selection has changed', e);
     };
 
+    function getCellStyle(params: { value: string; }) {
+        if (params.value === 'Weekly') {
+          return { color: '#FF6838' };
+        } else if (params.value === 'Monthly') {
+          return { color: '#00BA29' };
+        } else {
+          return { color: '#860089' };
+        }
+      }
+
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
             <div style={{ height: '50vh', width: '65vw' }} class="ag-theme-alpine">
@@ -116,6 +116,7 @@ const Tabel_transfer_dana = () => {
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
                 />
             </div>
+            {isFormOpen() && <Form_transfer formData={formDataToTransfer()} OnClose={() => setIsFormOpen(false)} />}
         </div>
     );
 };
