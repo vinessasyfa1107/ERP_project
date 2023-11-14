@@ -7,13 +7,15 @@ import { A, useLocation, useNavigate } from '@solidjs/router';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-interface PengajuanMonthlyProps {
-    OnClose: () => void;
-    total: number,
-    total2: number,
-    total3: number,
-    total4: number,
-    total5: number
+import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
+export interface PengajuanMonthlyProps {
+    OnClose?: () => void;
+    total?: number,
+    total2?: number,
+    total3?: number,
+    total4?: number,
+    total5?: number
+    pengajuan?: string,
 }
 
 type RowData = {
@@ -23,7 +25,6 @@ type RowData = {
 
 const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
 
-    const [namaPengajuan, setNamaPengajuan] = createSignal('')
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
@@ -32,21 +33,88 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
+
+    const [backendData, setBackendData] = createSignal([{}]);
+
+    // ...
+
+onMount(async () => {
+    try {
+      const backendData = await DataMonthlyPlanning("data monthplan");
+      console.log("monthplan: ", backendData);
+      setBackendData(backendData);
+  
+      // Get keterangan values from local storage
+      const savedData = localStorage.getItem('tableKetMonth');
+      const localData = savedData ? JSON.parse(savedData) : [];
+  
+      // Calculate aggregated data based on keterangan from local storage and backend data
+      const aggregatedData = localData.map((localItem) => {
+        const total = backendData
+          .filter((backendItem) => backendItem.keterangan === localItem.keterangan)
+          .reduce((sum, item) => sum + item.total, 0);
+  
+        return { keterangan: localItem.keterangan, totalplan: total };
+      });
+  
+      setRowData(aggregatedData);
+    } catch (error) {
+      console.error('Error fetching data from backend:', error);
+    }
+  });
+  
+  // ...
+  
     
     const [pageKeterangan, setPageKeterangan] = createSignal(false);
 
     function showPageKeterangan(){
         setPageKeterangan(true);
     };
+    const [showTambahNamaPengajuan, setShowTambahNamaPengajuan] = createSignal(true);
+
+
+
+    const submitForm = () => {
+        // Perform form submission logic here
+        // ...
+        
+        // After successful submission, hide the "tambah-nama-pengajuan" div
+        setPageKeterangan(true);
+        setShowTambahNamaPengajuan(false);
+
+    };
 
     const [keterangan, setKeterangan] = createSignal("");
-    const [totalplan, setTotalplan] = createSignal(0);
+    const [allTotal, setAllTotal] = createSignal(0);
 
+
+    function clearKeterangan(keteranganToRemove) {
+        // Filter rowData untuk menghapus baris dengan keterangan yang sesuai
+        const updatedData = rowData().filter(item => item.keterangan !== keteranganToRemove);
+      
+        // Perbarui rowData dengan data yang telah diperbarui
+        setRowData(updatedData);
+      
+        // Simpan data yang telah diperbarui ke localStorage
+        localStorage.setItem('tableKetMonth', JSON.stringify(updatedData));
+    }
+      
     const gridOptions = {
         columnDefs: [
             { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
             { field: "keterangan", width: 350},
-            { field: "totalplan", headerName:"Total", width: 97}
+            { field: "totalplan", headerName:"Total", width: 97},
+            { field: "aksi", headerName:"", width: 80, 
+            cellRenderer: (params: any) => {
+                return (
+                  <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
+                    <button><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                    <button onClick={() => clearKeterangan(params.data.keterangan)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                  </div>
+                );
+              }
+            }
         ]
     };
 
@@ -66,8 +134,82 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             navigate('/pengajuan-monthly/operasional-rutin-tamanhas');
         }
     };
+
+
+    //   const calculateTotalByKeterangan = (keterangan, backendData) => {
+    //     const filteredData = backendData.filter(item => item.keterangan === keterangan);
+    //     const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total, 0);
+    //     return total;
+    //   };
+      
+      
+    //   const addRow = () => {
+    //     if (keterangan()) {
+    //         const total = calculateTotalByKeterangan(keterangan(), backendData());
+
+    //       const newRow: RowData = {
+    //         keterangan: keterangan(),
+    //         totalplan: total
+    //       };
+      
+    //       setRowData((prevData) => {
+    //         const newData = [...prevData, newRow];
+    //         // Simpan data ke localStorage saat menambahkan data baru
+    //         localStorage.setItem('tableKetMonth', JSON.stringify(newData));
+    //         return newData;
+    //       });
+
+    //       setAllTotal((prevTotal) => prevTotal + total);
+
+    //       clearInputs();
+    //     }
+    //   };
+    const calculateTotalByKeterangan = (keterangan, backendData) => {
+        const filteredData = backendData.filter(item => item.keterangan === keterangan);
+        const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total2, 0);
+        return total;
+      };
+
+    const calculateAllTotal = () => {
+        const totalall = rowData().reduce((accumulator, currentValue) => accumulator + currentValue.totalplan, 0);
+        console.log("hasil total", totalall);
+        setAllTotal(totalall);
+      };
+      
+      const addRow = () => {
+        if (keterangan()) {
+          const total = calculateTotalByKeterangan(keterangan(), backendData);
+      
+          const newRow: RowData = {
+            keterangan: keterangan(),
+            totalplan: total
+          };
+      
+          setRowData((prevData) => {
+            const newData = [...prevData, newRow];
+            // Simpan data ke localStorage saat menambahkan data baru
+            localStorage.setItem('tableKetMonth', JSON.stringify(newData));
+            // calculateAllTotal();
+            return newData;
+          });
+      
+          setAllTotal((prevTotal) => prevTotal + total);
+      
+          clearInputs();
+        }
+      };
+      createEffect(() => {
+        calculateAllTotal();
+      });
+      
+
+
+      
+      
+      
+      
     
-    const addRow = () => {
+    const addRow1 = () => {
     if (keterangan()) {
         // const total = qty() * price();
         const newRow: RowData = {
@@ -77,6 +219,7 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
         const newData = [...prevData, newRow];
         // Simpan data ke localStorage saat menambahkan data baru
         localStorage.setItem('tableKetMonth', JSON.stringify(newData));
+        // calculateAllTotal();
         return newData;
         });
         clearInputs();
@@ -108,21 +251,11 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             <button onClick={props.OnClose}>✕</button>
         </div>
         <div class="pengajuan-monthly" >
-            {!pageKeterangan() &&
-                <div class="tambah-nama-pengajuan">
-                    <label>Nama Pengajuan</label>
-                    <br />
-                    <input type="text" 
-                    value={namaPengajuan()}
-                    onInput={(e) => setNamaPengajuan(e.target.value)}
-                    />
-                    <button onClick={showPageKeterangan}>Kirim</button>
-                </div>
-            }
-
-            {pageKeterangan() && 
             <div>
-                <div>
+                <div class="judul-pengajuan">
+                    <h1>Form Pengajuan</h1>
+                    <p>{props.pengajuan}</p>
+                    </div>
                     {tambahKeterangan() && 
                     <div class="tambah-keterangan-group">
                         <div>
@@ -142,10 +275,7 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
                         </div>
                     </div>
                     }
-                <div class="judul-pengajuan">
-                    <h1>Form Pengajuan</h1>
-                    <p>{namaPengajuan()}</p>
-                </div>
+
                 
                 <div class="btn-show-keterangan">
                     {!tambahKeterangan() && 
@@ -162,14 +292,12 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
                 />
                 <div class="detail-total-operasional">
                     <div>TOTAL</div>
-                    <div>Rp</div>
+                    <div>Rp{allTotal()}</div>
                 </div>
                 </div>
             </div>
-            }
 
         </div>
-    </div>
     </div>
   );
 };
