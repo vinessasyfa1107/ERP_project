@@ -21,6 +21,7 @@ import { Total, Total3, Total4, Total5 } from "../../store/Pengajuan/Monthly-sat
 import { Total2 } from "../../store/Pengajuan/Monthly-satu/pengajuan-m-satu";
 import PengajuanWeekly from "./create/kategori_pengajuanweekly/pengajuan-weekly/pengajuan-weekly";
 import PengajuanWeeklyInsentif from "./create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif";
+import NamaPengajuan from "./create/kategori_pengajuanmonthly/nama-pengajuan";
 
 interface NavbarProps { 
   children: JSX.Element
@@ -453,8 +454,9 @@ const Navbar: Component<NavbarProps> = (props) => {
           {tambahAkunPopup() && (<TambahAkunMaster OnClose={ClosePopUp} />)}
           {pengajuanPopup1() && (<PengajuanEvent OnClose={ClosePopUp} totalE1={TotalE1()} />)}
           {pengajuanPopup2() && (<PengajuanWeekly OnClose={ClosePopUp}/>)}
-          {pengajuanPopup3() && (<PengajuanMonthly OnClose={ClosePopUp} 
-          total={Total()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>)}
+          {/* {pengajuanPopup3() && (<PengajuanMonthly OnClose={ClosePopUp}  */}
+          {/* total={Total()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>)} */}
+          {pengajuanPopup3() && (<NamaPengajuan OnClose={ClosePopUp} />)}
           {pemasukanPopup() && (<PemasukanCreate OnClose={ClosePopUp} />)}
           {pengeluaranPopup() && (<PengeluaranCreate OnClose={ClosePopUp} />)}
 
