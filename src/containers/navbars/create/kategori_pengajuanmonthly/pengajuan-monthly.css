@@ -167,3 +167,42 @@
     font-size: 16px;
     font-weight: 600;
 }
+
+.pengajuan-monthly .tambah-nama-pengajuan input {
+    background-color: #FFFFFF;
+    border: none;
+    width: 50vh;
+    height: 5.5vh;
+    padding: 12px 10px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pengajuan-monthly .tambah-nama-pengajuan button {
+    background-color: #8562f7;
+    color: white;
+    width: 80px;
+    height: 5.5vh;
+    border-radius: 5px;
+    margin-top: 23px;
+}
+
+.pengajuan-monthly .judul-pengajuan {
+    text-align: center;
+}
+
+.pengajuan-monthly .judul-pengajuan h1 {
+    font-weight: 600;
+    font-family: 'Inter';
+    font-size: 16px;
+
+}
+
+.pengajuan-monthly .judul-pengajuan p {
+    font-weight: 700;
+    font-family: 'Inter';
+    font-size: 18px;
+}

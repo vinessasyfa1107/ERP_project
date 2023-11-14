@@ -14,10 +14,12 @@ interface EditPopUpProps {
         coa_kd: string,
         status: string
     }
+    confirm: boolean;
 }
 
 const FormConfirm: Component<EditPopUpProps> = (props) => {
     const [inputFile, setInputFile] = createSignal(null);
+    const [confirmStatus, setConfirmStatus] = createSignal(props.confirm);
 
     const handleFileInputChange = () => {
         if (inputFile() && inputFile()!.files.length > 0) {
@@ -34,33 +36,32 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
 
     const handleInputChange = (e) => {
+        // Menggunakan timestamp saat ini dalam format ISO 8601
         const { value } = e.target;
         setStatus(value);
-        if (value === 'InProgress' || value === 'Rejected') {
-            // Menggunakan timestamp saat ini dalam format ISO 8601
 
-            const currentDate = new Date();
-            const formattedDate = currentDate.toISOString().slice(0, 11);
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 11);
 
-            const hours = String(currentDate.getHours()).padStart(2, '0');
-            const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-            const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-            const formattedTime = `${hours}:${minutes}:${seconds}`;
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-            const timestamp = `${formattedDate}${formattedTime}`;
+        const timestamp = `${formattedDate}${formattedTime}`;
 
-            console.log("tanggal dan waktu: ", timestamp);
-            setTimestamp(timestamp);
-        }
-
+        console.log("tanggal dan waktu: ", timestamp);
+        setTimestamp(timestamp);
+        setConfirmStatus(!confirmStatus());
         updateStatus();
     };
 
     const categoryValueMap = {
         "Marketing": 1,
-        "Project": 2,
+        "Projek": 2,
         "Rutinitas": 3,
-        "Event": 4
+        "Event": 4,
+        "DLL" : 5
     };
 
     // Fungsi bantuan untuk mendapatkan nilai dari category string
@@ -82,7 +83,8 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
             planningtype: props.data.planningtype,
             category: categoryValue,
             amount: props.data.amount,
-            status: status()
+            status: props.data.status,
+            confirm: confirmStatus()
         }
         console.log("test", updateStatusToSend);
 
@@ -92,16 +94,7 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    id: props.data.id,
-                    entry_ts: timestamp(),
-                    coa_kd: props.data.coa_kd,
-                    description: props.data.description,
-                    planningtype: props.data.planningtype,
-                    category: categoryValue,
-                    amount: props.data.amount,
-                    status: status()
-                }),
+                body: JSON.stringify(updateStatusToSend),
             });
 
             if (response.ok) {
@@ -122,9 +115,6 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
         }
     };
 
-    
-
-
     return (
         <div class="overlay">
             <div class="form-confirm">
@@ -140,25 +130,25 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
                             <label>ID Perencanaan*</label>
                             <br />
-                            <input type="text" 
-                            value={props.data.id}
-                            readonly />
+                            <input type="text"
+                                value={props.data.id}
+                                readonly />
 
 
                             <p>
                                 <label>Keterangan*</label>
                                 <br />
-                                <input type="text" 
-                                value={props.data.description}
-                                readonly />
+                                <input type="text"
+                                    value={props.data.description}
+                                    readonly />
                             </p>
 
                             <p>
                                 <label>Status*</label>
                                 <br />
-                                <input type="text" 
-                                value={props.data.status}
-                                readonly />
+                                <input type="text"
+                                    value={props.data.status}
+                                    readonly />
                             </p>
 
                             <div>
