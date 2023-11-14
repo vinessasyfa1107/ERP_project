@@ -4,11 +4,23 @@ import { createSignal, onCleanup, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './form_transfer.css';
 
-interface TutupFormTransfer {
-    formData: any;
+interface EditPopUpProps {
     OnClose: () => void;
+    data: {
+        id: number,
+        entry_ts: string,
+        coa_kd: string,
+        description: string,
+        planningtype: string,
+        category: number,
+        amount: number,
+        status: string,
+        confirm: boolean
+    }
 }
-const Form_transfer: Component<TutupFormTransfer> = (props) => {
+const Form_transfer: Component<EditPopUpProps> = (props) => {
+
+    const [formSubmitted, setFormSubmitted] = createSignal(false);
 
     //========== UNTUK FILE FOTO ==========
     const [selectedFile, setSelectedFile] = createSignal<File | null>(null);
@@ -55,82 +67,92 @@ const Form_transfer: Component<TutupFormTransfer> = (props) => {
         }
     };
 
-    const [formData, setFormData] = createSignal({
-        id: 0,
-        income_ts: '',
-        amount: 0,
-        faktur_ts: '',
-        coa_kd: '',
-        keterangan: '',
-        // evidence: null
-    });
+    const [timestamp, setTimestamp] = createSignal('');
+    const [status, setStatus] = createSignal('');
 
 
-    const [isOpen, setIsOpen] = createSignal(false);
-    const [selectedOption, setSelectedOption] = createSignal('');
+    const handleInputChange = async (e) => {
+        // Menggunakan timestamp saat ini dalam format ISO 8601
+        const { value } = e.target;
+        setStatus(value);
 
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 11);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+        const hours = String(currentDate.getHours()).padStart(2, '0');
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+        const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-        const formattedDate = `${formData().income_ts}T00:00:00`;
+        const timestamp = `${formattedDate}${formattedTime}`;
 
-        const dataToSend = {
-            id: 0,
-            income_ts: formattedDate,
-            amount: formData().amount,
-            faktur_ts: formData().faktur_ts,
-            coa_kd: selectedOption(),
-            keterangan: formData().keterangan,
-            evidence: selectedFile()
-        };
+        console.log("tanggal dan waktu: ", timestamp);
+        setTimestamp(timestamp);
+        updateStatus();
 
-        console.log('data income: ', dataToSend);
-
-        // try {
-        //     const response = await fetch(`/api/income/`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(dataToSend),
-        //     });
-
-        //     if (response.ok) {
-        //         // Data berhasil diubah, tampilkan alert
-        //         alert('Data berhasil diubah');
-        //             window.location.href = '/report/pemasukan';
-        //         window.location.reload();
-        //         props.OnClose();
-        //     } else {
-        //         // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-        //         const errorMessage = await response.text();
-        //         alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-        //         console.error('Gagal mengubah data:', errorMessage);
-        //     }
-        // } catch (error) {
-        //     // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-        //     alert('Terjadi kesalahan. Silakan coba lagi.');
-        //     console.error('Terjadi kesalahan:', error);
-        // }
     };
 
 
 
-    const dropdownRef = (el) => {
-        if (el) {
-            const handleDocumentClick = (e) => {
-                if (!el.contains(e.target)) {
-                    setIsOpen(false);
-                }
-            };
-            document.addEventListener('click', handleDocumentClick);
-            onCleanup(() => {
-                document.removeEventListener('click', handleDocumentClick);
+    const categoryValueMap = {
+        "Marketing": 1,
+        "Projek": 2,
+        "Rutinitas": 3,
+        "Event": 4,
+        "DLL": 5
+    };
+
+    // Fungsi bantuan untuk mendapatkan nilai dari category string
+    function getCategoryValue(category) {
+        return categoryValueMap[category] || 0; // Nilai default jika tidak ada pemetaan
+    }
+
+    // Menggunakan fungsi getCategoryValue untuk mendapatkan nilai
+    const category = props.data.category;
+    const categoryValue = getCategoryValue(category);
+
+
+    const updateStatus = async () => {
+        const updateStatusToSend = {
+            id: props.data.id,
+            entry_ts: timestamp(),
+            coa_kd: props.data.coa_kd,
+            description: props.data.description,
+            planningtype: props.data.planningtype,
+            category: categoryValue,
+            amount: props.data.amount,
+            status: props.data.status,
+            confirm: props.data.confirm
+        }
+        console.log("test", updateStatusToSend);
+
+        try {
+            const response = await fetch(`/api/planning/${(props.data.id)}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateStatusToSend),
             });
+
+            if (response.ok) {
+                setFormSubmitted(true);
+                // Data berhasil diubah, tampilkan alert
+                alert('Data berhasil diubah');
+                props.OnClose();
+                window.location.reload();
+            } else {
+                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+                const errorMessage = await response.text();
+                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                console.error('Gagal mengubah data:', errorMessage);
+            }
+        } catch (error) {
+            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+            alert('Terjadi kesalahan. Silakan coba lagi.');
+            console.error('Terjadi kesalahan:', error);
         }
     };
-
 
 
     return (
@@ -148,13 +170,15 @@ const Form_transfer: Component<TutupFormTransfer> = (props) => {
                             <div style={{ "display": "flex", "justify-content": "space-between" }}>
                                 <div class="date" >
                                     <label>Tanggal*</label>
-                                    <input type="date" required />
+                                    <input type="date" value={props.data.id}
+                                        readonly />
                                 </div>
 
                                 <div>
                                     <label>Biaya*</label>
                                     <br />
-                                    <input type="number" required>
+                                    <input value={props.data.amount}
+                                        readonly>
                                     </input>
                                 </div>
                             </div>
@@ -163,7 +187,8 @@ const Form_transfer: Component<TutupFormTransfer> = (props) => {
                                 <div>
                                     <label>Keterangan*</label>
                                     <br />
-                                    <textarea class="textarea textarea-bordered" required
+                                    <textarea class="textarea textarea-bordered" value={props.data.description}
+                                        readonly
                                         style={{
                                             "background": '#F8F8F9',
                                             "box-shadow": "0px 2px 4px 0px rgb(0 0 0 / 25%) inset",
@@ -177,27 +202,18 @@ const Form_transfer: Component<TutupFormTransfer> = (props) => {
                                 <div>
                                     <label>Kategori*</label>
                                     <br />
-                                    <select required>
-                                        <option disabled selected></option>
-                                        <option value="Event">Event</option>
-                                        <option value="Weekly">Weekly</option>
-                                        <option value="Monthly">Monthly</option>
-                                        {/* <option>Etc</option> */}
-                                    </select>
+                                    <input value={props.data.planningtype}
+                                        readonly>
+                                    </input>
                                 </div>
 
 
                                 <div>
                                     <label>Jenis*</label>
                                     <br />
-                                    <select required>
-                                        <option disabled selected></option>
-                                        <option value="1">Marketing</option>
-                                        <option value="2">Project</option>
-                                        <option value="3">Rutinitas</option>
-                                        <option value="4">Event</option>
-                                        <option value="5">DLL</option>
-                                    </select>
+                                    <input value={props.data.category}
+                                        readonly>
+                                    </input>
                                 </div>
                             </div>
 
@@ -237,7 +253,7 @@ const Form_transfer: Component<TutupFormTransfer> = (props) => {
 
                         <br />
                         <div class="btn-kirim-data">
-                            <button onClick={handleSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={handleInputChange}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>

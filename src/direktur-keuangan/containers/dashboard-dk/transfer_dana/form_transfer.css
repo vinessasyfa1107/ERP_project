@@ -48,10 +48,6 @@ input::-webkit-inner-spin-button {
     overflow: hidden;
 }
 
-.form-transfer-container form {
-    margin-top: -5.5rem;
-}
-
 .form-transfer-container form .headakun {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;

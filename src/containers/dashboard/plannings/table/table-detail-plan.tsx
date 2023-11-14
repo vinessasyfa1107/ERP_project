@@ -13,6 +13,7 @@ const TableDetailPlan: Component = () => {
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
   const [confirmationStatus, setConfirmationStatus] = createSignal(false);
+  const [formSubmitted, setFormSubmitted] = createSignal(false);
 
 
   onMount(async () => {
@@ -49,6 +50,10 @@ const TableDetailPlan: Component = () => {
       handlePopUpApproved(selectedRowData);
       // Step 2: Update confirmationStatus based on checkbox
       setConfirmationStatus(selectedRowData.confirm || false);
+      
+    }
+    if (formSubmitted()) {
+      event.api.deselectAll(); // Deselect the checkbox
     }
   };
 
@@ -76,8 +81,6 @@ const TableDetailPlan: Component = () => {
     { field: 'amount', headerName: 'Jumlah', editable: params => !params.data.confirm },
     { field: 'status', headerName: 'Status', editable: false },
     { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
-
-
   ];
 
   // const rowData = [
