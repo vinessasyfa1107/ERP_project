@@ -1,4 +1,4 @@
-import { createSignal, type Component, onMount } from 'solid-js';
+import { createSignal, type Component, onMount, createEffect } from 'solid-js';
 import './pengajuan-monthly.css'
 import { Icon } from '@iconify-icon/solid';
 import { A, useLocation, useNavigate } from '@solidjs/router';
@@ -23,6 +23,7 @@ type RowData = {
 
 const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
 
+    const [namaPengajuan, setNamaPengajuan] = createSignal('')
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
@@ -31,6 +32,12 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
+    
+    const [pageKeterangan, setPageKeterangan] = createSignal(false);
+
+    function showPageKeterangan(){
+        setPageKeterangan(true);
+    };
 
     const [keterangan, setKeterangan] = createSignal("");
     const [totalplan, setTotalplan] = createSignal(0);
@@ -90,7 +97,6 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
         setTambahKeterangan(false);
     };
 
-
   const location = useLocation();
 
   return (
@@ -102,49 +108,66 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
             <button onClick={props.OnClose}>✕</button>
         </div>
         <div class="pengajuan-monthly" >
-            <div>
-                {tambahKeterangan() && 
-                <div class="tambah-keterangan-group">
-                    <div>
-                    {/* <label>Kebutuhan</label> */}
+            {!pageKeterangan() &&
+                <div class="tambah-nama-pengajuan">
+                    <label>Nama Pengajuan</label>
                     <br />
-                    <input 
-                    type="text"
-                    placeholder="Keterangan"
-                    value={keterangan()}
-                    onInput={(e) => setKeterangan(e.target.value)}
+                    <input type="text" 
+                    value={namaPengajuan()}
+                    onInput={(e) => setNamaPengajuan(e.target.value)}
                     />
-                    </div>
-                    <div>
-                        <button class="btn-tambah" onClick={addRow}>Tambah</button>
-                    </div>
-                    <div>
-                        <button class="btn-cancel" onClick={closeTambahKeterangan}>Selesai</button>
-                    </div>
+                    <button onClick={showPageKeterangan}>Kirim</button>
                 </div>
-                }
-            
-            <div class="btn-show-keterangan">
-                {!tambahKeterangan() && 
-                  <button onClick={showTambahKeterangan}><Icon icon="fa-solid:plus" width="11" class="mr-2"/>Keterangan</button>
-                }
+            }
+
+            {pageKeterangan() && 
+            <div>
+                <div>
+                    {tambahKeterangan() && 
+                    <div class="tambah-keterangan-group">
+                        <div>
+                        <br />
+                        <input 
+                        type="text"
+                        placeholder="Keterangan"
+                        value={keterangan()}
+                        onInput={(e) => setKeterangan(e.target.value)}
+                        />
+                        </div>
+                        <div>
+                            <button class="btn-tambah" onClick={addRow}>Tambah</button>
+                        </div>
+                        <div>
+                            <button class="btn-cancel" onClick={closeTambahKeterangan}>Selesai</button>
+                        </div>
+                    </div>
+                    }
+                <div class="judul-pengajuan">
+                    <h1>Form Pengajuan</h1>
+                    <p>{namaPengajuan()}</p>
+                </div>
+                
+                <div class="btn-show-keterangan">
+                    {!tambahKeterangan() && 
+                    <button onClick={showTambahKeterangan}><Icon icon="fa-solid:plus" width="11" class="mr-2"/>Keterangan</button>
+                    }
+                </div>
+                </div>
+                <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
+                <AgGridSolid 
+                    gridOptions={gridOptions} 
+                    onGridReady={onGridReady} 
+                    rowData={rowData()} 
+                    onCellClicked={onCellClicked}
+                />
+                <div class="detail-total-operasional">
+                    <div>TOTAL</div>
+                    <div>Rp</div>
+                </div>
+                </div>
             </div>
-            </div>
-            <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
-            <AgGridSolid 
-                gridOptions={gridOptions} 
-                onGridReady={onGridReady} 
-                rowData={rowData()} 
-                onCellClicked={onCellClicked}
-            />
-            <div class="detail-total-operasional">
-                <div>TOTAL</div>
-                <div>Rp</div>
-            </div>
-            </div>
-            {/* <div>
-                <A href='/pengajuan-monthly/operasional-rutin-tamanhas' onClick={props.OnClose}>Tambah Pengajuan</A>
-            </div> */}
+            }
+
         </div>
     </div>
     </div>
