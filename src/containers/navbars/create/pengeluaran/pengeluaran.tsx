@@ -61,7 +61,7 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
         
             const formattedDate = `${formData().expense_ts}T00:00:00`;
 
-            const dataToSend = {
+            const dataToSend2 = {
                 id: 0,
                 expense_ts: formattedDate,
                 amount: formData().amount,
@@ -71,15 +71,25 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                 evidence: selectedFile()
                 };
 
-            console.log('data expense: ', dataToSend);
+            // const formattedDate = `${formData.get('expense_ts')}T00:00:00`;
 
+            const dataToSend = new FormData();
+            dataToSend.append('id', '0');
+            dataToSend.append('expense_ts', `${formData().expense_ts}T00:00:00`);
+            dataToSend.append('amount', formData().amount !== null ? formData().amount.toString() : '');
+            dataToSend.append('faktur_ts', formData().faktur_ts !== null ? formData().faktur_ts.toString() : '');
+            dataToSend.append('coa_kd', selectedOption());
+            dataToSend.append('keterangan', formData().keterangan !== null ? formData().keterangan.toString() : '');
+            dataToSend.append('evidence', selectedFile());
+
+            console.log('Data to send:', Object.fromEntries(dataToSend)); 
             try {
                 const response = await fetch(`/api/expense/`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(dataToSend),
+                    // headers: {
+                    //     'Content-Type': 'multipart/form-data',
+                    // },
+                    body: dataToSend,
                 });
         
                 if (response.ok) {
