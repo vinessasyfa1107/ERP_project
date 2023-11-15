@@ -38,8 +38,10 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
     const handleInputChange = async (e) => {
         // Menggunakan timestamp saat ini dalam format ISO 8601
-        const { value } = e.target;
-        setStatus(value);
+        if (formSubmitted()) {
+            alert('Form sudah dikirim sebelumnya.');
+            return;
+        }
 
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 11);
@@ -55,17 +57,17 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
         setTimestamp(timestamp);
         setConfirmStatus(!confirmStatus());
         updateStatus();
-        
+
     };
 
-    
+
 
     const categoryValueMap = {
         "Marketing": 1,
         "Projek": 2,
         "Rutinitas": 3,
         "Event": 4,
-        "DLL" : 5
+        "DLL": 5
     };
 
     // Fungsi bantuan untuk mendapatkan nilai dari category string
