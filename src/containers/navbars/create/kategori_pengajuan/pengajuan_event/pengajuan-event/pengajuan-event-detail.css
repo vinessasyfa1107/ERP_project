@@ -1,19 +1,19 @@
-.pengajuan-weekly h1 {
+.pengajuan-event-details h1 {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
     /* color: #9F9F9F; */
 }
-.container-data-weekly {
+.container-event-details {
     gap: 1.5vh;
     margin-bottom: 10px;
 }
 
-.container-data-weekly label {
+.container-event-details label {
     font-weight: 600;
 }
 
-.container-data-weekly input {
+.container-event-details input {
     background-color: #FFFFFF;
     border: none;
     /* width: 20vh; */
@@ -28,7 +28,7 @@
     align-items: center;
 }
 
-.pengajuan-weekly .dropdown-keterangan select {
+.pengajuan-event-details .dropdown-keterangan-evdetails select {
     background-color: #FFFFFF;
     border: none;
     /* width: 20vh; */
@@ -43,7 +43,7 @@
     align-items: center;
 }
 
-.container-data-weekly .custom-dropdown-coa {
+.container-event-details .custom-dropdown-coa {
     background-color: #FFFFFF;
     border: none;
     width: 9vw;
@@ -58,11 +58,11 @@
     align-items: center;
 }
 
-.container-data-weekly .dropdown-selected {
+.container-event-details .dropdown-selected {
     height: 4.5vh;
 }
 
-.container-data-weekly .dropdown-options-coa {
+.container-event-details .dropdown-options-coa-evdetails {
     padding: 7px;
     height: 45vh;
     width: 18vw;
@@ -75,37 +75,37 @@
     cursor: pointer;
 }
 
-.container-data-weekly .custom-dropdown-coa .dropdown-selected {
+.container-event-details .custom-dropdown-coa .dropdown-selected {
     align-items: center;
 }
 
-/* .container-data-weekly .dropdown-options-coa .option {
+/* .container-event-details .dropdown-options-coa-evdetails .option {
     padding-left: 12px;
 }
 
-.container-data-weekly .dropdown-options-coa .option:hover {
+.container-event-details .dropdown-options-coa-evdetails .option:hover {
     background-color: rgb(87, 129, 255);
     padding-left: 14px;
     color: white;
     border-radius: 5px;
 } */
 
-.container-data-weekly .dropdown-options-coa .option-label {
+.container-event-details .dropdown-options-coa-evdetails .option-label {
     padding-left: 12px;
 }
 
-.container-data-weekly .dropdown-options-coa .option-label:hover {
+.container-event-details .dropdown-options-coa-evdetails .option-label:hover {
     background-color: rgb(87, 129, 255);
     padding-left: 14px;
     color: white;
     border-radius: 5px;
 }
 
-.tambah-data-1-weekly {
+.tambah-data-1-evdetails {
     align-items: center;
 }
 
-.tambah-data-1-weekly button {
+.tambah-data-1-evdetails button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -117,7 +117,7 @@
     margin-left: 10px;
 }
 
-.btn-simpan-data-weekly button {
+.btn-simpan-data-evdetails button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -128,7 +128,7 @@
     margin-top: 26px;
 }
 
-.detail-total-weekly {
+.detail-event-details {
     padding: 5px 10px;
     width: 15vw;
     margin-left: auto;

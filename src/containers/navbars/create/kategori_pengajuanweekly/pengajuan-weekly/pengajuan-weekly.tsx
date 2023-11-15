@@ -1,4 +1,4 @@
-import { createSignal, type Component, onMount } from 'solid-js';
+import { createSignal, type Component, onMount, createEffect } from 'solid-js';
 import './pengajuan-weekly.css'
 import { Icon } from '@iconify-icon/solid';
 import { A, useLocation, useNavigate } from '@solidjs/router';
@@ -7,14 +7,17 @@ import { A, useLocation, useNavigate } from '@solidjs/router';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+// import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
 
-interface PengajuanWeeklyProps {
-    OnClose: () => void;
+export interface PengajuanWeeklyProps {
+    OnClose?: () => void;
     total?: number,
     total2?: number,
     total3?: number,
     total4?: number,
     total5?: number
+    pengajuanweekly?: string,
 }
 
 type RowData = {
@@ -33,14 +36,87 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         })()
       );
 
-    const [keterangan, setKeterangan] = createSignal("");
-    const [totalplan, setTotalplan] = createSignal(0);
+    const [backendData, setBackendData] = createSignal([{}]);
 
+    // ...
+
+// onMount(async () => {
+//     try {
+//       const backendData = await DataMonthlyPlanning("data monthplan");
+//       console.log("monthplan: ", backendData);
+//       setBackendData(backendData);
+  
+//       // Get keterangan values from local storage
+//       const savedData = localStorage.getItem('tableKetWeekly');
+//       const localData = savedData ? JSON.parse(savedData) : [];
+  
+//       // Calculate aggregated data based on keterangan from local storage and backend data
+//       const aggregatedData = localData.map((localItem) => {
+//         const total = backendData
+//           .filter((backendItem) => backendItem.keterangan === localItem.keterangan)
+//           .reduce((sum, item) => sum + item.total, 0);
+  
+//         return { keterangan: localItem.keterangan, totalplan: total };
+//       });
+  
+//       setRowData(aggregatedData);
+//     } catch (error) {
+//       console.error('Error fetching data from backend:', error);
+//     }
+//   });
+  
+  // ...
+  
+    
+    const [pageKeterangan, setPageKeterangan] = createSignal(false);
+
+    function showPageKeterangan(){
+        setPageKeterangan(true);
+    };
+    const [showTambahNamaPengajuan, setShowTambahNamaPengajuan] = createSignal(true);
+
+
+
+    const submitForm = () => {
+        // Perform form submission logic here
+        // ...
+        
+        // After successful submission, hide the "tambah-nama-pengajuan" div
+        setPageKeterangan(true);
+        setShowTambahNamaPengajuan(false);
+
+    };
+
+    const [keterangan, setKeterangan] = createSignal("");
+    const [allTotal, setAllTotal] = createSignal(0);
+
+
+    function clearKeterangan(keteranganToRemove) {
+        // Filter rowData untuk menghapus baris dengan keterangan yang sesuai
+        const updatedData = rowData().filter(item => item.keterangan !== keteranganToRemove);
+      
+        // Perbarui rowData dengan data yang telah diperbarui
+        setRowData(updatedData);
+      
+        // Simpan data yang telah diperbarui ke localStorage
+        localStorage.setItem('tableKetWeekly', JSON.stringify(updatedData));
+    }
+      
     const gridOptions = {
         columnDefs: [
             { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
             { field: "keterangan", width: 350},
-            { field: "totalplan", headerName:"Total", width: 97}
+            { field: "totalplan", headerName:"Total", width: 97},
+            { field: "aksi", headerName:"", width: 80, 
+            cellRenderer: (params: any) => {
+                return (
+                  <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
+                    <button><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                    <button onClick={() => clearKeterangan(params.data.keterangan)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                  </div>
+                );
+              }
+            }
         ]
     };
 
@@ -55,14 +131,81 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
             // Assuming 'keterangan' is the column containing the link
             // Redirect to the specified URL when the 'keterangan' column is clicked
             // You can adjust this logic based on your column configuration
+            // alert('klik');
             props.OnClose();
             // Use router navigation here
             navigate('/pengajuan-weekly/pengajuanweekly-insentif');
-            // C:\Users\user2022\OneDrive\Documents\belajar-solid-dua\fe-new-erp\src\containers\navbars\create\kategori_pengajuanweekly\penguanweekly-rutin\pengajuanweekly-insentif\pengajuanweekly-insentif.tsx
         }
     };
-    
-    const addRow = () => {
+
+
+    //   const calculateTotalByKeterangan = (keterangan, backendData) => {
+    //     const filteredData = backendData.filter(item => item.keterangan === keterangan);
+    //     const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total, 0);
+    //     return total;
+    //   };
+      
+      
+    //   const addRow = () => {
+    //     if (keterangan()) {
+    //         const total = calculateTotalByKeterangan(keterangan(), backendData());
+
+    //       const newRow: RowData = {
+    //         keterangan: keterangan(),
+    //         totalplan: total
+    //       };
+      
+    //       setRowData((prevData) => {
+    //         const newData = [...prevData, newRow];
+    //         // Simpan data ke localStorage saat menambahkan data baru
+    //         localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+    //         return newData;
+    //       });
+
+    //       setAllTotal((prevTotal) => prevTotal + total);
+
+    //       clearInputs();
+    //     }
+    //   };
+    const calculateTotalByKeterangan = (keterangan, backendData) => {
+        const filteredData = backendData.filter(item => item.keterangan === keterangan);
+        const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total2, 0);
+        return total;
+      };
+
+    const calculateAllTotal = () => {
+        const totalall = rowData().reduce((accumulator, currentValue) => accumulator + currentValue.totalplan, 0);
+        console.log("hasil total", totalall);
+        setAllTotal(totalall);
+      };
+      
+      const addRow = () => {
+        if (keterangan()) {
+          const total = calculateTotalByKeterangan(keterangan(), backendData);
+      
+          const newRow: RowData = {
+            keterangan: keterangan(),
+            totalplan: total
+          };
+      
+          setRowData((prevData) => {
+            const newData = [...prevData, newRow];
+            // Simpan data ke localStorage saat menambahkan data baru
+            localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+            // calculateAllTotal();
+            return newData;
+          });
+      
+          setAllTotal((prevTotal) => prevTotal + total);
+      
+          clearInputs();
+        }
+      };
+      createEffect(() => {
+        calculateAllTotal();
+      });
+      
+    const addRow1 = () => {
     if (keterangan()) {
         // const total = qty() * price();
         const newRow: RowData = {
@@ -72,6 +215,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         const newData = [...prevData, newRow];
         // Simpan data ke localStorage saat menambahkan data baru
         localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+        // calculateAllTotal();
         return newData;
         });
         clearInputs();
@@ -92,7 +236,6 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         setTambahKeterangan(false);
     };
 
-
   const location = useLocation();
 
   return (
@@ -104,21 +247,24 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
             <button onClick={props.OnClose}>✕</button>
         </div>
         <div class="pengajuan-weekly" >
-            <div>
-                {tambahKeterangan() && 
-                <div class="tambah-keterangan-group-weekly">
-                    <div>
-                    {/* <label>Kebutuhan</label> */}
-                    <br />
-                    <input 
-                    type="text"
-                    placeholder="Keterangan"
-                    value={keterangan()}
-                    onInput={(e) => setKeterangan(e.target.value)}
-                    />
+        <div>
+                <div class="judul-pengajuan-weekly">
+                    <h1>Form Pengajuan Weekly</h1>
+                    <p>{props.pengajuanweekly}</p>
                     </div>
+                    {tambahKeterangan() && 
+                    <div class="tambah-keterangan-group-weekly">
+                        <div>
+                        <br />
+                        <input 
+                        type="text"
+                        placeholder="Keterangan"
+                        value={keterangan()}
+                        onInput={(e) => setKeterangan(e.target.value)}
+                        />
+                </div>
                     <div>
-                        <button class="btn-tambah-weekly" onClick={addRow}>Tambah</button>
+                        <button class="btn-tambah-weekly" onClick={addRow1}>Tambah</button>
                     </div>
                     <div>
                         <button class="btn-cancel-weekly" onClick={closeTambahKeterangan}>Selesai</button>

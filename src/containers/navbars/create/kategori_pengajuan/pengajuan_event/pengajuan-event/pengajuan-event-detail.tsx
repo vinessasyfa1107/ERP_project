@@ -2,14 +2,16 @@ import { createSignal, type Component, onCleanup, onMount, createEffect } from '
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './pengajuanweekly-insentif.css';
-import PengajuanWeekly from '../../pengajuan-weekly/pengajuan-weekly';
-import { Totall, setTotall2 } from '../../../../../../store/Pengajuan/Weekly-satu/weekly-insen-satu';
+import './pengajuan-event-detail.css'
+import PengajuanWeekly from '../../../kategori_pengajuanweekly/pengajuan-weekly/pengajuan-weekly';
+import { Total6, Total7, Total8, setTotal4 } from '../../../../../../store/Pengajuan/Event-satu/pengajuan-e-satu';
+import { Total5 } from '../../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Icon } from '@iconify-icon/solid';
-import FormEditWeekly from './forms/form-edit-weeklyinsen';
-import ConfirmPopUpWeeklyInsen from './popup/confirmpopup';
-import { optionsWeekly } from '../../data-coa-weekly';
-import { namaPengajuanWeekly } from './popup/nama-pengajuan-weekly';
+import EditEventDetails from '../popup-event/edit-event-details';
+import ComfirmDeleteEvDetails from '../popup-event/confirm-delete-evdetails';
+import { optionsEvdetails } from './data-coa-evdetails';
+import { namaPengajuanEvent } from './nama-pengajuan-event';
+import PengajuanEvent from './pengajuan-event';
 
 interface Option {
   value: string;
@@ -31,15 +33,15 @@ type RowData = {
     aksi?: object;
   };
 
-const PengajuanWeeklyInsentif: Component = () => {
-    const [popUpInsen, setPopUpInsen] = createSignal(false);
+const PengajuanEventDetails: Component = () => {
+    const [popUpEvent, setPopUpEvent] = createSignal(false);
 
-    function handlePopUpInsen(){
-        setPopUpInsen(true);
+    function handlePopUpEvent(){
+        setPopUpEvent(true);
     }
 
-    // function ClosePopUpInsen(){
-    //     setPopUpInsen(false);
+    // function ClosePopUp(){
+    //     setPopUp(false);
     // }
 
     const [isOpen, setIsOpen] = createSignal(false);
@@ -61,7 +63,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     const [rowData, setRowData] = createSignal<RowData[]>(
         (() => {
           // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableKetWeekly');
+          const savedData = localStorage.getItem('tableDataEventDetails');
           return savedData ? JSON.parse(savedData) : ([] as RowData[]);
         })()
       );
@@ -79,9 +81,6 @@ const PengajuanWeeklyInsentif: Component = () => {
         });
         }
     };
-
-      
-      
       
     const [need, setNeed] = createSignal("");
     const [qty, setQty] = createSignal(0);
@@ -90,21 +89,21 @@ const PengajuanWeeklyInsentif: Component = () => {
     const [coa, setCOA] = createSignal("");
   
 
-    const [EditPopUpInsen, setEditPopUpInsen] = createSignal(false);
-    const [DeletePopUpInsen, setDeletePopUpInsen] = createSignal(false);
+    const [EditPopUpEvent, setEditPopUpEvent] = createSignal(false);
+    const [DeletePopUpEvent, setDeletePopUpEvent] = createSignal(false);
 
-    function showEditPopUpInsen(){
-      setEditPopUpInsen(true);
+    function showEditPopUpEvent(){
+      setEditPopUpEvent(true);
     }
 
-    function showDeletePopUpInsen(){
-      setDeletePopUpInsen(true);
+    function showDeletePopUpEvent(){
+      setDeletePopUpEvent(true);
     }
 
-    function closePopUpInsen(){
-      setEditPopUpInsen(false);
-      setDeletePopUpInsen(false);
-      setPopUpInsen(false);
+    function closePopUpEvent(){
+      setEditPopUpEvent(false);
+      setDeletePopUpEvent(false);
+      setPopUpEvent(false);
     }
 
     const gridOptions = {
@@ -120,8 +119,8 @@ const PengajuanWeeklyInsentif: Component = () => {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
             return (
               <div style={{  display: "flex", "justify-content": "space-between", width:"9vh"}}>
-                <button onClick={showEditPopUpInsen}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button onClick={showDeletePopUpInsen}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                <button onClick={showEditPopUpEvent}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={showDeletePopUpEvent}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
           }
@@ -141,27 +140,27 @@ const PengajuanWeeklyInsentif: Component = () => {
 
     const calculateTotal = () => {
         const gridData = rowData();
-        let Totall2 = 0;
+        let Total = 0;
         for (const row of gridData) {
-          Totall2 += row.price;
+          Total += row.total;
         }
-        setTotall2(Totall2); // Simpan total di toko
-        return Totall2;
-  };
+        setTotal4(Total); // Simpan total di toko
+        return Total;
+      };
   
     // onMount(() => {
     //   // Bersihkan localStorage saat komponen di-unmount
     //   onCleanup(() => {
-    //     localStorage.removeItem('tableKetWeekly');
+    //     localStorage.removeItem('tableDataEventDetails');
     //   });
     // });
   //   const [keteranganOptions, setKeteranganOptions] = createSignal<string[] | (() => any)>(() => {
-  //     const savedData = localStorage.getItem('tableKetWeekly');
+  //     const savedData = localStorage.getItem('tableKetPengajuanEvent');
   //     return savedData ? JSON.parse(savedData).map((row) => row.keterangan) : [];
   // });
   const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
-    localStorage.getItem('tableKetWeekly')
-        ? JSON.parse(localStorage.getItem('tableKetWeekly')!).map((row: any) => row.keterangan)
+    localStorage.getItem('tableKetPengajuanEvent')
+        ? JSON.parse(localStorage.getItem('tableKetPengajuanEvent')!).map((row: any) => row.keterangan)
         : []
   );
 
@@ -171,12 +170,12 @@ const PengajuanWeeklyInsentif: Component = () => {
 
   const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
 
-  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsWeekly());
+  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsEvdetails());
   const [showDropdown, setShowDropdown] = createSignal(false);
 
   createEffect(() => {
     const inputValueLowerCase = inputValue().toLowerCase();
-    const filtered = optionsWeekly().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+    const filtered = optionsEvdetails().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
     setFilteredOptions(filtered);
   });
 
@@ -206,7 +205,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     const label = (e.target as HTMLInputElement).value;
     setInputValue(label);
 
-    const selectedOption = optionsWeekly().find((option) => option.label === label);
+    const selectedOption = optionsEvdetails().find((option) => option.label === label);
     if (selectedOption) {
       setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
     } else {
@@ -260,7 +259,7 @@ const PengajuanWeeklyInsentif: Component = () => {
       setRowData((prevData) => {
         const newData = [...prevData, newRow];
         // Simpan data ke localStorage saat menambahkan data baru
-        localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+        localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
         return newData;
       });
       clearInputs();
@@ -302,7 +301,7 @@ const PengajuanWeeklyInsentif: Component = () => {
 
     const DataToSend = {
       id: 0,
-      tipepengajuan: 'Monthly',
+      tipepengajuan: 'Event',
       entry_ts: timestamp,
       keterangan: keterangan(),
       kebutuhan: need(),
@@ -341,16 +340,16 @@ const PengajuanWeeklyInsentif: Component = () => {
 
 
   return (
-    <div class="pengajuan-weekly">
-      <div>
-        <h1>Form Tambah Pengajuan Weekly</h1>
+    <div class="pengajuan-event-details">
+       <div>
+        <h1>Form Tambah Pengajuan Event</h1>
       </div>
-      <div class="dropdown-keterangan-weekly-insen">
-        <label for="keteranganDropdown-insen">Keterangan:</label>
+      <div class="dropdown-keterangan-evdetails">
+        <label for="keteranganDropdown-evdetails">Keterangan:</label>
         <br />
         {/* Gunakan dropdown di sini */}
         <select
-            id="keteranganDropdown-insen"
+            id="keteranganDropdown-evdetails"
             // value={selectedOption()}
             // onChange={(e) => setSelectedOption(e.target.value)}
             style={{width:"45vh"}}
@@ -378,7 +377,7 @@ const PengajuanWeeklyInsentif: Component = () => {
       </div>
 
       <div> 
-        <div class="container-data-weekly" style={{display:'flex', "flex-direction":"row"}}>
+        <div class="container-event-details" style={{display:'flex', "flex-direction":"row"}}>
             <div>
             <label>Kebutuhan</label>
             <br />
@@ -403,8 +402,8 @@ const PengajuanWeeklyInsentif: Component = () => {
                   class="custom-dropdown-coa"
                 />
                 {showDropdown() && (
-                  <div class="dropdown-options-coa">
-                  <div class="options-list">
+                  <div class="dropdown-options-coa-evdetails">
+                  <div class="options-list-evdetails">
                     {filteredOptions().map((option) => (
                       <div onClick={() => handleOptionSelect(option)} class="option-label">{option.label}</div>
                     ))}
@@ -485,7 +484,7 @@ const PengajuanWeeklyInsentif: Component = () => {
             </div>
 
             
-            <div class="tambah-data-1-weekly">
+            <div class="tambah-data-1-evdetails">
                 <button onClick={handleSubmit}>Tambah</button>
             </div>
         </div>
@@ -495,22 +494,22 @@ const PengajuanWeeklyInsentif: Component = () => {
                 onGridReady={onGridReady} 
                 rowData={rowData()} 
             />
-            <div class="detail-total-weekly">
+            <div class="detail-event-details">
                 <div>TOTAL</div>
                 <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
-        <div class="btn-simpan-data-weekly">
-            <button onClick={handlePopUpInsen}>Simpan</button>
+        <div class="btn-simpan-data-evdetails">
+            <button onClick={handlePopUpEvent}>Simpan</button>
         </div>
 
         </div>
-        {popUpInsen() && <PengajuanWeekly OnClose={closePopUpInsen} pengajuanweekly={namaPengajuanWeekly()}/>}
-        {EditPopUpInsen() && <FormEditWeekly OnClose={closePopUpInsen}/>}
-        {DeletePopUpInsen() && <ConfirmPopUpWeeklyInsen OnClose={closePopUpInsen}/>}
+        {popUpEvent() && <PengajuanEvent OnClose={closePopUpEvent} pengajuanevent={namaPengajuanEvent()}/>}
+        {EditPopUpEvent() && <EditEventDetails OnClose={closePopUpEvent}/>}
+        {DeletePopUpEvent() && <ComfirmDeleteEvDetails OnClose={closePopUpEvent}/>}
     </div>
   );
 };
 
-export default PengajuanWeeklyInsentif;
+export default PengajuanEventDetails;
