@@ -1,6 +1,6 @@
-.nama-pengajuan-1 {
+.nama-pengajuan-1-weekly {
     left: 50%;
-    top: 45%;
+    top: 50%;
     transform: translate(-50%, -50%);
     margin: auto;
     padding: 20px 25px;
@@ -15,52 +15,52 @@
 }
 
 /*css untuk tabel form popup*/
-.nama-pengajuan-1 .nama-pengajuan {
+.nama-pengajuan-1-weekly .nama-pengajuan-weekly {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 70vh;
     height: 30vh;
     background-color: #fff;
     text-align: left;
-    padding: 25px 15px;
+    padding: 25px 20px;
     overflow: hidden;
 }
 
-.nama-pengajuan table {
+.nama-pengajuan-weekly table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.nama-pengajuan thead {
+.nama-pengajuan-weekly thead {
     background-color: #333;
     color: #fff;
 }
 
-.nama-pengajuan th {
+.nama-pengajuan-weekly th {
     padding: 10px;
     text-align: left;
 }
 
-.nama-pengajuan tbody tr:nth-child(even) {
+.nama-pengajuan-weekly tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.nama-pengajuan td {
+.nama-pengajuan-weekly td {
     padding: 10px;
 }
 
-.nama-pengajuan a {
+.nama-pengajuan-weekly a {
     text-decoration: none;
     color: #0074d9;
 }
 
-.nama-pengajuan a:hover {
+.nama-pengajuan-weekly a:hover {
     text-decoration: underline;
     color: #0056b3;
 }
 
 /* CSS untuk judul "monthly" */
-.nama-pengajuan-1 .keterangan {
+.nama-pengajuan-1-weekly .keterangan-weekly {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,7 +70,7 @@
 }
 
 
-.nama-pengajuan-1 .keterangan button {
+.nama-pengajuan-1-weekly .keterangan-weekly button {
     background-color: #AE0000;
     color: #FFFFFF;
     border-radius: 5px;
@@ -80,7 +80,7 @@
     float: right;
 }
 
-.nama-pengajuan-1 .keterangan h2 {
+.nama-pengajuan-1-weekly .keterangan-weekly h2 {
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
@@ -90,7 +90,7 @@
 }
 
 
-.nama-pengajuan-1 .keterangan span {
+.nama-pengajuan-1-weekly .keterangan-weekly span {
     font-size: 8px;
 }
 
@@ -105,7 +105,7 @@
     z-index: 2;
 }
 
-.isi-total-monthly {
+.isi-total-weekly {
     font-weight: 700;
 }
 /* 
@@ -115,7 +115,7 @@
 } */
 
 
-.nama-pengajuan .btn-show-keterangan button {
+.nama-pengajuan-weekly .btn-show-keterangan-weekly button {
     background-color: #8562f7;
     color: white;
     width: 20vh;
@@ -128,7 +128,7 @@
     font-weight: 600;
 }
 
-.nama-pengajuan .tambah-keterangan-group {
+.nama-pengajuan-weekly .tambah-keterangan-group-weekly {
     display: flex;
     flex-direction: row;
     gap: 1vh;
@@ -138,7 +138,7 @@
     /* height: 5.5vh; */
 }
 
-.nama-pengajuan .tambah-keterangan-group .btn-tambah {
+.nama-pengajuan-weekly .tambah-keterangan-group-weekly .btn-tambah-weekly {
     background-color: #8562f7;
     color: white;
     width: 80px;
@@ -147,7 +147,7 @@
     margin-top: 23px;
 }
 
-.nama-pengajuan .tambah-keterangan-group .btn-cancel {
+.nama-pengajuan-1-weekly .tambah-keterangan-group-weekly .btn-cancel-weekly {
     background-color: #b5b5b5;
     color: white;
     width: 80px;
@@ -156,7 +156,7 @@
     margin-top: 23px;
 }
 
-.nama-pengajuan .tambah-keterangan-group input {
+.nama-pengajuan-weekly .tambah-keterangan-group-weekly input {
     background-color: #FFFFFF;
     border: none;
     width: 50vh;
@@ -169,7 +169,7 @@
     font-weight: 600;
 }
 
-.nama-pengajuan .tambah-nama-pengajuan input {
+.nama-pengajuan-weekly .tambah-nama-pengajuan-weekly input {
     background-color: #FFFFFF;
     border: none;
     width: 50vh;
@@ -182,7 +182,7 @@
     font-weight: 600;
 }
 
-.nama-pengajuan .tambah-nama-pengajuan button {
+.nama-pengajuan-weekly .tambah-nama-pengajuan-weekly button {
     background-color: #8562f7;
     color: white;
     width: 80px;
@@ -191,18 +191,18 @@
     margin-top: 23px;
 }
 
-.nama-pengajuan .judul-pengajuan {
+.nama-pengajuan-weekly .judul-pengajuan {
     text-align: center;
 }
 
-.nama-pengajuan .judul-pengajuan h1 {
+.nama-pengajuan-weekly.judul-pengajuan h1 {
     font-weight: 600;
     font-family: 'Inter';
     font-size: 16px;
 
 }
 
-.nama-pengajuan .judul-pengajuan p {
+.nama-pengajuan-weekly .judul-pengajuan p {
     font-weight: 700;
     font-family: 'Inter';
     font-size: 18px;

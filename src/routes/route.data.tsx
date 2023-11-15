@@ -14,6 +14,8 @@ import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_penga
 import PengajuanReimburse from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-reimburse/popup/pengajuanweekly-reimburse';
 
 import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
+import PengajuanEventDetails from '../containers/navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event-detail';
+
 interface UserData {
     id: number;
     account_name: string;
@@ -182,7 +184,6 @@ const RouteData: Component = () => {
                  <Route path="/report" component={PengajuanReportDU} />
             </Route>
 
-            C:\Users\user2022\OneDrive\Documents\belajar-solid-dua\fe-new-erp\src\containers\navbars\create\kategori_pengajuanweekly\penguanweekly-rutin\pengajuanweekly-insentif\pengajuan-reimburse.tsx
 
             <Route path="/pengajuan-weekly">
                 <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
@@ -201,7 +202,7 @@ const RouteData: Component = () => {
             </Route>
 
             <Route path="/pengajuan-event">
-                <Route path="/kick-off-meeting" component={KickOffMeeting} />
+                <Route path="/pengajuan-event-detail" component={PengajuanEventDetails} />
             </Route>
         </Routes>
     )
