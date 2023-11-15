@@ -10,6 +10,7 @@ import { Icon } from '@iconify-icon/solid';
 import EditMonthlyPlan from './popup/edit-monthly-plan';
 import ComfirmDeletePlan from './popup/confirm-delete-plan';
 import { options } from './data-coa';
+import { namaPengajuan } from '../nama-pengajuan';
 
 interface Option {
   value: string;
@@ -117,9 +118,9 @@ const OperasionalTamanhas: Component = () => {
         { field: "price", headerName: "Price", width: 130 },
         { field: "total", headerName: "Total", width: 150},
         {
-          field: 'aksi', cellRenderer: (params: any) => {
+          field: 'aksi', width: 80,cellRenderer: (params: any) => {
             return (
-              <div style={{  display: "flex", "justify-content": "space-between", width: "9vh" }}>
+              <div style={{  display: "flex", "justify-content": "space-between", width:"9vh"}}>
                 <button onClick={showEditPopUp}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
                 <button onClick={showDeletePopUp}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
@@ -489,7 +490,7 @@ const OperasionalTamanhas: Component = () => {
                 <button onClick={handleSubmit}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "130vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
@@ -506,8 +507,7 @@ const OperasionalTamanhas: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={closePopUp} 
-        total={calculateTotal()} total2={Total2()} total3={Total3()} total4={Total4()} total5={Total5()}/>}
+        {popUp() && <PengajuanMonthly OnClose={closePopUp} pengajuan={namaPengajuan()}/>}
         {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}/>}
         {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>}
     </div>
