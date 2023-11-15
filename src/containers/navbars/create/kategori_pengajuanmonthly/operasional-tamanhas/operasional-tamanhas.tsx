@@ -4,7 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './operasional-tamanhas.css'
 import PengajuanMonthly from '../pengajuan-monthly';
-import { Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
+import { Total, Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Icon } from '@iconify-icon/solid';
 import EditMonthlyPlan from './popup/edit-monthly-plan';
@@ -22,7 +22,8 @@ interface SelectedOption {
   label?: string;
 }
 
-type RowData = {
+export type RowData = {
+    uniqueId: number;
     kebutuhan: string;
     qty: number;
     uom: string;
@@ -60,12 +61,21 @@ const OperasionalTamanhas: Component = () => {
 
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
-        (() => {
-          // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableData');
-          return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-        })()
-      );
+      (() => {
+        const savedData = localStorage.getItem('tableData');
+        return savedData
+          ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
+          : ([] as RowData[]);
+      })()
+    );
+
+    const [counter, setCounter] = createSignal(
+      (() => {
+        const savedCounter = localStorage.getItem('rowCounter');
+        return savedCounter ? parseInt(savedCounter, 10) : 0;
+      })()
+    );
+    
       
     const dropdownRef = (el) => {
         if (el) {
@@ -94,7 +104,8 @@ const OperasionalTamanhas: Component = () => {
     const [EditPopUp, setEditPopUp] = createSignal(false);
     const [DeletePopUp, setDeletePopUp] = createSignal(false);
 
-    function showEditPopUp(){
+    function showEditPopUp(row: RowData){
+      setSelectedRow(row);
       setEditPopUp(true);
     }
 
@@ -108,27 +119,100 @@ const OperasionalTamanhas: Component = () => {
       setPopUp(false);
     }
 
+    const deleteRow = (uniqueId: number) => {
+      setRowData((prevData) => {
+        const newData = prevData.filter((row) => row.uniqueId !== uniqueId);
+        localStorage.setItem('tableData', JSON.stringify(newData));
+        return newData;
+      });
+    };
+    // const generateUniqueId = () => {
+    //   const timestamp = new Date().getTime().toString(36); // Use a timestamp
+    //   const randomString = Math.random().toString(36).substr(2, 5); // Use a random string
+    //   return `${timestamp}_${randomString}`;
+    // };
+    
+    // ...
+
+    const onCellValueChanged = (params) => {
+      console.log('onCellValueChanged triggered');
+      
+      const editedRow = params.data;
+      const { field, newValue } = params;
+    
+      if (!editedRow.uniqueId) {
+        editedRow.uniqueId = counter(); // Set a unique value if it doesn't exist
+      }
+    
+      if (field === 'qty' || field === 'price') {
+        const qty = Number(editedRow.qty);
+        const price = Number(editedRow.price);
+        const updatedTotal = qty * price;
+    
+        console.log('Edited Row:', editedRow);
+        console.log('Field:', field);
+        console.log('New Value:', newValue);
+        console.log('Updated Total:', updatedTotal);
+    
+        setRowData((prevData) => {
+          const updatedData = prevData.map((row) =>
+            areRowsEqual(row, editedRow) ? { ...row, total: updatedTotal } : row
+          );
+    
+          console.log('Updated Data:', updatedData);
+    
+          localStorage.setItem('tableData', JSON.stringify(updatedData));
+    
+          // Recalculate and update the total
+          calculateTotal();
+    
+          return updatedData;
+        });
+      }
+    };
+    
+    
+    
+    
+
+    // Fungsi utilitas untuk membandingkan dua objek row
+    const areRowsEqual = (row1, row2) => {
+      // Implementasikan logika perbandingan berdasarkan properti yang sesuai
+      return row1.uniqueId === row2.uniqueId;
+    };
+    
+
+    const [selectedRow, setSelectedRow] = createSignal<RowData | null>(null);
+
     const gridOptions = {
       columnDefs: [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
-        { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
-        { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 80 },
-        { field: "uom", headerName: "UoM", width: 100 },
-        { field: "price", headerName: "Price", width: 130 },
-        { field: "total", headerName: "Total", width: 150},
+        { field: "uniqueId" },
+        { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
+        { field: "coa", headerName: "COA", editable: true, width: 130 },
+        { field: "qty", headerName: "Qty", editable: true, width: 80 },
+        { field: "uom", headerName: "UoM", editable: true, width: 100 },
+        { field: "price", headerName: "Price", editable: true, width: 130 },
+        { field: "total", headerName: "Total",  width: 150},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
+            const rowIndex = params.rowIndex;
+            const row = params.data; // Mendapatkan data baris dari params.data
+
             return (
               <div style={{  display: "flex", "justify-content": "space-between", width:"9vh"}}>
-                <button onClick={showEditPopUp}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button onClick={showDeletePopUp}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                <button onClick={() => showEditPopUp(row)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
           }
         }
       ],
+      onCellValueChanged: onCellValueChanged,
+      getRowId: (data) => data.uniqueId !== undefined ? data.uniqueId : data.id,
     };
+
+    
   
 
     // const calculateTotal = () => {
@@ -139,6 +223,14 @@ const OperasionalTamanhas: Component = () => {
     //     }
     //     return total;
     //   };
+    createEffect(() => {
+      const gridData = rowData();
+      let Total = 0;
+      for (const row of gridData) {
+        Total += row.total;
+      }
+      setTotal(Total); // Simpan total di toko
+    });
 
     const calculateTotal = () => {
         const gridData = rowData();
@@ -248,8 +340,9 @@ const OperasionalTamanhas: Component = () => {
 
   const addRow = () => {
     if (need() && qty() && uom() && price() ) {
-      const total = qty() * price();
+      let total = qty() * price();
       const newRow: RowData = {
+        uniqueId: counter(),
         kebutuhan: need(),
         qty: qty(),
         uom: uom(),
@@ -264,6 +357,8 @@ const OperasionalTamanhas: Component = () => {
         localStorage.setItem('tableData', JSON.stringify(newData));
         return newData;
       });
+      setCounter(counter() + 1);
+
       clearInputs();
     }
   };
@@ -339,6 +434,28 @@ const OperasionalTamanhas: Component = () => {
     }
 
   };
+
+  // const handleEdit = () => {
+  //   if (selectedRow()) {
+  //     const updatedRow: RowData = { ...selectedRow(), ...editedData() };
+
+  //     setRowData((prevData) => {
+  //       const updatedData = prevData.map((row) =>
+  //         areRowsEqual(row, selectedRow()) ? updatedRow : row
+  //       );
+
+  //       localStorage.setItem('tableData', JSON.stringify(updatedData));
+
+  //       // Hitung kembali total setelah edit
+  //       calculateTotal();
+
+  //       // Setelah proses edit selesai, Anda mungkin ingin menutup popup
+  //       setEditPopUp(false);
+
+  //       return updatedData;
+  //     });
+  //   }
+  // };
 
 
   return (
@@ -417,41 +534,6 @@ const OperasionalTamanhas: Component = () => {
               </div>
               </div>
 
-            {/* <div>
-            <label>COA</label>
-            <br />
-               <div class="custom-dropdown-coa" ref={dropdownRef}>
-                <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
-                    <div>{selectedOption() || ""}</div>
-                    <div>
-                        {isOpen() ? 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="10" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
-                        : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="10" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
-                        }
-                    </div>
-                </div>
-                <div>
-                {isOpen() && (
-                    <div class="dropdown-options-coa">
-                    <div class="options-list" >
-                        {options.map((option, index) => (
-                        <div
-                            class="option"
-                            onClick={() => {
-                            setSelectedOption(option);
-                            setIsOpen(false);
-                            }}
-                        >
-                            {option}
-                        </div>
-                        ))}
-                    </div>
-                    </div>
-                )}
-                </div>
-            </div> 
-            </div> */}
-
             <div>
             <label>Qty</label>
             <br />
@@ -487,7 +569,7 @@ const OperasionalTamanhas: Component = () => {
 
             
             <div class="tambah-data-1">
-                <button onClick={handleSubmit}>Tambah</button>
+                <button onClick={addRow}>Tambah</button>
             </div>
         </div>
         <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
@@ -498,7 +580,7 @@ const OperasionalTamanhas: Component = () => {
             />
             <div class="detail-total-operasional">
                 <div>TOTAL</div>
-                <div>Rp{calculateTotal()}</div>
+                <div>Rp{Total()}</div>
             </div>
         </div>
         
@@ -508,7 +590,7 @@ const OperasionalTamanhas: Component = () => {
 
         </div>
         {popUp() && <PengajuanMonthly OnClose={closePopUp} pengajuan={namaPengajuan()}/>}
-        {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}/>}
+        {/* {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}  rowData={selectedRow()} handleEdit={handleEdit}/>} */}
         {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>}
     </div>
   );
