@@ -30,37 +30,37 @@ const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
       setEditedData((prevData) => ({ ...prevData, [name]: value }));
     };
   
-    const handleEdit = () => {
-        // Anda bisa mengganti kondisi ini sesuai dengan kebutuhan validasi Anda
-        if (
-          editedData().kebutuhan !== '' &&
-          editedData().coa !== '' &&
-          editedData().qty !== 0 &&
-          editedData().uom !== '' &&
-          editedData().price !== 0
-        ) {
-          // Lakukan proses edit di sini
-          if (props.rowData) {
-            setRowData((prevData) => {
-              const updatedData = prevData.map((row) =>
-                areRowsEqual(row, props.rowData) ? { ...row, ...editedData() } : row
-              );
+    // const handleEdit = () => {
+    //     // Anda bisa mengganti kondisi ini sesuai dengan kebutuhan validasi Anda
+    //     if (
+    //       editedData().kebutuhan !== '' &&
+    //       editedData().coa !== '' &&
+    //       editedData().qty !== 0 &&
+    //       editedData().uom !== '' &&
+    //       editedData().price !== 0
+    //     ) {
+    //       // Lakukan proses edit di sini
+    //       if (props.rowData) {
+    //         setRowData((prevData) => {
+    //           const updatedData = prevData.map((row) =>
+    //             areRowsEqual(row, props.rowData) ? { ...row, ...editedData() } : row
+    //           );
       
-              localStorage.setItem('tableData', JSON.stringify(updatedData));
+    //           localStorage.setItem('tableData', JSON.stringify(updatedData));
       
-              // Hitung kembali total setelah edit
-              calculateTotal();
+    //           // Hitung kembali total setelah edit
+    //           calculateTotal();
       
-              // Setelah proses edit selesai, Anda mungkin ingin menutup popup
-              props.OnClose();
+    //           // Setelah proses edit selesai, Anda mungkin ingin menutup popup
+    //           props.OnClose();
       
-              return updatedData;
-            });
-          }
-        } else {
-          alert('Semua kolom harus diisi');
-        }
-      };
+    //           return updatedData;
+    //         });
+    //       }
+    //     } else {
+    //       alert('Semua kolom harus diisi');
+    //     }
+    //   };
       
 
     return (

@@ -84,7 +84,7 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
 
             const formattedDate = `${formData().income_ts}T00:00:00`;
 
-            const dataToSend = {
+            const dataToSend1 = {
                 id: 0,
                 income_ts: formattedDate,
                 amount: formData().amount,
@@ -93,35 +93,41 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                 keterangan: formData().keterangan,
                 evidence: selectedFile()
                 };
+            
+                const dataToSend = new FormData();
+                dataToSend.append('id', '0');
+                dataToSend.append('income_ts', `${formData().income_ts}T00:00:00`);
+                dataToSend.append('amount', formData().amount !== null ? formData().amount.toString() : '');
+                dataToSend.append('faktur_ts', formData().faktur_ts !== null ? formData().faktur_ts.toString() : '');
+                dataToSend.append('coa_kd', selectedOption());
+                dataToSend.append('keterangan', formData().keterangan !== null ? formData().keterangan.toString() : '');
+                dataToSend.append('evidence', selectedFile());
 
             console.log('data income: ', dataToSend);
 
-            // try {
-            //     const response = await fetch(`/api/income/`, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify(dataToSend),
-            //     });
+            try {
+                const response = await fetch(`/api/income/`, {
+                    method: 'POST',
+                    body: dataToSend,
+                });
         
-            //     if (response.ok) {
-            //         // Data berhasil diubah, tampilkan alert
-            //         alert('Data berhasil diubah');
-            //             window.location.href = '/report/pemasukan';
-            //         window.location.reload();
-            //         props.OnClose();
-            //     } else {
-            //         // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-            //         const errorMessage = await response.text();
-            //         alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-            //         console.error('Gagal mengubah data:', errorMessage);
-            //     }
-            // } catch (error) {
-            //     // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-            //     alert('Terjadi kesalahan. Silakan coba lagi.');
-            //     console.error('Terjadi kesalahan:', error);
-            // }
+                if (response.ok) {
+                    // Data berhasil diubah, tampilkan alert
+                    alert('Data berhasil diubah');
+                        window.location.href = '/report/pemasukan';
+                    window.location.reload();
+                    props.OnClose();
+                } else {
+                    // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+                    const errorMessage = await response.text();
+                    alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                    console.error('Gagal mengubah data:', errorMessage);
+                }
+            } catch (error) {
+                // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+                console.error('Terjadi kesalahan:', error);
+            }
         };
 
       

@@ -5,10 +5,6 @@ import { useStore } from '../store';
 
 
 import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
-import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-purwokerto/operasional-purwokerto';
-import KebutuhanProject from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-project/kebutuhan-project';
-import KebutuhanMarketing from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-marketing/kebutuhan-marketing';
-import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-maintenance-tools/kebutuhan-maintenance';
 import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
 import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import PengajuanReimburse from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-reimburse/popup/pengajuanweekly-reimburse';
@@ -189,16 +185,11 @@ const RouteData: Component = () => {
                 <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
                 <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
                 <Route path="/pengajuan-reimburse" component={PengajuanReimburse} />
-                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
                 <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
             <Route path="/pengajuan-monthly">
                 <Route path="/operasional-rutin-tamanhas" component={OperasionalTamanhas} />
-                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
-                <Route path="/kebutuhan-project" component={KebutuhanProject} />                
-                <Route path="/kebutuhan-marketing" component={KebutuhanMarketing} />
-                <Route path="/kebutuhan-maintenance-tools" component={KebutuhanMaintenance} />
             </Route>
 
             <Route path="/pengajuan-event">
