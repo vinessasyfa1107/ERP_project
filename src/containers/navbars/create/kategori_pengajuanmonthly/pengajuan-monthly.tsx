@@ -8,6 +8,7 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
+import ConfirmAllPlan from './popup/confirm-all-plan';
 export interface PengajuanMonthlyProps {
     OnClose?: () => void;
     total?: number,
@@ -38,30 +39,30 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
 
     // ...
 
-onMount(async () => {
-    try {
-      const backendData = await DataMonthlyPlanning("data monthplan");
-      console.log("monthplan: ", backendData);
-      setBackendData(backendData);
+// onMount(async () => {
+//     try {
+//       const backendData = await DataMonthlyPlanning("data monthplan");
+//       console.log("monthplan: ", backendData);
+//       setBackendData(backendData);
   
-      // Get keterangan values from local storage
-      const savedData = localStorage.getItem('tableKetMonth');
-      const localData = savedData ? JSON.parse(savedData) : [];
+//       // Get keterangan values from local storage
+//       const savedData = localStorage.getItem('tableKetMonth');
+//       const localData = savedData ? JSON.parse(savedData) : [];
   
-      // Calculate aggregated data based on keterangan from local storage and backend data
-      const aggregatedData = localData.map((localItem) => {
-        const total = backendData
-          .filter((backendItem) => backendItem.keterangan === localItem.keterangan)
-          .reduce((sum, item) => sum + item.total, 0);
+//       // Calculate aggregated data based on keterangan from local storage and backend data
+//       const aggregatedData = localData.map((localItem) => {
+//         const total = backendData
+//           .filter((backendItem) => backendItem.keterangan === localItem.keterangan)
+//           .reduce((sum, item) => sum + item.total, 0);
   
-        return { keterangan: localItem.keterangan, totalplan: total };
-      });
+//         return { keterangan: localItem.keterangan, totalplan: total };
+//       });
   
-      setRowData(aggregatedData);
-    } catch (error) {
-      console.error('Error fetching data from backend:', error);
-    }
-  });
+//       setRowData(aggregatedData);
+//     } catch (error) {
+//       console.error('Error fetching data from backend:', error);
+//     }
+//   });
   
   // ...
   
@@ -202,12 +203,6 @@ onMount(async () => {
         calculateAllTotal();
       });
       
-
-
-      
-      
-      
-      
     
     const addRow1 = () => {
     if (keterangan()) {
@@ -241,6 +236,68 @@ onMount(async () => {
     };
 
   const location = useLocation();
+
+  const submitPengajuan = () => {
+    // Perform form submission logic here
+    console.log("trigger submit pengajuan");
+    // Clear data from tableKetMonth
+    localStorage.removeItem('tableKetMonth');
+    
+    // Clear data from tableData
+    localStorage.removeItem('tableData');
+    console.log("Data terhapus")
+  };
+
+  //Untuk PopUp Submit
+
+  const [popUpConfirm, setPopUpConfirm] = createSignal(false);
+
+  function showPopUpConfirm() {
+    // console.log("Closing current popup");
+    // props.OnClose();
+  
+    // const isConfirmed = window.confirm("Are you sure you want to proceed?");
+    // console.log("Confirmation result:", isConfirmed);
+  
+    // if (isConfirmed == true) {
+    //   console.log("Setting popUpConfirm to true");
+    //   setPopUpConfirm(true);
+    // }
+    setPopUpConfirm(true);
+
+  }
+  
+
+  function closePopUpConfirm(){
+    setPopUpConfirm(false);
+  };
+
+  const tableData = JSON.parse(localStorage.getItem('tableData')) || [];
+  const tableKetMonth = JSON.parse(localStorage.getItem('tableKetMonth')) || [];
+
+  const calculateTotalByKeterangan1 = (data) => {
+    const result = {};
+    data.forEach((row) => {
+      const keterangan = row.keterangan;
+      result[keterangan] = (result[keterangan] || 0) + row.total;
+    });
+    return result;
+  };
+  
+  const totalByKeterangan = calculateTotalByKeterangan1(tableData);
+  
+  const mergedData = tableKetMonth.map((row) => ({
+    ...row,
+    totalplan: totalByKeterangan[row.keterangan] || 0,
+  }));
+
+  const allTotal1 = () => {
+    const totalPlanArray = mergedData.map((row) => row.totalplan || 0);
+    const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
+    return `Rp${total}`;
+  };
+  
+  
 
   return (
     <div class="overlay">
@@ -283,21 +340,25 @@ onMount(async () => {
                     }
                 </div>
                 </div>
-                <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
-                <AgGridSolid 
-                    gridOptions={gridOptions} 
-                    onGridReady={onGridReady} 
-                    rowData={rowData()} 
-                    onCellClicked={onCellClicked}
-                />
-                <div class="detail-total-operasional">
-                    <div>TOTAL</div>
-                    <div>Rp{allTotal()}</div>
-                </div>
-                </div>
-            </div>
+                  <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
+                    <AgGridSolid 
+                        gridOptions={gridOptions} 
+                        onGridReady={onGridReady} 
+                        rowData={mergedData} 
+                        onCellClicked={onCellClicked}
+                    />
+                    <div class="detail-total-operasional">
+                        <div>TOTAL</div>
+                        <div>{allTotal1()}</div>
+                    </div>
+                  </div>
+                  <div class="submit-btn">
+                      <button onClick={showPopUpConfirm}>Submit</button>
+                  </div>
 
+            </div>
         </div>
+        {popUpConfirm() && <ConfirmAllPlan OnClose={closePopUpConfirm} pengajuan={props.pengajuan}/>}
     </div>
   );
 };
