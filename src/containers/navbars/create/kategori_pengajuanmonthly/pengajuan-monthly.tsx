@@ -268,7 +268,7 @@ onMount(async () => {
                         />
                         </div>
                         <div>
-                            <button class="btn-tambah" onClick={addRow}>Tambah</button>
+                            <button class="btn-tambah" onClick={addRow1}>Tambah</button>
                         </div>
                         <div>
                             <button class="btn-cancel" onClick={closeTambahKeterangan}>Selesai</button>
