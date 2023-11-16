@@ -4,83 +4,64 @@ import { render } from 'solid-js/web';
 import { createSignal, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './edit-monthly-plan.css'
+import { RowData } from '../operasional-tamanhas';
 
 interface EditMonthlyPlanProps {
     OnClose: () => void;
-    // dataId: number;
+    rowData: RowData | null;
+    handleEdit: () => void; 
     // balance: number; // Tambahkan properti balance
 
 }
 
 const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
 
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     if (name === 'kodeCOA') {
-    //         setCoaKd(value);
-    //     } else if (name === 'namaCOA') {
-    //         setCoaName(value);
-    //     } else if (name === 'kategori') {
-    //         setCategory(value);
-    //     }
-    // };
-
-    // const saveChanges = async () => {
-    //     try {
-    //         const dataToSend = {
-    //             id: idValue,
-    //             coa_kd: coa_kd(),
-    //             coa_name: coa_name(),
-    //             category: category(),
-    //             balance: props.balance,
-    //         };
-    
-    //         const response = await fetch(`/api/coa/update`, {
-    //             method: 'PUT',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(dataToSend),
+    const { rowData } = props;
+    const [editedData, setEditedData] = createSignal({
+      kebutuhan: rowData ? rowData.kebutuhan : '',
+      coa: rowData ? rowData.coa : '',
+      qty: rowData ? rowData.qty : 0,
+      uom: rowData ? rowData.uom : '',
+      price: rowData ? rowData.price : 0,
+    });
+  
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setEditedData((prevData) => ({ ...prevData, [name]: value }));
+    };
+  
+    // const handleEdit = () => {
+    //     // Anda bisa mengganti kondisi ini sesuai dengan kebutuhan validasi Anda
+    //     if (
+    //       editedData().kebutuhan !== '' &&
+    //       editedData().coa !== '' &&
+    //       editedData().qty !== 0 &&
+    //       editedData().uom !== '' &&
+    //       editedData().price !== 0
+    //     ) {
+    //       // Lakukan proses edit di sini
+    //       if (props.rowData) {
+    //         setRowData((prevData) => {
+    //           const updatedData = prevData.map((row) =>
+    //             areRowsEqual(row, props.rowData) ? { ...row, ...editedData() } : row
+    //           );
+      
+    //           localStorage.setItem('tableData', JSON.stringify(updatedData));
+      
+    //           // Hitung kembali total setelah edit
+    //           calculateTotal();
+      
+    //           // Setelah proses edit selesai, Anda mungkin ingin menutup popup
+    //           props.OnClose();
+      
+    //           return updatedData;
     //         });
-    
-    //         if (response.ok) {
-    //             // Data berhasil diubah, tampilkan alert
-    //             alert('Data berhasil diubah');
-    //             props.OnClose();
-    //         } else {
-    //             // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-    //             const errorMessage = await response.text();
-    //             alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-    //             console.error('Gagal mengubah data:', errorMessage);
-    //         }
-    //     } catch (error) {
-    //         // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-    //         alert('Terjadi kesalahan. Silakan coba lagi.');
-    //         console.error('Terjadi kesalahan:', error);
+    //       }
+    //     } else {
+    //       alert('Semua kolom harus diisi');
     //     }
-    // };
-    
-    
-
-    // onMount(async () => {
-    //     try {
-    //         const response = await fetch('/api/coa', {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         });
-
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             setFormData(data);
-    //         } else {
-    //             console.error('Gagal mengambil data yang akan diedit');
-    //         }
-    //     } catch (error) {
-    //         console.error('Terjadi kesalahan:', error);
-    //     }
-    // });
+    //   };
+      
 
     return (
         <div class="overlay">

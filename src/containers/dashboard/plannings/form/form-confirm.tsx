@@ -20,6 +20,7 @@ interface EditPopUpProps {
 const FormConfirm: Component<EditPopUpProps> = (props) => {
     const [inputFile, setInputFile] = createSignal(null);
     const [confirmStatus, setConfirmStatus] = createSignal(props.confirm);
+    const [formSubmitted, setFormSubmitted] = createSignal(false);
 
     const handleFileInputChange = () => {
         if (inputFile() && inputFile()!.files.length > 0) {
@@ -35,10 +36,12 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
     const [timestamp, setTimestamp] = createSignal('');
 
 
-    const handleInputChange = (e) => {
+    const handleInputChange = async (e) => {
         // Menggunakan timestamp saat ini dalam format ISO 8601
-        const { value } = e.target;
-        setStatus(value);
+        if (formSubmitted()) {
+            alert('Form sudah dikirim sebelumnya.');
+            return;
+        }
 
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 11);
@@ -54,14 +57,17 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
         setTimestamp(timestamp);
         setConfirmStatus(!confirmStatus());
         updateStatus();
+
     };
+
+
 
     const categoryValueMap = {
         "Marketing": 1,
         "Projek": 2,
         "Rutinitas": 3,
         "Event": 4,
-        "DLL" : 5
+        "DLL": 5
     };
 
     // Fungsi bantuan untuk mendapatkan nilai dari category string
@@ -75,6 +81,11 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
 
     const updateStatus = async () => {
+        if (formSubmitted()) {
+            alert('Form sudah dikirim sebelumnya.');
+            return;
+        }
+
         const updateStatusToSend = {
             id: props.data.id,
             entry_ts: timestamp(),
@@ -98,6 +109,7 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
             });
 
             if (response.ok) {
+                setFormSubmitted(true);
                 // Data berhasil diubah, tampilkan alert
                 alert('Data berhasil diubah');
                 props.OnClose();
@@ -180,7 +192,7 @@ const FormConfirm: Component<EditPopUpProps> = (props) => {
 
                         <br />
                         <div class="btn-add-acc">
-                            <button onClick={handleInputChange}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button disabled={formSubmitted()} onClick={handleInputChange}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
 

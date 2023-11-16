@@ -12,9 +12,6 @@ import Tabel_kas_approval_td from "./tabel_kas_approval_td";
 import Table_time from "../time_tracking/table_time";
 
 
-
-
-
 const Arus_kas: Component = () => {
 
     const [, { changeSubTitleNavbar }] = useSubNavbarStore();

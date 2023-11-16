@@ -167,3 +167,46 @@
     font-size: 16px;
     font-weight: 600;
 }
+
+.pengajuan-weekly .tambah-nama-pengajuan input {
+    background-color: #FFFFFF;
+    border: none;
+    width: 50vh;
+    height: 5.5vh;
+    padding: 12px 10px;
+    border-radius: 5px;
+    background: #F8F8F9;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pengajuan-weekly .tambah-nama-pengajuan button {
+    background-color: #8562f7;
+    color: white;
+    width: 80px;
+    height: 5.5vh;
+    border-radius: 5px;
+    margin-top: 23px;
+}
+
+.pengajuan-weekly .judul-pengajuan-weekly {
+    text-align: center;
+}
+
+.pengajuan-weekly .judul-pengajuan-weekly h1 {
+    font-weight: 600;
+    font-family: 'Inter';
+    font-size: 16px;
+    margin: 0;
+}
+
+.pengajuan-weekly .judul-pengajuan-weekly p {
+    font-weight: 700;
+    font-family: 'Inter';
+    font-size: 18px;
+}
+
+.pengajuan-weekly .detail-total-operasional {
+    width: 80vh;
+}

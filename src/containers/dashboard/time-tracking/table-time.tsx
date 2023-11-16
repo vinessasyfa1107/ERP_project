@@ -10,7 +10,6 @@ interface TableTimeProps {
 }
 
 
-
 const TableTime: Component<TableTimeProps> = (props) => {
 
   const [RowData, setRowData] = createSignal([{}]);

@@ -10,16 +10,16 @@ import FormEditAkunTeams from './forms/edit-akun-teams';
 
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
-  
+
 const [editedData, setEditedData] = createSignal(null);
 
 const showEditPopup = (rowData: any) => {
-  setEditedData(rowData);
-  setIsEditPopupOpen(!isEditPopupOpen());
+    setEditedData(rowData);
+    setIsEditPopupOpen(!isEditPopupOpen());
 };
 
-function CloseEditPopUp () {
-  setIsEditPopupOpen (false);
+function CloseEditPopUp() {
+    setIsEditPopupOpen(false);
 }
 
 
@@ -30,107 +30,122 @@ const TableTeams = () => {
         { field: "Access" },
         { field: "Role" },
         { field: "Category" },
-        { field: 'aksi', cellRenderer: (params: any) => {
-            return (
-              <div style={{"margin-top": "8px", display:"flex", "justify-content":"space-between", width:"50px"}}>
-                <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
-              </div>
-            );
-          }}
-    
+        {
+            field: 'aksi', cellRenderer: (params: any) => {
+                return (
+                    <div style={{ "margin-top": "8px", display: "flex", "justify-content": "space-between", width: "50px" }}>
+                        <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+                        <button><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                    </div>
+                );
+            }
+        }
+
     ];
 
     const rowData = [
-        {   "Name": "Dede Herman", 
-            "Email": "dedeherman@braincodesolution", 
-            "Access": "Admin", 
-            "Role": "Employee, Supplier", 
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
             "Category": "Suppervisor",
             "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-            "Email": "dedeherman@braincodesolution", 
-            "Access": "Admin", 
-            "Role": "Employee, Supplier", 
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
             "Category": "Suppervisor",
             "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-            "Email": "dedeherman@braincodesolution", 
-            "Access": "Admin", 
-            "Role": "Employee, Supplier", 
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
             "Category": "Suppervisor",
             "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-            "Email": "dedeherman@braincodesolution", 
-            "Access": "Admin", 
-            "Role": "Employee, Supplier", 
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
             "Category": "Suppervisor",
             "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-    },  
-            {   "Name": "Dede Herman", 
-            "Email": "dedeherman@braincodesolution", 
-            "Access": "Admin", 
-            "Role": "Employee, Supplier", 
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
             "Category": "Suppervisor",
             "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },  
-        {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },          {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },          {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },          {   "Name": "Dede Herman", 
-        "Email": "dedeherman@braincodesolution", 
-        "Access": "Admin", 
-        "Role": "Employee, Supplier", 
-        "Category": "Suppervisor",
-        "Action": "button"
-        },  
-        ];
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        },
+        {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        }, {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        }, {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        }, {
+            "Name": "Dede Herman",
+            "Email": "dedeherman@braincodesolution",
+            "Access": "Admin",
+            "Role": "Employee, Supplier",
+            "Category": "Suppervisor",
+            "Action": "button"
+        },
+    ];
 
     const defaultColDef = {
         flex: 1,
@@ -152,9 +167,9 @@ const TableTeams = () => {
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
                 />
             </div>
-                <div>
-                </div>
-                    {isEditPopupOpen() && (<FormEditAkunTeams OnClose={CloseEditPopUp}/>)}
+            <div>
+            </div>
+            {isEditPopupOpen() && (<FormEditAkunTeams OnClose={CloseEditPopUp} />)}
         </div>
     );
 };
