@@ -34,6 +34,24 @@ export type RowData = {
     aksi?: object;
   };
 
+  const calculateTotalByKeterangan = (data) => {
+    const totals = {};
+  
+    for (const row of data) {
+      const keterangan = row.keterangan;
+  
+      if (!totals[keterangan]) {
+        totals[keterangan] = 0;
+      }
+  
+      totals[keterangan] += row.total;
+    }
+  
+    return totals;
+  };
+  
+  export { calculateTotalByKeterangan };
+
 const OperasionalTamanhas: Component = () => {
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
