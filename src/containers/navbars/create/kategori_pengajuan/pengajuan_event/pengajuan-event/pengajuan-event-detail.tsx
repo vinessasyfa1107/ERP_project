@@ -35,138 +35,195 @@ export type RowData = {
   };
 
 const PengajuanEventDetails: Component = () => {
-  const [gridApi, setGridApi] = createSignal(null);
-  const [rowData, setRowData] = createSignal<RowData[]>(
-    (() => {
-      const savedData = localStorage.getItem('tableKetPengajuanEvent');
-      return savedData
-        ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
-        : ([] as RowData[]);
-    })()
-  );
-    
-    
-  const [need, setNeed] = createSignal("");
-  const [qty, setQty] = createSignal(0);
-  const [uom, setuom] = createSignal("");
-  const [price, setPrice] = createSignal(0);
-  const [coa, setCOA] = createSignal("");
+// <<<<<<< HEAD
+//   const [gridApi, setGridApi] = createSignal(null);
+//   const [rowData, setRowData] = createSignal<RowData[]>(
+//     (() => {
+//       const savedData = localStorage.getItem('tableKetPengajuanEvent');
+//       return savedData
+//         ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
+//         : ([] as RowData[]);
+//     })()
+// =======
+    const [popUpEvent, setPopUpEvent] = createSignal(false);
 
-
-  const [popUpEvent, setPopUpEvent] = createSignal(false);
-
-  function handlePopUpEvent(){
-      setPopUpEvent(true);
-  }
-  // const [EditPopUp, setEditPopUp] = createSignal(false);
-  // const [DeletePopUp, setDeletePopUp] = createSignal(false);
-
-  // function showEditPopUp(row: RowData){
-  //   setSelectedRow(row);
-  //   setEditPopUp(true);
-  // }
-
-  // function showDeletePopUp(){
-  //   setDeletePopUp(true);
-  // }
-
-  function closePopUpEvent(){
-    // setEditPopUp(false);
-    // setDeletePopUp(false);
-    setPopUpEvent(false);
-  }
-
-  const handleCellValueChanged = (params) => {
-    const { data } = params;
-    // Update local storage
-    localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(rowData()));
-  
-    // Recalculate total if 'qty' or 'price' is changed
-    if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-      const newTotal = data.qty * data.price;
-      const updatedRow = { ...data, total: newTotal };
-      setRowData((prevData) => {
-        const newData = prevData.map((row) =>
-          areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
-        );
-        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
-        return newData;
-      });
+    function handlePopUpEvent(){
+        setPopUpEvent(true);
     }
-  };
 
-  const deleteRow = (index: number) => {
-    setRowData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      // Update localStorage after removing the row
-      localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
-      return newData;
-    });
-  };
+    // function ClosePopUp(){
+    //     setPopUp(false);
+    // }
+
+    const [isOpen, setIsOpen] = createSignal(false);
+
+    const [gridApi, setGridApi] = createSignal(null);
+    const [rowData, setRowData] = createSignal<RowData[]>(
+        (() => {
+          // Coba ambil data dari localStorage saat komponen diinisialisasi
+          const savedData = localStorage.getItem('tableDataEventDetails');
+          return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+        })()
+      );
       
-
-  // Fungsi utilitas untuk membandingkan dua objek row
-  const areRowsEqual = (row1, row2) => {
-    // Implementasikan logika perbandingan berdasarkan properti yang sesuai
-    return row1.uniqueId === row2.uniqueId;
-  };
-  
-  const gridOptions = {
-    columnDefs: [
-      { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
-      // { field: "uniqueId" },
-      { field: "keterangan", editable: true, width: 150 },
-      { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
-      { field: "coa", headerName: "COA", editable: true, width: 130 },
-      { field: "qty", headerName: "Qty", editable: true, width: 80 },
-      { field: "uom", headerName: "UoM", editable: true, width: 100 },
-      { field: "price", headerName: "Price", editable: true, width: 130 },
-      { field: "total", headerName: "Total",  width: 150},
-      {
-        field: 'aksi', width: 80,cellRenderer: (params: any) => {
-          const rowIndex = params.rowIndex;
-          const row = params.data; // Mendapatkan data baris dari params.data
-
-          return (
-            <div>
-              <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
-            </div>
-          );
+    const dropdownRef = (el) => {
+        if (el) {
+        const handleDocumentClick = (e) => {
+            if (!el.contains(e.target)) {
+            setIsOpen(false);
+            }
+        };
+        document.addEventListener('click', handleDocumentClick);
+        onCleanup(() => {
+            document.removeEventListener('click', handleDocumentClick);
+        });
         }
+    };
+      
+    const [need, setNeed] = createSignal("");
+    const [qty, setQty] = createSignal(0);
+    const [uom, setuom] = createSignal("");
+    const [price, setPrice] = createSignal(0);
+    const [coa, setCOA] = createSignal("");
+  
+
+    const [EditPopUpEvent, setEditPopUpEvent] = createSignal(false);
+    const [DeletePopUpEvent, setDeletePopUpEvent] = createSignal(false);
+
+    function showEditPopUpEvent(){
+      setEditPopUpEvent(true);
+    }
+
+    function showDeletePopUpEvent(){
+      setDeletePopUpEvent(true);
+    }
+
+    function closePopUpEvent(){
+      setEditPopUpEvent(false);
+      setDeletePopUpEvent(false);
+      setPopUpEvent(false);
+    }
+
+    const handleCellValueChanged = (params) => {
+      const { data } = params;
+      // Update local storage
+      localStorage.setItem('tableData', JSON.stringify(rowData()));
+    
+      // Recalculate total if 'qty' or 'price' is changed
+      if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
+        const newTotal = data.qty * data.price;
+        const updatedRow = { ...data, total: newTotal };
+        setRowData((prevData) => {
+          const newData = prevData.map((row) =>
+            areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
+          );
+          localStorage.setItem('tableData', JSON.stringify(newData));
+          return newData;
+        });
       }
-    ],
-    onCellValueChanged: handleCellValueChanged,
-  };
+    };
 
-  const onGridReady = (params: any) => {
-    setGridApi(() => params.api);
-  };
-
-  const addRow = () => {
-    if (need() && qty() && uom() && price() ) {
-      let total = qty() * price();
-      const newRow: RowData = {
-        // uniqueId: counter(),
-        keterangan: keterangan(),
-        kebutuhan: need(),
-        qty: qty(),
-        uom: uom(),
-        price: price(),
-        total: total,
-        // coa: selectedOption(),
-        coa: selectedOption()?.value,
-      };
+    const deleteRow = (index: number) => {
       setRowData((prevData) => {
-        const newData = [...prevData, newRow];
-        // Simpan data ke localStorage saat menambahkan data baru
-        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
+        const newData = [...prevData];
+        newData.splice(index, 1);
+        // Update localStorage after removing the row
+        localStorage.setItem('tableData', JSON.stringify(newData));
         return newData;
       });
+    };
+        
 
-      clearInputs();
-    }
-  };
+    // Fungsi utilitas untuk membandingkan dua objek row
+    const areRowsEqual = (row1, row2) => {
+      // Implementasikan logika perbandingan berdasarkan properti yang sesuai
+      return row1.uniqueId === row2.uniqueId;
+    };
+
+    const gridOptions = {
+      columnDefs: [
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
+        { field: "keterangan", editable: true, width: 150 },
+        { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
+        { field: "coa", headerName: "COA", editable: true, width: 130 },
+        { field: "qty", headerName: "Qty", editable: true, width: 80 },
+        { field: "uom", headerName: "UoM", editable: true, width: 100 },
+        { field: "price", headerName: "Price", editable: true, width: 130 },
+        { field: "total", headerName: "Total", width: 150},
+        {
+          field: 'aksi', width: 80,cellRenderer: (params: any) => {
+            const rowIndex = params.rowIndex;
+            const row = params.data; // Mendapatkan data baris dari params.data
+
+            return (
+              <div>
+                <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+              </div>
+            );
+          }
+        }
+      ],
+      onCellValueChanged: handleCellValueChanged,
+    };
+
+    const onGridReady = (params: any) => {
+      setGridApi(() => params.api);
+    };
+  
+    const addRow = () => {
+      if (need() && qty() && uom() && price() ) {
+        let total = qty() * price();
+        const newRow: RowData = {
+          // uniqueId: counter(),
+          keterangan: keterangan(),
+          kebutuhan: need(),
+          qty: qty(),
+          uom: uom(),
+          price: price(),
+          total: total,
+          // coa: selectedOption(),
+          coa: selectedOption()?.value,
+        };
+        setRowData((prevData) => {
+          const newData = [...prevData, newRow];
+          // Simpan data ke localStorage saat menambahkan data baru
+          localStorage.setItem('tableData', JSON.stringify(newData));
+          return newData;
+        });
+  
+        clearInputs();
+      }
+    };
+
+    // const calculateTotal = () => {
+    //     const gridData = rowData();
+    //     let total = 0;
+    //     for (const row of gridData) {
+    //       total += row.total;
+    //     }
+    //     return total;
+    //   };
+
+    const calculateTotal = () => {
+        const gridData = rowData();
+        let Total = 0;
+        for (const row of gridData) {
+          Total += row.total;
+        }
+        setTotal4(Total); // Simpan total di toko
+        return Total;
+      };
+  
+    // onMount(() => {
+    //   // Bersihkan localStorage saat komponen di-unmount
+    //   onCleanup(() => {
+    //     localStorage.removeItem('tableDataEventDetails');
+    //   });
+    // });
+  //   const [keteranganOptions, setKeteranganOptions] = createSignal<string[] | (() => any)>(() => {
+  //     const savedData = localStorage.getItem('tableKetPengajuanEvent');
+  //     return savedData ? JSON.parse(savedData).map((row) => row.keterangan) : [];
+  // });
 
   const clearInputs = () => {
     setNeed("");
@@ -203,66 +260,6 @@ const PengajuanEventDetails: Component = () => {
 const [keterangan, setKeterangan] = createSignal('');
 const [timestamp, setTimestamp] = createSignal('');
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  // if (!formData().nama || !formData().nama_perusahaan || !formData().email) {
-  //     alert('Mohon isi semua kolom yang dibutuhkan.');
-  //     return; // Menghentikan pengiriman jika ada input yang kosong
-  //   }
-  const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().slice(0, 11);
-
-    const hours = String(currentDate.getHours()).padStart(2, '0');
-    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-    const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-    const timestamp = `${formattedDate}${formattedTime}`;
-
-    console.log("tanggal dan waktu: ", timestamp);
-    setTimestamp(timestamp);
-
-  const total = qty() * price();
-
-  const DataToSend = {
-    id: 0,
-    tipepengajuan: 'Event',
-    entry_ts: timestamp,
-    keterangan: keterangan(),
-    kebutuhan: need(),
-    coa_kd: selectedOption()?.value,
-    quantity: qty(),
-    uom: uom(),
-    price: price(),
-    total: total,
-  };
-
-  console.log("data kontak: ", DataToSend)
-  try{
-    const response = await fetch('/api/eventpengajuan/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(DataToSend),
-    });
-
-    if (response.ok) {
-      console.log('Data berhasil diinput'); // Tampilkan pesan sukses
-      alert('Data berhasil ditambah');
-      addRow();
-    } else {
-        const errorMessage = await response.text();
-        alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-        console.error('Gagal mengubah data:', errorMessage);
-    }
-  } catch (error) {
-      alert('Terjadi kesalahan. Silakan coba lagi.');
-      console.error('Terjadi kesalahan:', error);
-  }
-
-};
 
 // kode dropdown keterangan
 const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(

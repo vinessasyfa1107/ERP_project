@@ -239,6 +239,31 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
 
   const location = useLocation();
 
+  const tableData = JSON.parse(localStorage.getItem('tableDataEventDetails')) || [];
+  const tableKet = JSON.parse(localStorage.getItem('tableKetPengajuanEvent')) || [];
+
+  const calculateTotalByKeterangan1 = (data) => {
+    const result = {};
+    data.forEach((row) => {
+      const keterangan = row.keterangan;
+      result[keterangan] = (result[keterangan] || 0) + row.total;
+    });
+    return result;
+  };
+  
+  const totalByKeterangan = calculateTotalByKeterangan1(tableData);
+  
+  const mergedData = tableKet.map((row) => ({
+    ...row,
+    totalplan: totalByKeterangan[row.keterangan] || 0,
+  }));
+
+  const allTotal1 = () => {
+    const totalPlanArray = mergedData.map((row) => row.totalplan || 0);
+    const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
+    return `Rp${total}`;
+  };
+
   return (
     <div class="overlay">
       
@@ -284,12 +309,12 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
                 <AgGridSolid 
                     gridOptions={gridOptions} 
                     onGridReady={onGridReady} 
-                    rowData={rowData()} 
+                    rowData={mergedData} 
                     onCellClicked={onCellClicked}
                 />
                 <div class="detail-total-operasional">
                     <div>TOTAL</div>
-                    <div>Rp{allTotal()}</div>
+                    <div>Rp{allTotal1()}</div>
                 </div>
                 </div>
             </div>

@@ -221,66 +221,6 @@ const OperasionalTamanhas: Component = () => {
   const [keterangan, setKeterangan] = createSignal('');
   const [timestamp, setTimestamp] = createSignal('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // if (!formData().nama || !formData().nama_perusahaan || !formData().email) {
-    //     alert('Mohon isi semua kolom yang dibutuhkan.');
-    //     return; // Menghentikan pengiriman jika ada input yang kosong
-    //   }
-    const currentDate = new Date();
-      const formattedDate = currentDate.toISOString().slice(0, 11);
-
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-      const timestamp = `${formattedDate}${formattedTime}`;
-
-      console.log("tanggal dan waktu: ", timestamp);
-      setTimestamp(timestamp);
-
-    const total = qty() * price();
-
-    const DataToSend = {
-      id: 0,
-      tipepengajuan: 'Monthly',
-      entry_ts: timestamp,
-      keterangan: keterangan(),
-      kebutuhan: need(),
-      coa_kd: selectedOption()?.value,
-      quantity: qty(),
-      uom: uom(),
-      price: price(),
-      total: total,
-    };
-
-    console.log("data kontak: ", DataToSend)
-    try{
-      const response = await fetch('/api/monthlypengajuan/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(DataToSend),
-      });
-  
-      if (response.ok) {
-        console.log('Data berhasil diinput'); // Tampilkan pesan sukses
-        alert('Data berhasil ditambah');
-        addRow();
-      } else {
-          const errorMessage = await response.text();
-          alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-          console.error('Gagal mengubah data:', errorMessage);
-      }
-    } catch (error) {
-        alert('Terjadi kesalahan. Silakan coba lagi.');
-        console.error('Terjadi kesalahan:', error);
-    }
-
-  };
 
   // kode dropdown keterangan
   const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
