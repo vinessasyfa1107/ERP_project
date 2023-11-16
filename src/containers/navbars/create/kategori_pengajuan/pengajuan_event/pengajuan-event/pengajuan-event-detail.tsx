@@ -5,7 +5,6 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './pengajuan-event-detail.css'
 import PengajuanWeekly from '../../../kategori_pengajuanweekly/pengajuan-weekly/pengajuan-weekly';
 import { Total6, Total7, Total8, setTotal4 } from '../../../../../../store/Pengajuan/Event-satu/pengajuan-e-satu';
-import { Total5 } from '../../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Icon } from '@iconify-icon/solid';
 import EditEventDetails from '../popup-event/edit-event-details';
 import ComfirmDeleteEvDetails from '../popup-event/confirm-delete-evdetails';
@@ -23,8 +22,10 @@ interface SelectedOption {
   label?: string;
 }
 
-type RowData = {
+export type RowData = {
+    keterangan: string;
     kebutuhan: string;
+    uniqueId?: number;
     qty: number;
     uom: string;
     price: number;
@@ -34,210 +35,108 @@ type RowData = {
   };
 
 const PengajuanEventDetails: Component = () => {
-    const [popUpEvent, setPopUpEvent] = createSignal(false);
-
-    function handlePopUpEvent(){
-        setPopUpEvent(true);
-    }
-
-    // function ClosePopUp(){
-    //     setPopUp(false);
-    // }
-
-    const [isOpen, setIsOpen] = createSignal(false);
-    // const [selectedOption, setSelectedOption] = createSignal('');
-    // const options = [
-    //     "1-0000", "1-1000", "1-1100", "1-1101", "1-1102",
-    //     "1-1200", "1-1201", "1-1202", "1-1203", "1-1204",
-    //     "1-1300", "1-1400", "1-1401", "1-1402", "1-1403", "1-1404",
-    //     "1-1500", "1-1501", "1-1506",
-    //     "1-1600", "1-1700",
-    //     "1-1801", "1-1801", "1-1802", "1-1803",
-    //     "1-9000", "1-9001", "1-2000", "1-2001", "1-2002", "1-2003",
-    //     "3-0000", "3-7000", "3-8000", "3-9000", "3-9999",
-    //     "8-0000",
-    //     "8-1001"
-    //   ];  
-
-    const [gridApi, setGridApi] = createSignal(null);
-    const [rowData, setRowData] = createSignal<RowData[]>(
-        (() => {
-          // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableDataEventDetails');
-          return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-        })()
-      );
-      
-    const dropdownRef = (el) => {
-        if (el) {
-        const handleDocumentClick = (e) => {
-            if (!el.contains(e.target)) {
-            setIsOpen(false);
-            }
-        };
-        document.addEventListener('click', handleDocumentClick);
-        onCleanup(() => {
-            document.removeEventListener('click', handleDocumentClick);
-        });
-        }
-    };
-      
-    const [need, setNeed] = createSignal("");
-    const [qty, setQty] = createSignal(0);
-    const [uom, setuom] = createSignal("");
-    const [price, setPrice] = createSignal(0);
-    const [coa, setCOA] = createSignal("");
-  
-
-    const [EditPopUpEvent, setEditPopUpEvent] = createSignal(false);
-    const [DeletePopUpEvent, setDeletePopUpEvent] = createSignal(false);
-
-    function showEditPopUpEvent(){
-      setEditPopUpEvent(true);
-    }
-
-    function showDeletePopUpEvent(){
-      setDeletePopUpEvent(true);
-    }
-
-    function closePopUpEvent(){
-      setEditPopUpEvent(false);
-      setDeletePopUpEvent(false);
-      setPopUpEvent(false);
-    }
-
-    const gridOptions = {
-      columnDefs: [
-        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
-        { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
-        { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 80 },
-        { field: "uom", headerName: "UoM", width: 100 },
-        { field: "price", headerName: "Price", width: 130 },
-        { field: "total", headerName: "Total", width: 150},
-        {
-          field: 'aksi', width: 80,cellRenderer: (params: any) => {
-            return (
-              <div style={{  display: "flex", "justify-content": "space-between", width:"9vh"}}>
-                <button onClick={showEditPopUpEvent}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button onClick={showDeletePopUpEvent}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
-              </div>
-            );
-          }
-        }
-      ],
-    };
-  
-
-    // const calculateTotal = () => {
-    //     const gridData = rowData();
-    //     let total = 0;
-    //     for (const row of gridData) {
-    //       total += row.total;
-    //     }
-    //     return total;
-    //   };
-
-    const calculateTotal = () => {
-        const gridData = rowData();
-        let Total = 0;
-        for (const row of gridData) {
-          Total += row.total;
-        }
-        setTotal4(Total); // Simpan total di toko
-        return Total;
-      };
-  
-    // onMount(() => {
-    //   // Bersihkan localStorage saat komponen di-unmount
-    //   onCleanup(() => {
-    //     localStorage.removeItem('tableDataEventDetails');
-    //   });
-    // });
-  //   const [keteranganOptions, setKeteranganOptions] = createSignal<string[] | (() => any)>(() => {
-  //     const savedData = localStorage.getItem('tableKetPengajuanEvent');
-  //     return savedData ? JSON.parse(savedData).map((row) => row.keterangan) : [];
-  // });
-  const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
-    localStorage.getItem('tableKetPengajuanEvent')
-        ? JSON.parse(localStorage.getItem('tableKetPengajuanEvent')!).map((row: any) => row.keterangan)
-        : []
+  const [gridApi, setGridApi] = createSignal(null);
+  const [rowData, setRowData] = createSignal<RowData[]>(
+    (() => {
+      const savedData = localStorage.getItem('tableKetPengajuanEvent');
+      return savedData
+        ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
+        : ([] as RowData[]);
+    })()
   );
-
-  // kode untuk buat dropdown searc
-  const [inputValue, setInputValue] = createSignal('');
-  // const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
-
-  const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
-
-  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsEvdetails());
-  const [showDropdown, setShowDropdown] = createSignal(false);
-
-  createEffect(() => {
-    const inputValueLowerCase = inputValue().toLowerCase();
-    const filtered = optionsEvdetails().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
-    setFilteredOptions(filtered);
-  });
-
-  createEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target && !target.closest('.dropdown-container')) {
-        setShowDropdown(false);
-      }
-    };
-
-    window.addEventListener('click', handleClickOutside);
-
-    onCleanup(() => {
-      window.removeEventListener('click', handleClickOutside);
-    });
-  });
-
-  // const handleOptionSelect = (selectedOption: Option) => {
-  //     setInputValue(selectedOption.label);
-  //     setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-  //     setShowDropdown(false);
-  //   };
     
+    
+  const [need, setNeed] = createSignal("");
+  const [qty, setQty] = createSignal(0);
+  const [uom, setuom] = createSignal("");
+  const [price, setPrice] = createSignal(0);
+  const [coa, setCOA] = createSignal("");
 
-  const handleInput = (e: Event) => {
-    const label = (e.target as HTMLInputElement).value;
-    setInputValue(label);
 
-    const selectedOption = optionsEvdetails().find((option) => option.label === label);
-    if (selectedOption) {
-      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-    } else {
-      setSelectedOption(null);
+  const [popUpEvent, setPopUpEvent] = createSignal(false);
+
+  function handlePopUpEvent(){
+      setPopUpEvent(true);
+  }
+  // const [EditPopUp, setEditPopUp] = createSignal(false);
+  // const [DeletePopUp, setDeletePopUp] = createSignal(false);
+
+  // function showEditPopUp(row: RowData){
+  //   setSelectedRow(row);
+  //   setEditPopUp(true);
+  // }
+
+  // function showDeletePopUp(){
+  //   setDeletePopUp(true);
+  // }
+
+  function closePopUpEvent(){
+    // setEditPopUp(false);
+    // setDeletePopUp(false);
+    setPopUpEvent(false);
+  }
+
+  const handleCellValueChanged = (params) => {
+    const { data } = params;
+    // Update local storage
+    localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(rowData()));
+  
+    // Recalculate total if 'qty' or 'price' is changed
+    if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
+      const newTotal = data.qty * data.price;
+      const updatedRow = { ...data, total: newTotal };
+      setRowData((prevData) => {
+        const newData = prevData.map((row) =>
+          areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
+        );
+        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
+        return newData;
+      });
     }
-
-    setShowDropdown(true);
   };
 
- 
-  const handleOptionSelect = (selectedOption: Option) => {
-      setInputValue(selectedOption.label);
-      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-      setShowDropdown(false);
-    };
-    
-  const handleKeyDown = (e: KeyboardEvent) => {
-  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-      e.preventDefault();
+  const deleteRow = (index: number) => {
+    setRowData((prevData) => {
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      // Update localStorage after removing the row
+      localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
+      return newData;
+    });
+  };
+      
+
+  // Fungsi utilitas untuk membandingkan dua objek row
+  const areRowsEqual = (row1, row2) => {
+    // Implementasikan logika perbandingan berdasarkan properti yang sesuai
+    return row1.uniqueId === row2.uniqueId;
+  };
   
-      const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
-      const nextIndex =
-      currentIndex === -1
-          ? 0
-          : e.key === 'ArrowDown'
-          ? (currentIndex + 1) % filteredOptions().length
-          : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
-  
-      setSelectedOption(filteredOptions()[nextIndex]);
-  } else if (e.key === 'Enter' && selectedOption()) {
-      handleOptionSelect(selectedOption() as Option);
-  }
+  const gridOptions = {
+    columnDefs: [
+      { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
+      // { field: "uniqueId" },
+      { field: "keterangan", editable: true, width: 150 },
+      { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
+      { field: "coa", headerName: "COA", editable: true, width: 130 },
+      { field: "qty", headerName: "Qty", editable: true, width: 80 },
+      { field: "uom", headerName: "UoM", editable: true, width: 100 },
+      { field: "price", headerName: "Price", editable: true, width: 130 },
+      { field: "total", headerName: "Total",  width: 150},
+      {
+        field: 'aksi', width: 80,cellRenderer: (params: any) => {
+          const rowIndex = params.rowIndex;
+          const row = params.data; // Mendapatkan data baris dari params.data
+
+          return (
+            <div>
+              <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+            </div>
+          );
+        }
+      }
+    ],
+    onCellValueChanged: handleCellValueChanged,
   };
 
   const onGridReady = (params: any) => {
@@ -246,8 +145,10 @@ const PengajuanEventDetails: Component = () => {
 
   const addRow = () => {
     if (need() && qty() && uom() && price() ) {
-      const total = qty() * price();
+      let total = qty() * price();
       const newRow: RowData = {
+        // uniqueId: counter(),
+        keterangan: keterangan(),
         kebutuhan: need(),
         qty: qty(),
         uom: uom(),
@@ -259,9 +160,10 @@ const PengajuanEventDetails: Component = () => {
       setRowData((prevData) => {
         const newData = [...prevData, newRow];
         // Simpan data ke localStorage saat menambahkan data baru
-        localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
+        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
         return newData;
       });
+
       clearInputs();
     }
   };
@@ -274,69 +176,169 @@ const PengajuanEventDetails: Component = () => {
     setCOA("");
   };
 
-  const [keterangan, setKeterangan] = createSignal('');
-  const [timestamp, setTimestamp] = createSignal('');
+  // const calculateTotal = () => {
+  //     const gridData = rowData();
+  //     let total = 0;
+  //     for (const row of gridData) {
+  //       total += row.total;
+  //     }
+  //     return total;
+  //   };
+  createEffect(() => {
+    const gridData = rowData();
+    let Total = 0;
+    for (const row of gridData) {
+      Total += row.total;
+    }
+    setTotal4(Total); // Simpan total di toko
+  });
 
-  const handleSubmit = async (e) => {
+  // onMount(() => {
+  //   // Bersihkan localStorage saat komponen di-unmount
+  //   onCleanup(() => {
+  //     localStorage.removeItem('tableKetPengajuanEvent');
+  //   });
+  // });
+
+const [keterangan, setKeterangan] = createSignal('');
+const [timestamp, setTimestamp] = createSignal('');
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // if (!formData().nama || !formData().nama_perusahaan || !formData().email) {
+  //     alert('Mohon isi semua kolom yang dibutuhkan.');
+  //     return; // Menghentikan pengiriman jika ada input yang kosong
+  //   }
+  const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().slice(0, 11);
+
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    const timestamp = `${formattedDate}${formattedTime}`;
+
+    console.log("tanggal dan waktu: ", timestamp);
+    setTimestamp(timestamp);
+
+  const total = qty() * price();
+
+  const DataToSend = {
+    id: 0,
+    tipepengajuan: 'Event',
+    entry_ts: timestamp,
+    keterangan: keterangan(),
+    kebutuhan: need(),
+    coa_kd: selectedOption()?.value,
+    quantity: qty(),
+    uom: uom(),
+    price: price(),
+    total: total,
+  };
+
+  console.log("data kontak: ", DataToSend)
+  try{
+    const response = await fetch('/api/eventpengajuan/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(DataToSend),
+    });
+
+    if (response.ok) {
+      console.log('Data berhasil diinput'); // Tampilkan pesan sukses
+      alert('Data berhasil ditambah');
+      addRow();
+    } else {
+        const errorMessage = await response.text();
+        alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+        console.error('Gagal mengubah data:', errorMessage);
+    }
+  } catch (error) {
+      alert('Terjadi kesalahan. Silakan coba lagi.');
+      console.error('Terjadi kesalahan:', error);
+  }
+
+};
+
+// kode dropdown keterangan
+const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
+  localStorage.getItem('tableKetPengajuanEvent')
+      ? JSON.parse(localStorage.getItem('tableKetPengajuanEvent')!).map((row: any) => row.keterangan)
+      : []
+);
+
+// kode untuk buat dropdown search COA
+const [inputValue, setInputValue] = createSignal('');
+// const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
+
+const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+
+const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsEvdetails());
+const [showDropdown, setShowDropdown] = createSignal(false);
+
+createEffect(() => {
+  const inputValueLowerCase = inputValue().toLowerCase();
+  const filtered = optionsEvdetails().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+  setFilteredOptions(filtered);
+});
+
+createEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target && !target.closest('.dropdown-container')) {
+      setShowDropdown(false);
+    }
+  };
+
+  window.addEventListener('click', handleClickOutside);
+
+  onCleanup(() => {
+    window.removeEventListener('click', handleClickOutside);
+  });
+});
+
+const handleInput = (e: Event) => {
+  const label = (e.target as HTMLInputElement).value;
+  setInputValue(label);
+
+  const selectedOption = optionsEvdetails().find((option) => option.label === label);
+  if (selectedOption) {
+    setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+  } else {
+    setSelectedOption(null);
+  }
+
+  setShowDropdown(true);
+};
+
+
+const handleOptionSelect = (selectedOption: Option) => {
+    setInputValue(selectedOption.label);
+    setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+    setShowDropdown(false);
+  };
+  
+const handleKeyDown = (e: KeyboardEvent) => {
+if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
     e.preventDefault();
 
-    // if (!formData().nama || !formData().nama_perusahaan || !formData().email) {
-    //     alert('Mohon isi semua kolom yang dibutuhkan.');
-    //     return; // Menghentikan pengiriman jika ada input yang kosong
-    //   }
-    const currentDate = new Date();
-      const formattedDate = currentDate.toISOString().slice(0, 11);
+    const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
+    const nextIndex =
+    currentIndex === -1
+        ? 0
+        : e.key === 'ArrowDown'
+        ? (currentIndex + 1) % filteredOptions().length
+        : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
 
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-      const timestamp = `${formattedDate}${formattedTime}`;
-
-      console.log("tanggal dan waktu: ", timestamp);
-      setTimestamp(timestamp);
-
-    const total = qty() * price();
-
-    const DataToSend = {
-      id: 0,
-      tipepengajuan: 'Event',
-      entry_ts: timestamp,
-      keterangan: keterangan(),
-      kebutuhan: need(),
-      coa_kd: selectedOption()?.value,
-      quantity: qty(),
-      uom: uom(),
-      price: price(),
-      total: total,
-    };
-
-    console.log("data kontak: ", DataToSend)
-    try{
-      const response = await fetch('/api/monthlypengajuan/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(DataToSend),
-      });
-  
-      if (response.ok) {
-        console.log('Data berhasil diinput'); // Tampilkan pesan sukses
-        alert('Data berhasil ditambah');
-        addRow();
-      } else {
-          const errorMessage = await response.text();
-          alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-          console.error('Gagal mengubah data:', errorMessage);
-      }
-    } catch (error) {
-        alert('Terjadi kesalahan. Silakan coba lagi.');
-        console.error('Terjadi kesalahan:', error);
-    }
-
-  };
+    setSelectedOption(filteredOptions()[nextIndex]);
+} else if (e.key === 'Enter' && selectedOption()) {
+    handleOptionSelect(selectedOption() as Option);
+}
+};
 
 
   return (
@@ -485,7 +487,7 @@ const PengajuanEventDetails: Component = () => {
 
             
             <div class="tambah-data-1-evdetails">
-                <button onClick={handleSubmit}>Tambah</button>
+                <button onClick={addRow}>Tambah</button>
             </div>
         </div>
         <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
@@ -496,7 +498,7 @@ const PengajuanEventDetails: Component = () => {
             />
             <div class="detail-event-details">
                 <div>TOTAL</div>
-                <div>Rp{calculateTotal()}</div>
+                <div>Rp{Total6()}</div>
             </div>
         </div>
         
@@ -506,8 +508,8 @@ const PengajuanEventDetails: Component = () => {
 
         </div>
         {popUpEvent() && <PengajuanEvent OnClose={closePopUpEvent} pengajuanevent={namaPengajuanEvent()}/>}
-        {EditPopUpEvent() && <EditEventDetails OnClose={closePopUpEvent}/>}
-        {DeletePopUpEvent() && <ComfirmDeleteEvDetails OnClose={closePopUpEvent}/>}
+        {/* {EditPopUpEvent() && <EditEventDetails OnClose={closePopUpEvent}/>}
+        {DeletePopUpEvent() && <ComfirmDeleteEvDetails OnClose={closePopUpEvent}/>} */}
     </div>
   );
 };

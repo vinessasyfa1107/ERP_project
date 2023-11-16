@@ -9,6 +9,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
 import ConfirmAllPlan from './popup/confirm-all-plan';
+
 export interface PengajuanMonthlyProps {
     OnClose?: () => void;
     total?: number,
