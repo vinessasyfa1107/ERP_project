@@ -24,6 +24,7 @@ interface SelectedOption {
 }
 
 type RowData = {
+    keterangan: string;
     kebutuhan: string;
     qty: number;
     uom: string;
@@ -45,19 +46,6 @@ const PengajuanEventDetails: Component = () => {
     // }
 
     const [isOpen, setIsOpen] = createSignal(false);
-    // const [selectedOption, setSelectedOption] = createSignal('');
-    // const options = [
-    //     "1-0000", "1-1000", "1-1100", "1-1101", "1-1102",
-    //     "1-1200", "1-1201", "1-1202", "1-1203", "1-1204",
-    //     "1-1300", "1-1400", "1-1401", "1-1402", "1-1403", "1-1404",
-    //     "1-1500", "1-1501", "1-1506",
-    //     "1-1600", "1-1700",
-    //     "1-1801", "1-1801", "1-1802", "1-1803",
-    //     "1-9000", "1-9001", "1-2000", "1-2001", "1-2002", "1-2003",
-    //     "3-0000", "3-7000", "3-8000", "3-9000", "3-9999",
-    //     "8-0000",
-    //     "8-1001"
-    //   ];  
 
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
@@ -106,26 +94,66 @@ const PengajuanEventDetails: Component = () => {
       setPopUpEvent(false);
     }
 
+    const handleCellValueChanged = (params) => {
+      const { data } = params;
+      // Update local storage
+      localStorage.setItem('tableData', JSON.stringify(rowData()));
+    
+      // Recalculate total if 'qty' or 'price' is changed
+      if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
+        const newTotal = data.qty * data.price;
+        const updatedRow = { ...data, total: newTotal };
+        setRowData((prevData) => {
+          const newData = prevData.map((row) =>
+            areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
+          );
+          localStorage.setItem('tableData', JSON.stringify(newData));
+          return newData;
+        });
+      }
+    };
+
+    const deleteRow = (index: number) => {
+      setRowData((prevData) => {
+        const newData = [...prevData];
+        newData.splice(index, 1);
+        // Update localStorage after removing the row
+        localStorage.setItem('tableData', JSON.stringify(newData));
+        return newData;
+      });
+    };
+        
+
+    // Fungsi utilitas untuk membandingkan dua objek row
+    const areRowsEqual = (row1, row2) => {
+      // Implementasikan logika perbandingan berdasarkan properti yang sesuai
+      return row1.uniqueId === row2.uniqueId;
+    };
+
     const gridOptions = {
       columnDefs: [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
-        { field: "kebutuhan", headerName: "Kebutuhan", width: 200 },
-        { field: "coa", headerName: "COA", width: 130 },
-        { field: "qty", headerName: "Qty", width: 80 },
-        { field: "uom", headerName: "UoM", width: 100 },
-        { field: "price", headerName: "Price", width: 130 },
+        { field: "keterangan", editable: true, width: 150 },
+        { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
+        { field: "coa", headerName: "COA", editable: true, width: 130 },
+        { field: "qty", headerName: "Qty", editable: true, width: 80 },
+        { field: "uom", headerName: "UoM", editable: true, width: 100 },
+        { field: "price", headerName: "Price", editable: true, width: 130 },
         { field: "total", headerName: "Total", width: 150},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
+            const rowIndex = params.rowIndex;
+            const row = params.data; // Mendapatkan data baris dari params.data
+
             return (
-              <div style={{  display: "flex", "justify-content": "space-between", width:"9vh"}}>
-                <button onClick={showEditPopUpEvent}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                <button onClick={showDeletePopUpEvent}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+              <div>
+                <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
               </div>
             );
           }
         }
       ],
+      onCellValueChanged: handleCellValueChanged,
     };
   
 
@@ -248,6 +276,7 @@ const PengajuanEventDetails: Component = () => {
     if (need() && qty() && uom() && price() ) {
       const total = qty() * price();
       const newRow: RowData = {
+        keterangan: keterangan(),
         kebutuhan: need(),
         qty: qty(),
         uom: uom(),
@@ -485,7 +514,7 @@ const PengajuanEventDetails: Component = () => {
 
             
             <div class="tambah-data-1-evdetails">
-                <button onClick={handleSubmit}>Tambah</button>
+                <button onClick={addRow}>Tambah</button>
             </div>
         </div>
         <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
