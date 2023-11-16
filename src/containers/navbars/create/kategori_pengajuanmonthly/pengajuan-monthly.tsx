@@ -272,6 +272,8 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     setPopUpConfirm(false);
   };
 
+
+  // COPY YANG INI YA CAAAAA !!!!!!
   const tableData = JSON.parse(localStorage.getItem('tableData')) || [];
   const tableKetMonth = JSON.parse(localStorage.getItem('tableKetMonth')) || [];
 
