@@ -8,6 +8,7 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
+
 export interface PengajuanMonthlyProps {
     OnClose?: () => void;
     total?: number,
@@ -268,7 +269,7 @@ onMount(async () => {
                         />
                         </div>
                         <div>
-                            <button class="btn-tambah" onClick={addRow}>Tambah</button>
+                            <button class="btn-tambah" onClick={addRow1}>Tambah</button>
                         </div>
                         <div>
                             <button class="btn-cancel" onClick={closeTambahKeterangan}>Selesai</button>
