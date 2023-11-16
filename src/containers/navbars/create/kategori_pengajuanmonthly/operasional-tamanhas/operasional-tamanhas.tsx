@@ -23,6 +23,7 @@ interface SelectedOption {
 }
 
 export type RowData = {
+    keterangan: string;
     uniqueId?: number;
     kebutuhan: string;
     qty: number;
@@ -115,6 +116,7 @@ const OperasionalTamanhas: Component = () => {
       columnDefs: [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
         // { field: "uniqueId" },
+        { field: "keterangan", editable: true, width: 150 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
         { field: "coa", headerName: "COA", editable: true, width: 130 },
         { field: "qty", headerName: "Qty", editable: true, width: 80 },
@@ -146,6 +148,7 @@ const OperasionalTamanhas: Component = () => {
         let total = qty() * price();
         const newRow: RowData = {
           // uniqueId: counter(),
+          keterangan: keterangan(),
           kebutuhan: need(),
           qty: qty(),
           uom: uom(),
