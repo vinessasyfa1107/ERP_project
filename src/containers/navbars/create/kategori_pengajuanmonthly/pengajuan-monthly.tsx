@@ -256,10 +256,57 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
           <button onClick={props.OnClose}>✕</button>
         </div>
         <div class="pengajuan-monthly" >
+
           <div>
             <div class="judul-pengajuan">
               <h1>Form Pengajuan</h1>
               <p>{props.pengajuan}</p>
+
+            <div>
+                <div class="judul-pengajuan">
+                    <h1>Form Pengajuan</h1>
+                    <p>{props.pengajuan}</p>
+                    </div>
+                    {tambahKeterangan() && 
+                    <div class="tambah-keterangan-group">
+                        <div>
+                        <br />
+                        <input 
+                        type="text"
+                        placeholder="Keterangan"
+                        value={keterangan()}
+                        onInput={(e) => setKeterangan(e.target.value)}
+                        />
+                        </div>
+                        <div>
+                            <button class="btn-tambah" onClick={addRow1}>Tambah</button>
+                        </div>
+                        <div>
+                            <button class="btn-cancel" onClick={closeTambahKeterangan}>Selesai</button>
+                        </div>
+                    </div>
+                    }
+
+                
+                <div class="btn-show-keterangan">
+                    {!tambahKeterangan() && 
+                    <button onClick={showTambahKeterangan}><Icon icon="fa-solid:plus" width="11" class="mr-2"/>Keterangan</button>
+                    }
+                </div>
+                </div>
+                <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
+                <AgGridSolid 
+                    gridOptions={gridOptions} 
+                    onGridReady={onGridReady} 
+                    rowData={rowData()} 
+                    onCellClicked={onCellClicked}
+                />
+                <div class="detail-total-operasional">
+                    <div>TOTAL</div>
+                    <div>Rp{allTotal()}</div>
+                </div>
+                </div>
+
             </div>
             {tambahKeterangan() &&
               <div class="tambah-keterangan-group">
