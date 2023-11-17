@@ -136,6 +136,13 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
         }
     };
 
+    const simpanPengajuan = (event: any) => {
+          props.OnClose();
+          // Use router navigation here
+          navigate('/pengajuan/pengajuan_detail');
+  };
+
+
 
     //   const calculateTotalByKeterangan = (keterangan, backendData) => {
     //     const filteredData = backendData.filter(item => item.keterangan === keterangan);
@@ -252,6 +259,8 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
 
   const [popUpConfirm, setPopUpConfirm] = createSignal(false);
 
+  const [timestamp, setTimestamp] = createSignal("");
+
   function showPopUpConfirm() {
     // console.log("Closing current popup");
     // props.OnClose();
@@ -263,8 +272,19 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     //   console.log("Setting popUpConfirm to true");
     //   setPopUpConfirm(true);
     // }
-    setPopUpConfirm(true);
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().slice(0, 11);
 
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    const timestamp = `${formattedDate}${formattedTime}`;
+
+    console.log("tanggal dan waktu: ", timestamp);
+    setTimestamp(timestamp);
+    setPopUpConfirm(true);
   }
   
 
@@ -354,13 +374,18 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
                         <div>{allTotal1()}</div>
                     </div>
                   </div>
-                  <div class="submit-btn">
-                      <button onClick={showPopUpConfirm}>Submit</button>
+                  <div class="bottom-btn">
+                  <div >
+                      <button class="submit-btn" onClick={showPopUpConfirm}>Submit</button>
                   </div>
+                  <div>
+                      <button class="simpan-btn" onClick={simpanPengajuan}>Simpan</button>
+                  </div>
+                </div>
+                </div>
 
-            </div>
         </div>
-        {popUpConfirm() && <ConfirmAllPlan OnClose={closePopUpConfirm} pengajuan={props.pengajuan}/>}
+        {popUpConfirm() && <ConfirmAllPlan OnClose={closePopUpConfirm} pengajuan={props.pengajuan} sumtotal={allTotal1()} date={timestamp()}/>}
     </div>
   );
 };
