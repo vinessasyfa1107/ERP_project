@@ -275,7 +275,7 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         <div class="pengajuan-event" >
             <div>
                 <div class="judul-pengajuan-event">
-                    <h1>Form Pengajuan</h1>
+                    <h1>Form Pengajuan Event</h1>
                     <p>{props.pengajuanevent}</p>
                     </div>
                     {tambahKeterangan() && 

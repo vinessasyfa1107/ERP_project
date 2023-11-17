@@ -8,7 +8,7 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
+import ConfirmAllPlanWeekly from './popup-save/confirm-all-plan-weekly';
 
 export interface PengajuanWeeklyProps {
     OnClose?: () => void;
@@ -20,7 +20,7 @@ export interface PengajuanWeeklyProps {
     pengajuanweekly?: string,
 }
 
-type RowData = {
+type RowDataWeekly = {
     keterangan: string;
     totalplan?: number;
   };
@@ -28,11 +28,11 @@ type RowData = {
 const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
     const [gridApi, setGridApi] = createSignal(null);
-    const [rowData, setRowData] = createSignal<RowData[]>(
+    const [rowDataWeekly, setRowDataWeekly] = createSignal<RowDataWeekly[]>(
         (() => {
           // Coba ambil data dari localStorage saat komponen diinisialisasi
           const savedData = localStorage.getItem('tableKetWeekly');
-          return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+          return savedData ? JSON.parse(savedData) : ([] as RowDataWeekly[]);
         })()
       );
 
@@ -42,7 +42,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
 // onMount(async () => {
 //     try {
-//       const backendData = await DataWeeklyPlanning("data monthplan");
+//       const backendData = await DataMonthlyPlanning("data monthplan");
 //       console.log("monthplan: ", backendData);
 //       setBackendData(backendData);
   
@@ -59,11 +59,11 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 //         return { keterangan: localItem.keterangan, totalplan: total };
 //       });
   
-  //     setRowData(aggregatedData);
-  //   } catch (error) {
-  //     console.error('Error fetching data from backend:', error);
-  //   }
-  // });
+//       setRowData(aggregatedData);
+//     } catch (error) {
+//       console.error('Error fetching data from backend:', error);
+//     }
+//   });
   
   // ...
   
@@ -74,6 +74,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         setPageKeterangan(true);
     };
     const [showTambahNamaPengajuan, setShowTambahNamaPengajuan] = createSignal(true);
+
 
 
     const submitForm = () => {
@@ -87,17 +88,17 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     };
 
     const [keterangan, setKeterangan] = createSignal("");
-    const [allTotalWeekly, setallTotalWeekly] = createSignal(0);
+    const [allTotal, setAllTotal] = createSignal(0);
 
 
     function clearKeterangan(keteranganToRemove) {
         // Filter rowData untuk menghapus baris dengan keterangan yang sesuai
-        const updatedData = rowData().filter(item => item.keterangan !== keteranganToRemove);
+        const updatedData = rowDataWeekly().filter(item => item.keterangan !== keteranganToRemove);
       
-        // Perbarui rowData dengan data yang telah diperbarui
-        setRowData(updatedData);
+        // Perbarui row dengan  yang telah diperbarui
+        setRowDataWeekly(updatedData);
       
-        // Simpan data yang telah diperbarui ke localStorage
+        // Simpan  yang telah diperbarui ke localStorage
         localStorage.setItem('tableKetWeekly', JSON.stringify(updatedData));
     }
       
@@ -160,61 +161,61 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     //         return newData;
     //       });
 
-    //       setallTotalWeekly((prevTotal) => prevTotal + total);
+    //       setAllTotal((prevTotal) => prevTotal + total);
 
     //       clearInputs();
     //     }
     //   };
-
     const calculateTotalByKeterangan = (keterangan, backendData) => {
         const filteredData = backendData.filter(item => item.keterangan === keterangan);
         const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total2, 0);
         return total;
       };
 
-    const calculateallTotalWeekly = () => {
-        const totalall = rowData().reduce((accumulator, currentValue) => accumulator + currentValue.totalplan, 0);
+    const calculateAllTotal = () => {
+        const totalall = rowDataWeekly().reduce((accumulator, currentValue) => accumulator + currentValue.totalplan, 0);
         console.log("hasil total", totalall);
-        setallTotalWeekly(totalall);
+        setAllTotal(totalall);
       };
       
-      const addRow = () => {
-        if (keterangan()) {
-          const total = calculateTotalByKeterangan(keterangan(), backendData);
+      // const addRow = () => {
+      //   if (keterangan()) {
+      //     const total = calculateTotalByKeterangan(keterangan(), backendData);
       
-          const newRow: RowData = {
-            keterangan: keterangan(),
-            totalplan: total
-          };
+      //     const newRow: RowDataWeekly = {
+      //       keterangan: keterangan(),
+      //       totalplan: total
+      //     };
       
-          setRowData((prevData) => {
-            const newData = [...prevData, newRow];
-            // Simpan data ke localStorage saat menambahkan data baru
-            localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-            // calculateallTotalWeekly();
-            return newData;
-          });
+      //     setRowDataWeekly((prevData) => {
+      //       const newData = [...prevData, newRow];
+      //       // Simpan data ke localStorage saat menambahkan data baru
+      //       localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+      //       // calculateAllTotal();
+      //       return newData;
+      //     });
       
-          setallTotalWeekly((prevTotal) => prevTotal + total);
+      //     setAllTotal((prevTotal) => prevTotal + total);
       
-          clearInputs();
-        }
-      };
-      createEffect(() => {
-        calculateallTotalWeekly();
-      });
+      //     clearInputs();
+      //   }
+      // };
+      // createEffect(() => {
+      //   calculateAllTotal();
+      // });
+      
     
     const addRow1 = () => {
     if (keterangan()) {
         // const total = qty() * price();
-        const newRow: RowData = {
+        const newRow: RowDataWeekly = {
         keterangan: keterangan()
         };
-        setRowData((prevData) => {
+        setRowDataWeekly((prevData) => {
         const newData = [...prevData, newRow];
         // Simpan data ke localStorage saat menambahkan data baru
         localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-        // calculateallTotalWeekly();
+        // calculateAllTotal();
         return newData;
         });
         clearInputs();
@@ -237,6 +238,70 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
   const location = useLocation();
 
+  const submitPengajuan = () => {
+    // Perform form submission logic here
+    console.log("trigger submit pengajuan");
+    // Clear data from tableKetWeekly
+    localStorage.removeItem('tableKetWeekly');
+    
+    // Clear data from tableDataWeekly
+    localStorage.removeItem('tableDataWeekly');
+    console.log("Data terhapus")
+  };
+
+  //Untuk PopUp Submit
+
+  const [popUpSubmit, setPopUpSubmit] = createSignal(false);
+
+  function showPopUpSubmit() {
+    // console.log("Closing current popup");
+    // props.OnClose();
+  
+    // const isConfirmed = window.confirm("Are you sure you want to proceed?");
+    // console.log("Confirmation result:", isConfirmed);
+  
+    // if (isConfirmed == true) {
+    //   console.log("Setting popUpConfirm to true");
+    //   setPopUpConfirm(true);
+    // }
+    setPopUpSubmit(true);
+
+  }
+  
+
+  function closePopUpConfirm(){
+    setPopUpSubmit(false);
+  };
+
+
+  // COPY YANG INI YA CAAAAA !!!!!!
+  const tableDataWeekly = JSON.parse(localStorage.getItem('tableDataWeekly')) || [];
+  const tableKetWeekly = JSON.parse(localStorage.getItem('tableKetWeekly')) || [];
+
+  const calculateTotalByKeterangan1 = (data) => {
+    const result = {};
+    data.forEach((row) => {
+      const keterangan = row.keterangan;
+      result[keterangan] = (result[keterangan] || 0) + row.total;
+    });
+    return result;
+  };
+  
+  const totalByKeterangan = calculateTotalByKeterangan1(tableDataWeekly);
+  
+  const mergedData = tableKetWeekly.map((row) => ({
+    ...row,
+    totalplan: totalByKeterangan[row.keterangan] || 0,
+  }));
+
+  const allTotal1Weekly = () => {
+    const totalPlanArray = mergedData.map((row) => row.totalplan || 0);
+    const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
+    return `Rp${total}`;
+  };
+  
+  
+
   return (
     <div class="overlay">
       
@@ -246,7 +311,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
             <button onClick={props.OnClose}>✕</button>
         </div>
         <div class="pengajuan-weekly" >
-        <div>
+            <div>
                 <div class="judul-pengajuan-weekly">
                     <h1>Form Pengajuan Weekly</h1>
                     <p>{props.pengajuanweekly}</p>
@@ -261,39 +326,43 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
                         value={keterangan()}
                         onInput={(e) => setKeterangan(e.target.value)}
                         />
-                </div>
-                    <div>
-                        <button class="btn-tambah-weekly" onClick={addRow1}>Tambah</button>
+                        </div>
+                        <div>
+                            <button class="btn-tambah-weekly" onClick={addRow1}>Tambah</button>
+                        </div>
+                        <div>
+                            <button class="btn-cancel-weekly" onClick={closeTambahKeterangan}>Selesai</button>
+                        </div>
                     </div>
-                    <div>
-                        <button class="btn-cancel-weekly" onClick={closeTambahKeterangan}>Selesai</button>
-                    </div>
+                    }
+
+                
+                <div class="btn-show-keterangan-weekly">
+                    {!tambahKeterangan() && 
+                    <button onClick={showTambahKeterangan}><Icon icon="fa-solid:plus" width="11" class="mr-2"/>Keterangan</button>
+                    }
                 </div>
-                }
-            
-            <div class="btn-show-keterangan-weekly">
-                {!tambahKeterangan() && 
-                  <button onClick={showTambahKeterangan}><Icon icon="fa-solid:plus" width="11" class="mr-2"/>Keterangan</button>
-                }
+                </div>
+                  <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
+                    <AgGridSolid 
+                        gridOptions={gridOptions} 
+                        onGridReady={onGridReady} 
+                        rowData={mergedData} 
+                        onCellClicked={onCellClicked}
+                    />
+                    <div class="detail-total-weekly">
+                        <div>TOTAL</div>
+                        <div>{allTotal1Weekly()}</div>
+                    </div>
+                  </div>
+                  <div class="submit-btn-weekly">
+                      <button onClick={showPopUpSubmit}>Submit</button>
+
+                  </div>
+
             </div>
-            </div>
-            <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "80vh", margin:"auto" }}>
-            <AgGridSolid 
-                gridOptions={gridOptions} 
-                onGridReady={onGridReady} 
-                rowData={rowData()} 
-                onCellClicked={onCellClicked}
-            />
-            <div class="detail-total-operasional">
-                <div>TOTAL</div>
-                <div>Rp{allTotalWeekly()}</div>
-            </div>
-            </div>
-            {/* <div>
-                <A href='/pengajuan-monthly/operasional-rutin-tamanhas' onClick={props.OnClose}>Tambah Pengajuan</A>
-            </div> */}
         </div>
-    </div>
+        {popUpSubmit() && <ConfirmAllPlanWeekly OnClose={closePopUpConfirm} pengajuanweekly={props.pengajuanweekly}/>}
     </div>
   );
 };
