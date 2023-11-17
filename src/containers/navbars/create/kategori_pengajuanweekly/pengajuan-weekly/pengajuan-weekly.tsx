@@ -42,7 +42,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
 // onMount(async () => {
 //     try {
-//       const backendData = await DataMonthlyPlanning("data monthplan");
+//       const backendData = await DataWeeklyPlanning("data monthplan");
 //       console.log("monthplan: ", backendData);
 //       setBackendData(backendData);
   
@@ -59,11 +59,11 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 //         return { keterangan: localItem.keterangan, totalplan: total };
 //       });
   
-//       setRowData(aggregatedData);
-//     } catch (error) {
-//       console.error('Error fetching data from backend:', error);
-//     }
-//   });
+  //     setRowData(aggregatedData);
+  //   } catch (error) {
+  //     console.error('Error fetching data from backend:', error);
+  //   }
+  // });
   
   // ...
   
@@ -74,7 +74,6 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         setPageKeterangan(true);
     };
     const [showTambahNamaPengajuan, setShowTambahNamaPengajuan] = createSignal(true);
-
 
 
     const submitForm = () => {
@@ -88,7 +87,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     };
 
     const [keterangan, setKeterangan] = createSignal("");
-    const [allTotal, setAllTotal] = createSignal(0);
+    const [allTotalWeekly, setallTotalWeekly] = createSignal(0);
 
 
     function clearKeterangan(keteranganToRemove) {
@@ -131,7 +130,6 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
             // Assuming 'keterangan' is the column containing the link
             // Redirect to the specified URL when the 'keterangan' column is clicked
             // You can adjust this logic based on your column configuration
-            // alert('klik');
             props.OnClose();
             // Use router navigation here
             navigate('/pengajuan-weekly/pengajuanweekly-insentif');
@@ -162,21 +160,22 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     //         return newData;
     //       });
 
-    //       setAllTotal((prevTotal) => prevTotal + total);
+    //       setallTotalWeekly((prevTotal) => prevTotal + total);
 
     //       clearInputs();
     //     }
     //   };
+
     const calculateTotalByKeterangan = (keterangan, backendData) => {
         const filteredData = backendData.filter(item => item.keterangan === keterangan);
         const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total2, 0);
         return total;
       };
 
-    const calculateAllTotal = () => {
+    const calculateallTotalWeekly = () => {
         const totalall = rowData().reduce((accumulator, currentValue) => accumulator + currentValue.totalplan, 0);
         console.log("hasil total", totalall);
-        setAllTotal(totalall);
+        setallTotalWeekly(totalall);
       };
       
       const addRow = () => {
@@ -192,19 +191,19 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
             const newData = [...prevData, newRow];
             // Simpan data ke localStorage saat menambahkan data baru
             localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-            // calculateAllTotal();
+            // calculateallTotalWeekly();
             return newData;
           });
       
-          setAllTotal((prevTotal) => prevTotal + total);
+          setallTotalWeekly((prevTotal) => prevTotal + total);
       
           clearInputs();
         }
       };
       createEffect(() => {
-        calculateAllTotal();
+        calculateallTotalWeekly();
       });
-      
+    
     const addRow1 = () => {
     if (keterangan()) {
         // const total = qty() * price();
@@ -215,7 +214,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         const newData = [...prevData, newRow];
         // Simpan data ke localStorage saat menambahkan data baru
         localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-        // calculateAllTotal();
+        // calculateallTotalWeekly();
         return newData;
         });
         clearInputs();
@@ -287,7 +286,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
             />
             <div class="detail-total-operasional">
                 <div>TOTAL</div>
-                <div>Rp</div>
+                <div>Rp{allTotalWeekly()}</div>
             </div>
             </div>
             {/* <div>
