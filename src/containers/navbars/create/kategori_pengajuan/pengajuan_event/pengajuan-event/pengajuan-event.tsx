@@ -7,6 +7,7 @@ import { A, useLocation, useNavigate } from '@solidjs/router';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import ConfirmAllEvent from '../popup-event/confirm-all-event';
 // import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
 
 export interface PengajuanEventProps {
@@ -264,6 +265,28 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
     return `Rp${total}`;
   };
 
+  const [popUpConfirm, setPopUpConfirm] = createSignal(false);
+
+  function showPopUpConfirm() {
+    // console.log("Closing current popup");
+    // props.OnClose();
+  
+    // const isConfirmed = window.confirm("Are you sure you want to proceed?");
+    // console.log("Confirmation result:", isConfirmed);
+  
+    // if (isConfirmed == true) {
+    //   console.log("Setting popUpConfirm to true");
+    //   setPopUpConfirm(true);
+    // }
+    setPopUpConfirm(true);
+
+  }
+  
+
+  function closePopUpConfirm(){
+    setPopUpConfirm(false);
+  };
+
   return (
     <div class="overlay">
       
@@ -275,28 +298,28 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         <div class="pengajuan-event" >
             <div>
                 <div class="judul-pengajuan-event">
-                    <h1>Form Pengajuan Event</h1>
-                    <p>{props.pengajuanevent}</p>
+                  <h1>Form Pengajuan</h1>
+                  <p>{props.pengajuanevent}</p>
+                </div>
+                {tambahKeterangan() && 
+                <div class="tambah-keterangan-group-event">
+                    <div>
+                    <br />
+                    <input 
+                    type="text"
+                    placeholder="Keterangan"
+                    value={keterangan()}
+                    onInput={(e) => setKeterangan(e.target.value)}
+                    />
                     </div>
-                    {tambahKeterangan() && 
-                    <div class="tambah-keterangan-group-event">
-                        <div>
-                        <br />
-                        <input 
-                        type="text"
-                        placeholder="Keterangan"
-                        value={keterangan()}
-                        onInput={(e) => setKeterangan(e.target.value)}
-                        />
-                        </div>
-                        <div>
-                            <button class="btn-tambah-event" onClick={addRow1}>Tambah</button>
-                        </div>
-                        <div>
-                            <button class="btn-cancel-event" onClick={closeTambahKeterangan}>Selesai</button>
-                        </div>
+                    <div>
+                        <button class="btn-tambah-event" onClick={addRow1}>Tambah</button>
                     </div>
-                    }
+                    <div>
+                        <button class="btn-cancel-event" onClick={closeTambahKeterangan}>Selesai</button>
+                    </div>
+                </div>
+                }
 
                 
                 <div class="btn-show-keterangan-event">
@@ -317,9 +340,13 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
                     <div>Rp{allTotal1()}</div>
                 </div>
                 </div>
+                <div class="submit-btn-event">
+                    <button onClick={showPopUpConfirm}>Submit</button>
+                </div>
             </div>
 
         </div>
+        {popUpConfirm() && <ConfirmAllEvent OnClose={closePopUpConfirm} pengajuan={props.pengajuanevent} sumtotal={allTotal1()}/>}
     </div>
   );
 };

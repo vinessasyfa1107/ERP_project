@@ -43,6 +43,21 @@ const Pengajuan_navbar: Component = () => {
                 </A>
             </div>
 
+            <div class="selection">
+                <A href='/pengajuan/pengajuan_detail' classList={{ active: location.pathname === '/pengajuan/pengajuan_detail' }}>
+                    <div class="box-menu">
+                    <div class="menu-selection">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 48 48">
+                      <g fill="none" stroke="currentColor" stroke-width="4"><path stroke-linejoin="round" d="M5 19h38v22a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V19Zm0-9a2 2 0 0 1 2-2h34a2 2 0 0 1 2 2v9H5v-9Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m16 31l6 6l12-12"/><path stroke-linecap="round" d="M16 5v8m16-8v8"/></g>
+                    </svg>
+                        <div class="name-selection">
+                            Pengajuan
+                        </div>
+                    </div>
+                    </div>
+                </A>
+            </div>
+
         {/* <A href='/pengajuan/pengajuan_dashboard' classList={{ active: location.pathname === '/pengajuan/pengajuan_dashboard' }}>Dashboard</A> */}
         {/* <A href='/pengajuan/pengajuan_laporan' classList={{ active: location.pathname === '/pengajuan/pengajuan_laporan' }}>Laporan</A> */}
       </div>

@@ -96,7 +96,8 @@ const PengajuanEventDetails: Component = () => {
     const handleCellValueChanged = (params) => {
       const { data } = params;
       // Update local storage
-      localStorage.setItem('tableDataMonthly', JSON.stringify(rowData()));
+
+      localStorage.setItem('tableDataEventDetails', JSON.stringify(rowData()));
     
       // Recalculate total if 'qty' or 'price' is changed
       if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
@@ -106,7 +107,7 @@ const PengajuanEventDetails: Component = () => {
           const newData = prevData.map((row) =>
             areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
           );
-          localStorage.setItem('tableDataMonthly', JSON.stringify(newData));
+          localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
           return newData;
         });
       }
@@ -117,7 +118,7 @@ const PengajuanEventDetails: Component = () => {
         const newData = [...prevData];
         newData.splice(index, 1);
         // Update localStorage after removing the row
-        localStorage.setItem('tableDataMonthly', JSON.stringify(newData));
+        localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
         return newData;
       });
     };

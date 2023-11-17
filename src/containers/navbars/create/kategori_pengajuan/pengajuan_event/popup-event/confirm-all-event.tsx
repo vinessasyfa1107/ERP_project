@@ -3,17 +3,16 @@ import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
 import { createSignal, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
-import './confirm-all-plan.css'
+import './confirm-all-event.css'
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { RowData } from '../operasional-tamanhas/operasional-tamanhas';
+import { RowData } from '../pengajuan-event/pengajuan-event-detail';
 
-interface ConfirmAllPlanProps {
+interface ConfirmAllEventProps {
     OnClose: () => void;
     pengajuan: string;
     sumtotal: string;
-    date: string;
 }
 
 interface AggregatedRowData {
@@ -22,30 +21,16 @@ interface AggregatedRowData {
   }
   
 
-const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
+const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
 
-    // const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
-    //     (() => {
-    //       const savedData = localStorage.getItem('tableData');
-    //       return savedData
-    //         ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) as RowData[]
-    //         : ([] as RowData[]);
-    //     })()
-    //   );
     const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
-      (() => {
-          const savedData = localStorage.getItem('tableData');
-          const entry_ts = props.date; // Ambil nilai timestamp dari props
-
+        (() => {
+          const savedData = localStorage.getItem('tableDataEventDetails');
           return savedData
-              ? JSON.parse(savedData).map((row, index) => ({
-                  ...row,
-                  // uniqueId: index,
-                  entry_ts, // Tambahkan properti timestamp ke setiap objek
-              })) as RowData[]
-              : ([] as RowData[]);
-      })()
-  );
+            ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) as RowData[]
+            : ([] as RowData[]);
+        })()
+      );
 
 
 
@@ -97,71 +82,26 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
     // Mengonversi data agar sesuai dengan format AgGridSolid
     const rowDataForGrid = transformDataForGrid(aggregatedRowData());
     
-    const gridOptions = {
-      domLayout: 'autoHeight' as 'autoHeight',            
-      columnDefs: [
-            { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
-            { field: "keterangan", width: 350},
-            { field: "total", headerName:"Total", width: 97},
-        ],
-        
-    };
-
-    console.log("tes", transformDataForGrid(aggregatedRowData()))
-    console.log("data all monthly ke BE, ", originalRowData());
-
-
-    const sendDataToBackend = async () => {
-      console.log("data all monthly ke BE, ", originalRowData());
-      // localStorage.removeItem('tableData');
-      // localStorage.removeItem('tableKetMonth');
-      // localStorage.removeItem('namaPengajuanMonthly');
-      try {
-        const response = await fetch('/api/monthlypengajuan/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(originalRowData()),
-        });
+        const gridOptions = {
+          domLayout: 'autoHeight' as 'autoHeight',            
+          columnDefs: [
+                { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
+                { field: "keterangan", width: 350},
+                { field: "total", headerName:"Total", width: 97},
+            ],
+            
+        };
     
-        if (!response.ok) {
-          throw new Error('Gagal mengirim data ke backend');
-        }
-    
-        const responseData = await response.json();
-        console.log('Response dari backend:', responseData);
-    
-        // Tambahkan logika atau penanganan lain jika diperlukan
-        if (responseData.success) {
-          // Data berhasil dikirim, lakukan sesuatu
-          console.log('Data berhasil dikirim ke backend');
-          props.OnClose();
-          // localStorage.removeItem('tableData');
-          // localStorage.removeItem('tableKetMonth');
-          // localStorage.removeItem('namaPengajuanMonthly');
-          // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman berhasil
-        } else {
-          // Gagal karena logika bisnis di backend, tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
-          console.error('Gagal mengirim data ke backend:', responseData.error);
-          // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman gagal
-        }
-      } catch (error) {
-        console.error('Error:', error.message);
-        // Tambahkan penanganan kesalahan jika diperlukan
-      }
-    };
-    
-
-        
+        console.log("tes", transformDataForGrid(aggregatedRowData()))
+      
 
     return (
         <div class="overlay">
 
 
-        <div class="confirm-allplan-m">
+        <div class="confirm-allplan-ev">
          
-                <div class="monthly-plan-confirmation">
+                <div>
                     <form method="dialog">
                         <div class="head-acc" style={{"text-transform":"capitalize"}}>
                             <h2>Apa anda yakin ingin submit data di bawah ini?</h2>
@@ -169,9 +109,10 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
                         </div>
                         <div class="form-pengajuan">
                             <div>
+                                <h1>Pengajuan Event</h1>
                                 <h1>{props.pengajuan}</h1>
                                 <h2>No : 058/FIN.BC/PDO/VI/2023</h2>
-                                <p>{props.date}</p>
+                                <p>Total Amount: {updatedRowData[updatedRowData.length - 1].total}</p>
                                 {/* <p>Aggregated Description: {updatedRowData[updatedRowData.length - 1].aggregatedDescription}</p> */}
                             </div>
                             <div class="ag-theme-alpine z-0" style={{ height: "auto", width: "80vh", margin:"auto"}}>
@@ -187,12 +128,8 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
                             </div>
 
                             <br />
-                            <div>
-                              <div>
-                                <button class="btn-save-edit" onClick={sendDataToBackend}>
-                                  <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
-                                </button>
-                              </div>
+                            <div class="btn-save-edit">
+                                <button ><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                             </div>
                     </form>
                 </div>
@@ -202,4 +139,4 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
 };
 
 
-export default ConfirmAllPlan;
+export default ConfirmAllEvent;

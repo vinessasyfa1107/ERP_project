@@ -11,6 +11,7 @@ import EditMonthlyPlan from './popup/edit-monthly-plan';
 import ComfirmDeletePlan from './popup/confirm-delete-plan';
 import { options } from './data-coa';
 import { namaPengajuan } from '../nama-pengajuan';
+import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/Event/event-pengajuan';
 
 interface Option {
   value: string;
@@ -23,14 +24,16 @@ interface SelectedOption {
 }
 
 export type RowData = {
-    keterangan: string;
-    uniqueId?: number;
-    kebutuhan: string;
-    qty: number;
+    namapengajuan: string;
+    tipepengajuan: string
+    id?: number;
     uom: string;
+    keterangan: string;
+    kebutuhan: string;
+    quantity: number;
     price: number;
     total: number;
-    coa: string;
+    coa_kd: string;
     aksi?: object;
   };
 
@@ -136,7 +139,7 @@ const OperasionalTamanhas: Component = () => {
         // { field: "uniqueId" },
         { field: "keterangan", editable: true, width: 150 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
-        { field: "coa", headerName: "COA", editable: true, width: 130 },
+        { field: "coa_kd", headerName: "COA", editable: true, width: 130 },
         { field: "qty", headerName: "Qty", editable: true, width: 80 },
         { field: "uom", headerName: "UoM", editable: true, width: 100 },
         { field: "price", headerName: "Price", editable: true, width: 130 },
@@ -165,15 +168,17 @@ const OperasionalTamanhas: Component = () => {
       if (need() && qty() && uom() && price() ) {
         let total = qty() * price();
         const newRow: RowData = {
-          // uniqueId: counter(),
+          id: 0,
+          tipepengajuan: "Monthly",
+          namapengajuan: getNamaPengajuanMonthly(),
           keterangan: keterangan(),
           kebutuhan: need(),
-          qty: qty(),
+          quantity: qty(),
           uom: uom(),
           price: price(),
           total: total,
           // coa: selectedOption(),
-          coa: selectedOption()?.value,
+          coa_kd: selectedOption()?.value,
         };
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
