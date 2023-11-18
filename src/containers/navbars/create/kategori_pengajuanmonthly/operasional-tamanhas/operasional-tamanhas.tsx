@@ -10,8 +10,7 @@ import { Icon } from '@iconify-icon/solid';
 import EditMonthlyPlan from './popup/edit-monthly-plan';
 import ComfirmDeletePlan from './popup/confirm-delete-plan';
 import { options } from './data-coa';
-import { namaPengajuan } from '../nama-pengajuan';
-import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/Event/event-pengajuan';
+import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/nama-pengajuan';
 
 interface Option {
   value: string;
@@ -23,7 +22,7 @@ interface SelectedOption {
   label?: string;
 }
 
-export type RowData = {
+export type RowData = { //sesuain ke row data lain (samain field BE) ganti columnDefsnya juga gini fieldnya
     namapengajuan: string;
     tipepengajuan: string
     id?: number;
@@ -135,15 +134,15 @@ const OperasionalTamanhas: Component = () => {
     
     const gridOptions = {
       columnDefs: [
-        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
         // { field: "uniqueId" },
-        { field: "keterangan", editable: true, width: 150 },
+        { field: "keterangan", editable: true, width: 162 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
-        { field: "coa_kd", headerName: "COA", editable: true, width: 130 },
-        { field: "qty", headerName: "Qty", editable: true, width: 80 },
+        { field: "coa_kd", headerName: "COA", editable: true, width: 100 },
+        { field: "quantity", headerName: "Qty", editable: true, width: 80 },
         { field: "uom", headerName: "UoM", editable: true, width: 100 },
-        { field: "price", headerName: "Price", editable: true, width: 130 },
-        { field: "total", headerName: "Total",  width: 150},
+        { field: "price", headerName: "Price", editable: true, width: 95 },
+        { field: "total", headerName: "Total",  width: 95},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
             const rowIndex = params.rowIndex;
@@ -222,21 +221,21 @@ const OperasionalTamanhas: Component = () => {
     //     localStorage.removeItem('tableData');
     //   });
     // });
+    
+  // kode dropdown keterangan
 
   const [keterangan, setKeterangan] = createSignal('');
   const [timestamp, setTimestamp] = createSignal('');
 
-
-  // kode dropdown keterangan
   const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
     localStorage.getItem('tableKetMonth')
         ? JSON.parse(localStorage.getItem('tableKetMonth')!).map((row: any) => row.keterangan)
         : []
   );
 
+
   // kode untuk buat dropdown search COA
   const [inputValue, setInputValue] = createSignal('');
-  // const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
 
   const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
 
@@ -307,7 +306,8 @@ const OperasionalTamanhas: Component = () => {
   return (
     <div class="operasional-rutin-tamanhas">
       <div>
-        <h1>Form Tambah Pengajuan</h1>
+        <h1>Form Tambah Pengajuan Monthly: {getNamaPengajuanMonthly()}</h1> 
+        {/* ganti ke get itu dari store ya, pokoknya untuk nampilin nama pengajuan pake ini */}
       </div>
       <div class="dropdown-keterangan">
         <label for="keteranganDropdown">Keterangan:</label>
@@ -410,7 +410,7 @@ const OperasionalTamanhas: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "150vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
@@ -427,7 +427,7 @@ const OperasionalTamanhas: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanMonthly OnClose={closePopUp} pengajuan={namaPengajuan()}/>}
+        {popUp() && <PengajuanMonthly OnClose={closePopUp}/>}
         {/* {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}  rowData={selectedRow()} handleEdit={handleEdit}/>} */}
         {/* {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>} */}
     </div>

@@ -2,11 +2,10 @@ import { createSignal, type Component, onMount } from 'solid-js';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 import Pengajuan_navbar from '../pengajuan_navbar';
 import './pengajuan_detail.css'
-import { namaPengajuan } from '../../navbars/create/kategori_pengajuanmonthly/nama-pengajuan';
 import NamaPengajuanWeekly, { namaPengajuanWeekly } from '../../navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/popup/nama-pengajuan-weekly';
 import { namaPengajuanEvent } from '../../navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/nama-pengajuan-event';
 import { A } from '@solidjs/router';
-import { getNamaPengajuanMonthly } from '../../../store/Pengajuan/Event/event-pengajuan';
+import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly } from '../../../store/Pengajuan/nama-pengajuan';
 
 const PengajuanDetail: Component = () => {
 
@@ -23,14 +22,14 @@ const PengajuanDetail: Component = () => {
                 <A href="/pengajuan-event/pengajuan-event-detail">
                 <div>
                     <h1>Pengajuan Event:</h1>
-                    <p>{namaPengajuanEvent()}</p>
+                    <p>{getNamaPengajuanEvent()}</p>
                 </div>
                 </A>
 
                 <A href="/pengajuan-weekly/pengajuanweekly-insentif">
                 <div>
                     <h1>Pengajuan Weekly:</h1>
-                    <p>{namaPengajuanWeekly()}</p>
+                    <p>{getNamaPengajuanWeekly()}</p>
                 </div>
                 </A>
 

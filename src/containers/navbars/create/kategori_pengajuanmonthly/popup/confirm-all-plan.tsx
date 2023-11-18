@@ -8,6 +8,7 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { RowData } from '../operasional-tamanhas/operasional-tamanhas';
+import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/nama-pengajuan';
 
 interface ConfirmAllPlanProps {
     OnClose: () => void;
@@ -161,41 +162,41 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
 
         <div class="confirm-allplan-m">
          
-                <div class="monthly-plan-confirmation">
-                    <form method="dialog">
-                        <div class="head-acc" style={{"text-transform":"capitalize"}}>
-                            <h2>Apa anda yakin ingin submit data di bawah ini?</h2>
-                            <button onClick={props.OnClose}>✕</button>
-                        </div>
-                        <div class="form-pengajuan">
-                            <div>
-                                <h1>{props.pengajuan}</h1>
-                                <h2>No : 058/FIN.BC/PDO/VI/2023</h2>
-                                <p>{props.date}</p>
-                                {/* <p>Aggregated Description: {updatedRowData[updatedRowData.length - 1].aggregatedDescription}</p> */}
-                            </div>
-                            <div class="ag-theme-alpine z-0" style={{ height: "auto", width: "80vh", margin:"auto"}}>
-                                <AgGridSolid 
-                                    gridOptions={gridOptions} 
-                                    onGridReady={onGridReady} 
-                                    rowData={rowDataForGrid} 
-                                />
-                            </div>
-                            <div class="sum-total" style={{display:"flex", "flex-direction":"row", "justify-content":"space-between"}}>
-                              <p>TOTAL ESTIMASI</p> <p>{props.sumtotal}</p>
-                            </div>
-                            </div>
+          <div class="monthly-plan-confirmation">
+              <form method="dialog">
+                  <div class="head-acc" style={{"text-transform":"capitalize"}}>
+                      <h2>Apa anda yakin ingin submit data di bawah ini?</h2>
+                      <button onClick={props.OnClose}>✕</button>
+                  </div>
+                  <div class="form-pengajuan">
+                      <div>
+                          <h1>{getNamaPengajuanMonthly()}</h1>
+                          <h2>No : 058/FIN.BC/PDO/VI/2023</h2>
+                          <p>{props.date}</p>
+                          {/* <p>Aggregated Description: {updatedRowData[updatedRowData.length - 1].aggregatedDescription}</p> */}
+                      </div>
+                      <div class="ag-theme-alpine z-0" style={{ height: "auto", width: "80vh", margin:"auto"}}>
+                          <AgGridSolid 
+                              gridOptions={gridOptions} 
+                              onGridReady={onGridReady} 
+                              rowData={rowDataForGrid} 
+                          />
+                      </div>
+                      <div class="sum-total" style={{display:"flex", "flex-direction":"row", "justify-content":"space-between"}}>
+                        <p>TOTAL ESTIMASI</p> <p>{props.sumtotal}</p>
+                      </div>
+                      </div>
 
-                            <br />
-                            <div>
-                              <div>
-                                <button class="btn-save-edit" onClick={sendDataToBackend}>
-                                  <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
-                                </button>
-                              </div>
-                            </div>
-                    </form>
-                </div>
+                      <br />
+                      <div>
+                        <div>
+                          <button class="btn-save-edit" onClick={sendDataToBackend}>
+                            <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
+                          </button>
+                        </div>
+                      </div>
+              </form>
+          </div>
         </div>
         </div>
     );

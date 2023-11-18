@@ -1,40 +1,32 @@
 import { createSignal, type Component, onMount, createEffect, onCleanup } from 'solid-js';
 import './nama-pengajuan.css'
 import { Icon } from '@iconify-icon/solid';
-import { A, useLocation, useNavigate } from '@solidjs/router';
+import { A, useLocation, useNavigate, Navigate } from '@solidjs/router';
 // import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 // import { useSubNavbarStore } from '../../../../../../store/Navbar/SubNavbarStore';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import PengajuanMonthly from './pengajuan-monthly';
-import { getNamaPengajuanMonthly, setNamaPengajuanMonthly } from '../../../../store/Pengajuan/Event/event-pengajuan';
+import { getNamaPengajuanMonthly, setNamaPengajuanMonthly } from '../../../../store/Pengajuan/nama-pengajuan';
 
 interface NamaPengajuanProps {
     OnClose: () => void;
 }
 
-type RowData = {
-    keterangan: string;
-    totalplan?: number;
-  };
-
-const [namaPengajuan, setNamaPengajuan] = createSignal("");
-
-export {namaPengajuan}
-
 const NamaPengajuan: Component<NamaPengajuanProps> = (props) => {
   const [namaPengajuanInput, setNamaPengajuanInput] = createSignal("");
   const [isMonthlyExists, setIsMonthlyExists] = createSignal(!!getNamaPengajuanMonthly());
   const [showSubmitMessage, setShowSubmitMessage] = createSignal(false);
+  const [PopUp, setPopUp] = createSignal(false);
 
   const submitForm = () => {
     if (!isMonthlyExists()) {
       setNamaPengajuanMonthly(namaPengajuanInput());
       setNamaPengajuanInput("");
       setShowSubmitMessage(false);
-      props.OnClose();
-      // setShowSubmitMessage(true);
+      // props.OnClose();
+      setPopUp(true)
     } else {
       // Jika sudah ada nilai di namaPengajuanMonthly, tampilkan pesan
       setShowSubmitMessage(true);
@@ -64,6 +56,7 @@ const NamaPengajuan: Component<NamaPengajuanProps> = (props) => {
             </div>
           </div>
         )}
+        {/* gatau knp tp ini ga muncul */}
         {showSubmitMessage() && (
           <div>
             <p>Terdapat pengajuan "{getNamaPengajuanMonthly()}" yang belum di-submit.</p>
@@ -72,6 +65,7 @@ const NamaPengajuan: Component<NamaPengajuanProps> = (props) => {
         )}
       </div>
       {isMonthlyExists() && <PengajuanMonthly OnClose={props.OnClose} pengajuan={getNamaPengajuanMonthly()} />}
+      {PopUp() && <PengajuanMonthly OnClose={props.OnClose} pengajuan={getNamaPengajuanMonthly()} />}
     </div>
   );
 };
