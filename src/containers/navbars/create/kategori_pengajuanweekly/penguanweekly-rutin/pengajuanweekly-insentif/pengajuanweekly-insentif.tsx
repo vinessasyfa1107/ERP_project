@@ -10,7 +10,7 @@ import { Icon } from '@iconify-icon/solid';
 import FormEditWeekly from './forms/form-edit-weeklyinsen';
 import ConfirmPopUpWeeklyInsen from './popup/confirmpopup';
 import { optionsWeekly } from '../../data-coa-weekly';
-import { namaPengajuanWeekly } from './popup/nama-pengajuan-weekly';
+import { getNamaPengajuanWeekly } from '../../../../../../store/Pengajuan/nama-pengajuan';
 
 interface Option {
   value: string;
@@ -22,15 +22,17 @@ interface SelectedOption {
   label?: string;
 }
 
-export type RowDataWeekly = {
-    keterangan: string;
-    uniqueId?: number;
-    kebutuhan: string;
-    qty: number;
+export type RowData = { //sesuain ke row data lain (samain field BE) ganti columnDefsnya juga gini fieldnya
+    namapengajuanweekly: string;
+    tipepengajuanweekly: string
+    id?: number;
     uom: string;
+    keterangan: string;
+    kebutuhan: string;
+    quantity: number;
     price: number;
     total: number;
-    coa: string;
+    coa_kd: string;
     aksi?: object;
   };
 
@@ -54,12 +56,12 @@ export type RowDataWeekly = {
 
 const PengajuanWeeklyInsentif: Component = () => {
     const [gridApi, setGridApi] = createSignal(null);
-    const [rowDataWeekly, setRowDataWeekly] = createSignal<RowDataWeekly[]>(
+    const [rowData, setRowData] = createSignal<RowData[]>(
       (() => {
-        const savedData = localStorage.getItem('tableKetWeekly');
+        const savedData = localStorage.getItem('tableData');
         return savedData
           ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
-          : ([] as RowDataWeekly[]);
+          : ([] as RowData[]);
       })()
     );
       
@@ -97,28 +99,28 @@ const PengajuanWeeklyInsentif: Component = () => {
     const handleCellValueChanged = (params) => {
       const { data } = params;
       // Update local storage
-      localStorage.setItem('tableKetWeekly', JSON.stringify(rowDataWeekly()));
+      localStorage.setItem('tableData', JSON.stringify(rowData()));
     
       // Recalculate total if 'qty' or 'price' is changed
       if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
         const newTotal = data.qty * data.price;
         const updatedRow = { ...data, total: newTotal };
-        setRowDataWeekly((prevData) => {
+        setRowData((prevData) => {
           const newData = prevData.map((row) =>
             areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
           );
-          localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+          localStorage.setItem('tableData', JSON.stringify(newData));
           return newData;
         });
       }
     };
 
     const deleteRow = (index: number) => {
-      setRowDataWeekly((prevData) => {
+      setRowData((prevData) => {
         const newData = [...prevData];
         newData.splice(index, 1);
         // Update localStorage after removing the row
-        localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+        localStorage.setItem('tableData', JSON.stringify(newData));
         return newData;
       });
     };
@@ -132,15 +134,15 @@ const PengajuanWeeklyInsentif: Component = () => {
     
     const gridOptions = {
       columnDefs: [
-        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
         // { field: "uniqueId" },
-        { field: "keterangan", editable: true, width: 150 },
+        { field: "keterangan", editable: true, width: 162 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
-        { field: "coa", headerName: "COA", editable: true, width: 130 },
-        { field: "qty", headerName: "Qty", editable: true, width: 80 },
+        { field: "coa_kd", headerName: "COA", editable: true, width: 100 },
+        { field: "quantity", headerName: "Qty", editable: true, width: 80 },
         { field: "uom", headerName: "UoM", editable: true, width: 100 },
-        { field: "price", headerName: "Price", editable: true, width: 130 },
-        { field: "total", headerName: "Total",  width: 150},
+        { field: "price", headerName: "Price", editable: true, width: 95 },
+        { field: "total", headerName: "Total",  width: 95},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
             const rowIndex = params.rowIndex;
@@ -164,21 +166,23 @@ const PengajuanWeeklyInsentif: Component = () => {
     const addRow = () => {
       if (need() && qty() && uom() && price() ) {
         let total = qty() * price();
-        const newRow: RowDataWeekly = {
-          // uniqueId: counter(),
+        const newRow: RowData = {
+          id: 0,
+          tipepengajuanweekly: "Weekly",
+          namapengajuanweekly: getNamaPengajuanWeekly(),
           keterangan: keterangan(),
           kebutuhan: need(),
-          qty: qty(),
+          quantity: qty(),
           uom: uom(),
           price: price(),
           total: total,
           // coa: selectedOption(),
-          coa: selectedOption()?.value,
+          coa_kd: selectedOption()?.value,
         };
-        setRowDataWeekly((prevData) => {
+        setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
+          localStorage.setItem('tableData', JSON.stringify(newData));
           return newData;
         });
   
@@ -203,35 +207,35 @@ const PengajuanWeeklyInsentif: Component = () => {
     //     return total;
     //   };
     createEffect(() => {
-      const gridData = rowDataWeekly();
-      let TotalW = 0;
+      const gridData = rowData();
+      let Total = 0;
       for (const row of gridData) {
-        TotalW += row.total;
+        Total += row.total;
       }
-      setTotalW(TotalW); // Simpan total di toko
+      setTotalW(Total); // Simpan total di toko
     });
 
     // onMount(() => {
     //   // Bersihkan localStorage saat komponen di-unmount
     //   onCleanup(() => {
-    //     localStorage.removeItem('tableKetWeekly');
+    //     localStorage.removeItem('tableData');
     //   });
     // });
+    
+  // kode dropdown keterangan
 
   const [keterangan, setKeterangan] = createSignal('');
   const [timestamp, setTimestamp] = createSignal('');
 
-
-  // kode dropdown keterangan
   const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
     localStorage.getItem('tableKetWeekly')
         ? JSON.parse(localStorage.getItem('tableKetWeekly')!).map((row: any) => row.keterangan)
         : []
   );
 
+
   // kode untuk buat dropdown search COA
   const [inputValue, setInputValue] = createSignal('');
-  // const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
 
   const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
 
@@ -302,7 +306,8 @@ const PengajuanWeeklyInsentif: Component = () => {
   return (
     <div class="pengajuan-weekly">
       <div>
-        <h1>Form Tambah Pengajuan Weekly</h1>
+        <h1>Form Tambah Pengajuan Weekly: {getNamaPengajuanWeekly()}</h1> 
+        {/* ganti ke get itu dari store ya, pokoknya untuk nampilin nama pengajuan pake ini */}
       </div>
       <div class="dropdown-keterangan-weekly-insen">
         <label for="keteranganDropdown-insen">Keterangan:</label>
@@ -405,15 +410,15 @@ const PengajuanWeeklyInsentif: Component = () => {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "150vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
-                rowData={rowDataWeekly()} 
+                rowData={rowData()} 
             />
             <div class="detail-total-weekly">
                 <div>TOTAL</div>
-                <div>Rp={TotalW()}</div>
+                <div>Rp{TotalW()}</div>
             </div>
         </div>
         
@@ -422,7 +427,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanWeekly OnClose={closePopUp} pengajuanweekly={namaPengajuanWeekly()}/>}
+        {popUp() && <PengajuanWeekly OnClose={closePopUp}/>}
         {/* {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}  rowData={selectedRow()} handleEdit={handleEdit}/>} */}
         {/* {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>} */}
     </div>

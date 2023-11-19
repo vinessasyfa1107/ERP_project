@@ -184,9 +184,9 @@ const RouteData: Component = () => {
 
 
             <Route path="/pengajuan-weekly">
-                <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
+                {/* <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} /> */}
                 <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
-                <Route path="/pengajuan-reimburse" component={PengajuanReimburse} />
+                {/* <Route path="/pengajuan-reimburse" component={PengajuanReimburse} /> */}
                 <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
