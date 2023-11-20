@@ -8,62 +8,64 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import PengajuanWeekly from '../../../pengajuan-weekly/pengajuan-weekly';
+import { getNamaPengajuanWeekly, setNamaPengajuanWeekly } from '../../../../../../../store/Pengajuan/nama-pengajuan';
 
 interface NamaPengajuanWeeklyProps {
     OnClose: () => void;
 }
 
-type RowData = {
-    keterangan: string;
-    totalplan?: number;
-  };
-
-  const [namaPengajuanWeekly, setNamaPengajuanWeekly] = createSignal("");
-
-export {namaPengajuanWeekly}
-
 const NamaPengajuanWeekly: Component<NamaPengajuanWeeklyProps> = (props) => {
-    const navigate = useNavigate();
-    const [pageKeterangan, setPageKeterangan] = createSignal(false);
+  const [namaPengajuanWeeklyInput, setNamaPengajuanWeeklyInput] = createSignal("");
+  const [isWeeklyExists, setIsWeeklyExists] = createSignal(!!getNamaPengajuanWeekly());
+  const [showSubmitMessage, setShowSubmitMessage] = createSignal(false);
+  const [PopUp, setPopUp] = createSignal(false);
 
-    function showPageKeterangan(){
-        setPageKeterangan(true)
+  const submitForm = () => {
+    if (!isWeeklyExists()) {
+      setNamaPengajuanWeekly(namaPengajuanWeeklyInput());
+      setNamaPengajuanWeeklyInput("");
+      setShowSubmitMessage(false);
+      // props.OnClose();
+      setPopUp(true)
+    } else {
+      // Jika sudah ada nilai di namaPengajuanWeesetNamaPengajuanWeeklyInput, tampilkan pesan
+      setShowSubmitMessage(true);
     }
-    function closePageKeterangan(){
-        setPageKeterangan(false)
-    }
-
-    const submitForm = () => {
-        showPageKeterangan();
-        // props.OnClose();
-    };
-
-  const location = useLocation();
+  };
 
   return (
     <div class="overlay">
-      
       <div class="nama-pengajuan-1-weekly">
-        <div class="keterangan-weekly">
-            <h2>Weekly  <span>(*Tidak boleh kosong)</span></h2>
-            <button onClick={props.OnClose}>✕</button>
+        <div class="keterangan">
+          <h2>Weekly <span>(*Tidak boleh kosong)</span></h2>
+          <button onClick={props.OnClose}>✕</button>
         </div>
-        <div class="nama-pengajuan-weekly" >
-
-                <div class="tambah-nama-pengajuan-weekly">
-                    <label>Nama Pengajuan</label>
-                    <br />
-                    <input type="text" 
-                    value={namaPengajuanWeekly()}
-                    onInput={(e) => setNamaPengajuanWeekly(e.target.value)}
-                    />
-                    <button onClick={submitForm}>Kirim</button>
-                </div>
-
-
-        </div>
-    </div>
-    {pageKeterangan() && <PengajuanWeekly OnClose={props.OnClose} pengajuanweekly={namaPengajuanWeekly()}/>}
+        {!isWeeklyExists() && (
+          <div class="nama-pengajuan-weekly">
+            <div class="tambah-nama-pengajuan-weekly">
+              <label>Nama Pengajuan</label>
+              <br />
+              <input
+                type="text"
+                value={namaPengajuanWeeklyInput()}
+                onInput={(e) => setNamaPengajuanWeeklyInput(e.target.value)}
+              />
+              <button onClick={submitForm}>
+                Kirim
+              </button>
+            </div>
+          </div>
+        )}
+        {/* gatau knp tp ini ga muncul */}
+        {showSubmitMessage() && (
+          <div>
+            <p>Terdapat pengajuan "{getNamaPengajuanWeekly()}" yang belum di-submit.</p>
+            <button onClick={() => setShowSubmitMessage(false)}>Tutup</button>
+          </div>
+        )}
+      </div>
+      {isWeeklyExists() && <PengajuanWeekly OnClose={props.OnClose} pengajuanweekly={getNamaPengajuanWeekly()} />}
+      {PopUp() && <PengajuanWeekly OnClose={props.OnClose} pengajuanweekly={getNamaPengajuanWeekly()} />}
     </div>
   );
 };

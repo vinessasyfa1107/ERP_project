@@ -1,5 +1,5 @@
 /*css untuk button tambah akun*/
-.confirm-allplan-m {
+.confirm-all-weekly {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -16,7 +16,7 @@
 }
 
 /* 
-.confirm-allplan-m .btn-tambah-akun button {
+.confirm-all-weekly .btn-tambah-akun button {
     width: 76px;
     height: 25px;
     border-radius: 4px;
@@ -31,10 +31,10 @@
 } */
 
 /*css untuk tabel form popup*/
-.confirm-allplan-m .monthly-plan-confirmation {
+.confirm-all-weekly .weekly-plan-confirmation {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
-    width: 112vh;
+    width: 122vh;
     height: 90vh;
     background-color: #fff;
     text-align: left;
@@ -44,7 +44,7 @@
     position: relative;
 }
 
-.confirm-allplan-m form .head-acc {
+.confirm-all-weekly form .head-acc-weekly {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;
     justify-content: space-between;
@@ -53,7 +53,7 @@
     margin-bottom: 2vh;
 }
 
-.confirm-allplan-m form .head-acc button {
+.confirm-all-weekly form .head-acc-weekly button {
     /*untuk mengatur button x saja*/
     background-color: #AE0000;
     color: #FFFFFF;
@@ -64,25 +64,25 @@
     float: right;
 }
 
-.confirm-allplan-m form .head-acc h2 {
+.confirm-all-weekly form .head-acc-weekly h2 {
     /*untuk mengatur judul form*/
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
 
-.confirm-allplan-m form .head-acc span {
+.confirm-all-weekly form .head-acc-weekly span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
 }
 
 /*css untuk isian form*/
-/* .confirm-allplan-m .form-pengajuan p {
+/* .confirm-all-weekly .form-pengajuan-weekly p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
 } */
-.confirm-allplan-m .form-pengajuan {
+.confirm-all-weekly .form-pengajuan-weekly {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,19 +91,19 @@
 
 }
 
-.confirm-allplan-m .form-pengajuan h1 {
+.confirm-all-weekly .form-pengajuan-weekly h1 {
     font-family: 'Inter';
     font-size: 20px;
 }
 
-.confirm-allplan-m .form-pengajuan label {
+.confirm-all-weekly .form-pengajuan-weekly label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
 
-.confirm-allplan-m .form-pengajuan input,
+.confirm-all-weekly .form-pengajuan-weekly input,
 select {
     /*untuk kotak teks input*/
     width: 29rem;
@@ -123,13 +123,13 @@ select {
 
 
 /*css untuk button add-acc*/
-.confirm-allplan-m .btn-add-acc {
+.confirm-all-weekly .btn-add-acc {
     position: relative; /* Buat parent relative untuk tombol */
     width: 100%; /* Atur lebar sesuai kebutuhan */
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.confirm-allplan-m .btn-save-edit {
+.confirm-all-weekly .btn-save-edit-weekly button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -141,28 +141,7 @@ select {
     border-radius: 5px;
 }
 
-.confirm-allplan-m .btn-cancel-edit {
-    background-color: rgba(133, 133, 133, 0.8);    
-    color: #fff;
-    text-transform: capitalize;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -18%); /*Geser tombol ke tengah*/
-    width: 80px;
-    height: 42px;
-    border-radius: 5px;
-}
-
-.confirm-allplan-m .form-pengajuan .sum-total {
-    width: 80vh;
-    background-color: #6e49e9ba;
-    color: #fff;
-    font-weight: 500;
-    font-size: 18px;
-    padding: 2px 10px;
-}
-
-/* .confirm-allplan-m .modal-box label {
+/* .confirm-all-weekly .modal-box label {
     text-align: left;
 }
 

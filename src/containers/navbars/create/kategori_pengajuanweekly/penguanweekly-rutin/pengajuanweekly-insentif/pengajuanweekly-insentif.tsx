@@ -10,7 +10,7 @@ import { Icon } from '@iconify-icon/solid';
 import FormEditWeekly from './forms/form-edit-weeklyinsen';
 import ConfirmPopUpWeeklyInsen from './popup/confirmpopup';
 import { optionsWeekly } from '../../data-coa-weekly';
-import { namaPengajuanWeekly } from './popup/nama-pengajuan-weekly';
+import { getNamaPengajuanWeekly } from '../../../../../../store/Pengajuan/nama-pengajuan';
 
 interface Option {
   value: string;
@@ -22,268 +22,292 @@ interface SelectedOption {
   label?: string;
 }
 
-export type RowData = {
-  keterangan: string;
-  kebutuhan: string;
-  uniqueId?: number;
-  qty: number;
-  uom: string;
-  price: number;
-  total: number;
-  coa: string;
-  aksi?: object;
-};
+export type RowData = { //sesuain ke row data lain (samain field BE) ganti columnDefsnya juga gini fieldnya
+    namapengajuanweekly: string;
+    tipepengajuanweekly: string
+    id?: number;
+    uom: string;
+    keterangan: string;
+    kebutuhan: string;
+    quantity: number;
+    price: number;
+    total: number;
+    coa_kd: string;
+    aksi?: object;
+  };
+
+  const calculateTotalByKeterangan = (data) => {
+    const totals = {};
+  
+    for (const row of data) {
+      const keterangan = row.keterangan;
+  
+      if (!totals[keterangan]) {
+        totals[keterangan] = 0;
+      }
+  
+      totals[keterangan] += row.total;
+    }
+  
+    return totals;
+  };
+  
+  export { calculateTotalByKeterangan };
 
 const PengajuanWeeklyInsentif: Component = () => {
-const [gridApi, setGridApi] = createSignal(null);
-const [rowData, setRowData] = createSignal<RowData[]>(
-  (() => {
-    const savedData = localStorage.getItem('tableKetWeekly');
-    return savedData
-      ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
-      : ([] as RowData[]);
-  })()
-);
+    const [gridApi, setGridApi] = createSignal(null);
+    const [rowData, setRowData] = createSignal<RowData[]>(
+      (() => {
+        const savedData = localStorage.getItem('tableData');
+        return savedData
+          ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
+          : ([] as RowData[]);
+      })()
+    );
+      
+      
+    const [need, setNeed] = createSignal("");
+    const [qty, setQty] = createSignal(0);
+    const [uom, setuom] = createSignal("");
+    const [price, setPrice] = createSignal(0);
+    const [coa, setCOA] = createSignal("");
   
-  
-const [need, setNeed] = createSignal("");
-const [qty, setQty] = createSignal(0);
-const [uom, setuom] = createSignal("");
-const [price, setPrice] = createSignal(0);
-const [coa, setCOA] = createSignal("");
 
+    const [popUp, setPopUp] = createSignal(false);
 
-const [popUpInsen, setPopUpInsen] = createSignal(false);
+    function handlePopUp(){
+        setPopUp(true);
+    }
+    // const [EditPopUp, setEditPopUp] = createSignal(false);
+    // const [DeletePopUp, setDeletePopUp] = createSignal(false);
 
-function handlePopUpInsen(){
-    setPopUpInsen(true);
-}
-// const [EditPopUp, setEditPopUp] = createSignal(false);
-// const [DeletePopUp, setDeletePopUp] = createSignal(false);
+    // function showEditPopUp(row: RowData){
+    //   setSelectedRow(row);
+    //   setEditPopUp(true);
+    // }
 
-// function showEditPopUp(row: RowData){
-//   setSelectedRow(row);
-//   setEditPopUp(true);
-// }
+    // function showDeletePopUp(){
+    //   setDeletePopUp(true);
+    // }
 
-// function showDeletePopUp(){
-//   setDeletePopUp(true);
-// }
+    function closePopUp(){
+      // setEditPopUp(false);
+      // setDeletePopUp(false);
+      setPopUp(false);
+    }
 
-function closePopUpInsen(){
-  // setEditPopUp(false);
-  // setDeletePopUp(false);
-  setPopUpInsen(false);
-}
-
-const handleCellValueChanged = (params) => {
-  const { data } = params;
-  // Update local storage
-  localStorage.setItem('tableKetWeekly', JSON.stringify(rowData()));
-
-  // Recalculate total if 'qty' or 'price' is changed
-  if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-    const newTotal = data.qty * data.price;
-    const updatedRow = { ...data, total: newTotal };
-    setRowData((prevData) => {
-      const newData = prevData.map((row) =>
-        areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
-      );
-      localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-      return newData;
-    });
-  }
-};
-
-const deleteRow = (index: number) => {
-  setRowData((prevData) => {
-    const newData = [...prevData];
-    newData.splice(index, 1);
-    // Update localStorage after removing the row
-    localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-    return newData;
-  });
-};
+    const handleCellValueChanged = (params) => {
+      const { data } = params;
+      // Update local storage
+      localStorage.setItem('tableData', JSON.stringify(rowData()));
     
-
-// Fungsi utilitas untuk membandingkan dua objek row
-const areRowsEqual = (row1, row2) => {
-  // Implementasikan logika perbandingan berdasarkan properti yang sesuai
-  return row1.uniqueId === row2.uniqueId;
-};
-
-const gridOptions = {
-  columnDefs: [
-    { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
-    // { field: "uniqueId" },
-    { field: "keterangan", editable: true, width: 150 },
-    { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
-    { field: "coa", headerName: "COA", editable: true, width: 130 },
-    { field: "qty", headerName: "Qty", editable: true, width: 80 },
-    { field: "uom", headerName: "UoM", editable: true, width: 100 },
-    { field: "price", headerName: "Price", editable: true, width: 130 },
-    { field: "total", headerName: "Total",  width: 150},
-    {
-      field: 'aksi', width: 80,cellRenderer: (params: any) => {
-        const rowIndex = params.rowIndex;
-        const row = params.data; // Mendapatkan data baris dari params.data
-
-        return (
-          <div>
-            <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
-          </div>
-        );
+      // Recalculate total if 'qty' or 'price' is changed
+      if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
+        const newTotal = data.qty * data.price;
+        const updatedRow = { ...data, total: newTotal };
+        setRowData((prevData) => {
+          const newData = prevData.map((row) =>
+            areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
+          );
+          localStorage.setItem('tableData', JSON.stringify(newData));
+          return newData;
+        });
       }
-    }
-  ],
-  onCellValueChanged: handleCellValueChanged,
-};
-
-const onGridReady = (params: any) => {
-  setGridApi(() => params.api);
-};
-
-const addRow = () => {
-  if (need() && qty() && uom() && price() ) {
-    let total = qty() * price();
-    const newRow: RowData = {
-      // uniqueId: counter(),
-      keterangan: keterangan(),
-      kebutuhan: need(),
-      qty: qty(),
-      uom: uom(),
-      price: price(),
-      total: total,
-      // coa: selectedOption(),
-      coa: selectedOption()?.value,
     };
-    setRowData((prevData) => {
-      const newData = [...prevData, newRow];
-      // Simpan data ke localStorage saat menambahkan data baru
-      localStorage.setItem('tableKetWeekly', JSON.stringify(newData));
-      return newData;
+
+    const deleteRow = (index: number) => {
+      setRowData((prevData) => {
+        const newData = [...prevData];
+        newData.splice(index, 1);
+        // Update localStorage after removing the row
+        localStorage.setItem('tableData', JSON.stringify(newData));
+        return newData;
+      });
+    };
+        
+
+    // Fungsi utilitas untuk membandingkan dua objek row
+    const areRowsEqual = (row1, row2) => {
+      // Implementasikan logika perbandingan berdasarkan properti yang sesuai
+      return row1.uniqueId === row2.uniqueId;
+    };
+    
+    const gridOptions = {
+      columnDefs: [
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
+        // { field: "uniqueId" },
+        { field: "keterangan", editable: true, width: 162 },
+        { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
+        { field: "coa_kd", headerName: "COA", editable: true, width: 100 },
+        { field: "quantity", headerName: "Qty", editable: true, width: 80 },
+        { field: "uom", headerName: "UoM", editable: true, width: 100 },
+        { field: "price", headerName: "Price", editable: true, width: 95 },
+        { field: "total", headerName: "Total",  width: 95},
+        {
+          field: 'aksi', width: 80,cellRenderer: (params: any) => {
+            const rowIndex = params.rowIndex;
+            const row = params.data; // Mendapatkan data baris dari params.data
+
+            return (
+              <div>
+                <button onClick={() => deleteRow(rowIndex)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+              </div>
+            );
+          }
+        }
+      ],
+      onCellValueChanged: handleCellValueChanged,
+    };
+
+    const onGridReady = (params: any) => {
+      setGridApi(() => params.api);
+    };
+  
+    const addRow = () => {
+      if (need() && qty() && uom() && price() ) {
+        let total = qty() * price();
+        const newRow: RowData = {
+          id: 0,
+          tipepengajuanweekly: "Weekly",
+          namapengajuanweekly: getNamaPengajuanWeekly(),
+          keterangan: keterangan(),
+          kebutuhan: need(),
+          quantity: qty(),
+          uom: uom(),
+          price: price(),
+          total: total,
+          // coa: selectedOption(),
+          coa_kd: selectedOption()?.value,
+        };
+        setRowData((prevData) => {
+          const newData = [...prevData, newRow];
+          // Simpan data ke localStorage saat menambahkan data baru
+          localStorage.setItem('tableData', JSON.stringify(newData));
+          return newData;
+        });
+  
+        clearInputs();
+      }
+    };
+  
+    const clearInputs = () => {
+      setNeed("");
+      setQty(0);
+      setuom("");
+      setPrice(0);
+      setCOA("");
+    };
+
+    // const calculateTotal = () => {
+    //     const gridData = rowData();
+    //     let total = 0;
+    //     for (const row of gridData) {
+    //       total += row.total;
+    //     }
+    //     return total;
+    //   };
+    createEffect(() => {
+      const gridData = rowData();
+      let Total = 0;
+      for (const row of gridData) {
+        Total += row.total;
+      }
+      setTotalW(Total); // Simpan total di toko
     });
 
-    clearInputs();
-  }
-};
+    // onMount(() => {
+    //   // Bersihkan localStorage saat komponen di-unmount
+    //   onCleanup(() => {
+    //     localStorage.removeItem('tableData');
+    //   });
+    // });
+    
+  // kode dropdown keterangan
 
-const clearInputs = () => {
-  setNeed("");
-  setQty(0);
-  setuom("");
-  setPrice(0);
-  setCOA("");
-};
+  const [keterangan, setKeterangan] = createSignal('');
+  const [timestamp, setTimestamp] = createSignal('');
 
-// const calculateTotal = () => {
-//     const gridData = rowData();
-//     let total = 0;
-//     for (const row of gridData) {
-//       total += row.total;
-//     }
-//     return total;
-//   };
+  const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
+    localStorage.getItem('tableKetWeekly')
+        ? JSON.parse(localStorage.getItem('tableKetWeekly')!).map((row: any) => row.keterangan)
+        : []
+  );
+
+
+  // kode untuk buat dropdown search COA
+  const [inputValue, setInputValue] = createSignal('');
+
+  const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+
+  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsWeekly());
+  const [showDropdown, setShowDropdown] = createSignal(false);
+
   createEffect(() => {
-    const gridData = rowData();
-    let TotalW = 0;
-    for (const row of gridData) {
-      TotalW += row.total;
-    }
-    setTotalW(TotalW); // Simpan total di toko
+    const inputValueLowerCase = inputValue().toLowerCase();
+    const filtered = optionsWeekly().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+    setFilteredOptions(filtered);
   });
 
-// onMount(() => {
-//   // Bersihkan localStorage saat komponen di-unmount
-//   onCleanup(() => {
-//     localStorage.removeItem('tableKetWeekly');
-//   });
-// });
+  createEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && !target.closest('.dropdown-container')) {
+        setShowDropdown(false);
+      }
+    };
 
-const [keterangan, setKeterangan] = createSignal('');
-const [timestamp, setTimestamp] = createSignal('');
+    window.addEventListener('click', handleClickOutside);
 
+    onCleanup(() => {
+      window.removeEventListener('click', handleClickOutside);
+    });
+  });
 
-// kode dropdown keterangan
-const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
-localStorage.getItem('tableKetWeekly')
-    ? JSON.parse(localStorage.getItem('tableKetWeekly')!).map((row: any) => row.keterangan)
-    : []
-);
+  const handleInput = (e: Event) => {
+    const label = (e.target as HTMLInputElement).value;
+    setInputValue(label);
 
-// kode untuk buat dropdown search COA
-const [inputValue, setInputValue] = createSignal('');
-// const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
+    const selectedOption = optionsWeekly().find((option) => option.label === label);
+    if (selectedOption) {
+      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+    } else {
+      setSelectedOption(null);
+    }
 
-const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+    setShowDropdown(true);
+  };
 
-const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsWeekly());
-const [showDropdown, setShowDropdown] = createSignal(false);
-
-createEffect(() => {
-const inputValueLowerCase = inputValue().toLowerCase();
-const filtered = optionsWeekly().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
-setFilteredOptions(filtered);
-});
-
-createEffect(() => {
-const handleClickOutside = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  if (target && !target.closest('.dropdown-container')) {
-    setShowDropdown(false);
+ 
+  const handleOptionSelect = (selectedOption: Option) => {
+      setInputValue(selectedOption.label);
+      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+      setShowDropdown(false);
+    };
+    
+  const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+  
+      const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
+      const nextIndex =
+      currentIndex === -1
+          ? 0
+          : e.key === 'ArrowDown'
+          ? (currentIndex + 1) % filteredOptions().length
+          : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
+  
+      setSelectedOption(filteredOptions()[nextIndex]);
+  } else if (e.key === 'Enter' && selectedOption()) {
+      handleOptionSelect(selectedOption() as Option);
   }
-};
+  };
 
-window.addEventListener('click', handleClickOutside);
-
-onCleanup(() => {
-  window.removeEventListener('click', handleClickOutside);
-});
-});
-
-const handleInput = (e: Event) => {
-  const label = (e.target as HTMLInputElement).value;
-  setInputValue(label);
-
-const selectedOption = optionsWeekly().find((option) => option.label === label);
-if (selectedOption) {
-  setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-} else {
-  setSelectedOption(null);
-}
-
-  setShowDropdown(true);
-};
-
-
-const handleOptionSelect = (selectedOption: Option) => {
-    setInputValue(selectedOption.label);
-    setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-    setShowDropdown(false);
-};
-
-const handleKeyDown = (e: KeyboardEvent) => {
-if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-  e.preventDefault();
-
-  const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
-  const nextIndex =
-  currentIndex === -1
-      ? 0
-      : e.key === 'ArrowDown'
-      ? (currentIndex + 1) % filteredOptions().length
-      : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
-
-    setSelectedOption(filteredOptions()[nextIndex]);
-}  else if (e.key === 'Enter' && selectedOption()) {
-    handleOptionSelect(selectedOption() as Option);
-}
-};
 
   return (
     <div class="pengajuan-weekly">
-       <div>
-        <h1>Form Tambah Pengajuan Weekly</h1>
+      <div>
+        <h1>Form Tambah Pengajuan Weekly: {getNamaPengajuanWeekly()}</h1> 
+        {/* ganti ke get itu dari store ya, pokoknya untuk nampilin nama pengajuan pake ini */}
       </div>
       <div class="dropdown-keterangan-weekly-insen">
         <label for="keteranganDropdown-insen">Keterangan:</label>
@@ -291,8 +315,6 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         {/* Gunakan dropdown di sini */}
         <select
             id="keteranganDropdown-insen"
-            // value={selectedOption()}
-            // onChange={(e) => setSelectedOption(e.target.value)}
             style={{width:"45vh"}}
             value={keterangan()}
             onInput={(e) => setKeterangan(e.target.value)}
@@ -308,12 +330,6 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                   <option value={option}>{option}</option>
               ))
           )}
-            {/* <option value="" disabled selected>
-                Pilih Keterangan
-            </option>
-            {keteranganOptions().map((option) => (
-                <option value={option}>{option}</option>
-            ))} */}
         </select>      
       </div>
 
@@ -356,41 +372,6 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
               </div>
               </div>
 
-            {/* <div>
-            <label>COA</label>
-            <br />
-               <div class="custom-dropdown-coa" ref={dropdownRef}>
-                <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
-                    <div>{selectedOption() || ""}</div>
-                    <div>
-                        {isOpen() ? 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="10" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
-                        : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="10" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
-                        }
-                    </div>
-                </div>
-                <div>
-                {isOpen() && (
-                    <div class="dropdown-options-coa">
-                    <div class="options-list" >
-                        {options.map((option, index) => (
-                        <div
-                            class="option"
-                            onClick={() => {
-                            setSelectedOption(option);
-                            setIsOpen(false);
-                            }}
-                        >
-                            {option}
-                        </div>
-                        ))}
-                    </div>
-                    </div>
-                )}
-                </div>
-            </div> 
-            </div> */}
-
             <div>
             <label>Qty</label>
             <br />
@@ -429,7 +410,7 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                 <button onClick={addRow}>Tambah</button>
             </div>
         </div>
-        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "146.5vh" }}>
+        <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "150vh" }}>
             <AgGridSolid 
                 gridOptions={gridOptions} 
                 onGridReady={onGridReady} 
@@ -442,13 +423,13 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         </div>
         
         <div class="btn-simpan-data-weekly">
-            <button onClick={handlePopUpInsen}>Simpan</button>
+            <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
-        {popUpInsen() && <PengajuanWeekly OnClose={closePopUpInsen} pengajuanweekly={namaPengajuanWeekly()}/>}
-        {/* {EditPopUpInsen() && <FormEditWeekly OnClose={closePopUpInsen}/>}
-        {DeletePopUpInsen() && <ConfirmPopUpWeeklyInsen OnClose={closePopUpInsen}/>} */}
+        {popUp() && <PengajuanWeekly OnClose={closePopUp}/>}
+        {/* {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}  rowData={selectedRow()} handleEdit={handleEdit}/>} */}
+        {/* {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>} */}
     </div>
   );
 };

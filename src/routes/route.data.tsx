@@ -62,6 +62,7 @@ const Header = lazy(() => import('../containers/header/header'));
 
 const Pengajuan_dashboard = lazy(() => import('../containers/pengajuan/pengajuan_dashboard/pengajuan_dashboard'));
 const Pengajuan_laporan = lazy(() => import('../containers/pengajuan/pengajuan_laporan/pengajuan_laporan'));
+const PengajuanDetail = lazy(() => import('../containers/pengajuan/pengajuan_detail/pengajuan_detail'));
 
 const Kas_besar = lazy(() => import('../containers/report/kas_besar/kas_besar'));
 const Semua_laporan = lazy(() => import('../containers/report/semua_laporan'));
@@ -151,6 +152,7 @@ const RouteData: Component = () => {
             <Route path="/pengajuan">
                 <Route path="/pengajuan_dashboard" component={Pengajuan_dashboard} />
                 <Route path="/pengajuan_laporan" component={Pengajuan_laporan} />
+                <Route path="/pengajuan_detail" component={PengajuanDetail} />
             </Route>
 
             <Route path="/keuangan">
@@ -182,9 +184,9 @@ const RouteData: Component = () => {
 
 
             <Route path="/pengajuan-weekly">
-                <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
+                {/* <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} /> */}
                 <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
-                <Route path="/pengajuan-reimburse" component={PengajuanReimburse} />
+                {/* <Route path="/pengajuan-reimburse" component={PengajuanReimburse} /> */}
                 <Route path="/masterakun" component={MasterAkun} />
             </Route>
 

@@ -1,5 +1,5 @@
 /*css untuk button tambah akun*/
-.confirm-allplan-m {
+.confirm-allplan-e {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -16,7 +16,7 @@
 }
 
 /* 
-.confirm-allplan-m .btn-tambah-akun button {
+.confirm-allplan-e .btn-tambah-akun button {
     width: 76px;
     height: 25px;
     border-radius: 4px;
@@ -31,7 +31,7 @@
 } */
 
 /*css untuk tabel form popup*/
-.confirm-allplan-m .monthly-plan-confirmation {
+.confirm-allplan-e .event-plan-confirmation {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 112vh;
@@ -44,7 +44,7 @@
     position: relative;
 }
 
-.confirm-allplan-m form .head-acc {
+.confirm-allplan-e form .head-acc-event {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;
     justify-content: space-between;
@@ -53,7 +53,7 @@
     margin-bottom: 2vh;
 }
 
-.confirm-allplan-m form .head-acc button {
+.confirm-allplan-e form .head-acc-event button {
     /*untuk mengatur button x saja*/
     background-color: #AE0000;
     color: #FFFFFF;
@@ -64,25 +64,25 @@
     float: right;
 }
 
-.confirm-allplan-m form .head-acc h2 {
+.confirm-allplan-e form .head-acc-event h2 {
     /*untuk mengatur judul form*/
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
 
-.confirm-allplan-m form .head-acc span {
+.confirm-allplan-e form .head-acc-event span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
 }
 
 /*css untuk isian form*/
-/* .confirm-allplan-m .form-pengajuan p {
+/* .confirm-allplan-e .form-pengajuan-event p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
 } */
-.confirm-allplan-m .form-pengajuan {
+.confirm-allplan-e .form-pengajuan-event {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,19 +91,19 @@
 
 }
 
-.confirm-allplan-m .form-pengajuan h1 {
+.confirm-allplan-e .form-pengajuan-event h1 {
     font-family: 'Inter';
     font-size: 20px;
 }
 
-.confirm-allplan-m .form-pengajuan label {
+.confirm-allplan-e .form-pengajuan-event label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
 
-.confirm-allplan-m .form-pengajuan input,
+.confirm-allplan-e .form-pengajuan-event input,
 select {
     /*untuk kotak teks input*/
     width: 29rem;
@@ -123,13 +123,13 @@ select {
 
 
 /*css untuk button add-acc*/
-.confirm-allplan-m .btn-add-acc {
+.confirm-allplan-e .btn-add-acc {
     position: relative; /* Buat parent relative untuk tombol */
     width: 100%; /* Atur lebar sesuai kebutuhan */
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.confirm-allplan-m .btn-save-edit {
+.confirm-allplan-e .btn-save-edit-event button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -141,28 +141,7 @@ select {
     border-radius: 5px;
 }
 
-.confirm-allplan-m .btn-cancel-edit {
-    background-color: rgba(133, 133, 133, 0.8);    
-    color: #fff;
-    text-transform: capitalize;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -18%); /*Geser tombol ke tengah*/
-    width: 80px;
-    height: 42px;
-    border-radius: 5px;
-}
-
-.confirm-allplan-m .form-pengajuan .sum-total {
-    width: 80vh;
-    background-color: #6e49e9ba;
-    color: #fff;
-    font-weight: 500;
-    font-size: 18px;
-    padding: 2px 10px;
-}
-
-/* .confirm-allplan-m .modal-box label {
+/* .confirm-allplan-e .modal-box label {
     text-align: left;
 }
 

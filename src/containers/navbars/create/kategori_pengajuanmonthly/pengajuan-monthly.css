@@ -211,7 +211,14 @@
     width: 80vh;
 }
 
-.pengajuan-monthly .submit-btn button {
+.pengajuan-monthly .bottom-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200vh;
+}
+
+.pengajuan-monthly .submit-btn  {
     background-color: #8367ff;
     color: #fff;
     text-transform: capitalize;
@@ -221,5 +228,18 @@
     border-radius: 5px;
     margin: auto;
     margin-top: 40px;
-    left: 45%;
+    left: 60%;
+}
+
+.pengajuan-monthly .simpan-btn  {
+    background-color: #8367ff;
+    color: #fff;
+    text-transform: capitalize;
+    position: absolute;
+    width: 80px;
+    height: 42px;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 40px;
+    left: 30%;
 }

@@ -1,0 +1,25 @@
+.pengajuan-detail-container {
+    background-color: #EFEFEF;
+    width: 150vh;
+    height: 110vh;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    padding: 30px;
+}
+
+
+.pengajuan-detail-container h1 {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.pengajuan-detail-container p {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.pengajuan-detail-container p:hover {
+    font-size: 18px;
+    color: blueviolet;
+    opacity: 0.7;
+}

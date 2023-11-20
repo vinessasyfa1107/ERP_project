@@ -3,14 +3,13 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './pengajuan-event-detail.css'
-import PengajuanWeekly from '../../../kategori_pengajuanweekly/pengajuan-weekly/pengajuan-weekly';
+import PengajuanEvent from './pengajuan-event';
 import { Total6, Total7, Total8, setTotal4 } from '../../../../../../store/Pengajuan/Event-satu/pengajuan-e-satu';
 import { Icon } from '@iconify-icon/solid';
 import EditEventDetails from '../popup-event/edit-event-details';
 import ComfirmDeleteEvDetails from '../popup-event/confirm-delete-evdetails';
 import { optionsEvdetails } from './data-coa-evdetails';
 import { namaPengajuanEvent } from './nama-pengajuan-event';
-import PengajuanEvent from './pengajuan-event';
 
 interface Option {
   value: string;
@@ -24,8 +23,8 @@ interface SelectedOption {
 
 export type RowData = {
     keterangan: string;
-    kebutuhan: string;
     uniqueId?: number;
+    kebutuhan: string;
     qty: number;
     uom: string;
     price: number;
@@ -34,51 +33,35 @@ export type RowData = {
     aksi?: object;
   };
 
-const PengajuanEventDetails: Component = () => {
-// <<<<<<< HEAD
-//   const [gridApi, setGridApi] = createSignal(null);
-//   const [rowData, setRowData] = createSignal<RowData[]>(
-//     (() => {
-//       const savedData = localStorage.getItem('tableKetPengajuanEvent');
-//       return savedData
-//         ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
-//         : ([] as RowData[]);
-//     })()
-// =======
-    const [popUpEvent, setPopUpEvent] = createSignal(false);
-
-    function handlePopUpEvent(){
-        setPopUpEvent(true);
+  const calculateTotalByKeterangan = (data) => {
+    const totals = {};
+  
+    for (const row of data) {
+      const keterangan = row.keterangan;
+  
+      if (!totals[keterangan]) {
+        totals[keterangan] = 0;
+      }
+  
+      totals[keterangan] += row.total;
     }
+  
+    return totals;
+  };
+  
+  export { calculateTotalByKeterangan };
 
-    // function ClosePopUp(){
-    //     setPopUp(false);
-    // }
-
-    const [isOpen, setIsOpen] = createSignal(false);
-
+const PengajuanEventDetails: Component = () => {
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
-        (() => {
-          // Coba ambil data dari localStorage saat komponen diinisialisasi
-          const savedData = localStorage.getItem('tableDataEventDetails');
-          return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-        })()
-      );
+      (() => {
+        const savedData = localStorage.getItem('tableDataMonthly');
+        return savedData
+          ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
+          : ([] as RowData[]);
+      })()
+    );
       
-    const dropdownRef = (el) => {
-        if (el) {
-        const handleDocumentClick = (e) => {
-            if (!el.contains(e.target)) {
-            setIsOpen(false);
-            }
-        };
-        document.addEventListener('click', handleDocumentClick);
-        onCleanup(() => {
-            document.removeEventListener('click', handleDocumentClick);
-        });
-        }
-    };
       
     const [need, setNeed] = createSignal("");
     const [qty, setQty] = createSignal(0);
@@ -87,27 +70,34 @@ const PengajuanEventDetails: Component = () => {
     const [coa, setCOA] = createSignal("");
   
 
-    const [EditPopUpEvent, setEditPopUpEvent] = createSignal(false);
-    const [DeletePopUpEvent, setDeletePopUpEvent] = createSignal(false);
+    const [popUp, setPopUp] = createSignal(false);
 
-    function showEditPopUpEvent(){
-      setEditPopUpEvent(true);
+    function handlePopUp(){
+        setPopUp(true);
     }
+    // const [EditPopUp, setEditPopUp] = createSignal(false);
+    // const [DeletePopUp, setDeletePopUp] = createSignal(false);
 
-    function showDeletePopUpEvent(){
-      setDeletePopUpEvent(true);
-    }
+    // function showEditPopUp(row: RowData){
+    //   setSelectedRow(row);
+    //   setEditPopUp(true);
+    // }
 
-    function closePopUpEvent(){
-      setEditPopUpEvent(false);
-      setDeletePopUpEvent(false);
-      setPopUpEvent(false);
+    // function showDeletePopUp(){
+    //   setDeletePopUp(true);
+    // }
+
+    function closePopUp(){
+      // setEditPopUp(false);
+      // setDeletePopUp(false);
+      setPopUp(false);
     }
 
     const handleCellValueChanged = (params) => {
       const { data } = params;
       // Update local storage
-      localStorage.setItem('tableData', JSON.stringify(rowData()));
+
+      localStorage.setItem('tableDataEventDetails', JSON.stringify(rowData()));
     
       // Recalculate total if 'qty' or 'price' is changed
       if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
@@ -117,7 +107,7 @@ const PengajuanEventDetails: Component = () => {
           const newData = prevData.map((row) =>
             areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
           );
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
           return newData;
         });
       }
@@ -128,7 +118,7 @@ const PengajuanEventDetails: Component = () => {
         const newData = [...prevData];
         newData.splice(index, 1);
         // Update localStorage after removing the row
-        localStorage.setItem('tableData', JSON.stringify(newData));
+        localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
         return newData;
       });
     };
@@ -139,17 +129,18 @@ const PengajuanEventDetails: Component = () => {
       // Implementasikan logika perbandingan berdasarkan properti yang sesuai
       return row1.uniqueId === row2.uniqueId;
     };
-
+    
     const gridOptions = {
       columnDefs: [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
+        // { field: "uniqueId" },
         { field: "keterangan", editable: true, width: 150 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
         { field: "coa", headerName: "COA", editable: true, width: 130 },
         { field: "qty", headerName: "Qty", editable: true, width: 80 },
         { field: "uom", headerName: "UoM", editable: true, width: 100 },
         { field: "price", headerName: "Price", editable: true, width: 130 },
-        { field: "total", headerName: "Total", width: 150},
+        { field: "total", headerName: "Total",  width: 150},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
             const rowIndex = params.rowIndex;
@@ -187,12 +178,20 @@ const PengajuanEventDetails: Component = () => {
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableDataMonthly', JSON.stringify(newData));
           return newData;
         });
   
         clearInputs();
       }
+    };
+  
+    const clearInputs = () => {
+      setNeed("");
+      setQty(0);
+      setuom("");
+      setPrice(0);
+      setCOA("");
     };
 
     // const calculateTotal = () => {
@@ -203,144 +202,107 @@ const PengajuanEventDetails: Component = () => {
     //     }
     //     return total;
     //   };
-
-    const calculateTotal = () => {
-        const gridData = rowData();
-        let Total = 0;
-        for (const row of gridData) {
-          Total += row.total;
-        }
-        setTotal4(Total); // Simpan total di toko
-        return Total;
-      };
+    createEffect(() => {
+      const gridData = rowData();
+      let Total = 0;
+      for (const row of gridData) {
+        Total += row.total;
+      }
+      setTotal4(Total); // Simpan total di toko
+    });
   
+
     // onMount(() => {
     //   // Bersihkan localStorage saat komponen di-unmount
     //   onCleanup(() => {
-    //     localStorage.removeItem('tableDataEventDetails');
+    //     localStorage.removeItem('tableDataMonthly');
     //   });
     // });
-  //   const [keteranganOptions, setKeteranganOptions] = createSignal<string[] | (() => any)>(() => {
-  //     const savedData = localStorage.getItem('tableKetPengajuanEvent');
-  //     return savedData ? JSON.parse(savedData).map((row) => row.keterangan) : [];
-  // });
 
-  const clearInputs = () => {
-    setNeed("");
-    setQty(0);
-    setuom("");
-    setPrice(0);
-    setCOA("");
-  };
+  const [keterangan, setKeterangan] = createSignal('');
+  const [timestamp, setTimestamp] = createSignal('');
 
-  // const calculateTotal = () => {
-  //     const gridData = rowData();
-  //     let total = 0;
-  //     for (const row of gridData) {
-  //       total += row.total;
-  //     }
-  //     return total;
-  //   };
+
+  // kode dropdown keterangan
+  const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
+    localStorage.getItem('tableKetMonth')
+        ? JSON.parse(localStorage.getItem('tableKetMonth')!).map((row: any) => row.keterangan)
+        : []
+  );
+
+  // kode untuk buat dropdown search COA
+  const [inputValue, setInputValue] = createSignal('');
+  // const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
+
+  const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+
+  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsEvdetails());
+  const [showDropdown, setShowDropdown] = createSignal(false);
+
   createEffect(() => {
-    const gridData = rowData();
-    let Total = 0;
-    for (const row of gridData) {
-      Total += row.total;
-    }
-    setTotal4(Total); // Simpan total di toko
+    const inputValueLowerCase = inputValue().toLowerCase();
+    const filtered = optionsEvdetails().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+    setFilteredOptions(filtered);
   });
 
-  // onMount(() => {
-  //   // Bersihkan localStorage saat komponen di-unmount
-  //   onCleanup(() => {
-  //     localStorage.removeItem('tableKetPengajuanEvent');
-  //   });
-  // });
+  createEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && !target.closest('.dropdown-container')) {
+        setShowDropdown(false);
+      }
+    };
 
-const [keterangan, setKeterangan] = createSignal('');
-const [timestamp, setTimestamp] = createSignal('');
+    window.addEventListener('click', handleClickOutside);
 
+    onCleanup(() => {
+      window.removeEventListener('click', handleClickOutside);
+    });
+  });
 
-// kode dropdown keterangan
-const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
-  localStorage.getItem('tableKetPengajuanEvent')
-      ? JSON.parse(localStorage.getItem('tableKetPengajuanEvent')!).map((row: any) => row.keterangan)
-      : []
-);
+  const handleInput = (e: Event) => {
+    const label = (e.target as HTMLInputElement).value;
+    setInputValue(label);
 
-// kode untuk buat dropdown search COA
-const [inputValue, setInputValue] = createSignal('');
-// const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>({ value: undefined, label: undefined });
+    const selectedOption = optionsEvdetails().find((option) => option.label === label);
+    if (selectedOption) {
+      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+    } else {
+      setSelectedOption(null);
+    }
 
-const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+    setShowDropdown(true);
+  };
 
-const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsEvdetails());
-const [showDropdown, setShowDropdown] = createSignal(false);
-
-createEffect(() => {
-  const inputValueLowerCase = inputValue().toLowerCase();
-  const filtered = optionsEvdetails().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
-  setFilteredOptions(filtered);
-});
-
-createEffect(() => {
-  const handleClickOutside = (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (target && !target.closest('.dropdown-container')) {
+ 
+  const handleOptionSelect = (selectedOption: Option) => {
+      setInputValue(selectedOption.label);
+      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
       setShowDropdown(false);
-    }
-  };
-
-  window.addEventListener('click', handleClickOutside);
-
-  onCleanup(() => {
-    window.removeEventListener('click', handleClickOutside);
-  });
-});
-
-const handleInput = (e: Event) => {
-  const label = (e.target as HTMLInputElement).value;
-  setInputValue(label);
-
-  const selectedOption = optionsEvdetails().find((option) => option.label === label);
-  if (selectedOption) {
-    setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-  } else {
-    setSelectedOption(null);
-  }
-
-  setShowDropdown(true);
-};
-
-
-const handleOptionSelect = (selectedOption: Option) => {
-    setInputValue(selectedOption.label);
-    setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
-    setShowDropdown(false);
-  };
+    };
+    
+  const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
   
-const handleKeyDown = (e: KeyboardEvent) => {
-if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-    e.preventDefault();
-
-    const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
-    const nextIndex =
-    currentIndex === -1
-        ? 0
-        : e.key === 'ArrowDown'
-        ? (currentIndex + 1) % filteredOptions().length
-        : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
-
-    setSelectedOption(filteredOptions()[nextIndex]);
-} else if (e.key === 'Enter' && selectedOption()) {
-    handleOptionSelect(selectedOption() as Option);
-}
-};
+      const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
+      const nextIndex =
+      currentIndex === -1
+          ? 0
+          : e.key === 'ArrowDown'
+          ? (currentIndex + 1) % filteredOptions().length
+          : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
+  
+      setSelectedOption(filteredOptions()[nextIndex]);
+  } else if (e.key === 'Enter' && selectedOption()) {
+      handleOptionSelect(selectedOption() as Option);
+  }
+  };
 
 
   return (
     <div class="pengajuan-event-details">
-       <div>
+      <div>
         <h1>Form Tambah Pengajuan Event</h1>
       </div>
       <div class="dropdown-keterangan-evdetails">
@@ -349,8 +311,6 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         {/* Gunakan dropdown di sini */}
         <select
             id="keteranganDropdown-evdetails"
-            // value={selectedOption()}
-            // onChange={(e) => setSelectedOption(e.target.value)}
             style={{width:"45vh"}}
             value={keterangan()}
             onInput={(e) => setKeterangan(e.target.value)}
@@ -366,12 +326,6 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                   <option value={option}>{option}</option>
               ))
           )}
-            {/* <option value="" disabled selected>
-                Pilih Keterangan
-            </option>
-            {keteranganOptions().map((option) => (
-                <option value={option}>{option}</option>
-            ))} */}
         </select>      
       </div>
 
@@ -401,8 +355,8 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                   class="custom-dropdown-coa"
                 />
                 {showDropdown() && (
-                  <div class="dropdown-options-coa-evdetails">
-                  <div class="options-list-evdetails">
+                  <div class="dropdown-options-coa">
+                  <div class="options-list">
                     {filteredOptions().map((option) => (
                       <div onClick={() => handleOptionSelect(option)} class="option-label">{option.label}</div>
                     ))}
@@ -413,41 +367,6 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                 {/* <div>Selected Value: {selectedOption()?.value || 'None'}</div> */}
               </div>
               </div>
-
-            {/* <div>
-            <label>COA</label>
-            <br />
-               <div class="custom-dropdown-coa" ref={dropdownRef}>
-                <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
-                    <div>{selectedOption() || ""}</div>
-                    <div>
-                        {isOpen() ? 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="10" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
-                        : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="10" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
-                        }
-                    </div>
-                </div>
-                <div>
-                {isOpen() && (
-                    <div class="dropdown-options-coa">
-                    <div class="options-list" >
-                        {options.map((option, index) => (
-                        <div
-                            class="option"
-                            onClick={() => {
-                            setSelectedOption(option);
-                            setIsOpen(false);
-                            }}
-                        >
-                            {option}
-                        </div>
-                        ))}
-                    </div>
-                    </div>
-                )}
-                </div>
-            </div> 
-            </div> */}
 
             <div>
             <label>Qty</label>
@@ -500,13 +419,13 @@ if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         </div>
         
         <div class="btn-simpan-data-evdetails">
-            <button onClick={handlePopUpEvent}>Simpan</button>
+            <button onClick={handlePopUp}>Simpan</button>
         </div>
 
         </div>
-        {popUpEvent() && <PengajuanEvent OnClose={closePopUpEvent} pengajuanevent={namaPengajuanEvent()}/>}
-        {/* {EditPopUpEvent() && <EditEventDetails OnClose={closePopUpEvent}/>}
-        {DeletePopUpEvent() && <ComfirmDeleteEvDetails OnClose={closePopUpEvent}/>} */}
+        {popUp() && <PengajuanEvent OnClose={closePopUp} pengajuanevent={namaPengajuanEvent()}/>}
+        {/* {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}  rowData={selectedRow()} handleEdit={handleEdit}/>} */}
+        {/* {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>} */}
     </div>
   );
 };

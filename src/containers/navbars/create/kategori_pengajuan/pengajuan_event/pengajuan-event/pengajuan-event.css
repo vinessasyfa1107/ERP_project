@@ -3,11 +3,11 @@
     top: 50%;
     transform: translate(-50%, -50%);
     margin: auto;
-    padding: 5px;
+    padding: 25px;
     position: fixed;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    z-index: 2;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
     background-color: #fff;
@@ -18,10 +18,10 @@
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 85vh;
-    height: 97vh;
+    height: 70vh;
     background-color: #fff;
     text-align: left;
-    padding: 25px 20px;
+    /* padding: 25px 20px; */
     overflow: hidden;
 }
 
@@ -65,7 +65,7 @@
     align-items: center;
     padding-bottom: 15px;
     margin-bottom: 2vh;
-    margin-top: 80px;
+    /* margin-top: 80px; */
 }
 
 
@@ -209,4 +209,17 @@
 
 .pengajuan-weekly .detail-total-operasional {
     width: 80vh;
+}
+
+.pengajuan-event .submit-btn-event button {
+    background-color: #8367ff;
+    color: #fff;
+    text-transform: capitalize;
+    position: absolute;
+    width: 80px;
+    height: 42px;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 40px;
+    left: 45%;
 }
