@@ -2,9 +2,9 @@ import { onMount, type Component } from 'solid-js';
 import './planning.css';
 import TablePlanning from './table/table-planning';
 import ChartPlanning from './chart-planning';
-import TableDetailPlan from './table/table-detail-plan';
+import TablePengajuanBaru from './table/table-pengajuan-baru';
 import { Icon } from '@iconify-icon/solid';
-import FormPlanning from './form/form-planning';
+import FormConfirm from './form/form-confirm';
 import { A } from '@solidjs/router';
 import Header from '../../header/header';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
@@ -49,7 +49,7 @@ const Planning: Component = () => {
 
                 <div>
                     <h1>List Rencana Pengajuan</h1>
-                    <TableDetailPlan />
+                    <TablePengajuanBaru />
                 </div>
 
             </div>

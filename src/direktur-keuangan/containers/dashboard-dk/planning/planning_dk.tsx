@@ -2,7 +2,8 @@ import { createSignal, type Component, onMount } from 'solid-js';
 import './planning_dk.css';
 import TablePlanning from './table-detail-plan/table-planning';
 import ChartPlanning from './chart-planning';
-import TableDetailPlan from './table-detail-plan/table-detail-plan';
+// import TableDetailPlan from './table-detail-plan/table-detail-plan';
+import TablePengajuanBaru from '../../../../containers/dashboard/plannings/table/table-pengajuan-baru';
 import { Icon } from '@iconify-icon/solid';
 import { A } from '@solidjs/router';
 import Header from '../header/header';
@@ -44,7 +45,8 @@ const Planning_dk: Component = () => {
 
                 <div>
                     <h1>List Rencana Pengajuan</h1>
-                    <TableDetailPlan />
+                    {/* <TableDetailPlan /> */}
+                    <TablePengajuanBaru />
                 </div>
 
             </div>
