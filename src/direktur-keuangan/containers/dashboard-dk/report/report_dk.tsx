@@ -14,7 +14,7 @@ import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 
 const Report_dk: Component = () => {
 
-    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+    const [, { changeSubTitleNavbar }] = useSubNavbarStore();
 
     onMount(() => {
         changeSubTitleNavbar("Report");
@@ -42,8 +42,8 @@ const Report_dk: Component = () => {
                 <ReportNavbar />
             </div> */}
 
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
-                <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
+            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "285vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px" }}>
+                <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "285vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px" }}>
                     {/* div untuk barchart container */}
                     <div class="barchartReport-container">
                         <div class="top-table">
@@ -167,13 +167,13 @@ const Report_dk: Component = () => {
                     </div>
 
                     {/* div untuk barchart arus kas report */}
-                    <p style={{ "margin": "22px", "color": "#414141","font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal" , "font-family":"Exo"}}>Arus Kas</p>
+                    <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal", "font-family": "Exo" }}>Arus Kas</p>
                     <div class="barchart-aruskas-container" style={{ "margin-bottom": "5.5rem" }}>
                         <Barchart_aruskas_report />
                     </div>
 
                     {/* div untuk barchart laba rugi */}
-                    <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal", "font-family":"Exo" }}>Laba Rugi</p>
+                    <p style={{ "margin": "22px", "color": "#414141", "font-size": "18px", "font-style": "normal", "font-weight": "700", "line-height": "normal", "font-family": "Exo" }}>Laba Rugi</p>
                     <div class="barchart-labarugi-container" >
                         <Barchart_labarugi_report />
                     </div>

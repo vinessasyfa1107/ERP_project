@@ -21,6 +21,27 @@ interface AggregatedRowData {
     keterangan: string;
     total: number;
   }
+
+  interface NewRowData {
+    pengajuan: {
+      id: number;
+      coa_kd: string;
+      entry_ts: string;
+      tipepengajuan: string;
+      status: string;
+      namapengajuan?: string;
+    };
+    details: {
+      pengajuan_id: number;
+      keterangan: string;
+      kebutuhan: string;
+      quantity: number;
+      uom: string;
+      price: number;
+      total: number;
+      namapengajuan?: string;
+    }[];
+  }
   
 
 const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
@@ -33,20 +54,84 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
     //         : ([] as RowData[]);
     //     })()
     //   );
-    const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
-      (() => {
-          const savedData = localStorage.getItem('tableData');
-          const entry_ts = props.date; // Ambil nilai timestamp dari props
+  //   const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
+  //     (() => {
+  //         const savedData = localStorage.getItem('tableData');
+  //         const entry_ts = props.date; // Ambil nilai timestamp dari props
 
-          return savedData
-              ? JSON.parse(savedData).map((row, index) => ({
-                  ...row,
-                  // uniqueId: index,
-                  entry_ts, // Tambahkan properti timestamp ke setiap objek
-              })) as RowData[]
-              : ([] as RowData[]);
-      })()
+  //         return savedData
+  //             ? JSON.parse(savedData).map((row, index) => ({
+  //                 ...row,
+  //                 // uniqueId: index,
+  //                 entry_ts, // Tambahkan properti timestamp ke setiap objek
+  //             })) as RowData[]
+  //             : ([] as RowData[]);
+  //     })()
+  // );
+
+  const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
+    (() => {
+      const savedData = localStorage.getItem('tableData');
+      const entry_ts = props.date; // Ambil nilai timestamp dari props
+      const status = "Waiting";
+      const pengajuan_id = 0;
+
+      return savedData
+        ? JSON.parse(savedData).map((row) => ({
+            ...row,
+            // uniqueId: index,
+            entry_ts,
+            status,
+            pengajuan_id
+          })) as RowData[]
+        : ([] as RowData[]);
+    })()
   );
+  
+  // Fungsi untuk mengonversi originalRowData ke NewRowData
+  function convertRowData(originalRowData): NewRowData | null {
+    const uniquePengajuan: Record<string, NewRowData> = {};
+  
+    originalRowData.forEach((rowData) => {
+      const key = `${rowData.id}_${rowData.coa_kd}_${rowData.entry_ts}_${rowData.tipepengajuan}`;
+  
+      if (!uniquePengajuan[key]) {
+        uniquePengajuan[key] = {
+          pengajuan: {
+            id: rowData.id,
+            coa_kd: rowData.coa_kd,
+            entry_ts: rowData.entry_ts,
+            tipepengajuan: rowData.tipepengajuan,
+            status: rowData.status,
+            namapengajuan: rowData.namapengajuan,
+          },
+          details: [],
+        };
+      }
+  
+      uniquePengajuan[key].details.push({
+        pengajuan_id: rowData.pengajuan_id,
+        keterangan: rowData.keterangan,
+        kebutuhan: rowData.kebutuhan,
+        quantity: rowData.quantity,
+        uom: rowData.uom,
+        price: rowData.price,
+        total: rowData.total,
+        namapengajuan: rowData.namapengajuan,
+      });
+    });
+  
+    const result = Object.values(uniquePengajuan);
+    return result.length > 0 ? result[0] : null;
+  }
+  
+  
+  // Contoh penggunaan dalam konversi data
+  const newStructuredData = convertRowData(originalRowData());
+  
+  console.log("struktur", newStructuredData)
+
+  
 
 
 
@@ -111,41 +196,33 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
     console.log("tes", transformDataForGrid(aggregatedRowData()))
     console.log("data all monthly ke BE, ", originalRowData());
 
+    console.log("struktur baru", newStructuredData)
+
 
     const sendDataToBackend = async () => {
       console.log("data all monthly ke BE, ", originalRowData());
-      // localStorage.removeItem('tableData');
-      // localStorage.removeItem('tableKetMonth');
-      // localStorage.removeItem('namaPengajuanMonthly');
+      console.log("struktur baru", newStructuredData)
+
       try {
         const response = await fetch('/api/monthlypengajuan/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(originalRowData()),
+          body: JSON.stringify(newStructuredData),
         });
     
-        if (!response.ok) {
-          throw new Error('Gagal mengirim data ke backend');
-        }
-    
-        const responseData = await response.json();
-        console.log('Response dari backend:', responseData);
-    
-        // Tambahkan logika atau penanganan lain jika diperlukan
-        if (responseData.success) {
-          // Data berhasil dikirim, lakukan sesuatu
+        if (response.ok) {
+          alert('Data berhasil dikirim ke backend');
           console.log('Data berhasil dikirim ke backend');
           props.OnClose();
-          // localStorage.removeItem('tableData');
-          // localStorage.removeItem('tableKetMonth');
-          // localStorage.removeItem('namaPengajuanMonthly');
-          // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman berhasil
+          localStorage.removeItem('tableData');
+          localStorage.removeItem('tableKetMonth');
+          localStorage.removeItem('namaPengajuanMonthly');
         } else {
-          // Gagal karena logika bisnis di backend, tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
-          console.error('Gagal mengirim data ke backend:', responseData.error);
-          // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman gagal
+            const errorMessage = await response.text();
+            alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+            console.error('Gagal mengubah data:', errorMessage);
         }
       } catch (error) {
         console.error('Error:', error.message);
@@ -153,8 +230,6 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
       }
     };
     
-
-        
 
     return (
         <div class="overlay">

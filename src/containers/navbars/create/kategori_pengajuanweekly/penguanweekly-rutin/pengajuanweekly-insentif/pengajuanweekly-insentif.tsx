@@ -58,7 +58,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
       (() => {
-        const savedData = localStorage.getItem('tableData');
+        const savedData = localStorage.getItem('tableDataWeekly');
         return savedData
           ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
           : ([] as RowData[]);
@@ -99,7 +99,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     const handleCellValueChanged = (params) => {
       const { data } = params;
       // Update local storage
-      localStorage.setItem('tableData', JSON.stringify(rowData()));
+      localStorage.setItem('tableDataWeekly', JSON.stringify(rowData()));
     
       // Recalculate total if 'qty' or 'price' is changed
       if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
@@ -109,7 +109,7 @@ const PengajuanWeeklyInsentif: Component = () => {
           const newData = prevData.map((row) =>
             areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
           );
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
           return newData;
         });
       }
@@ -120,7 +120,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         const newData = [...prevData];
         newData.splice(index, 1);
         // Update localStorage after removing the row
-        localStorage.setItem('tableData', JSON.stringify(newData));
+        localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
         return newData;
       });
     };
@@ -182,7 +182,7 @@ const PengajuanWeeklyInsentif: Component = () => {
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableData', JSON.stringify(newData));
+          localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
           return newData;
         });
   
@@ -218,7 +218,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     // onMount(() => {
     //   // Bersihkan localStorage saat komponen di-unmount
     //   onCleanup(() => {
-    //     localStorage.removeItem('tableData');
+    //     localStorage.removeItem('tableDataWeekly');
     //   });
     // });
     

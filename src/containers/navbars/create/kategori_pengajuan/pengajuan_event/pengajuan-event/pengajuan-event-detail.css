@@ -62,7 +62,7 @@
     height: 4.5vh;
 }
 
-.container-event-details .dropdown-options-coa-evdetails {
+.container-event-details .dropdown-options-coa {
     padding: 7px;
     height: 45vh;
     width: 18vw;
@@ -90,11 +90,11 @@
     border-radius: 5px;
 } */
 
-.container-event-details .dropdown-options-coa-evdetails .option-label {
+.container-event-details .dropdown-options-coa .option-label {
     padding-left: 12px;
 }
 
-.container-event-details .dropdown-options-coa-evdetails .option-label:hover {
+.container-event-details .dropdown-options-coa .option-label:hover {
     background-color: rgb(87, 129, 255);
     padding-left: 14px;
     color: white;
