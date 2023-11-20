@@ -7,8 +7,10 @@ import { A, useLocation, useNavigate } from '@solidjs/router';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import ConfirmAllEvent from '../popup-event/confirm-all-event';
+import { getNamaPengajuanEvent } from '../../../../../../store/Pengajuan/nama-pengajuan';
 // import { DataMonthlyPlanning } from '../../../../api/planning/data-monthly-plan';
-
+import { RowData as RowDataEvent } from './pengajuan-event-detail';
 export interface PengajuanEventProps {
     OnClose?: () => void;
     total?: number,
@@ -35,36 +37,6 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         })()
       );
 
-    const [backendData, setBackendData] = createSignal([{}]);
-
-    // ...
-
-// onMount(async () => {
-//     try {
-//       const backendData = await DataMonthlyPlanning("data monthplan");
-//       console.log("monthplan: ", backendData);
-//       setBackendData(backendData);
-  
-//       // Get keterangan values from local storage
-//       const savedData = localStorage.getItem('tableKetMonth');
-//       const localData = savedData ? JSON.parse(savedData) : [];
-  
-//       // Calculate aggregated data based on keterangan from local storage and backend data
-//       const aggregatedData = localData.map((localItem) => {
-//         const total = backendData
-//           .filter((backendItem) => backendItem.keterangan === localItem.keterangan)
-//           .reduce((sum, item) => sum + item.total, 0);
-  
-//         return { keterangan: localItem.keterangan, totalplan: total };
-//       });
-  
-//       setRowData(aggregatedData);
-//     } catch (error) {
-//       console.error('Error fetching data from backend:', error);
-//     }
-//   });
-  
-  // ...
   
     
     const [pageKeterangan, setPageKeterangan] = createSignal(false);
@@ -91,32 +63,153 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
 
 
     function clearKeterangan(keteranganToRemove) {
+      // Tampilkan konfirmasi dan simpan hasilnya dalam variabel
+      const userConfirmed = window.confirm(`Apa anda yakin ingin menghapus seluruh data dalam pengajuan dengan keterangan '${keteranganToRemove}'?`);
+    
+      // Jika pengguna menekan "OK", lanjutkan dengan penghapusan data
+      if (userConfirmed) {
         // Filter rowData untuk menghapus baris dengan keterangan yang sesuai
-        const updatedData = rowData().filter(item => item.keterangan !== keteranganToRemove);
-      
+        const updatedRowData = rowData().filter(item => item.keterangan !== keteranganToRemove);
+    
         // Perbarui rowData dengan data yang telah diperbarui
-        setRowData(updatedData);
-      
+        setRowData(updatedRowData);
+    
         // Simpan data yang telah diperbarui ke localStorage
-        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(updatedData));
+        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(updatedRowData));
+    
+        // Filter tableData untuk menghapus baris dengan keterangan yang sesuai
+        const updatedTableData = tableData().filter(item => item.keterangan !== keteranganToRemove);
+    
+        // Perbarui tableData dengan data yang telah diperbarui
+        setTableData(updatedTableData);
+    
+        // Simpan data yang telah diperbarui ke localStorage (jika diperlukan)
+        localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+      }
     }
+    
+    //UNTUK EDIT DATA
+    //dideklarasi buat dipake di onCellValueChanged
+    const [tableData, setTableData] = createSignal<RowDataEvent[]>(
+      (() => {
+        // Coba ambil data dari localStorage saat komponen diinisialisasi
+        const savedData = localStorage.getItem('tableDataEventDetails'); //nama untuk nyimpen data tabel keterangan
+        return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+      })()
+    );
+
+    const onCellValueChanged = (params) => {
+      // Mendapatkan data baris yang berubah
+      const editedRow = params.data;
+    
+      // Mendapatkan indeks baris yang berubah
+      const rowIndex = rowData().findIndex((row) => row.keterangan === editedRow.keterangan);
+    
+      // Perbarui rowData dengan data yang telah berubah
+      const updatedRowData = [...rowData()];
+      updatedRowData[rowIndex] = editedRow;
+      setRowData(updatedRowData);
+      
+      console.log("params ",)
+      // Simpan data yang telah berubah ke localStorage
+      localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(updatedRowData));
+    
+      // Perbarui tableData dengan keterangan yang diubah
+
+      console.log("prev ket !! ", previousKet());
+      console.log("ket params, ", params.data.keterangan);
+      const updatedTableData = tableData().map((data) => {
+        if (data.keterangan === previousKet()) {
+          return {
+            ...data,
+            // Perbarui keterangan
+            keterangan: params.data.keterangan,
+          };
+        }
+        return data;
+      });
+      
+    
+      // Perbarui tableData
+      setTableData(updatedTableData);
+    
+      // Simpan data tableData yang telah berubah ke localStorage (jika diperlukan)
+      localStorage.setItem('tableDataEventDetails', JSON.stringify(updatedTableData));
+    };
+
+    // untuk edit data
+    const [isEditing, setIsEditing] = createSignal(false);
+    const [shouldNavigate, setShouldNavigate] = createSignal(false);
+    const [previousKet, setPreviousKet] = createSignal('');
+
+    const clearEdit = () => {
+      setIsEditing(false);
+      // Log nilai isEditing saat clearEdit
+      console.log('isEditing cleared:', isEditing);
+      // Tambahan logika atau pembaruan lain yang mungkin diperlukan saat menonaktifkan mode edit
+    };
+
+    const toggleEdit = (params) => {
+      // Toggle mode edit
+      setIsEditing(!isEditing());
+      // Log nilai isEditing saat toggleEdit
+      console.log('isEditing toggled to:', isEditing);
+      console.log('ini apa ', params.data.keterangan);
+      setPreviousKet(params.data.keterangan);
+    };
+
+    createEffect(() => {
+      // Efek ini akan memonitor perubahan isEditing dan memperbarui onCellValueChanged
+      gridOptions.onCellValueChanged = isEditing() ? onCellValueChanged : undefined;
+    });
+
+    const handleDone = (params: any) => {
+      // Pemanggilan ini mungkin memerlukan penyesuaian sesuai kebutuhan Anda
+      clearEdit();
+
+      // Logika tambahan jika navigasi harus dihindari
+      if (!shouldNavigate) {
+        // Atur kondisi agar navigasi dihindari pada klik berikutnya
+        setShouldNavigate(true);
+        return;
+      }
+    };
+
+
+    const onCellClicked = (event: any) => {
+      if (!isEditing()) {
+        // Jika tidak dalam mode edit, navigasi ke halaman lain
+        if (shouldNavigate) {
+          navigate('/pengajuan-event/pengajuan-event-detail');
+          props.OnClose();
+        }
+      }
+      // Reset kondisi agar navigasi dapat dilakukan pada klik berikutnya
+      setShouldNavigate(false);
+    };
       
     const gridOptions = {
         columnDefs: [
             { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
-            { field: "keterangan", width: 350},
+            { field: "keterangan", editable: true,  width: 250},
             { field: "totalplan", headerName:"Total", width: 97},
             { field: "aksi", headerName:"", width: 80, 
             cellRenderer: (params: any) => {
                 return (
-                  <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
-                    <button><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-                    <button onClick={() => clearKeterangan(params.data.keterangan)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button>
+                  <div style={{  display: "flex", "justify-content": "space-between", width: "7vh" }}>
+                    <button onClick={() => isEditing() ? handleDone(params) : toggleEdit(params)}>
+                      <Icon icon={isEditing() ? 'pajamas:todo-done' : 'iconamoon:edit'} color="#40444b" width="18" height="18" />
+                    </button>
+                    <button onClick={() => clearKeterangan(params.data.keterangan)}>
+                      <Icon icon="mdi:delete" color="#40444b" width="18" height="18" />
+                    </button>
                   </div>
                 );
               }
             }
-        ]
+        ],
+        onCellValueChanged: undefined, // Ditetapkan secara dinamis di createEffect
+
     };
 
     const onGridReady = (params: any) => {
@@ -125,102 +218,54 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
 
     const navigate = useNavigate();
 
-    const onCellClicked = (event: any) => {
-        if (event.columnApi.getColumn(event.column.colId).getColId() === 'keterangan') {
-            // Assuming 'keterangan' is the column containing the link
-            // Redirect to the specified URL when the 'keterangan' column is clicked
-            // You can adjust this logic based on your column configuration
-            props.OnClose();
-            // Use router navigation here
-            navigate('/pengajuan-event/pengajuan-event-detail');
-        }
-    };
-
-    //   const calculateTotalByKeterangan = (keterangan, backendData) => {
-    //     const filteredData = backendData.filter(item => item.keterangan === keterangan);
-    //     const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total, 0);
-    //     return total;
-    //   };
-      
-      
-    //   const addRow = () => {
-    //     if (keterangan()) {
-    //         const total = calculateTotalByKeterangan(keterangan(), backendData());
-
-    //       const newRow: RowData = {
-    //         keterangan: keterangan(),
-    //         totalplan: total
-    //       };
-      
-    //       setRowData((prevData) => {
-    //         const newData = [...prevData, newRow];
-    //         // Simpan data ke localStorage saat menambahkan data baru
-    //         localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
-    //         return newData;
-    //       });
-
-    //       setAllTotal((prevTotal) => prevTotal + total);
-
-    //       clearInputs();
-    //     }
-    //   };
-    const calculateTotalByKeterangan = (keterangan, backendData) => {
-        const filteredData = backendData.filter(item => item.keterangan === keterangan);
-        const total = filteredData.reduce((accumulator, currentValue) => accumulator + currentValue.total2, 0);
-        return total;
-      };
-
-    const calculateAllTotal = () => {
-        const totalall = rowData().reduce((accumulator, currentValue) => accumulator + currentValue.totalplan, 0);
-        console.log("hasil total", totalall);
-        setAllTotal(totalall);
-      };
-      
-      const addRow = () => {
-        if (keterangan()) {
-          const total = calculateTotalByKeterangan(keterangan(), backendData);
-      
-          const newRow: RowData = {
-            keterangan: keterangan(),
-            totalplan: total
-          };
-      
-          setRowData((prevData) => {
-            const newData = [...prevData, newRow];
-            // Simpan data ke localStorage saat menambahkan data baru
-            localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
-            // calculateAllTotal();
-            return newData;
-          });
-      
-          setAllTotal((prevTotal) => prevTotal + total);
-      
-          clearInputs();
-        }
-      };
-      createEffect(() => {
-        calculateAllTotal();
-      });
-      
-
-
-      
-      
     const addRow1 = () => {
-    if (keterangan()) {
-        // const total = qty() * price();
-        const newRow: RowData = {
-        keterangan: keterangan()
-        };
-        setRowData((prevData) => {
-        const newData = [...prevData, newRow];
-        // Simpan data ke localStorage saat menambahkan data baru
-        localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
-        // calculateAllTotal();
-        return newData;
-        });
-        clearInputs();
-    }};
+      if (keterangan()) {
+          // const total = qty() * price();
+          const newRow: RowData = {
+          keterangan: keterangan(),
+          totalplan: 0,
+          };
+          setRowData((prevData) => {
+          const newData = [...prevData, newRow];
+          // Simpan data ke localStorage saat menambahkan data baru
+          localStorage.setItem('tableKetPengajuanEvent', JSON.stringify(newData));
+          // calculateAllTotal();
+          
+          return newData;
+          });
+          clearInputs();
+      }};
+  
+
+  
+      // gantiin kode untuk merged Data yang ini ya Ca !!!!!!!!!!!!!!!!!!
+      // Ambil data dari localStorage 
+      const tableData2 = JSON.parse(localStorage.getItem('tableDataEventDetails')) || [];
+      const initialRowData = JSON.parse(localStorage.getItem('tableKetPengajuanEvent')) || [];
+  
+      // Buat objek untuk menyimpan total berdasarkan keterangan
+      const totalByKeterangan = {};
+  
+      // Hitung total dari tableData berdasarkan keterangan
+      tableData2.forEach((row) => {
+      const { keterangan, total } = row;
+      totalByKeterangan[keterangan] = (totalByKeterangan[keterangan] || 0) + total;
+      });
+  
+      // Perbarui totalplan langsung pada data initialRowData
+      const updatedRowData = initialRowData.map((row) => {
+      const { keterangan } = row;
+      return { ...row, totalplan: totalByKeterangan[keterangan] || 0 };
+      });
+  
+      // Perbarui state rowData
+      setRowData(updatedRowData);
+      
+      const allTotal1 = () => {
+      const totalPlanArray = updatedRowData.map((row) => row.totalplan || 0);
+      const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
+      return `Rp${total}`;
+      };
 
     const clearInputs = () => {
         setKeterangan("")
@@ -239,6 +284,41 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
 
   const location = useLocation();
 
+  const [popUpConfirm, setPopUpConfirm] = createSignal(false);
+  const [timestamp, setTimestamp] = createSignal("");
+
+  function showPopUpConfirm() {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().slice(0, 11);
+
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    const timestamp = `${formattedDate}${formattedTime}`;
+
+    console.log("tanggal dan waktu: ", timestamp);
+    setTimestamp(timestamp);
+
+    setPopUpConfirm(true);
+    console.log("jalan")
+  }
+  
+
+  function closePopUpConfirm(){
+    setPopUpConfirm(false);
+  };
+
+  const simpanPengajuan = (event: any) => {
+    props.OnClose();
+    navigate('/pengajuan/pengajuan_detail');
+  };
+
+  function hapusnama(){
+    localStorage.removeItem('namaPengajuanEvent'); // Menghapus nilai dari penyimpanan lokal
+  }
+
   return (
     <div class="overlay">
       
@@ -249,29 +329,30 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         </div>
         <div class="pengajuan-event" >
             <div>
+                {/* <button onClick={hapusnama}>hapus</button> */}
                 <div class="judul-pengajuan-event">
-                    <h1>Form Pengajuan</h1>
-                    <p>{props.pengajuanevent}</p>
+                  <h1>Form Pengajuan</h1>
+                  <p>{getNamaPengajuanEvent()}</p>
+                </div>
+                {tambahKeterangan() && 
+                <div class="tambah-keterangan-group-event">
+                    <div>
+                    <br />
+                    <input 
+                    type="text"
+                    placeholder="Keterangan"
+                    value={keterangan()}
+                    onInput={(e) => setKeterangan(e.target.value)}
+                    />
                     </div>
-                    {tambahKeterangan() && 
-                    <div class="tambah-keterangan-group-event">
-                        <div>
-                        <br />
-                        <input 
-                        type="text"
-                        placeholder="Keterangan"
-                        value={keterangan()}
-                        onInput={(e) => setKeterangan(e.target.value)}
-                        />
-                        </div>
-                        <div>
-                            <button class="btn-tambah-event" onClick={addRow1}>Tambah</button>
-                        </div>
-                        <div>
-                            <button class="btn-cancel-event" onClick={closeTambahKeterangan}>Selesai</button>
-                        </div>
+                    <div>
+                        <button class="btn-tambah-event" onClick={addRow1}>Tambah</button>
                     </div>
-                    }
+                    <div>
+                        <button class="btn-cancel-event" onClick={closeTambahKeterangan}>Selesai</button>
+                    </div>
+                </div>
+                }
 
                 
                 <div class="btn-show-keterangan-event">
@@ -289,12 +370,21 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
                 />
                 <div class="detail-total-operasional">
                     <div>TOTAL</div>
-                    <div>Rp{allTotal()}</div>
+                    <div>{allTotal1()}</div>
                 </div>
+                </div>
+                <div class="submit-btn-event">
+                  <div >
+                    <button class="submit-btn" onClick={showPopUpConfirm}>Submit</button>
+                  </div>
+                  <div>
+                    <button class="simpan-btn" onClick={simpanPengajuan}>Simpan</button>
+                  </div>
                 </div>
             </div>
 
         </div>
+        {popUpConfirm() && <ConfirmAllEvent OnClose={closePopUpConfirm} pengajuan={props.pengajuanevent} sumtotal={allTotal1()} date={timestamp()}/>}
     </div>
   );
 };

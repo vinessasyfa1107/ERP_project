@@ -1,6 +1,6 @@
 .nama-pengajuan-1-weekly {
     left: 50%;
-    top: 50%;
+    top: 45%;
     transform: translate(-50%, -50%);
     margin: auto;
     padding: 20px 25px;
@@ -22,7 +22,7 @@
     height: 30vh;
     background-color: #fff;
     text-align: left;
-    padding: 25px 20px;
+    padding: 25px 15px;
     overflow: hidden;
 }
 
@@ -60,7 +60,7 @@
 }
 
 /* CSS untuk judul "monthly" */
-.nama-pengajuan-1-weekly .keterangan-weekly {
+.nama-pengajuan-1-weekly .keterangan {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,7 +70,7 @@
 }
 
 
-.nama-pengajuan-1-weekly .keterangan-weekly button {
+.nama-pengajuan-1-weekly .keterangan button {
     background-color: #AE0000;
     color: #FFFFFF;
     border-radius: 5px;
@@ -80,7 +80,7 @@
     float: right;
 }
 
-.nama-pengajuan-1-weekly .keterangan-weekly h2 {
+.nama-pengajuan-1-weekly .keterangan h2 {
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
@@ -90,7 +90,7 @@
 }
 
 
-.nama-pengajuan-1-weekly .keterangan-weekly span {
+.nama-pengajuan-1-weekly .keterangan span {
     font-size: 8px;
 }
 
@@ -147,7 +147,7 @@
     margin-top: 23px;
 }
 
-.nama-pengajuan-1-weekly .tambah-keterangan-group-weekly .btn-cancel-weekly {
+.nama-pengajuan-weekly .tambah-keterangan-group-weekly .btn-cancel-weekly {
     background-color: #b5b5b5;
     color: white;
     width: 80px;
@@ -191,18 +191,18 @@
     margin-top: 23px;
 }
 
-.nama-pengajuan-weekly .judul-pengajuan {
+.nama-pengajuan-weekly .judul-pengajuan-weekly {
     text-align: center;
 }
 
-.nama-pengajuan-weekly.judul-pengajuan h1 {
+.nama-pengajuan-weekly .judul-pengajuan-weekly h1 {
     font-weight: 600;
     font-family: 'Inter';
     font-size: 16px;
 
 }
 
-.nama-pengajuan-weekly .judul-pengajuan p {
+.nama-pengajuan-weekly .judul-pengajuan-weekly p {
     font-weight: 700;
     font-family: 'Inter';
     font-size: 18px;

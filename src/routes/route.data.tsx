@@ -5,10 +5,6 @@ import { useStore } from '../store';
 
 
 import OperasionalTamanhas from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
-import OperasionalPurwokerto from '../containers/navbars/create/kategori_pengajuanmonthly/operasional-purwokerto/operasional-purwokerto';
-import KebutuhanProject from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-project/kebutuhan-project';
-import KebutuhanMarketing from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-marketing/kebutuhan-marketing';
-import KebutuhanMaintenance from '../containers/navbars/create/kategori_pengajuanmonthly/kebutuhan-maintenance-tools/kebutuhan-maintenance';
 import PengajuanWeeklyRutin from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-rutin';
 import PengajuanWeeklyInsentif from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import PengajuanReimburse from '../containers/navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-reimburse/popup/pengajuanweekly-reimburse';
@@ -66,6 +62,7 @@ const Header = lazy(() => import('../containers/header/header'));
 
 const Pengajuan_dashboard = lazy(() => import('../containers/pengajuan/pengajuan_dashboard/pengajuan_dashboard'));
 const Pengajuan_laporan = lazy(() => import('../containers/pengajuan/pengajuan_laporan/pengajuan_laporan'));
+const PengajuanDetail = lazy(() => import('../containers/pengajuan/pengajuan_detail/pengajuan_detail'));
 
 const Kas_besar = lazy(() => import('../containers/report/kas_besar/kas_besar'));
 const Semua_laporan = lazy(() => import('../containers/report/semua_laporan'));
@@ -155,6 +152,7 @@ const RouteData: Component = () => {
             <Route path="/pengajuan">
                 <Route path="/pengajuan_dashboard" component={Pengajuan_dashboard} />
                 <Route path="/pengajuan_laporan" component={Pengajuan_laporan} />
+                <Route path="/pengajuan_detail" component={PengajuanDetail} />
             </Route>
 
             <Route path="/keuangan">
@@ -186,19 +184,14 @@ const RouteData: Component = () => {
 
 
             <Route path="/pengajuan-weekly">
-                <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} />
+                {/* <Route path="/pengajuanweekly-rutin" component={PengajuanWeeklyRutin} /> */}
                 <Route path="/pengajuanweekly-insentif" component={PengajuanWeeklyInsentif} />
-                <Route path="/pengajuan-reimburse" component={PengajuanReimburse} />
-                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
+                {/* <Route path="/pengajuan-reimburse" component={PengajuanReimburse} /> */}
                 <Route path="/masterakun" component={MasterAkun} />
             </Route>
 
             <Route path="/pengajuan-monthly">
                 <Route path="/operasional-rutin-tamanhas" component={OperasionalTamanhas} />
-                <Route path="/operasional-rutin-purwokerto" component={OperasionalPurwokerto} />
-                <Route path="/kebutuhan-project" component={KebutuhanProject} />                
-                <Route path="/kebutuhan-marketing" component={KebutuhanMarketing} />
-                <Route path="/kebutuhan-maintenance-tools" component={KebutuhanMaintenance} />
             </Route>
 
             <Route path="/pengajuan-event">

@@ -177,9 +177,7 @@ const Login: Component = () => {
         </div>
       </div>
     </div>
-
   )
-
 }
 
 export default Login;
