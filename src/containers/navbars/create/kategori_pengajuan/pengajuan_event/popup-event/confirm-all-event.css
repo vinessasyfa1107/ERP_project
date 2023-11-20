@@ -8,7 +8,7 @@
     position: fixed;
     justify-content: center;
     align-items: center;
-    z-index: 5;
+    z-index: 6;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 20px;
     background-color: #fff;
@@ -31,7 +31,7 @@
 } */
 
 /*css untuk tabel form popup*/
-.confirm-allplan-ev .monthly-plan-confirmation {
+.confirm-allplan-ev .event-plan-confirmation {
     /*untuk mengatur radius pop up form*/
     border-radius: 10px;
     width: 112vh;
@@ -40,11 +40,11 @@
     text-align: left;
     padding: 25px 20px;
     overflow: hidden;
-    z-index: 5;
+    z-index: 6;
     position: relative;
 }
 
-.confirm-allplan-ev form .head-acc {
+.confirm-allplan-ev form .head-acc-event {
     /*untuk mengatur teks dan button secara keseluruhan*/
     display: flex;
     justify-content: space-between;
@@ -53,7 +53,7 @@
     margin-bottom: 2vh;
 }
 
-.confirm-allplan-ev form .head-acc button {
+.confirm-allplan-ev form .head-acc-event button {
     /*untuk mengatur button x saja*/
     background-color: #AE0000;
     color: #FFFFFF;
@@ -64,25 +64,25 @@
     float: right;
 }
 
-.confirm-allplan-ev form .head-acc h2 {
+.confirm-allplan-ev form .head-acc-event h2 {
     /*untuk mengatur judul form*/
     color: #6E49E9;
     font-weight: bold;
     font-size: 18px;
 }
 
-.confirm-allplan-ev form .head-acc span {
+.confirm-allplan-ev form .head-acc-event span {
     /*untuk mengatur span pada h2*/
     font-size: 8px;
 }
 
 /*css untuk isian form*/
-/* .confirm-allplan-ev .form-pengajuan p {
+/* .confirm-allplan-ev .form-pengajuan-event p {
     color: #000000;
     font-weight: 600;
     font-size: 16px;
 } */
-.confirm-allplan-ev .form-pengajuan {
+.confirm-allplan-ev .form-pengajuan-event {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,19 +91,19 @@
 
 }
 
-.confirm-allplan-ev .form-pengajuan h1 {
+.confirm-allplan-ev .form-pengajuan-event h1 {
     font-family: 'Inter';
     font-size: 20px;
 }
 
-.confirm-allplan-ev .form-pengajuan label {
+.confirm-allplan-ev .form-pengajuan-event label {
     font-size: 16px;
     font-style: normal;
     line-height: 2;
     font-weight: 600;
 }
 
-.confirm-allplan-ev .form-pengajuan input,
+.confirm-allplan-ev .form-pengajuan-event input,
 select {
     /*untuk kotak teks input*/
     width: 29rem;
@@ -129,7 +129,7 @@ select {
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.confirm-allplan-ev .btn-save-edit button {
+.confirm-allplan-ev .btn-save-edit-event button {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;
@@ -141,7 +141,7 @@ select {
     border-radius: 5px;
 }
 
-.confirm-allplan-ev .form-pengajuan .sum-total {
+.confirm-allplan-ev .form-pengajuan-event .sum-total {
     width: 80vh;
     background-color: #6e49e9ba;
     color: #fff;
