@@ -9,7 +9,8 @@ import { Icon } from '@iconify-icon/solid';
 import EditEventDetails from '../popup-event/edit-event-details';
 import ComfirmDeleteEvDetails from '../popup-event/confirm-delete-evdetails';
 import { optionsEvdetails } from './data-coa-evdetails';
-import { namaPengajuanEvent } from './nama-pengajuan-event';
+import { getNamaPengajuanEvent } from '../../../../../../store/Pengajuan/nama-pengajuan';
+import ConfirmAllEvent from '../popup-event/confirm-all-event';
 
 interface Option {
   value: string;
@@ -22,14 +23,16 @@ interface SelectedOption {
 }
 
 export type RowData = {
-    keterangan: string;
-    uniqueId?: number;
-    kebutuhan: string;
-    qty: number;
+    namapengajuan: string;
+    tipepengajuan: string
+    id?: number;
     uom: string;
+    keterangan: string;
+    kebutuhan: string;
+    quantity: number;
     price: number;
     total: number;
-    coa: string;
+    coa_kd: string;
     aksi?: object;
   };
 
@@ -55,7 +58,7 @@ const PengajuanEventDetails: Component = () => {
     const [gridApi, setGridApi] = createSignal(null);
     const [rowData, setRowData] = createSignal<RowData[]>(
       (() => {
-        const savedData = localStorage.getItem('tableDataMonthly');
+        const savedData = localStorage.getItem('tableDataEventDetails');
         return savedData
           ? JSON.parse(savedData).map((row, index) => ({ ...row, uniqueId: index })) // Add a uniqueId property
           : ([] as RowData[]);
@@ -136,8 +139,8 @@ const PengajuanEventDetails: Component = () => {
         // { field: "uniqueId" },
         { field: "keterangan", editable: true, width: 150 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
-        { field: "coa", headerName: "COA", editable: true, width: 130 },
-        { field: "qty", headerName: "Qty", editable: true, width: 80 },
+        { field: "coa_kd", headerName: "COA", editable: true, width: 130 },
+        { field: "quantity", headerName: "Qty", editable: true, width: 80 },
         { field: "uom", headerName: "UoM", editable: true, width: 100 },
         { field: "price", headerName: "Price", editable: true, width: 130 },
         { field: "total", headerName: "Total",  width: 150},
@@ -165,20 +168,22 @@ const PengajuanEventDetails: Component = () => {
       if (need() && qty() && uom() && price() ) {
         let total = qty() * price();
         const newRow: RowData = {
-          // uniqueId: counter(),
+          id: 0,
+          tipepengajuan: "Monthly",
+          namapengajuan: getNamaPengajuanEvent(),
           keterangan: keterangan(),
           kebutuhan: need(),
-          qty: qty(),
+          quantity: qty(),
           uom: uom(),
           price: price(),
           total: total,
           // coa: selectedOption(),
-          coa: selectedOption()?.value,
+          coa_kd: selectedOption()?.value,
         };
         setRowData((prevData) => {
           const newData = [...prevData, newRow];
           // Simpan data ke localStorage saat menambahkan data baru
-          localStorage.setItem('tableDataMonthly', JSON.stringify(newData));
+          localStorage.setItem('tableDataEventDetails', JSON.stringify(newData));
           return newData;
         });
   
@@ -194,14 +199,14 @@ const PengajuanEventDetails: Component = () => {
       setCOA("");
     };
 
-    // const calculateTotal = () => {
-    //     const gridData = rowData();
-    //     let total = 0;
-    //     for (const row of gridData) {
-    //       total += row.total;
-    //     }
-    //     return total;
-    //   };
+    const calculateTotal = () => {
+        const gridData = rowData();
+        let total = 0;
+        for (const row of gridData) {
+          total += row.total;
+        }
+        return total;
+      };
     createEffect(() => {
       const gridData = rowData();
       let Total = 0;
@@ -215,7 +220,7 @@ const PengajuanEventDetails: Component = () => {
     // onMount(() => {
     //   // Bersihkan localStorage saat komponen di-unmount
     //   onCleanup(() => {
-    //     localStorage.removeItem('tableDataMonthly');
+    //     localStorage.removeItem('tableDataEventDetails');
     //   });
     // });
 
@@ -225,8 +230,8 @@ const PengajuanEventDetails: Component = () => {
 
   // kode dropdown keterangan
   const [keteranganOptions, setKeteranganOptions] = createSignal<string[]>(
-    localStorage.getItem('tableKetMonth')
-        ? JSON.parse(localStorage.getItem('tableKetMonth')!).map((row: any) => row.keterangan)
+    localStorage.getItem('tableKetPengajuanEvent')
+        ? JSON.parse(localStorage.getItem('tableKetPengajuanEvent')!).map((row: any) => row.keterangan)
         : []
   );
 
@@ -303,7 +308,7 @@ const PengajuanEventDetails: Component = () => {
   return (
     <div class="pengajuan-event-details">
       <div>
-        <h1>Form Tambah Pengajuan Event</h1>
+        <h1>Form Tambah Pengajuan Event: {getNamaPengajuanEvent()}</h1>
       </div>
       <div class="dropdown-keterangan-evdetails">
         <label for="keteranganDropdown-evdetails">Keterangan:</label>
@@ -414,7 +419,7 @@ const PengajuanEventDetails: Component = () => {
             />
             <div class="detail-event-details">
                 <div>TOTAL</div>
-                <div>Rp{Total6()}</div>
+                <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
@@ -422,8 +427,10 @@ const PengajuanEventDetails: Component = () => {
             <button onClick={handlePopUp}>Simpan</button>
         </div>
 
+
+
         </div>
-        {popUp() && <PengajuanEvent OnClose={closePopUp} pengajuanevent={namaPengajuanEvent()}/>}
+        {popUp() && <PengajuanEvent OnClose={closePopUp}/>}
         {/* {EditPopUp() && <EditMonthlyPlan OnClose={closePopUp}  rowData={selectedRow()} handleEdit={handleEdit}/>} */}
         {/* {DeletePopUp() && <ComfirmDeletePlan OnClose={closePopUp}/>} */}
     </div>
