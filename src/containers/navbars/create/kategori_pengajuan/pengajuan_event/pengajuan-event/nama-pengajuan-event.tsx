@@ -8,37 +8,32 @@ import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import PengajuanEvent from './pengajuan-event';
+import { getNamaPengajuanEvent, getNamaPengajuanMonthly, setNamaPengajuanEvent } from '../../../../../../store/Pengajuan/nama-pengajuan';
 
 interface NamaPengajuanEventProps {
     OnClose: () => void;
 }
 
-type RowData = {
-    keterangan: string;
-    totalplan?: number;
+const NamaPengajuanEvent: Component<NamaPengajuanEventProps> = (props) => {
+  const [namaPengajuanInput, setNamaPengajuanInput] = createSignal("");
+  const [isMonthlyExists, setIsMonthlyExists] = createSignal(!!getNamaPengajuanEvent());
+  const [showSubmitMessage, setShowSubmitMessage] = createSignal(false);
+  const [PopUp, setPopUp] = createSignal(false);
+
+  const submitForm = () => {
+    if (!isMonthlyExists()) {
+      setNamaPengajuanEvent(namaPengajuanInput());
+      setNamaPengajuanInput("");
+      setShowSubmitMessage(false);
+      // props.OnClose();
+      setPopUp(true)
+    } else {
+      // Jika sudah ada nilai di namaPengajuanMonthly, tampilkan pesan
+      setShowSubmitMessage(true);
+    }
   };
 
-  const [namaPengajuanEvent, setNamaPengajuanEvent] = createSignal("");
 
-export {namaPengajuanEvent}
-
-const NamaPengajuanEvent: Component<NamaPengajuanEventProps> = (props) => {
-    const navigate = useNavigate();
-    const [pageKeterangan, setPageKeterangan] = createSignal(false);
-
-    function showPageKeterangan(){
-        setPageKeterangan(true)
-    }
-    function closePageKeterangan(){
-        setPageKeterangan(false)
-    }
-
-    const submitForm = () => {
-        showPageKeterangan();
-        // props.OnClose();
-    };
-
-  const location = useLocation();
 
   return (
     <div class="overlay">
@@ -48,22 +43,25 @@ const NamaPengajuanEvent: Component<NamaPengajuanEventProps> = (props) => {
             <h2>Event  <span>(*Tidak boleh kosong)</span></h2>
             <button onClick={props.OnClose}>✕</button>
         </div>
-        <div class="nama-pengajuan-event" >
+        {!isMonthlyExists() && (
 
+        <div class="nama-pengajuan-event" >
                 <div class="tambah-nama-pengajuan-event">
                     <label>Nama Pengajuan</label>
                     <br />
                     <input type="text" 
-                    value={namaPengajuanEvent()}
-                    onInput={(e) => setNamaPengajuanEvent(e.target.value)}
+                    value={namaPengajuanInput()}
+                    onInput={(e) => setNamaPengajuanInput(e.target.value)}
                     />
                     <button onClick={submitForm}>Kirim</button>
                 </div>
-
-
         </div>
+        )}
+
     </div>
-    {pageKeterangan() && <PengajuanEvent OnClose={props.OnClose} pengajuanevent={namaPengajuanEvent()}/>}
+    {isMonthlyExists() && <PengajuanEvent OnClose={props.OnClose}/>}
+    {PopUp() && <PengajuanEvent OnClose={props.OnClose}/>}
+
     </div>
   );
 };
