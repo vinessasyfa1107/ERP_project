@@ -2,7 +2,7 @@ import { createSignal, type Component, onMount } from 'solid-js';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 import Pengajuan_navbar from '../pengajuan_navbar';
 import './pengajuan_detail.css'
-import { namaPengajuanEvent } from '../../navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/nama-pengajuan-event';
+// import { namaPengajuanEvent } from '../../navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/nama-pengajuan-event';
 import { A } from '@solidjs/router';
 import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly } from '../../../store/Pengajuan/nama-pengajuan';
 

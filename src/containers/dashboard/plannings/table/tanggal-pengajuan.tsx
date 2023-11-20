@@ -1,9 +1,9 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, onCleanup } from 'solid-js';
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import { RowData } from '../../../navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
+// import store from '../../../../store/Pengajuan/tanggal-pengajuan/date-pengajuanm';
 
 interface RowData {
   keterangan: string;
@@ -21,9 +21,11 @@ interface ConfirmAllPlanDateProps {
 }
 
 const ConfirmAllPlanDate: Component<ConfirmAllPlanDateProps> = (props) => {
+  const localStorageKey = 'tableDataDate'; // New localStorage key
+
   const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
     (() => {
-      const savedData = localStorage.getItem('tableData');
+      const savedData = localStorage.getItem(localStorageKey);
       const entry_ts = props.date;
 
       return savedData
@@ -34,10 +36,6 @@ const ConfirmAllPlanDate: Component<ConfirmAllPlanDateProps> = (props) => {
         : ([] as RowData[]);
     })()
   );
-
-  const saveDataToLocalStorage = (data: RowData[]) => {
-    localStorage.setItem('tableData', JSON.stringify(data));
-  };
 
   const [gridApi, setGridApi] = createSignal(null);
   const [aggregatedRowData, setAggregatedRowData] = createSignal<AggregatedRowData[]>([]);
@@ -93,11 +91,18 @@ const ConfirmAllPlanDate: Component<ConfirmAllPlanDateProps> = (props) => {
     ],
   };
 
-  // Simpan data ke localStorage saat terjadi perubahan pada originalRowData
-  setOriginalRowData((prevData) => {
-    saveDataToLocalStorage(prevData);
-    return prevData;
-  });
+  // // Simpan data ke store saat terjadi perubahan pada originalRowData
+  // setOriginalRowData((prevData) => {
+  //   localStorage.setItem(localStorageKey, JSON.stringify(prevData));
+  //   store.setRowData1(prevData); // Simpan data ke rowData1 di store
+  //   return prevData;
+  // });
+
+  // // Bersihkan localStorage dan store saat komponen di-unmount
+  // onCleanup(() => {
+  //   localStorage.removeItem(localStorageKey);
+  //   store.setRowData1([]); // Reset data di store saat komponen di-unmount
+  // });
 
   return (
     <div class="ag-theme-alpine" style={{ height: '500px', width: '100%' }}>

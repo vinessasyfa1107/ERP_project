@@ -34,7 +34,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
   //   );
   const [originalRowDataW, setOriginalRowData] = createSignal<RowData[]>(
     (() => {
-        const savedData = localStorage.getItem('tableData');
+        const savedData = localStorage.getItem('tableDataWeekly');
         const entry_ts = props.date; // Ambil nilai timestamp dari props
 
         return savedData
@@ -46,6 +46,24 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
             : ([] as RowData[]);
     })()
 );
+
+  const localStorageKey = "tableAllPengajuan"; // Nama kunci local storage yang baru
+
+
+  // Menyimpan data ke local storage setiap kali originalRowData berubah
+  const updateLocalStorage = () => {
+    const serializedData = JSON.stringify(originalRowDataW());
+    localStorage.setItem(localStorageKey, serializedData);
+  };
+
+  // Fungsi untuk mengirim data ke backend
+  const SubmitData = () => {
+    // Lakukan logika pengiriman data ke backend di sini
+    // ...
+
+    // Setelah logika pengiriman selesai, panggil updateLocalStorage untuk menyimpan data ke local storage
+    updateLocalStorage();
+  };
 
 
 
@@ -189,7 +207,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
                     <br />
                     <div>
                       <div>
-                        <button class="btn-save-edit" onClick={sendDataToBackend}>
+                        <button class="btn-save-edit" onClick={SubmitData}>
                           <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
                         </button>
                       </div>
@@ -203,3 +221,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
 
 
 export default ConfirmAllPlanWeekly;
+
+function originalRowDataW(): any {
+  throw new Error('Function not implemented.');
+}
