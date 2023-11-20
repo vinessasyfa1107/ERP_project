@@ -6,7 +6,7 @@ import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import FormConfirm from '../form/form-confirm';
 import { dataplanning } from '../../../../api/planning/dataplanning';
-import { RowData } from '../../../navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
+import { RowData } from '../../../navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import { useNavigate } from '@solidjs/router';
 
 const TablePengajuanBaru: Component = () => {
@@ -18,7 +18,7 @@ const [gridApi, setGridApi] = createSignal(null);
 const [rowData, setRowData] = createSignal<RowData[]>(
     (() => {
       // Coba ambil data dari localStorage saat komponen diinisialisasi
-      const savedData = localStorage.getItem('tableData');
+      const savedData = localStorage.getItem('tableAllPengajuan');
       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
     })()
   );
@@ -59,7 +59,6 @@ const [rowData, setRowData] = createSignal<RowData[]>(
   
 const onCellClicked = (event: any) => {
         navigate('/pengajuan/pengajuan_detail');
-        // C:\Users\user2022\OneDrive\Documents\belajar-solid-dua\fe-new-erp\src\containers\pengajuan\pengajuan_detail\pengajuan_detail.tsx
   };
 
   const handleSelectionChanged = (event) => {
