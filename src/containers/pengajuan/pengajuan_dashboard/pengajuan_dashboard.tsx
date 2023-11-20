@@ -10,8 +10,9 @@ import './pengajuan_dashboard.css';
 import Pengajuan_navbar from '../pengajuan_navbar';
 import ChartPlanning from '../../dashboard/plannings/chart-planning';
 import TablePlanning from '../../dashboard/plannings/table/table-planning';
-import TableDetailPlan from '../../dashboard/plannings/table/table-detail-plan';
-import FormPlanning from '../../dashboard/plannings/form/form-planning';
+// import TableDetailPlan from '../../dashboard/plannings/table/table-detail-plan';
+import TablePengajuanBaru from '../../dashboard/plannings/table/table-pengajuan-baru';
+// import FormPlanning from '../../dashboard/plannings/form/form-planning';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 
 const Pengajuan_dashboard: Component = () => {
@@ -47,7 +48,8 @@ const Pengajuan_dashboard: Component = () => {
 
                     <div class="rencanaPengajuan-container">
                         <h1>List Rencana Pengajuan</h1>
-                        <TableDetailPlan />
+                        <TablePengajuanBaru />
+                        {/* <TableDetailPlan /> */}
                         {/* <FormPlanning /> */}
                     </div>
 

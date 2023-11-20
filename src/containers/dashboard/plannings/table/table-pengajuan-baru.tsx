@@ -6,30 +6,43 @@ import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import FormConfirm from '../form/form-confirm';
 import { dataplanning } from '../../../../api/planning/dataplanning';
+import { RowData } from '../../../navbars/create/kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
+import { useNavigate } from '@solidjs/router';
 
-const TableDetailPlan: Component = () => {
+const TablePengajuanBaru: Component = () => {
+    const navigate = useNavigate();
 
-  const [RowData, setRowData] = createSignal([]);
+//   const [RowData, setRowData] = createSignal([]);
+
+const [gridApi, setGridApi] = createSignal(null);
+const [rowData, setRowData] = createSignal<RowData[]>(
+    (() => {
+      // Coba ambil data dari localStorage saat komponen diinisialisasi
+      const savedData = localStorage.getItem('tableData');
+      return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+    })()
+  );
+
+  const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
   const [confirmationStatus, setConfirmationStatus] = createSignal(false);
   const [formSubmitted, setFormSubmitted] = createSignal(false);
 
+//   onMount(async () => {
+//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+//     console.log("dataplanning", data_planning);
+//     setRowData(data_planning);
+//   })
 
-  onMount(async () => {
-    const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-    console.log("dataplanning", data_planning);
-    setRowData(data_planning);
-  })
+//   const fetchData = async () => {
+//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+//     setRowData(data_planning);
+//   };
 
-  const fetchData = async () => {
-    const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-    setRowData(data_planning);
-  };
-
-  onMount(() => {
-    fetchData();
-  });
+//   onMount(() => {
+//     fetchData();
+//   });
 
   const handlePopUpApproved = (data) => {
     if (data.status === 'Approved') {
@@ -38,9 +51,15 @@ const TableDetailPlan: Component = () => {
     }
   };
 
-  const ClosePopUp = () => {
-    setPopUpOpen(false);
-    fetchData();
+//   const ClosePopUp = () => {
+//     setPopUpOpen(false);
+//     fetchData();
+//   };
+
+  
+const onCellClicked = (event: any) => {
+        navigate('/pengajuan/pengajuan_detail');
+        // C:\Users\user2022\OneDrive\Documents\belajar-solid-dua\fe-new-erp\src\containers\pengajuan\pengajuan_detail\pengajuan_detail.tsx
   };
 
   const handleSelectionChanged = (event) => {
@@ -58,8 +77,6 @@ const TableDetailPlan: Component = () => {
   };
 
 
-
-
   function getCellStyle(params: { value: string; }) {
     if (params.value === 'Weekly') {
       return { color: '#FF6838' };
@@ -72,13 +89,14 @@ const TableDetailPlan: Component = () => {
 
 
   const columnDefs = [
-    { field: 'id', headerName: 'ID', editable: false },
+    { valueGetter: 'node.rowIndex + 1', headerName: 'ID', width: 61 },
+    // { field: 'id', headerName: 'ID', editable: false },
     { field: 'entry_ts', headerName: 'Tanggal', editable: false },
     // { field: 'coa_kd', headerName: 'COA', editable: false },
-    { field: 'description', headerName: 'Keterangan', editable: false },
-    { field: 'planningtype', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
+    { field: 'keterangan', headerName: 'Nama Pengajuan', editable: false},
+    { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'category', headerName: 'Jenis', editable: false },
-    { field: 'amount', headerName: 'Jumlah', editable: params => !params.data.confirm },
+    { field: 'total', headerName: 'Jumlah', editable: params => !params.data.confirm },
     { field: 'status', headerName: 'Status', editable: false },
     // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
   ];
@@ -115,23 +133,26 @@ const TableDetailPlan: Component = () => {
     },
   }
 
-
-
   return (
     <div style={{ "justify-content": "center" }}>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
           columnDefs={columnDefs}
-          rowData={RowData()}
+          rowData={rowData()}
+          onCellClicked={onCellClicked}
           defaultColDef={defaultColDef}
           gridOptions={gridOptions}
           rowSelection="multiple"
           rowMultiSelectWithClick={true}
         />
       </div>
-      {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />}
+      {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
     </div>
   );
 };
 
-export default TableDetailPlan;
+export default TablePengajuanBaru;
+function isEditing() {
+    throw new Error('Function not implemented.');
+}
+
