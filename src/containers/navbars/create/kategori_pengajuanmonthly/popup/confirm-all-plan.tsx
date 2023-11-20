@@ -21,6 +21,24 @@ interface AggregatedRowData {
     keterangan: string;
     total: number;
   }
+
+  interface NewRowData {
+    pengajuan: {
+      id: number;
+      coa_kd: string;
+      entry_ts: string;
+      tipepengajuan: string;
+      namapengajuan?: string;
+    };
+    details: {
+      keterangan: string;
+      kebutuhan: string;
+      quantity: number;
+      uom: string;
+      price: number;
+      total: number;
+    }[];
+  }
   
 
 const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
@@ -33,20 +51,94 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
     //         : ([] as RowData[]);
     //     })()
     //   );
-    const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
-      (() => {
-          const savedData = localStorage.getItem('tableData');
-          const entry_ts = props.date; // Ambil nilai timestamp dari props
+  //   const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
+  //     (() => {
+  //         const savedData = localStorage.getItem('tableData');
+  //         const entry_ts = props.date; // Ambil nilai timestamp dari props
 
-          return savedData
-              ? JSON.parse(savedData).map((row, index) => ({
-                  ...row,
-                  // uniqueId: index,
-                  entry_ts, // Tambahkan properti timestamp ke setiap objek
-              })) as RowData[]
-              : ([] as RowData[]);
-      })()
+  //         return savedData
+  //             ? JSON.parse(savedData).map((row, index) => ({
+  //                 ...row,
+  //                 // uniqueId: index,
+  //                 entry_ts, // Tambahkan properti timestamp ke setiap objek
+  //             })) as RowData[]
+  //             : ([] as RowData[]);
+  //     })()
+  // );
+  function convertRowDataToNew(rowData: RowData, entry_ts: string): NewRowData {
+    return {
+      pengajuan: {
+        id: rowData.id || 0,
+        coa_kd: rowData.coa_kd,
+        entry_ts,
+        tipepengajuan: rowData.tipepengajuan,
+      },
+      details: [
+        {
+          keterangan: rowData.keterangan,
+          kebutuhan: rowData.kebutuhan,
+          quantity: rowData.quantity,
+          uom: rowData.uom,
+          price: rowData.price,
+          total: rowData.total,
+        },
+      ],
+    };
+  }
+  
+  const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
+    (() => {
+      const savedData = localStorage.getItem('tableData');
+      const entry_ts = props.date; // Ambil nilai timestamp dari props
+  
+      return savedData
+        ? JSON.parse(savedData).map((row) => ({
+            ...row,
+            // uniqueId: index,
+            entry_ts, // Tambahkan properti timestamp ke setiap objek
+          })) as RowData[]
+        : ([] as RowData[]);
+    })()
   );
+  
+  // Fungsi untuk mengonversi originalRowData ke NewRowData
+  function convertRowData(originalRowData): NewRowData[] {
+    const uniquePengajuan: Record<string, NewRowData> = {};
+  
+    originalRowData.forEach((rowData) => {
+      const key = `${rowData.id}_${rowData.coa_kd}_${rowData.entry_ts}_${rowData.tipepengajuan}`;
+  
+      if (!uniquePengajuan[key]) {
+        uniquePengajuan[key] = {
+          pengajuan: {
+            id: rowData.id,
+            coa_kd: rowData.coa_kd,
+            entry_ts: rowData.entry_ts,
+            tipepengajuan: rowData.tipepengajuan,
+          },
+          details: [],
+        };
+      }
+  
+      uniquePengajuan[key].details.push({
+        keterangan: rowData.keterangan,
+        kebutuhan: rowData.kebutuhan,
+        quantity: rowData.quantity,
+        uom: rowData.uom,
+        price: rowData.price,
+        total: rowData.total,
+      });
+    });
+  
+    return Object.values(uniquePengajuan);
+  }
+  
+  // Contoh penggunaan dalam konversi data
+  const newStructuredData = convertRowData(originalRowData());
+  
+  console.log("struktur", newStructuredData)
+
+  
 
 
 
@@ -153,8 +245,6 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
       }
     };
     
-
-        
 
     return (
         <div class="overlay">
