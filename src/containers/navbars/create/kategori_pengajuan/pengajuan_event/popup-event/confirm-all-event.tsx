@@ -12,7 +12,7 @@ import { getNamaPengajuanEvent } from '../../../../../../store/Pengajuan/nama-pe
 
 interface ConfirmAllEventProps {
     OnClose: () => void;
-    pengajuan?: string;
+    pengajuanevent?: string;
     sumtotal?: string;
     date?: string;
 }
@@ -21,25 +21,91 @@ interface AggregatedRowData {
     keterangan: string;
     total: number;
   }
-  
 
+interface NewRowData {
+  pengajuanevent: {
+    id: number;
+    coa_kd: string;
+    entry_ts: string;
+    tipepengajuanevent: string;
+    status: string;
+    namapengajuanevent?: string;
+    };
+  details: {
+    pengajuan_id: number;
+    keterangan: string;
+    kebutuhan: string;
+    quantity: number;
+    uom: string;
+    price: number;
+    total: number;
+    namapengajuanevent?: string;
+  }[];
+}
+  
 const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
 
   const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
     (() => {
         const savedData = localStorage.getItem('tableDataEventDetails');
         const entry_ts = props.date; // Ambil nilai timestamp dari props
+        const status = "Waiting";
+        const pengajuan_id = 0;
 
         return savedData
             ? JSON.parse(savedData).map((row, index) => ({
                 ...row,
                 // uniqueId: index,
-                entry_ts, // Tambahkan properti timestamp ke setiap objek
+                entry_ts,
+                status,
+                pengajuan_id
             })) as RowData[]
             : ([] as RowData[]);
     })()
 );
-
+  
+  // Fungsi untuk mengonversi originalRowData ke NewRowData
+  function convertRowData(originalRowData): NewRowData | null {
+    const uniquePengajuan: Record<string, NewRowData> = {};
+  
+    originalRowData.forEach((rowData) => {
+      const key = `${rowData.id}_${rowData.coa_kd}_${rowData.entry_ts}_${rowData.tipepengajuan}`;
+  
+      if (!uniquePengajuan[key]) {
+        uniquePengajuan[key] = {
+          pengajuanevent: {
+            id: rowData.id,
+            coa_kd: rowData.coa_kd,
+            entry_ts: rowData.entry_ts,
+            tipepengajuanevent: rowData.tipepengajuanevent,
+            status: rowData.status,
+            namapengajuanevent: rowData.namapengajuanevent,
+          },
+          details: [],
+        };
+      }
+  
+      uniquePengajuan[key].details.push({
+        pengajuan_id: rowData.pengajuan_id,
+        keterangan: rowData.keterangan,
+        kebutuhan: rowData.kebutuhan,
+        quantity: rowData.quantity,
+        uom: rowData.uom,
+        price: rowData.price,
+        total: rowData.total,
+        namapengajuanevent: rowData.namapengajuanevent,
+      });
+    });
+  
+    const result = Object.values(uniquePengajuan);
+    return result.length > 0 ? result[0] : null;
+  }
+  
+  
+  // Contoh penggunaan dalam konversi data
+  const newStructuredData = convertRowData(originalRowData());
+  
+  console.log("struktur", newStructuredData)
 
 
   const [gridApi, setGridApi] = createSignal(null);
@@ -102,10 +168,41 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
 
   console.log("tes", transformDataForGrid(aggregatedRowData()))
   console.log("data all event ke BE, ", originalRowData());
-
+  
+  console.log("struktur baru", newStructuredData)
 
   const sendDataToBackend = async () => {
     console.log("data all event ke BE, ", originalRowData());
+    console.log("struktur baru", newStructuredData)
+
+    try {
+      const response = await fetch('/api/eventpengajuan/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newStructuredData),
+      });
+  
+      if (response.ok) {
+        alert('Data berhasil dikirim ke backend');
+        console.log('Data berhasil dikirim ke backend');
+        props.OnClose();
+        localStorage.removeItem('tableDataEventDetails');
+        localStorage.removeItem('tableKetPengajuanEvent');
+        localStorage.removeItem('namaPengajuanEvemet');
+      } else {
+          const errorMessage = await response.text();
+          alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+          console.error('Gagal mengubah data:', errorMessage);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      // Tambahkan penanganan kesalahan jika diperlukan
+    }
+  };
+  
+
     // localStorage.removeItem('tableData');
     // localStorage.removeItem('tableKetMonth');
     // localStorage.removeItem('namaPengajuanMonthly');
@@ -145,12 +242,17 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
     // }
   };
         
-        console.log("ini popup submit");
-        console.log("tes", transformDataForGrid(aggregatedRowData()))
+// function onGridReady1(event: GridReadyEvent<any, any>): void {
+//   throw new Error('Function not implemented.');
+// }
+
+        // console.log("ini popup submit");
+        // console.log("tes", transformDataForGrid(aggregatedRowData()))
       
 
     return (
         <div class="overlay">
+          
         <div class="confirm-allplan-ev absolute z-6">
           <div class="event-plan-confirmation">
               <form method="dialog">
@@ -178,15 +280,18 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
                       </div>
 
                       <br />
-                      <div class="btn-save-edit-event">
-                          <button ><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                      <div>
+                        <div>
+                          <button class="btn-save-edit" onClick={sendDataToBackend}>
+                            <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
+                          </button>
+                        </div>
                       </div>
               </form>
           </div>
         </div>
         </div>
-    );
-};
-
+      );
+  };
 
 export default ConfirmAllEvent;

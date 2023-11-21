@@ -384,7 +384,7 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
             </div>
 
         </div>
-        {popUpConfirm() && <ConfirmAllEvent OnClose={closePopUpConfirm} pengajuan={props.pengajuanevent} sumtotal={allTotal1()} date={timestamp()}/>}
+        {popUpConfirm() && <ConfirmAllEvent OnClose={closePopUpConfirm} pengajuanevent={props.pengajuanevent} sumtotal={allTotal1()} date={timestamp()}/>}
     </div>
   );
 };
