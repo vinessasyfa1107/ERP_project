@@ -23,36 +23,14 @@ interface SelectedOption {
 }
 
 export type RowData = { //sesuain ke row data lain (samain field BE) ganti columnDefsnya juga gini fieldnya
-    namapengajuanweekly: string;
-    tipepengajuanweekly: string
-    id?: number;
-    uom: string;
+    namapengajuan: string;  
     keterangan: string;
     kebutuhan: string;
-    quantity: number;
-    price: number;
     total: number;
     coa_kd: string;
     aksi?: object;
   };
 
-  const calculateTotalByKeterangan = (data) => {
-    const totals = {};
-  
-    for (const row of data) {
-      const keterangan = row.keterangan;
-  
-      if (!totals[keterangan]) {
-        totals[keterangan] = 0;
-      }
-  
-      totals[keterangan] += row.total;
-    }
-  
-    return totals;
-  };
-  
-  export { calculateTotalByKeterangan };
 
 const PengajuanWeeklyInsentif: Component = () => {
     const [gridApi, setGridApi] = createSignal(null);
@@ -67,7 +45,7 @@ const PengajuanWeeklyInsentif: Component = () => {
       
       
     const [need, setNeed] = createSignal("");
-    const [qty, setQty] = createSignal(0);
+    const [totalw, setTotalw] = createSignal(0);
     const [uom, setuom] = createSignal("");
     const [price, setPrice] = createSignal(0);
     const [coa, setCOA] = createSignal("");
@@ -139,9 +117,9 @@ const PengajuanWeeklyInsentif: Component = () => {
         { field: "keterangan", editable: true, width: 162 },
         { field: "kebutuhan", headerName: "Kebutuhan", editable: true, width: 200 },
         { field: "coa_kd", headerName: "COA", editable: true, width: 100 },
-        { field: "quantity", headerName: "Qty", editable: true, width: 80 },
-        { field: "uom", headerName: "UoM", editable: true, width: 100 },
-        { field: "price", headerName: "Price", editable: true, width: 95 },
+        // { field: "quantity", headerName: "Qty", editable: true, width: 80 },
+        // { field: "uom", headerName: "UoM", editable: true, width: 100 },
+        // { field: "price", headerName: "Price", editable: true, width: 95 },
         { field: "total", headerName: "Total",  width: 95},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
@@ -164,18 +142,12 @@ const PengajuanWeeklyInsentif: Component = () => {
     };
   
     const addRow = () => {
-      if (need() && qty() && uom() && price() ) {
-        let total = qty() * price();
+      if (need() && totalw() ) {
         const newRow: RowData = {
-          id: 0,
-          tipepengajuanweekly: "Weekly",
-          namapengajuanweekly: getNamaPengajuanWeekly(),
+          namapengajuan: getNamaPengajuanWeekly(),
           keterangan: keterangan(),
           kebutuhan: need(),
-          quantity: qty(),
-          uom: uom(),
-          price: price(),
-          total: total,
+          total: totalw(),
           // coa: selectedOption(),
           coa_kd: selectedOption()?.value,
         };
@@ -192,20 +164,17 @@ const PengajuanWeeklyInsentif: Component = () => {
   
     const clearInputs = () => {
       setNeed("");
-      setQty(0);
-      setuom("");
-      setPrice(0);
-      setCOA("");
+      setTotalW(0);
     };
 
-    // const calculateTotal = () => {
-    //     const gridData = rowData();
-    //     let total = 0;
-    //     for (const row of gridData) {
-    //       total += row.total;
-    //     }
-    //     return total;
-    //   };
+    const calculateTotal = () => {
+        const gridData = rowData();
+        let total = 0;
+        for (const row of gridData) {
+          total += row.total;
+        }
+        return total;
+      };
     createEffect(() => {
       const gridData = rowData();
       let Total = 0;
@@ -373,35 +342,13 @@ const PengajuanWeeklyInsentif: Component = () => {
               </div>
 
             <div>
-            <label>Qty</label>
+            <label>Total</label>
             <br />
             <input style={{width:"6vw"}}
             type="number"
             placeholder="Qty"
-            value={qty()}
-            onInput={(e) => setQty(Number(e.target.value))}
-            />
-            </div>
-
-            <div>
-            <label>UoM</label>
-            <br />
-            <input style={{width:"7.5vw"}}
-            type="text"
-            placeholder="UoM"
-            value={uom()}
-            onInput={(e) => setuom(e.target.value)}
-            />
-            </div>
-            
-            <div>
-            <label>Price</label>
-            <br />
-            <input style={{width:"8vw"}}
-            type="number"
-            placeholder="Price"
-            value={price()}
-            onInput={(e) => setPrice(Number(e.target.value))}
+            value={totalw()}
+            onInput={(e) => setTotalw(Number(e.target.value))}
             />
             </div>
 
@@ -418,7 +365,7 @@ const PengajuanWeeklyInsentif: Component = () => {
             />
             <div class="detail-total-weekly">
                 <div>TOTAL</div>
-                <div>Rp{TotalW()}</div>
+                <div>Rp{calculateTotal()}</div>
             </div>
         </div>
         
