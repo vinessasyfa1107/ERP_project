@@ -2,30 +2,26 @@ import { createSignal, type Component, onMount, onCleanup, createEffect } from '
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import './table-planning.css';
+// import '../../dashboard/plannings/table/table-planning.css';
 import { Icon } from '@iconify-icon/solid';
-import FormConfirm from '../form/form-confirm';
-import { dataplanning } from '../../../../api/planning/dataplanning';
-import { RowData } from '../../../navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import { useNavigate } from '@solidjs/router';
-import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/monthly-pengajuan';
-import { type } from 'os';
-
-const [dataIdPlan, setDataIDPlan] = createSignal(0);
-
-export {dataIdPlan}
+import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/monthly-pengajuan';
+import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
+import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
+import { GridOptions } from 'ag-grid-community';
 
 
-const TablePengajuanBaru: Component = () => {
-
-
-  const [RowData, setRowData] = createSignal([{}]);
+const TablePengajuanDetail: Component = () => {
     
-  onMount(async () => {
-    const monthlypengajuan = await DataMonthlyPengajuan("data monthly plan");
-    console.log("data detail plan", monthlypengajuan);
-    setRowData(monthlypengajuan)
-  })
+    const [RowData, setRowData] = createSignal([{}]);
+
+    onMount(async () => {
+        const monthlypengajuan = await DataDetailMonthly("data monthly detail plan");
+        console.log("MONTHLY detail plan", monthlypengajuan);
+        setRowData(monthlypengajuan)
+    })
+
+
 // const [gridApi, setGridApi] = createSignal(null);
 // const [rowData, setRowData] = createSignal<RowData[]>(
 //     (() => {
@@ -67,15 +63,12 @@ const TablePengajuanBaru: Component = () => {
 //     setPopUpOpen(false);
 //     fetchData();
 //   };
-const navigate = useNavigate();
-
 
   
-const onCellClicked = (params) => {
-    console.log('meonk', params.data.id)
-    setDataIDPlan(params.data.id)
-    navigate('/pengajuan/pengajuan_detail');
-  };
+// const onCellClicked = (data) => {
+//         setDataIDPlan(data.id);
+//         navigate('/pengajuan/pengajuan_detail');
+//   };
 
   const handleSelectionChanged = (event) => {
     const selectedRows = event.api.getSelectedRows();
@@ -103,18 +96,36 @@ const onCellClicked = (params) => {
   }
 
 
-  const columnDefs = [
-    { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
-    { field: 'id', headerName: 'ID', editable: false },
-    { field: 'entry_ts', headerName: 'Tanggal', editable: false },
-    { field: 'coa_kd', headerName: 'COA', editable: false },
-    { field: 'namapengajuan', headerName: 'Keterangan', editable: false},
-    { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
-    // { field: 'category', headerName: 'Jenis', editable: false },
-    { field: 'total', headerName: 'Jumlah', editable: params => !params.data.confirm },
-    { field: 'status', headerName: 'Status', editable: false },
+  const gridOptions = {
+    columnDefs: [
+    // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
+    // { field: 'id', headerName: 'ID', editable: false },
+    { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 100 },
+    { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
+    { field: 'keterangan', editable: false },
+    { field: 'kebutuhan'},
+    // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
+    { field: 'quantity', headerName: 'Qty', editable: false },
+    { field: 'price', headerName: 'Harga' },
+    { field: 'total', headerName: 'Jumlah' },
+    // { field: 'status', headerName: 'Status', editable: false },
+    { field: 'notes'},
+    { field: 'reference'},
+
     // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
-  ];
+  ],
+    pagination: true,
+    paginationPageSize: 4,
+    rowHeight: 40,
+    onSelectionChanged: handleSelectionChanged,
+    onCellEditingStopped: (event) => {
+        // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
+        if (event.column.getColId() === 'amount' && event.data.confirm) {
+        // Reset nilai ke nilai asli
+        event.api.applyTransaction({ update: [{ ...event.data }] });
+        }
+    },
+};
 
   // const rowData = [
   //   { id: '11C7D', tanggal: '10-2-22', COA: '1-0000', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
@@ -133,28 +144,28 @@ const onCellClicked = (params) => {
     sortable: true,
   }
 
-  const gridOptions = {
-    // domLayout: 'autoHeight' as DomLayoutType,
-    pagination: true,
-    paginationPageSize: 4,
-    rowHeight: 40,
-    onSelectionChanged: handleSelectionChanged,
-    onCellEditingStopped: (event) => {
-      // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-      if (event.column.getColId() === 'amount' && event.data.confirm) {
-        // Reset nilai ke nilai asli
-        event.api.applyTransaction({ update: [{ ...event.data }] });
-      }
-    },
-  }
+//   const gridOptions = {
+//     // domLayout: 'autoHeight' as DomLayoutType,
+//     pagination: true,
+//     paginationPageSize: 4,
+//     rowHeight: 40,
+//     onSelectionChanged: handleSelectionChanged,
+//     onCellEditingStopped: (event) => {
+//       // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
+//       if (event.column.getColId() === 'amount' && event.data.confirm) {
+//         // Reset nilai ke nilai asli
+//         event.api.applyTransaction({ update: [{ ...event.data }] });
+//       }
+//     },
+//   }
 
   return (
     <div style={{ "justify-content": "center" }}>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
-          columnDefs={columnDefs}
+        //   columnDefs={columnDefs}
           rowData={RowData()}
-          onCellClicked={onCellClicked}
+        //   onCellClicked={onCellClicked}
           defaultColDef={defaultColDef}
           gridOptions={gridOptions}
           rowSelection="multiple"
@@ -166,8 +177,5 @@ const onCellClicked = (params) => {
   );
 };
 
-export default TablePengajuanBaru;
-function isEditing() {
-    throw new Error('Function not implemented.');
-}
+export default TablePengajuanDetail;
 
