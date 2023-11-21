@@ -11,7 +11,7 @@ import { getNamaPengajuanWeekly } from '../../../../../../store/Pengajuan/nama-p
 
 interface ConfirmAllPlanWeeklyProps {
   OnClose: () => void;
-  pengajuanweekly: string;
+  pengajuan?: string;
   sumtotalweekly: string;
   date: string;
 }
@@ -20,6 +20,28 @@ interface AggregatedRowData {
   keterangan: string;
   total: number;
 }
+
+interface NewRowData {
+  pengajuan: {
+    id: number;
+    coa_kd: string;
+    entry_ts: string;
+    tipepengajuan: string;
+    status: string;
+    namapengajuan?: string;
+  };
+  details: {
+    pengajuan_id: number;
+    keterangan: string;
+    kebutuhan: string;
+    // quantity: number;
+    // uom: string;
+    // price: number;
+    total: number;
+    namapengajuan?: string;
+  }[];
+}
+
 
 
 const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
@@ -36,34 +58,87 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
     (() => {
         const savedData = localStorage.getItem('tableDataWeekly');
         const entry_ts = props.date; // Ambil nilai timestamp dari props
+        const status = "Waiting";
+        const pengajuan_id = 0;
+        const tipepengajuan = "Weekly";
 
         return savedData
             ? JSON.parse(savedData).map((row, index) => ({
                 ...row,
                 // uniqueId: index,
-                entry_ts, // Tambahkan properti timestamp ke setiap objek
+                entry_ts, 
+                status, 
+                pengajuan_id,
+                tipepengajuan 
             })) as RowData[]
             : ([] as RowData[]);
     })()
 );
 
-  const localStorageKey = "tableAllPengajuan"; // Nama kunci local storage yang baru
+     // Fungsi untuk mengonversi originalRowData ke NewRowData
+  function convertRowData(originalRowData): NewRowData | null {
+    const uniquePengajuan: Record<string, NewRowData> = {};
+  
+    originalRowData.forEach((rowData) => {
+      const key = `${rowData.id}_${rowData.coa_kd}_${rowData.entry_ts}_${rowData.tipepengajuan}`;
+  
+      if (!uniquePengajuan[key]) {
+        uniquePengajuan[key] = {
+          pengajuan: {
+            id: 0,
+            coa_kd: rowData.coa_kd,
+            entry_ts: rowData.entry_ts,
+            tipepengajuan: rowData.tipepengajuan,
+            status: rowData.status,
+            namapengajuan: rowData.namapengajuan,
+          },
+          details: [],
+        };
+      }
+  
+      uniquePengajuan[key].details.push({
+        pengajuan_id: rowData.pengajuan_id,
+        keterangan: rowData.keterangan,
+        kebutuhan: rowData.kebutuhan,
+        // quantity: rowData.quantity,
+        // uom: rowData.uom,
+        // price: rowData.price,
+        total: rowData.total,
+        namapengajuan: rowData.namapengajuan,
+      });
+    });
+  
+    const result = Object.values(uniquePengajuan);
+    return result.length > 0 ? result[0] : null;
+  }
+  
+  
+  // Contoh penggunaan dalam konversi data
+  const newStructuredData = convertRowData(originalRowDataW());
+  
+  console.log("struktur", newStructuredData)
 
 
-  // Menyimpan data ke local storage setiap kali originalRowData berubah
-  const updateLocalStorage = () => {
-    const serializedData = JSON.stringify(originalRowDataW());
-    localStorage.setItem(localStorageKey, serializedData);
-  };
 
-  // Fungsi untuk mengirim data ke backend
-  const SubmitData = () => {
-    // Lakukan logika pengiriman data ke backend di sini
-    // ...
 
-    // Setelah logika pengiriman selesai, panggil updateLocalStorage untuk menyimpan data ke local storage
-    updateLocalStorage();
-  };
+
+  // const localStorageKey = "tableAllPengajuan"; // Nama kunci local storage yang baru
+
+
+  // // Menyimpan data ke local storage setiap kali originalRowData berubah
+  // const updateLocalStorage = () => {
+  //   const serializedData = JSON.stringify(originalRowDataW());
+  //   localStorage.setItem(localStorageKey, serializedData);
+  // };
+
+  // // Fungsi untuk mengirim data ke backend
+  // const SubmitData = () => {
+  //   // Lakukan logika pengiriman data ke backend di sini
+  //   // ...
+
+  //   // Setelah logika pengiriman selesai, panggil updateLocalStorage untuk menyimpan data ke local storage
+  //   updateLocalStorage();
+  // };
 
 
 
@@ -114,6 +189,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
 
   // Mengonversi data agar sesuai dengan format AgGridSolid
   const rowDataForGrid = transformDataForGrid(aggregatedRowData());
+  console.log("convert", rowDataForGrid)
   
   const gridOptions = {
     domLayout: 'autoHeight' as 'autoHeight',            
@@ -126,66 +202,58 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
   };
 
   console.log("tes", transformDataForGrid(aggregatedRowData()))
-  console.log("data all monthly ke BE, ", originalRowDataW());
+  console.log("data all weekly ke BE, ", originalRowDataW());
 
+  console.log("struktur baru", newStructuredData)
 
   const sendDataToBackend = async () => {
-    console.log("data all monthly ke BE, ", originalRowDataW());
+    console.log("data all weekly ke BE, ", originalRowDataW());
+    console.log("struktur baru", newStructuredData)
     // localStorage.removeItem('tableData');
     // localStorage.removeItem('tableKetMonth');
     // localStorage.removeItem('namaPengajuanMonthly');
     try {
-      const response = await fetch('/api/monthlypengajuan/', {
+      const response = await fetch('/api/weeklypengajuan/', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(originalRowDataW()),
+        body: JSON.stringify(newStructuredData),
       });
   
-      if (!response.ok) {
-        throw new Error('Gagal mengirim data ke backend');
-      }
-  
-      const responseData = await response.json();
-      console.log('Response dari backend:', responseData);
-  
-      // Tambahkan logika atau penanganan lain jika diperlukan
-      if (responseData.success) {
-        // Data berhasil dikirim, lakukan sesuatu
+      if (response.ok) {
+        alert('Data berhasil dikirim ke backend');
         console.log('Data berhasil dikirim ke backend');
         props.OnClose();
-        // localStorage.removeItem('tableData');
-        // localStorage.removeItem('tableKetMonth');
-        // localStorage.removeItem('namaPengajuanMonthly');
-        // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman berhasil
+        localStorage.removeItem('tableDataWeekly');
+        localStorage.removeItem('tableKetWeekly');
+        localStorage.removeItem('namaPengajuanWeekly');
       } else {
-        // Gagal karena logika bisnis di backend, tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
-        console.error('Gagal mengirim data ke backend:', responseData.error);
-        // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman gagal
+          const errorMessage = await response.text();
+          alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+          console.error('Gagal mengubah data:', errorMessage);
       }
+
     } catch (error) {
       console.error('Error:', error.message);
       // Tambahkan penanganan kesalahan jika diperlukan
     }
   };
-  
-
-      
 
   return (
       <div class="overlay">
 
 
-      <div class="confirm-allplan-m">
+      <div class="confirm-allplan-weekly">
        
-        <div class="monthly-plan-confirmation">
+        <div class="weekly-plan-confirmation">
             <form method="dialog">
-                <div class="head-acc" style={{"text-transform":"capitalize"}}>
+                <div class="head-acc-weekly" style={{"text-transform":"capitalize"}}>
                     <h2>Apa anda yakin ingin submit data di bawah ini?</h2>
                     <button onClick={props.OnClose}>✕</button>
                 </div>
-                <div class="form-pengajuan">
+                <div class="form-pengajuan-weekly">
                     <div>
                         <h1>{getNamaPengajuanWeekly()}</h1>
                         <h2>No : 058/FIN.BC/PDO/VI/2023</h2>
@@ -207,7 +275,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
                     <br />
                     <div>
                       <div>
-                        <button class="btn-save-edit" onClick={SubmitData}>
+                        <button class="btn-save-edit-weekly" onClick={sendDataToBackend}>
                           <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
                         </button>
                       </div>
@@ -222,6 +290,6 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
 
 export default ConfirmAllPlanWeekly;
 
-function originalRowDataW(): any {
-  throw new Error('Function not implemented.');
-}
+// function originalRowDataW(): any {
+//   throw new Error('Function not implemented.');
+// }

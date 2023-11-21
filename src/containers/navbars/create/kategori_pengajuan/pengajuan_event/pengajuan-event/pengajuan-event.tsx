@@ -84,7 +84,7 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         setTableData(updatedTableData);
     
         // Simpan data yang telah diperbarui ke localStorage (jika diperlukan)
-        localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+        localStorage.setItem('tableDataEventDetails', JSON.stringify(updatedTableData));
       }
     }
     
@@ -384,7 +384,7 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
             </div>
 
         </div>
-        {popUpConfirm() && <ConfirmAllEvent OnClose={closePopUpConfirm} pengajuan={props.pengajuanevent} sumtotal={allTotal1()} date={timestamp()}/>}
+        {popUpConfirm() && <ConfirmAllEvent OnClose={closePopUpConfirm} sumtotal={allTotal1()} date={timestamp()}/>}
     </div>
   );
 };
