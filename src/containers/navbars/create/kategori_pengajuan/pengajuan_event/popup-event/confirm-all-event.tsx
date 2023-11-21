@@ -23,13 +23,13 @@ interface AggregatedRowData {
   }
 
 interface NewRowData {
-  pengajuanevent: {
+  pengajuan: {
     id: number;
     coa_kd: string;
     entry_ts: string;
-    tipepengajuanevent: string;
+    tipepengajuan: string;
     status: string;
-    namapengajuanevent?: string;
+    namapengajuan?: string;
     };
   details: {
     pengajuan_id: number;
@@ -39,7 +39,7 @@ interface NewRowData {
     uom: string;
     price: number;
     total: number;
-    namapengajuanevent?: string;
+    namapengajuan?: string;
   }[];
 }
   
@@ -73,13 +73,13 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
   
       if (!uniquePengajuan[key]) {
         uniquePengajuan[key] = {
-          pengajuanevent: {
+          pengajuan: {
             id: rowData.id,
             coa_kd: rowData.coa_kd,
             entry_ts: rowData.entry_ts,
-            tipepengajuanevent: rowData.tipepengajuanevent,
+            tipepengajuan: rowData.tipepengajuan,
             status: rowData.status,
-            namapengajuanevent: rowData.namapengajuanevent,
+            namapengajuan: rowData.namapengajuan,
           },
           details: [],
         };
@@ -93,7 +93,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
         uom: rowData.uom,
         price: rowData.price,
         total: rowData.total,
-        namapengajuanevent: rowData.namapengajuanevent,
+        namapengajuan: rowData.namapengajuan,
       });
     });
   
@@ -190,7 +190,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
         props.OnClose();
         localStorage.removeItem('tableDataEventDetails');
         localStorage.removeItem('tableKetPengajuanEvent');
-        localStorage.removeItem('namaPengajuanEvemet');
+        localStorage.removeItem('namaPengajuanEvent');
       } else {
           const errorMessage = await response.text();
           alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
@@ -240,7 +240,6 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
     //   console.error('Error:', error.message);
     //   // Tambahkan penanganan kesalahan jika diperlukan
     // }
-  };
         
 // function onGridReady1(event: GridReadyEvent<any, any>): void {
 //   throw new Error('Function not implemented.');

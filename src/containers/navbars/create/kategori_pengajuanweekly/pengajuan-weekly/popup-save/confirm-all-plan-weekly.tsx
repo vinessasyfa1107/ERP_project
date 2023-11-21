@@ -11,7 +11,7 @@ import { getNamaPengajuanWeekly } from '../../../../../../store/Pengajuan/nama-p
 
 interface ConfirmAllPlanWeeklyProps {
   OnClose: () => void;
-  pengajuanweekly: string;
+  pengajuan?: string;
   sumtotalweekly: string;
   date: string;
 }
@@ -26,19 +26,19 @@ interface NewRowData {
     id: number;
     coa_kd: string;
     entry_ts: string;
-    tipepengajuanweekly: string;
+    tipepengajuan: string;
     status: string;
-    namapengajuanweekly?: string;
+    namapengajuan?: string;
   };
   details: {
     pengajuan_id: number;
     keterangan: string;
     kebutuhan: string;
-    quantity: number;
-    uom: string;
-    price: number;
+    // quantity: number;
+    // uom: string;
+    // price: number;
     total: number;
-    namapengajuanweekly?: string;
+    namapengajuan?: string;
   }[];
 }
 
@@ -60,6 +60,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         const entry_ts = props.date; // Ambil nilai timestamp dari props
         const status = "Waiting";
         const pengajuan_id = 0;
+        const tipepengajuan = "Weekly";
 
         return savedData
             ? JSON.parse(savedData).map((row, index) => ({
@@ -67,7 +68,8 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
                 // uniqueId: index,
                 entry_ts, 
                 status, 
-                pengajuan_id 
+                pengajuan_id,
+                tipepengajuan 
             })) as RowData[]
             : ([] as RowData[]);
     })()
@@ -83,12 +85,12 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
       if (!uniquePengajuan[key]) {
         uniquePengajuan[key] = {
           pengajuan: {
-            id: rowData.id,
+            id: 0,
             coa_kd: rowData.coa_kd,
             entry_ts: rowData.entry_ts,
-            tipepengajuanweekly: rowData.tipepengajuan,
+            tipepengajuan: rowData.tipepengajuan,
             status: rowData.status,
-            namapengajuanweekly: rowData.namapengajuan,
+            namapengajuan: rowData.namapengajuan,
           },
           details: [],
         };
@@ -98,11 +100,11 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         pengajuan_id: rowData.pengajuan_id,
         keterangan: rowData.keterangan,
         kebutuhan: rowData.kebutuhan,
-        quantity: rowData.quantity,
-        uom: rowData.uom,
-        price: rowData.price,
+        // quantity: rowData.quantity,
+        // uom: rowData.uom,
+        // price: rowData.price,
         total: rowData.total,
-        namapengajuanweekly: rowData.namapengajuanweekly,
+        namapengajuan: rowData.namapengajuan,
       });
     });
   
@@ -187,6 +189,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
 
   // Mengonversi data agar sesuai dengan format AgGridSolid
   const rowDataForGrid = transformDataForGrid(aggregatedRowData());
+  console.log("convert", rowDataForGrid)
   
   const gridOptions = {
     domLayout: 'autoHeight' as 'autoHeight',            
@@ -210,21 +213,22 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
     // localStorage.removeItem('tableKetMonth');
     // localStorage.removeItem('namaPengajuanMonthly');
     try {
-      const response = await fetch('/api/mweeklypengajuan/', {
+      const response = await fetch('/api/weeklypengajuan/', {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(originalRowDataW()),
+        body: JSON.stringify(newStructuredData),
       });
   
       if (response.ok) {
         alert('Data berhasil dikirim ke backend');
         console.log('Data berhasil dikirim ke backend');
         props.OnClose();
-        localStorage.removeItem('tableData');
-        localStorage.removeItem('tableKetMonth');
-        localStorage.removeItem('namaPengajuanMonthly');
+        localStorage.removeItem('tableDataWeekly');
+        localStorage.removeItem('tableKetWeekly');
+        localStorage.removeItem('namaPengajuanWeekly');
       } else {
           const errorMessage = await response.text();
           alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
