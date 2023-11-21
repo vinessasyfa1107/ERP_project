@@ -84,7 +84,7 @@ const PengajuanEvent: Component<PengajuanEventProps> = (props) => {
         setTableData(updatedTableData);
     
         // Simpan data yang telah diperbarui ke localStorage (jika diperlukan)
-        localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+        localStorage.setItem('tableDataEventDetails', JSON.stringify(updatedTableData));
       }
     }
     
