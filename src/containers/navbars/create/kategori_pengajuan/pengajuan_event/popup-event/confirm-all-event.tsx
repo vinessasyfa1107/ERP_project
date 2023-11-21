@@ -196,7 +196,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
         props.OnClose();
         localStorage.removeItem('tableDataEventDetails');
         localStorage.removeItem('tableKetPengajuanEvent');
-        localStorage.removeItem('namaPengajuanEvemet');
+        localStorage.removeItem('namaPengajuanEvent');
       } else {
         const errorMessage = await response.text();
         alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
@@ -208,6 +208,47 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
     }
   };
 
+    // localStorage.removeItem('tableData');
+    // localStorage.removeItem('tableKetMonth');
+    // localStorage.removeItem('namaPengajuanMonthly');
+    // try {
+    //   const response = await fetch('/api/monthlypengajuan/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(originalRowData()),
+    //   });
+  
+    //   if (!response.ok) {
+    //     throw new Error('Gagal mengirim data ke backend');
+    //   }
+  
+    //   const responseData = await response.json();
+    //   console.log('Response dari backend:', responseData);
+  
+    //   // Tambahkan logika atau penanganan lain jika diperlukan
+    //   if (responseData.success) {
+    //     // Data berhasil dikirim, lakukan sesuatu
+    //     console.log('Data berhasil dikirim ke backend');
+    //     props.OnClose();
+    //     // localStorage.removeItem('tableData');
+    //     // localStorage.removeItem('tableKetMonth');
+    //     // localStorage.removeItem('namaPengajuanMonthly');
+    //     // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman berhasil
+    //   } else {
+    //     // Gagal karena logika bisnis di backend, tampilkan pesan kesalahan atau lakukan tindakan yang sesuai
+    //     console.error('Gagal mengirim data ke backend:', responseData.error);
+    //     // Tambahkan logika atau tindakan lain yang diperlukan setelah pengiriman gagal
+    //   }
+    // } catch (error) {
+    //   console.error('Error:', error.message);
+    //   // Tambahkan penanganan kesalahan jika diperlukan
+    // }
+        
+// function onGridReady1(event: GridReadyEvent<any, any>): void {
+//   throw new Error('Function not implemented.');
+// }
 
   return (
     <div class="overlay">

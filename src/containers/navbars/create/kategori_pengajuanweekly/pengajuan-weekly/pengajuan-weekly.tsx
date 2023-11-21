@@ -63,7 +63,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
         setTableData(updatedTableData);
     
         // Simpan data yang telah diperbarui ke localStorage (jika diperlukan)
-        localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+        localStorage.setItem('tableDataWeekly', JSON.stringify(updatedTableData));
       }
     }
     
@@ -72,7 +72,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     const [tableData, setTableData] = createSignal<RowDataWeekly[]>(
       (() => {
         // Coba ambil data dari localStorage saat komponen diinisialisasi
-        const savedData = localStorage.getItem('tableData'); //nama untuk nyimpen data tabel keterangan
+        const savedData = localStorage.getItem('tableDataWeekly'); //nama untuk nyimpen data tabel keterangan
         return savedData ? JSON.parse(savedData) : ([] as RowData[]);
       })()
     );
@@ -113,7 +113,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
       setTableData(updatedTableData);
     
       // Simpan data tableData yang telah berubah ke localStorage (jika diperlukan)
-      localStorage.setItem('tableData', JSON.stringify(updatedTableData));
+      localStorage.setItem('tableDataWeekly', JSON.stringify(updatedTableData));
     };
 
     // untuk edit data
@@ -218,7 +218,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
     // gantiin kode untuk merged Data yang ini ya Ca !!!!!!!!!!!!!!!!!!
     // Ambil data dari localStorage 
-    const tableData2 = JSON.parse(localStorage.getItem('tableData')) || [];
+    const tableData2 = JSON.parse(localStorage.getItem('tableDataWeekly')) || [];
     const initialRowData = JSON.parse(localStorage.getItem('tableKetWeekly')) || [];
 
     // Buat objek untuk menyimpan total berdasarkan keterangan
@@ -397,7 +397,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
                 </div>
 
         </div>
-        {popUpConfirm() && <ConfirmAllPlanWeekly OnClose={closePopUpConfirm} pengajuanweekly={props.pengajuanweekly} sumtotalweekly={allTotalW1()} date={timestamp()}/>}
+        {popUpConfirm() && <ConfirmAllPlanWeekly OnClose={closePopUpConfirm} sumtotalweekly={allTotalW1()} date={timestamp()}/>}
     </div>
   );
 };
