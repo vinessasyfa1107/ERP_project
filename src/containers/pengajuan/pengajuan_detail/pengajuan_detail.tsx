@@ -7,6 +7,8 @@ import { A } from '@solidjs/router';
 import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly } from '../../../store/Pengajuan/nama-pengajuan';
 import TablePengajuanDetail from './table-pengajuan-detail';
 import Table_event_detail from './table_event_detail';
+import TablePengajuanDetailWeekly from './table-weekly';
+
 
 const PengajuanDetail: Component = () => {
 
@@ -44,6 +46,9 @@ const PengajuanDetail: Component = () => {
                 <div style={{"margin-top":"20px"}}>
                     <h1 style={{"font-size":"18px"}}>Detail Pengajuan Monthly</h1>
                     <TablePengajuanDetail/>
+
+                    <h1 style={{"font-size":"18px"}}>Detail Pengajuan Weekly</h1>
+                    <TablePengajuanDetailWeekly/>
                 </div>
 
                 <div style={{"margin-top":"20px"}}>
