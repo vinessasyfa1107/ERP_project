@@ -5,7 +5,8 @@ export type resultdata = {
   "keterangan": string,
   "kebutuhan": string,
   "reference": string,
-  "namapengajuan": String
+  "namapengajuan": String,
+  "total": number,
 }
   
   export async function DataDetailWeekly(query: string) {
@@ -21,7 +22,7 @@ export type resultdata = {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "TESTT");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, namapengajuan}) => ({
-      pengajuan_id, keterangan, kebutuhan, namapengajuan
+    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, namapengajuan, total}) => ({
+      pengajuan_id, keterangan, kebutuhan, namapengajuan, total
     }));
   }
