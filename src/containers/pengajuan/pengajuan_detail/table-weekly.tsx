@@ -104,6 +104,7 @@ const TablePengajuanDetailWeekly: Component = () => {
     { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
     { field: 'keterangan', editable: false },
     { field: 'kebutuhan'},
+    { field: 'total', headerName: 'Jumlah' },
     // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'quantity', headerName: 'Qty', editable: false },
     // { field: 'price', headerName: 'Harga' },
