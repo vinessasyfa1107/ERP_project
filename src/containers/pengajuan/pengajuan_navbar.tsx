@@ -1,13 +1,20 @@
 import { A, useLocation } from '@solidjs/router';
-import type { Component } from 'solid-js';
+import { onMount, type Component } from 'solid-js';
 import './pengajuan_navbar.css';
 import { Icon } from '@iconify-icon/solid';
 import { useStore } from '../../store';
+import { useNavbarStore } from '../../store/Navbar/NavbarStore';
 
 const Pengajuan_navbar: Component = () => {
     const [{titleStore}] = useStore();
 
     const location = useLocation();
+
+    const [, {changeTitleNavbar}] = useNavbarStore();
+
+    onMount(() => {
+        changeTitleNavbar("Pengajuan");
+    })
 
   return (
     <div>

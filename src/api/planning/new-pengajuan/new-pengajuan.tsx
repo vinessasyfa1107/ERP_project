@@ -1,6 +1,6 @@
 export type resultdata = {
     "id": number,
-    "entry_ts": Date,
+    "entry_ts": string,
     "namapengajuan": string,
     "tipepengajuan": string,
     "total": number,
