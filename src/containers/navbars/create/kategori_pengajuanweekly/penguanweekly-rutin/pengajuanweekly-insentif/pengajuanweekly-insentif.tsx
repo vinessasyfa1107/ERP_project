@@ -110,6 +110,19 @@ const PengajuanWeeklyInsentif: Component = () => {
       return row1.uniqueId === row2.uniqueId;
     };
     
+    const formatRupiah = (value) => {
+      const numericValue = Number(value);
+  
+      if (isNaN(numericValue)) {
+        return value;
+      }
+  
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      }).format(numericValue);
+    };
+    
     const gridOptions = {
       columnDefs: [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
@@ -120,6 +133,8 @@ const PengajuanWeeklyInsentif: Component = () => {
         // { field: "quantity", headerName: "Qty", editable: true, width: 80 },
         // { field: "uom", headerName: "UoM", editable: true, width: 100 },
         // { field: "price", headerName: "Price", editable: true, width: 95 },
+        { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value) },
+        { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value) },
         { field: "total", headerName: "Total",  width: 95},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
@@ -364,9 +379,9 @@ const PengajuanWeeklyInsentif: Component = () => {
                 rowData={rowData()} 
             />
             <div class="detail-total-weekly">
-                <div>TOTAL</div>
-                <div>Rp{calculateTotal()}</div>
-            </div>
+              <div>TOTAL</div>
+            <div>{formatRupiah(calculateTotal())}</div>
+          </div>
         </div>
         
         <div class="btn-simpan-data-weekly">
