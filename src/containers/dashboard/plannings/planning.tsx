@@ -8,6 +8,7 @@ import FormConfirm from './form/form-confirm';
 import { A } from '@solidjs/router';
 import Header from '../../header/header';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
+import TableSortPlan from './table/table-sort-planning';
 
 const Planning: Component = () => {
     const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
@@ -32,7 +33,7 @@ const Planning: Component = () => {
             <div class="box-1" style={{"justify-content":"center"}}>
 
                 <div class="component-1">
-                    <ChartPlanning />
+                    {/* <ChartPlanning />
                     <div class="tabel-keterangan">
                         <div class="rightcp">
                             <input type="text" placeholder="Search.." name="search" />
@@ -44,7 +45,9 @@ const Planning: Component = () => {
                         <br />
                         <h1>Keterangan</h1>
                         <TablePlanning />
-                    </div>
+                    </div> */}
+                <TableSortPlan/>
+
                 </div>
 
                 <div>
