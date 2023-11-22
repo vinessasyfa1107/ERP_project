@@ -8,7 +8,7 @@ import FormConfirm from '../form/form-confirm';
 import { dataplanning } from '../../../../api/planning/dataplanning';
 import { RowData } from '../../../navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import { useNavigate } from '@solidjs/router';
-import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/monthly-pengajuan';
+import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 import { type } from 'os';
 
 const [dataIdPlan, setDataIDPlan] = createSignal(0);
