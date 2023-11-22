@@ -5,7 +5,7 @@ import './pengajuan_detail.css'
 // import { namaPengajuanEvent } from '../../navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/nama-pengajuan-event';
 import { A } from '@solidjs/router';
 import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly } from '../../../store/Pengajuan/nama-pengajuan';
-import TablePengajuanDetail from './table-pengajuan-detail';
+import TablePengajuanDetail from './table-monthly-detail';
 import Table_event_detail from './table_event_detail';
 import TablePengajuanDetailWeekly from './table-weekly';
 
