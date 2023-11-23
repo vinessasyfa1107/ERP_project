@@ -95,6 +95,19 @@ const TablePengajuanDetailWeekly: Component = () => {
     }
   }
 
+  const formatRupiah = (value) => {
+    const numericValue = Number(value);
+
+    if (isNaN(numericValue)) {
+      return value;
+    }
+
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(numericValue);
+  }; 
+
 
   const gridOptions = {
     columnDefs: [
@@ -104,7 +117,7 @@ const TablePengajuanDetailWeekly: Component = () => {
     { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
     { field: 'keterangan', editable: false },
     { field: 'kebutuhan'},
-    { field: 'total', headerName: 'Jumlah' },
+    { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
     // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'quantity', headerName: 'Qty', editable: false },
     // { field: 'price', headerName: 'Harga' },

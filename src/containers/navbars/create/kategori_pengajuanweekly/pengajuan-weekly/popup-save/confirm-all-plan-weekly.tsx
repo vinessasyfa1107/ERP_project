@@ -190,13 +190,26 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
   // Mengonversi data agar sesuai dengan format AgGridSolid
   const rowDataForGrid = transformDataForGrid(aggregatedRowData());
   console.log("convert", rowDataForGrid)
+
+  const formatRupiah = (value) => {
+    const numericValue = Number(value);
+
+    if (isNaN(numericValue)) {
+      return value;
+    }
+
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(numericValue);
+  };
   
   const gridOptions = {
     domLayout: 'autoHeight' as 'autoHeight',            
     columnDefs: [
           { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
           { field: "keterangan", width: 350},
-          { field: "total", headerName:"Total", width: 97},
+          { field: "total", headerName:"Total", width: 97, valueFormatter: (params) => formatRupiah(params.value) },
       ],
       
   };
