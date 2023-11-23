@@ -340,19 +340,6 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     setPopUpConfirm(false);
   };
 
-  const formatRupiah = (value) => {
-    const numericValue = Number(value);
-
-    if (isNaN(numericValue)) {
-      return value;
-    }
-
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-    }).format(numericValue);
-  };
-
   // function hapusnama(){
   //   localStorage.removeItem('namaPengajuanMonthly'); // Menghapus nilai dari penyimpanan lokal
   // }
