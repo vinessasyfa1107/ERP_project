@@ -9,6 +9,9 @@ import TablePengajuanDetail from './table-monthly-detail';
 import Table_event_detail from './table_event_detail';
 import TablePengajuanDetailWeekly from './table-weekly';
 
+const [selectedCategory, setSelectedCategory] = createSignal('');
+
+export {selectedCategory, setSelectedCategory}
 
 const PengajuanDetail: Component = () => {
 
@@ -17,6 +20,9 @@ const PengajuanDetail: Component = () => {
     onMount(() => {
         changeSubTitleNavbar("Pengajuan Tersimpan");
     })
+
+    const [showWeekly, setShowWeekly] = createSignal(true);
+
 
     return (
         <div>
@@ -43,7 +49,7 @@ const PengajuanDetail: Component = () => {
                     </div>
                 </A>
 
-                <div style={{ "margin-top": "20px" }}>
+                {/* <div style={{ "margin-top": "20px" }}>
                     <h1 style={{ "font-size": "18px" }}>Detail Pengajuan Monthly</h1>
                     <TablePengajuanDetail />
                 </div>
@@ -56,7 +62,13 @@ const PengajuanDetail: Component = () => {
                 <div style={{ "margin-top": "20px" }}>
                     <h1 style={{ "font-size": "18px" }}>Detail Pengajuan Event</h1>
                     <Table_event_detail />
-                </div>
+                </div> */}
+
+                {selectedCategory() === 'Weekly' && <TablePengajuanDetailWeekly />}
+                {selectedCategory() === 'Event' && <Table_event_detail />}
+                {selectedCategory() === 'Monthly' && <TablePengajuanDetail />}
+
+                {/* {showWeekly() && (<TablePengajuanDetail /> || <TablePengajuanDetailWeekly /> || <Table_event_detail />)} */}
             </div>
 
         </div>

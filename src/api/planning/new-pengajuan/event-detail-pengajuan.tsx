@@ -1,4 +1,5 @@
-import { dataIdPlan } from "../../../containers/dashboard/plannings/table/table-pengajuan-baru";
+// import { dataIdPlan } from "../../../containers/dashboard/plannings/table/table-pengajuan-baru";
+import { dataIdEvent } from "../../../containers/pengajuan/pengajuan_detail/table_event_detail";
 
 export type resultdata = {
   "pengajuan_id": number,
@@ -20,7 +21,7 @@ export type resultdata = {
   
   
     const response = await fetch(
-      `/api/eventpengajuan/${dataIdPlan()}`
+      `/api/eventpengajuan/${dataIdEvent()}`
     );
   
     const results = await response.json();

@@ -5,10 +5,14 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 // import '../../dashboard/plannings/table/table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
-import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
+// import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
 import { DataWeeklyPengajuan } from '../../../api/planning/new-pengajuan/weekly-pengajuan';
 import { DataDetailWeekly } from '../../../api/planning/new-pengajuan/weekly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
+
+const [dataIdWeekly, setDataIDWeekly] = createSignal(0);
+
+export {dataIdWeekly, setDataIDWeekly}
 
 
 const TablePengajuanDetailWeekly: Component = () => {
@@ -174,7 +178,8 @@ const TablePengajuanDetailWeekly: Component = () => {
 //   }
 
   return (
-    <div style={{ "justify-content": "center" }}>
+    <div style={{ "justify-content": "center", "margin-top":"30px" }}>
+      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Weekly</h1>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
         //   columnDefs={columnDefs}
