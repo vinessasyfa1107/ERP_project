@@ -111,7 +111,7 @@ const onCellClicked = (params) => {
     { field: 'namapengajuan', headerName: 'Keterangan', editable: false},
     { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'category', headerName: 'Jenis', editable: false },
-    { field: 'total', headerName: 'Jumlah', editable: params => !params.data.confirm },
+    { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
     { field: 'status', headerName: 'Status', editable: false },
     // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
   ];
@@ -132,6 +132,20 @@ const onCellClicked = (params) => {
     flex: 1,
     sortable: true,
   }
+
+  const formatRupiah = (value) => {
+    const numericValue = Number(value);
+
+    if (isNaN(numericValue)) {
+      return value;
+    }
+
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(numericValue);
+  };
+
 
   const gridOptions = {
     // domLayout: 'autoHeight' as DomLayoutType,
