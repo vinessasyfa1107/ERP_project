@@ -93,6 +93,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     }
   };
 
+
   const deleteRow = (index: number) => {
     setRowData((prevData) => {
       const newData = [...prevData];
@@ -183,25 +184,25 @@ const PengajuanWeeklyInsentif: Component = () => {
   const calculateTotal = () => {
     const gridData = rowData();
     let total = 0;
-  
+
     for (const row of gridData) {
       total += row.total;
     }
-  
+
     const formattedTotal = formatRupiah(total);
     setTotalW(formattedTotal); // Simpan total di toko dalam format Rupiah
-    
+
     return formattedTotal; // Mengembalikan total dalam format Rupiah
   };
-  
+
   createEffect(() => {
     const gridData = rowData();
     let total = 0;
-  
+
     for (const row of gridData) {
       total += row.total;
     }
-  
+
     const formattedTotal = formatRupiah(total);
     setTotalW(formattedTotal); // Simpan total di toko dalam format Rupiah
   });
@@ -380,6 +381,7 @@ const PengajuanWeeklyInsentif: Component = () => {
           </div>
         </div>
         <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "150vh" }}>
+
           <AgGridSolid
             gridOptions={gridOptions}
             onGridReady={onGridReady}
@@ -387,7 +389,7 @@ const PengajuanWeeklyInsentif: Component = () => {
           />
           <div class="detail-total-weekly">
             <div>TOTAL</div>
-            <div>Rp{calculateTotal()}</div>
+            <div>{formatRupiah(calculateTotal())}</div>
           </div>
         </div>
 
