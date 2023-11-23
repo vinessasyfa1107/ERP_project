@@ -167,24 +167,11 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
       setShouldNavigate(false);
     };
 
-    const formatRupiah = (value) => {
-      const numericValue = Number(value);
-  
-      if (isNaN(numericValue)) {
-        return value;
-      }
-  
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-      }).format(numericValue);
-    };
-
     const gridOptions = {
         columnDefs: [
             { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
             { field: "keterangan", editable: true, width: 269},
-            { field: "totalplan", headerName:"Total", width:  100, valueFormatter: (params) => formatRupiah(params.value)},
+            { field: "totalplan", headerName:"Total", width:  100},
             { field: "aksi", headerName:"", width: 80, 
             cellRenderer: (params: any) => {
                 return (
@@ -255,7 +242,7 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
     const allTotalW1 = () => {
     const totalPlanArray = updatedRowData.map((row) => row.totalplan || 0);
     const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
-    return formatRupiah(total);
+    return `Rp${total}`;
     };
 
 
@@ -338,6 +325,19 @@ const PengajuanWeekly: Component<PengajuanWeeklyProps> = (props) => {
 
   function closePopUpConfirm(){
     setPopUpConfirm(false);
+  };
+
+  const formatRupiah = (value) => {
+    const numericValue = Number(value);
+
+    if (isNaN(numericValue)) {
+      return value;
+    }
+
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(numericValue);
   };
 
   // function hapusnama(){

@@ -93,7 +93,6 @@ const PengajuanWeeklyInsentif: Component = () => {
     }
   };
 
-
   const deleteRow = (index: number) => {
     setRowData((prevData) => {
       const newData = [...prevData];
@@ -134,7 +133,9 @@ const PengajuanWeeklyInsentif: Component = () => {
       // { field: "quantity", headerName: "Qty", editable: true, width: 80 },
       // { field: "uom", headerName: "UoM", editable: true, width: 100 },
       // { field: "price", headerName: "Price", editable: true, width: 95 },
-      { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
+      { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value) },
+      { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value) },
+      { field: "total", headerName: "Total", width: 95 },
       {
         field: 'aksi', width: 80, cellRenderer: (params: any) => {
           const rowIndex = params.rowIndex;
@@ -184,27 +185,18 @@ const PengajuanWeeklyInsentif: Component = () => {
   const calculateTotal = () => {
     const gridData = rowData();
     let total = 0;
-
     for (const row of gridData) {
       total += row.total;
     }
-
-    const formattedTotal = formatRupiah(total);
-    setTotalW(formattedTotal); // Simpan total di toko dalam format Rupiah
-
-    return formattedTotal; // Mengembalikan total dalam format Rupiah
+    return total;
   };
-
   createEffect(() => {
     const gridData = rowData();
-    let total = 0;
-
+    let Total = 0;
     for (const row of gridData) {
-      total += row.total;
+      Total += row.total;
     }
-
-    const formattedTotal = formatRupiah(total);
-    setTotalW(formattedTotal); // Simpan total di toko dalam format Rupiah
+    setTotalW(Total); // Simpan total di toko
   });
 
   // onMount(() => {
@@ -381,7 +373,6 @@ const PengajuanWeeklyInsentif: Component = () => {
           </div>
         </div>
         <div class="ag-theme-alpine z-0" style={{ height: "300px", width: "150vh" }}>
-
           <AgGridSolid
             gridOptions={gridOptions}
             onGridReady={onGridReady}
