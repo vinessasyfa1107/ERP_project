@@ -6,10 +6,13 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
 import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pengajuan';
-import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
+// import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 
+const [dataIdMonthly, setDataIDMonthly] = createSignal(0);
+
+export {dataIdMonthly, setDataIDMonthly}
 
 const TablePengajuanDetail: Component = () => {
 
@@ -118,12 +121,12 @@ const TablePengajuanDetail: Component = () => {
       { field: 'keterangan', editable: false },
       { field: 'kebutuhan' },
       // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
-      { field: 'quantity', headerName: 'Qty', editable: false,  width: 60 },
+      { field: 'quantity', headerName: 'Qty', editable: false,  width: 90 },
+      { field: 'uom' },
       { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
       { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
       // { field: 'status', headerName: 'Status', editable: false },
-      { field: 'notes' },
-      { field: 'reference' },
+      // { field: 'price' },
 
       // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
     ],
@@ -173,7 +176,8 @@ const TablePengajuanDetail: Component = () => {
   //   }
 
   return (
-    <div style={{ "justify-content": "center" }}>
+    <div style={{ "justify-content": "center", "margin-top":"30px" }}>
+      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Monthly</h1>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
           //   columnDefs={columnDefs}

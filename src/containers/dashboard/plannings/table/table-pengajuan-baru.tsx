@@ -10,10 +10,10 @@ import { RowData } from '../../../navbars/create/kategori_pengajuanweekly/pengua
 import { useNavigate } from '@solidjs/router';
 import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 import { type } from 'os';
-
-const [dataIdPlan, setDataIDPlan] = createSignal(0);
-
-export {dataIdPlan}
+import { setDataIDWeekly } from '../../../pengajuan/pengajuan_detail/table-weekly';
+import { setDataIDEvent } from '../../../pengajuan/pengajuan_detail/table_event_detail';
+import { setDataIDMonthly } from '../../../pengajuan/pengajuan_detail/table-monthly-detail';
+import { setSelectedCategory } from '../../../pengajuan/pengajuan_detail/pengajuan_detail';
 
 
 const TablePengajuanBaru: Component = () => {
@@ -72,10 +72,24 @@ const navigate = useNavigate();
 
   
 const onCellClicked = (params) => {
-    console.log('meonk', params.data.id)
-    setDataIDPlan(params.data.id)
+  if (params.data.tipepengajuan === 'Weekly') {
+    // console.log('meonk', params.data.id);
+    setDataIDWeekly(params.data.id);
+    setSelectedCategory(params.data.tipepengajuan)
     navigate('/pengajuan/pengajuan_detail');
-  };
+  } else if(params.data.tipepengajuan === 'Event') {
+    // console.log('meonk', params.data.id);
+    setDataIDEvent(params.data.id);
+    navigate('/pengajuan/pengajuan_detail');
+    setSelectedCategory(params.data.tipepengajuan)
+  } else if (params.data.tipepengajuan === 'Monthly'){
+    // console.log('meonk', params.data.id);
+    setDataIDMonthly(params.data.id);
+    navigate('/pengajuan/pengajuan_detail');
+    setSelectedCategory(params.data.tipepengajuan)
+  }
+};
+
 
   const handleSelectionChanged = (event) => {
     const selectedRows = event.api.getSelectedRows();
