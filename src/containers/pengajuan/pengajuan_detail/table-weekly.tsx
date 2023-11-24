@@ -119,6 +119,7 @@ const TablePengajuanDetailWeekly: Component = () => {
     // { field: 'id', headerName: 'ID', editable: false },
     { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 100 },
     { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
+    { field: 'coa_kd', headerName: 'COA', editable: false },
     { field: 'keterangan', editable: false },
     { field: 'kebutuhan'},
     { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
