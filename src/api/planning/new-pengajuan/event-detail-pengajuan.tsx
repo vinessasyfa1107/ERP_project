@@ -11,7 +11,8 @@ export type resultdata = {
   "unit": string,
   "notes": string,
   "reference": string,
-  "namapengajuan": String
+  "namapengajuan": String,
+  "coa_kd": String
 }
   
   export async function DataDetailEvent(query: string) {
@@ -27,7 +28,7 @@ export type resultdata = {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "TESTT");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan}) => ({
-      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan
+    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd}) => ({
+      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd
     }));
   }
