@@ -112,7 +112,7 @@ const TableSortPlan: Component = () => {
     // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 50 },
     { field: 'id', headerName: 'ID', editable: false, width: 65 },
     { field: 'entry_ts', headerName: 'Tanggal',  width: 130},
-    { field: 'coa_kd', headerName: 'COA', width: 85 },
+    // { field: 'coa_kd', headerName: 'COA', width: 85 },
     { field: 'namapengajuan', headerName: 'Keterangan', width: 269, editable: false},
     { field: 'tipepengajuan', cellStyle: getCellStyle, width: 115,  headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, },
     // { field: 'category', headerName: 'Jenis', },

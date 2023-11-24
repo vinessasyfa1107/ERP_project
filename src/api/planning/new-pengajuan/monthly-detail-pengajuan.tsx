@@ -7,6 +7,7 @@ export type resultdata = {
   "kebutuhan": string,
   "quantity": number,
   "uom": string,
+  "coa_kd": string,
   "price": number,
   "total": number,
   "unit": string,
@@ -28,7 +29,7 @@ export type resultdata = {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "TESTT");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan}) => ({
-      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan
+    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd}) => ({
+      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd
     }));
   }
