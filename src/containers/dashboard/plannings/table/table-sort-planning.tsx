@@ -15,7 +15,6 @@ const TableSortPlan: Component = () => {
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
     console.log("bulan ", selectedMonth())
-
   };
 
   const handleSearchChange = (event) => {

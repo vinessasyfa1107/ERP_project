@@ -109,8 +109,8 @@ const PengajuanEventDetails: Component = () => {
     localStorage.setItem('tableDataEventDetails', JSON.stringify(rowData()));
 
     // Recalculate total if 'qty' or 'price' is changed
-    if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-      const newTotal = data.qty * data.price;
+    if (params.colDef.field === 'quantity' || params.colDef.field === 'price' || params.colDef.field === 'unit') {
+      const newTotal = data.quantity * data.price * data.unit;
       const updatedRow = { ...data, total: newTotal };
       setRowData((prevData) => {
         const newData = prevData.map((row) =>

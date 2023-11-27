@@ -20,20 +20,34 @@ const TablePengajuanBaru: Component = () => {
 
 
   const [RowData, setRowData] = createSignal([{}]);
-    
+  const [searchTerm, setSearchTerm] = createSignal('');
+  const [selectedMonth, setSelectedMonth] = createSignal('');
+
   onMount(async () => {
     const monthlypengajuan = await DataMonthlyPengajuan("data monthly plan");
     console.log("data detail plan", monthlypengajuan);
     setRowData(monthlypengajuan)
   })
-// const [gridApi, setGridApi] = createSignal(null);
-// const [rowData, setRowData] = createSignal<RowData[]>(
-//     (() => {
-//       // Coba ambil data dari localStorage saat komponen diinisialisasi
-//       const savedData = localStorage.getItem('tableAllPengajuan');
-//       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-//     })()
-//   );
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+    console.log("bulan ", selectedMonth())
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    console.log("search ", searchTerm());
+
+  };
+
+  // const [gridApi, setGridApi] = createSignal(null);
+  // const [rowData, setRowData] = createSignal<RowData[]>(
+  //     (() => {
+  //       // Coba ambil data dari localStorage saat komponen diinisialisasi
+  //       const savedData = localStorage.getItem('tableAllPengajuan');
+  //       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+  //     })()
+  //   );
 
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
@@ -41,20 +55,20 @@ const TablePengajuanBaru: Component = () => {
   const [confirmationStatus, setConfirmationStatus] = createSignal(false);
   const [formSubmitted, setFormSubmitted] = createSignal(false);
 
-//   onMount(async () => {
-//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-//     console.log("dataplanning", data_planning);
-//     setRowData(data_planning);
-//   })
+  //   onMount(async () => {
+  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+  //     console.log("dataplanning", data_planning);
+  //     setRowData(data_planning);
+  //   })
 
-//   const fetchData = async () => {
-//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-//     setRowData(data_planning);
-//   };
+  //   const fetchData = async () => {
+  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+  //     setRowData(data_planning);
+  //   };
 
-//   onMount(() => {
-//     fetchData();
-//   });
+  //   onMount(() => {
+  //     fetchData();
+  //   });
 
   const handlePopUpApproved = (data) => {
     if (data.status === 'Approved') {
@@ -63,32 +77,32 @@ const TablePengajuanBaru: Component = () => {
     }
   };
 
-//   const ClosePopUp = () => {
-//     setPopUpOpen(false);
-//     fetchData();
-//   };
-const navigate = useNavigate();
+  //   const ClosePopUp = () => {
+  //     setPopUpOpen(false);
+  //     fetchData();
+  //   };
+  const navigate = useNavigate();
 
 
-  
-const onCellClicked = (params) => {
-  if (params.data.tipepengajuan === 'Weekly') {
-    // console.log('meonk', params.data.id);
-    setDataIDWeekly(params.data.id);
-    setSelectedCategory(params.data.tipepengajuan)
-    navigate('/pengajuan/pengajuan_detail');
-  } else if(params.data.tipepengajuan === 'Event') {
-    // console.log('meonk', params.data.id);
-    setDataIDEvent(params.data.id);
-    navigate('/pengajuan/pengajuan_detail');
-    setSelectedCategory(params.data.tipepengajuan)
-  } else if (params.data.tipepengajuan === 'Monthly'){
-    // console.log('meonk', params.data.id);
-    setDataIDMonthly(params.data.id);
-    navigate('/pengajuan/pengajuan_detail');
-    setSelectedCategory(params.data.tipepengajuan)
-  }
-};
+
+  const onCellClicked = (params) => {
+    if (params.data.tipepengajuan === 'Weekly') {
+      // console.log('meonk', params.data.id);
+      setDataIDWeekly(params.data.id);
+      setSelectedCategory(params.data.tipepengajuan)
+      navigate('/pengajuan/pengajuan_detail');
+    } else if (params.data.tipepengajuan === 'Event') {
+      // console.log('meonk', params.data.id);
+      setDataIDEvent(params.data.id);
+      navigate('/pengajuan/pengajuan_detail');
+      setSelectedCategory(params.data.tipepengajuan)
+    } else if (params.data.tipepengajuan === 'Monthly') {
+      // console.log('meonk', params.data.id);
+      setDataIDMonthly(params.data.id);
+      navigate('/pengajuan/pengajuan_detail');
+      setSelectedCategory(params.data.tipepengajuan)
+    }
+  };
 
 
   const handleSelectionChanged = (event) => {
@@ -98,12 +112,57 @@ const onCellClicked = (params) => {
       handlePopUpApproved(selectedRowData);
       // Step 2: Update confirmationStatus based on checkbox
       setConfirmationStatus(selectedRowData.confirm || false);
-      
+
     }
     if (formSubmitted()) {
       event.api.deselectAll(); // Deselect the checkbox
     }
   };
+
+  const loadGridData = async () => {
+    const selectedMonthValue = selectedMonth();
+    const searchTermValue = searchTerm();
+
+    // ...
+
+    console.log("search ", searchTermValue);
+    console.log("bulan ", selectedMonthValue);
+    const data_planning = await DataMonthlyPengajuan("data pengajuan baru");
+
+    let filteredData = data_planning;
+
+    if (selectedMonthValue) {
+      filteredData = filteredData
+        .filter((item) => item.entry_ts.startsWith(selectedMonthValue))
+        .map((item) => ({
+          ...item,
+          entry_ts: item.entry_ts.slice(0, 10),
+        }));
+    }
+
+    filteredData = filteredData.filter((item) =>
+      Object.values(item).some((value) =>
+        value.toString().toLowerCase().includes(
+          (searchTermValue && searchTermValue) ? searchTermValue.toLowerCase() : ''
+        )
+      )
+    );
+
+
+    console.log("Filtered Data:", filteredData);
+    console.log("search ", searchTerm());
+    console.log("bulan ", selectedMonth())
+    setRowData(filteredData);
+  };
+
+  onMount(loadGridData);
+
+  createEffect(() => {
+    loadGridData();
+    return onCleanup(() => {
+      // Clean up subscriptions or resources if needed
+    });
+  }, [selectedMonth, searchTerm]);
 
 
   function getCellStyle(params: { value: string; }) {
@@ -122,7 +181,7 @@ const onCellClicked = (params) => {
     { field: 'id', headerName: 'ID', editable: false },
     { field: 'entry_ts', headerName: 'Tanggal', editable: false },
     // { field: 'coa_kd', headerName: 'COA', editable: false },
-    { field: 'namapengajuan', headerName: 'Keterangan', editable: false},
+    { field: 'namapengajuan', headerName: 'Keterangan', editable: false },
     { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'category', headerName: 'Jenis', editable: false },
     { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
@@ -177,25 +236,60 @@ const onCellClicked = (params) => {
   }
 
   return (
-    <div style={{ "justify-content": "center" }}>
-      <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
-        <AgGridSolid
-          columnDefs={columnDefs}
-          rowData={RowData()}
-          onCellClicked={onCellClicked}
-          defaultColDef={defaultColDef}
-          gridOptions={gridOptions}
-          rowSelection="multiple"
-          rowMultiSelectWithClick={true}
-        />
+    <div>
+      <div style={{ display: "flex", "justify-content": "space-between" }}>
+        <div>
+          {/* <label for="monthSelect">Pilih Bulan: </label> */}
+          <select id="monthSelect" onChange={handleMonthChange}>
+            <option value="">Semua Bulan</option>
+            <option value="2023-01">Januari</option>
+            <option value="2023-02">Februari</option>
+            <option value="2023-03">Maret</option>
+            <option value="2023-04">April</option>
+            <option value="2023-05">Mei</option>
+            <option value="2023-06">Juni</option>
+            <option value="2023-07">Juli</option>
+            <option value="2023-08">Agustus</option>
+            <option value="2023-09">September</option>
+            <option value="2023-10">Oktober</option>
+            <option value="2023-11">November</option>
+            <option value="2023-12">Desember</option>
+
+            {/* tambahkan opsi bulan lainnya sesuai kebutuhan */}
+          </select>
+        </div>
+        <div class="rightcp" style={{ display: "flex", "flex-direction": "row", "align-items": "center" }}>
+          <input type="text" placeholder="Search.." name="search"
+            value={searchTerm()}
+            onInput={handleSearchChange}
+          />
+          <span class="search-icon">
+            <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
+          </span>
+          <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+        </div>
       </div>
-      {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+
+      <div style={{ "justify-content": "center" }}>
+        <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
+          <AgGridSolid
+            columnDefs={columnDefs}
+            rowData={RowData()}
+            onCellClicked={onCellClicked}
+            defaultColDef={defaultColDef}
+            gridOptions={gridOptions}
+            rowSelection="multiple"
+            rowMultiSelectWithClick={true}
+          />
+        </div>
+        {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+      </div>
     </div>
   );
 };
 
 export default TablePengajuanBaru;
 function isEditing() {
-    throw new Error('Function not implemented.');
+  throw new Error('Function not implemented.');
 }
 
