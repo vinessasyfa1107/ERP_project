@@ -139,6 +139,19 @@ const PengajuanEventDetails: Component = () => {
     return row1.uniqueId === row2.uniqueId;
   };
 
+  const formatRupiah = (value) => {
+    const numericValue = Number(value);
+
+    if (isNaN(numericValue)) {
+      return value;
+    }
+
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(numericValue);
+  };
+
   const gridOptions = {
     columnDefs: [
       { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 60 },
@@ -149,8 +162,8 @@ const PengajuanEventDetails: Component = () => {
       { field: "quantity", headerName: "Qty", editable: true, width: 80 },
       { field: "unit", headerName: "Unit", editable: true, width: 130 },
       { field: "uom", headerName: "UoM", editable: true, width: 100 },
-      { field: "price", headerName: "Price", editable: true, width: 130 },
-      { field: "total", headerName: "Total", width: 150 },
+      { field: "price", headerName: "Price", editable: true, width: 130, valueFormatter: (params) => formatRupiah(params.value) },
+      { field: "total", headerName: "Total", width: 150, valueFormatter: (params) => formatRupiah(params.value) },
       { field: "notes", headerName: "Notes", editable: true, width: 130 },
       { field: "reference", headerName: "Reference", editable: true, width: 130 },
       {
@@ -217,8 +230,9 @@ const PengajuanEventDetails: Component = () => {
     for (const row of gridData) {
       total += row.total;
     }
-    return total;
+    return formatRupiah(total);
   };
+  
   createEffect(() => {
     const gridData = rowData();
     let Total = 0;
@@ -464,7 +478,7 @@ const PengajuanEventDetails: Component = () => {
           />
           <div class="detail-event-details">
             <div>TOTAL</div>
-            <div>Rp{calculateTotal()}</div>
+            <div>{calculateTotal()}</div>
           </div>
         </div>
 

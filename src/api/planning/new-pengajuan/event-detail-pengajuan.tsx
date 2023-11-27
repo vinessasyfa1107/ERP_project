@@ -1,4 +1,5 @@
-import { dataIdPlan } from "../../../containers/dashboard/plannings/table/table-pengajuan-baru";
+// import { dataIdPlan } from "../../../containers/dashboard/plannings/table/table-pengajuan-baru";
+import { dataIdEvent } from "../../../containers/pengajuan/pengajuan_detail/table_event_detail";
 
 export type resultdata = {
   "pengajuan_id": number,
@@ -11,7 +12,8 @@ export type resultdata = {
   "unit": string,
   "notes": string,
   "reference": string,
-  "namapengajuan": String
+  "namapengajuan": String,
+  "coa_kd": String
 }
   
   export async function DataDetailEvent(query: string) {
@@ -20,14 +22,14 @@ export type resultdata = {
   
   
     const response = await fetch(
-      `/api/eventpengajuan/${dataIdPlan()}`
+      `/api/eventpengajuan/${dataIdEvent()}`
     );
   
     const results = await response.json();
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "TESTT");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan}) => ({
-      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan
+    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd}) => ({
+      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd
     }));
   }

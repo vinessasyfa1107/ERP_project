@@ -131,6 +131,19 @@ const OperasionalTamanhas: Component = () => {
       // Implementasikan logika perbandingan berdasarkan properti yang sesuai
       return row1.uniqueId === row2.uniqueId;
     };
+
+    const formatRupiah = (value) => {
+      const numericValue = Number(value);
+  
+      if (isNaN(numericValue)) {
+        return value;
+      }
+  
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      }).format(numericValue);
+    };
     
     const gridOptions = {
       columnDefs: [
@@ -141,8 +154,8 @@ const OperasionalTamanhas: Component = () => {
         { field: "coa_kd", headerName: "COA", editable: true, width: 100 },
         { field: "quantity", headerName: "Qty", editable: true, width: 80 },
         { field: "uom", headerName: "UoM", editable: true, width: 100 },
-        { field: "price", headerName: "Price", editable: true, width: 95 },
-        { field: "total", headerName: "Total",  width: 95},
+        { field: "price", headerName: "Price", editable: true, width: 95, valueFormatter: (params) => formatRupiah(params.value) },
+        { field: "total", headerName: "Total",  width: 95, valueFormatter: (params) => formatRupiah(params.value)},
         {
           field: 'aksi', width: 80,cellRenderer: (params: any) => {
             const rowIndex = params.rowIndex;
@@ -212,7 +225,9 @@ const OperasionalTamanhas: Component = () => {
       for (const row of gridData) {
         Total += row.total;
       }
-      setTotal(Total); // Simpan total di toko
+    
+      const formattedTotal = formatRupiah(Total);
+      setTotal(formattedTotal); // Simpan total di toko dalam format Rupiah
     });
 
     // onMount(() => {
@@ -418,7 +433,7 @@ const OperasionalTamanhas: Component = () => {
             />
             <div class="detail-total-operasional">
                 <div>TOTAL</div>
-                <div>Rp{Total()}</div>
+                <div>{Total()}</div>
             </div>
         </div>
         

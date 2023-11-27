@@ -1,4 +1,5 @@
-import { dataIdPlan } from "../../../containers/dashboard/plannings/table/table-pengajuan-baru";
+// import { dataIdPlan } from "../../../containers/dashboard/plannings/table/table-pengajuan-baru";
+import { dataIdWeekly } from "../../../containers/pengajuan/pengajuan_detail/table-weekly";
 
 export type resultdata = {
   "pengajuan_id": number,
@@ -7,6 +8,7 @@ export type resultdata = {
   "reference": string,
   "namapengajuan": String,
   "total": number,
+  "coa_kd": string,
 }
   
   export async function DataDetailWeekly(query: string) {
@@ -15,14 +17,14 @@ export type resultdata = {
   
   
     const response = await fetch(
-      `/api/weeklypengajuan/${dataIdPlan()}`
+      `/api/weeklypengajuan/${dataIdWeekly()}`
     );
   
     const results = await response.json();
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "TESTT");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, namapengajuan, total}) => ({
-      pengajuan_id, keterangan, kebutuhan, namapengajuan, total
+    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, namapengajuan, total, coa_kd}) => ({
+      pengajuan_id, keterangan, kebutuhan, namapengajuan, total, coa_kd
     }));
   }

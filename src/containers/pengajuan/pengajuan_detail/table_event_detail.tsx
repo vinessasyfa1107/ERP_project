@@ -6,11 +6,14 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
 import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pengajuan';
-import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
+// import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 import { DataDetailEvent } from '../../../api/planning/new-pengajuan/event-detail-pengajuan';
 
+const [dataIdEvent, setDataIDEvent] = createSignal(0);
+
+export {dataIdEvent, setDataIDEvent}
 
 const Table_event_detail: Component = () => {
 
@@ -116,6 +119,7 @@ const Table_event_detail: Component = () => {
       // { field: 'id', headerName: 'ID', editable: false },
       { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 60 },
       { field: 'namapengajuan', headerName: 'Pengajuan', editable: false },
+      { field: 'coa_kd', headerName: 'COA', editable: false },
       { field: 'keterangan', editable: false },
       { field: 'kebutuhan' },
       // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
@@ -175,7 +179,8 @@ const Table_event_detail: Component = () => {
   //   }
 
   return (
-    <div style={{ "justify-content": "center" }}>
+    <div style={{ "justify-content": "center", "margin-top":"30px" }}>
+      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Event</h1>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
           //   columnDefs={columnDefs}

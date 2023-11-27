@@ -107,16 +107,30 @@ const TableSortPlan: Component = () => {
     }
   }
 
+  const formatRupiah = (value) => {
+    const numericValue = Number(value);
+
+    if (isNaN(numericValue)) {
+      return value;
+    }
+
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(numericValue);
+  };
+
+
   const gridOptions = {
     columnDefs: [
     // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 50 },
     { field: 'id', headerName: 'ID', editable: false, width: 65 },
     { field: 'entry_ts', headerName: 'Tanggal',  width: 130},
-    { field: 'coa_kd', headerName: 'COA', width: 85 },
+    // { field: 'coa_kd', headerName: 'COA', width: 85 },
     { field: 'namapengajuan', headerName: 'Keterangan', width: 269, editable: false},
     { field: 'tipepengajuan', cellStyle: getCellStyle, width: 115,  headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, },
     // { field: 'category', headerName: 'Jenis', },
-    { field: 'total', headerName: 'Jumlah', width: 125, editable: params => !params.data.confirm },
+    { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
     { field: 'status', headerName: 'Status', width: 125},
     // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
     ],

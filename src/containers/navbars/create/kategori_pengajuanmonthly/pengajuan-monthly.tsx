@@ -165,11 +165,24 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
       setShouldNavigate(false);
     };
 
+    const formatRupiah = (value) => {
+      const numericValue = Number(value);
+  
+      if (isNaN(numericValue)) {
+        return value;
+      }
+  
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      }).format(numericValue);
+    };
+
     const gridOptions = {
         columnDefs: [
             { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 70 },
             { field: "keterangan", editable: true, width: 269},
-            { field: "totalplan", headerName:"Total", width:  100},
+            { field: "totalplan", headerName:"Total", width:  100, valueFormatter: (params) => formatRupiah(params.value)},
             { field: "aksi", headerName:"", width: 80, 
             cellRenderer: (params: any) => {
                 return (
@@ -238,9 +251,9 @@ const PengajuanMonthly: Component<PengajuanMonthlyProps> = (props) => {
     setRowData(updatedRowData);
     
     const allTotal1 = () => {
-    const totalPlanArray = updatedRowData.map((row) => row.totalplan || 0);
-    const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
-    return `Rp${total}`;
+      const totalPlanArray = updatedRowData.map((row) => row.totalplan || 0);
+      const total = totalPlanArray.reduce((acc, currentValue) => acc + currentValue, 0);
+      return formatRupiah(total);
     };
 
 
