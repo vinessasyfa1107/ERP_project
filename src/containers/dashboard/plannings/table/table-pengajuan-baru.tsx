@@ -121,7 +121,7 @@ const onCellClicked = (params) => {
     { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
     { field: 'id', headerName: 'ID', editable: false },
     { field: 'entry_ts', headerName: 'Tanggal', editable: false },
-    { field: 'coa_kd', headerName: 'COA', editable: false },
+    // { field: 'coa_kd', headerName: 'COA', editable: false },
     { field: 'namapengajuan', headerName: 'Keterangan', editable: false},
     { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'category', headerName: 'Jenis', editable: false },
