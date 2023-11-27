@@ -102,9 +102,10 @@ const OperasionalTamanhas: Component = () => {
       localStorage.setItem('tableData', JSON.stringify(rowData()));
     
       // Recalculate total if 'qty' or 'price' is changed
-      if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-        const newTotal = data.qty * data.price;
+      if (params.colDef.field === 'quantity' || params.colDef.field === 'price') {
+        const newTotal = data.quantity * data.price;
         const updatedRow = { ...data, total: newTotal };
+        console.log("ini apa", updatedRow)
         setRowData((prevData) => {
           const newData = prevData.map((row) =>
             areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
@@ -259,7 +260,7 @@ const OperasionalTamanhas: Component = () => {
 
   createEffect(() => {
     const inputValueLowerCase = inputValue().toLowerCase();
-    const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+    const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase) || option.value.toLowerCase().includes(inputValueLowerCase));
     setFilteredOptions(filtered);
   });
 
@@ -280,9 +281,11 @@ const OperasionalTamanhas: Component = () => {
 
   const handleInput = (e: Event) => {
     const label = (e.target as HTMLInputElement).value;
+    console.log("?", label)
     setInputValue(label);
 
-    const selectedOption = options().find((option) => option.label === label);
+    const selectedOption = options().find((option) => option.value === label);
+    
     if (selectedOption) {
       setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
     } else {
@@ -294,7 +297,8 @@ const OperasionalTamanhas: Component = () => {
 
  
   const handleOptionSelect = (selectedOption: Option) => {
-      setInputValue(selectedOption.label);
+      // setInputValue(selectedOption.label);
+      setInputValue(`${selectedOption.value} ${selectedOption.label}`);
       setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
       setShowDropdown(false);
     };
@@ -370,14 +374,14 @@ const OperasionalTamanhas: Component = () => {
                   placeholder="COA.."
                   value={inputValue()}
                   onInput={handleInput}
-                  onKeyDown={handleKeyDown}
+                  // onKeyDown={handleKeyDown}
                   class="custom-dropdown-coa"
                 />
                 {showDropdown() && (
                   <div class="dropdown-options-coa">
                   <div class="options-list">
                     {filteredOptions().map((option) => (
-                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.label}</div>
+                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.value} {option.label}</div>
                     ))}
                   </div>
                   </div>

@@ -117,11 +117,12 @@ const TablePengajuanDetail: Component = () => {
       // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
       // { field: 'id', headerName: 'ID', editable: false },
       { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 60 },
-      { field: 'coa_kd', headerName: 'COA', width: 85 },
 
       { field: 'namapengajuan', headerName: 'Pengajuan', editable: false },
       { field: 'keterangan', editable: false },
       { field: 'kebutuhan' },
+      { field: 'coa_kd', headerName: 'COA', width: 85 },
+
       // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
       { field: 'quantity', headerName: 'Qty', editable: false,  width: 90 },
       { field: 'uom' },
