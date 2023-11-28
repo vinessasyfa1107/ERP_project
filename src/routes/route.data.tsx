@@ -11,6 +11,7 @@ import PengajuanReimburse from '../containers/navbars/create/kategori_pengajuanw
 
 import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
 import PengajuanEventDetails from '../containers/navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event-detail';
+import PengajuanDetailDK from '../direktur-keuangan/containers/pengajuan/pengajuan-detail-dk';
 
 interface UserData {
     id: number;
@@ -121,6 +122,10 @@ const RouteData: Component = () => {
                 <Route path="/keuangan_dashboard_dk" component={Keuangan_dashboard_dk} />
                 <Route path="/transfer_dana" component={Transfer_dana} />
                 <Route path="/form_transfer" component={Form_transfer} />
+            </Route>
+
+            <Route path="/direktur-keuangan/pengajuan">
+                <Route path="/pengajuan-detail" component={PengajuanDetailDK} />
 
             </Route>
 

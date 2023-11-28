@@ -103,7 +103,7 @@ const NavbarDK: Component<NavbarProps> = (props) => {
               </div>
             </A> */}
 
-            <A href="/dashboard/report" classList={{ active: location.pathname.startsWith('/dashboard') }}>
+            <A href="/dashboard-dk/report_dk" classList={{ active: location.pathname.startsWith('/dashboard') }}>
             <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-3 w-3/5 items-center">
                   <img
@@ -122,7 +122,7 @@ const NavbarDK: Component<NavbarProps> = (props) => {
               </div>
             </A>
 
-            <A href="/pengajuan/pengajuan_dashboard" classList={{ active: location.pathname.startsWith('/pengajuan')}}>
+            <A href="/direktur-keuangan/pengajuan/pengajuan-detail" classList={{ active: location.pathname.startsWith('/pengajuan')}}>
               <div class="sidebars bg-#F7F7F7 rounded-[5px] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-center gap-8 w-48 items-center hover:bg-#e1e1e1b2" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-row gap-4 w-3/5 items-center">
                   <img
