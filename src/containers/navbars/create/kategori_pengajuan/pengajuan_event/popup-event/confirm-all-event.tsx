@@ -241,7 +241,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
             <br />
             <div>
               <div>
-                <button class="btn-save-edit" onClick={sendDataToBackend}>
+                <button class="btn-save-edit-event" onClick={sendDataToBackend}>
                   <Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" />
                 </button>
               </div>
