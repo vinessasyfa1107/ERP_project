@@ -34,6 +34,7 @@ interface NewRowData {
     pengajuan_id: number;
     keterangan: string;
     kebutuhan: string;
+    coa_kd: string;
     // quantity: number;
     // uom: string;
     // price: number;
@@ -100,6 +101,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         pengajuan_id: rowData.pengajuan_id,
         keterangan: rowData.keterangan,
         kebutuhan: rowData.kebutuhan,
+        coa_kd: rowData.coa_kd,
         // quantity: rowData.quantity,
         // uom: rowData.uom,
         // price: rowData.price,
