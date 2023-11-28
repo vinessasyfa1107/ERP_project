@@ -24,7 +24,6 @@ interface AggregatedRowData {
 interface NewRowData {
   pengajuan: {
     id: number;
-    coa_kd: string;
     entry_ts: string;
     tipepengajuan: string;
     status: string;
@@ -87,7 +86,6 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         uniquePengajuan[key] = {
           pengajuan: {
             id: 0,
-            coa_kd: rowData.coa_kd,
             entry_ts: rowData.entry_ts,
             tipepengajuan: rowData.tipepengajuan,
             status: rowData.status,
