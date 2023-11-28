@@ -79,18 +79,18 @@ const PengajuanWeeklyInsentif: Component = () => {
     // Update local storage
     localStorage.setItem('tableDataWeekly', JSON.stringify(rowData()));
 
-    // Recalculate total if 'qty' or 'price' is changed
-    if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-      const newTotal = data.qty * data.price;
-      const updatedRow = { ...data, total: newTotal };
-      setRowData((prevData) => {
-        const newData = prevData.map((row) =>
-          areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
-        );
-        localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
-        return newData;
-      });
-    }
+    // // Recalculate total if 'qty' or 'price' is changed
+    // if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
+    //   const newTotal = data.qty * data.price;
+    //   const updatedRow = { ...data, total: newTotal };
+    //   setRowData((prevData) => {
+    //     const newData = prevData.map((row) =>
+    //       areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
+    //     );
+    //     localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
+    //     return newData;
+    //   });
+    // }
   };
 
 
@@ -134,7 +134,7 @@ const PengajuanWeeklyInsentif: Component = () => {
       // { field: "quantity", headerName: "Qty", editable: true, width: 80 },
       // { field: "uom", headerName: "UoM", editable: true, width: 100 },
       // { field: "price", headerName: "Price", editable: true, width: 95 },
-      { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
+      { field: "total", headerName: "Total", editable: true, width: 95, valueFormatter: (params) => formatRupiah(params.value) },
       {
         field: 'aksi', width: 80, cellRenderer: (params: any) => {
           const rowIndex = params.rowIndex;
