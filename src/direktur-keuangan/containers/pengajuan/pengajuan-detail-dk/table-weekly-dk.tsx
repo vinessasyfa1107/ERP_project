@@ -2,37 +2,34 @@ import { createSignal, type Component, onMount, onCleanup, createEffect } from '
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import '../../dashboaard/plannings/table/table-planning.css';
+// import '../../dashboard/plannings/table/table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
-import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pengajuan';
 // import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
-import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
+import { DataWeeklyPengajuan } from '../../../../api/planning/new-pengajuan/weekly-pengajuan';
+import { DataDetailWeekly } from '../../../../api/planning/new-pengajuan/weekly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 
-const [dataIdMonthly, setDataIDMonthly] = createSignal(0);
 
-export {dataIdMonthly, setDataIDMonthly}
+const TableWeeklyDK: Component = () => {
+    
+    const [RowData, setRowData] = createSignal([{}]);
 
-const TableMonthlyDK: Component = () => {
-
-  const [RowData, setRowData] = createSignal([{}]);
-
-  onMount(async () => {
-    const monthlypengajuan = await DataDetailMonthly("data monthly detail plan");
-    console.log("MONTHLY detail plan", monthlypengajuan);
-    setRowData(monthlypengajuan)
-  })
+    onMount(async () => {
+        const weeklypengajuan = await DataDetailWeekly("data weekly detail plan");
+        console.log("WEEKLY detail plan", weeklypengajuan);
+        setRowData(weeklypengajuan)
+    })
 
 
-  // const [gridApi, setGridApi] = createSignal(null);
-  // const [rowData, setRowData] = createSignal<RowData[]>(
-  //     (() => {
-  //       // Coba ambil data dari localStorage saat komponen diinisialisasi
-  //       const savedData = localStorage.getItem('tableAllPengajuan');
-  //       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-  //     })()
-  //   );
+// const [gridApi, setGridApi] = createSignal(null);
+// const [rowData, setRowData] = createSignal<RowData[]>(
+//     (() => {
+//       // Coba ambil data dari localStorage saat komponen diinisialisasi
+//       const savedData = localStorage.getItem('tableAllPengajuan');
+//       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
+//     })()
+//   );
 
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
@@ -40,20 +37,20 @@ const TableMonthlyDK: Component = () => {
   const [confirmationStatus, setConfirmationStatus] = createSignal(false);
   const [formSubmitted, setFormSubmitted] = createSignal(false);
 
-  //   onMount(async () => {
-  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-  //     console.log("dataplanning", data_planning);
-  //     setRowData(data_planning);
-  //   })
+//   onMount(async () => {
+//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+//     console.log("dataplanning", data_planning);
+//     setRowData(data_planning);
+//   })
 
-  //   const fetchData = async () => {
-  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-  //     setRowData(data_planning);
-  //   };
+//   const fetchData = async () => {
+//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+//     setRowData(data_planning);
+//   };
 
-  //   onMount(() => {
-  //     fetchData();
-  //   });
+//   onMount(() => {
+//     fetchData();
+//   });
 
   const handlePopUpApproved = (data) => {
     if (data.status === 'Approved') {
@@ -62,16 +59,16 @@ const TableMonthlyDK: Component = () => {
     }
   };
 
-  //   const ClosePopUp = () => {
-  //     setPopUpOpen(false);
-  //     fetchData();
-  //   };
+//   const ClosePopUp = () => {
+//     setPopUpOpen(false);
+//     fetchData();
+//   };
 
-
-  // const onCellClicked = (data) => {
-  //         setDataIDPlan(data.id);
-  //         navigate('/pengajuan/pengajuan_detail');
-  //   };
+  
+// const onCellClicked = (data) => {
+//         setDataIDPlan(data.id);
+//         navigate('/pengajuan/pengajuan_detail');
+//   };
 
   const handleSelectionChanged = (event) => {
     const selectedRows = event.api.getSelectedRows();
@@ -80,7 +77,7 @@ const TableMonthlyDK: Component = () => {
       handlePopUpApproved(selectedRowData);
       // Step 2: Update confirmationStatus based on checkbox
       setConfirmationStatus(selectedRowData.confirm || false);
-
+      
     }
     if (formSubmitted()) {
       event.api.deselectAll(); // Deselect the checkbox
@@ -109,48 +106,32 @@ const TableMonthlyDK: Component = () => {
       style: 'currency',
       currency: 'IDR',
     }).format(numericValue);
-  };
+  }; 
 
 
   const gridOptions = {
     columnDefs: [
-      // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
-      // { field: 'id', headerName: 'ID', editable: false },
-      { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 60 },
-
-      { field: 'namapengajuan', headerName: 'Pengajuan', editable: false },
-      { field: 'keterangan', editable: false },
-      { field: 'kebutuhan' },
-      { field: 'coa_kd', headerName: 'COA', width: 85 },
-
-      // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
-      { field: 'quantity', headerName: 'Qty', editable: false,  width: 90 },
-      { field: 'uom' },
-      { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
-      { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
-      // { field: 'status', headerName: 'Status', editable: false },
-      // { field: 'price' },
-
-      { field: 'confirm', cellRenderer: (params: any) => {
-        return (
-          <div>
-            <input type="checkbox" />
-          </div>
-        );
-      }},
-    ],
+    // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
+    // { field: 'id', headerName: 'ID', editable: false },
+    { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 100 },
+    { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
+    { field: 'coa_kd', headerName: 'COA', editable: false },
+    { field: 'keterangan', editable: false },
+    { field: 'kebutuhan'},
+    { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
+  ],
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
     onSelectionChanged: handleSelectionChanged,
     onCellEditingStopped: (event) => {
-      // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-      if (event.column.getColId() === 'amount' && event.data.confirm) {
+        // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
+        if (event.column.getColId() === 'amount' && event.data.confirm) {
         // Reset nilai ke nilai asli
         event.api.applyTransaction({ update: [{ ...event.data }] });
-      }
+        }
     },
-  };
+};
 
   // const rowData = [
   //   { id: '11C7D', tanggal: '10-2-22', COA: '1-0000', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
@@ -165,33 +146,33 @@ const TableMonthlyDK: Component = () => {
 
 
   const defaultColDef = {
-    // flex: 1,
+    flex: 1,
     sortable: true,
   }
 
-  //   const gridOptions = {
-  //     // domLayout: 'autoHeight' as DomLayoutType,
-  //     pagination: true,
-  //     paginationPageSize: 4,
-  //     rowHeight: 40,
-  //     onSelectionChanged: handleSelectionChanged,
-  //     onCellEditingStopped: (event) => {
-  //       // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-  //       if (event.column.getColId() === 'amount' && event.data.confirm) {
-  //         // Reset nilai ke nilai asli
-  //         event.api.applyTransaction({ update: [{ ...event.data }] });
-  //       }
-  //     },
-  //   }
+//   const gridOptions = {
+//     // domLayout: 'autoHeight' as DomLayoutType,
+//     pagination: true,
+//     paginationPageSize: 4,
+//     rowHeight: 40,
+//     onSelectionChanged: handleSelectionChanged,
+//     onCellEditingStopped: (event) => {
+//       // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
+//       if (event.column.getColId() === 'amount' && event.data.confirm) {
+//         // Reset nilai ke nilai asli
+//         event.api.applyTransaction({ update: [{ ...event.data }] });
+//       }
+//     },
+//   }
 
   return (
     <div style={{ "justify-content": "center", "margin-top":"30px" }}>
-      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Monthly</h1>
+      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Weekly</h1>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
-          //   columnDefs={columnDefs}
+        //   columnDefs={columnDefs}
           rowData={RowData()}
-          //   onCellClicked={onCellClicked}
+        //   onCellClicked={onCellClicked}
           defaultColDef={defaultColDef}
           gridOptions={gridOptions}
           rowSelection="multiple"
@@ -203,5 +184,5 @@ const TableMonthlyDK: Component = () => {
   );
 };
 
-export default TableMonthlyDK;
+export default TableWeeklyDK;
 
