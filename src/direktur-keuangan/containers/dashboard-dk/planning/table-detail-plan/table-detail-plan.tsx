@@ -84,7 +84,7 @@ const TableDetailPlan: Component = () => {
           gridOptions={gridOptions}
           onRowClicked={(event) => handlePopUpApproved(event.data)}
         />
-        {popUpOpen() && <Formapprove_dk data={popupData()} OnClose={ClosePopUp} />}
+        {/* {popUpOpen() && <Formapprove_dk data={popupData()} OnClose={ClosePopUp} />} */}
       </div>
     </div>
   );

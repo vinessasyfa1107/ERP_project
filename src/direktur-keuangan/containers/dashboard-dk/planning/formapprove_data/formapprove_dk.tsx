@@ -4,7 +4,7 @@ import { Icon } from '@iconify-icon/solid';
 
 interface EditPopUpProps {
     OnClose: () => void;
-    data: {
+    params: {
         id: number,
         entry_ts: string,
         description: string,
@@ -65,38 +65,38 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
 
     const updateStatus = async () => {
         const updateStatusToSend = {
-            id: props.data.id,
+            id: props.params.id,
             entry_ts: timestamp(),
-            alasan: props.data.alasan,
-            // coa_kd: props.data.coa_kd,
-            //description: props.data.description,
-            planningtype: props.data.planningtype,
+            alasan: props.params.alasan,
+            // coa_kd: props.params.coa_kd,
+            //description: props.params.description,
+            planningtype: props.params.planningtype,
            // category: categoryValue,
-            amount: props.data.amount,
+            amount: props.params.amount,
             // status: status()
         }
         console.log("test", updateStatusToSend);
 
         try {
-            const response = await fetch(`/api/planning/${(props.data.id)}`, {
+            const response = await fetch(`/api/planning/${(props.params.id)}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    // id: props.data.id,
+                    // id: props.params.id,
                     entry_ts: timestamp(),
-                    // coa_kd: props.data.coa_kd,
-                    alasan: props.data.alasan,
-                    planningtype: props.data.planningtype,
+                    // coa_kd: props.params.coa_kd,
+                    alasan: props.params.alasan,
+                    planningtype: props.params.planningtype,
                     // category: categoryValue,
-                    amount: props.data.amount,
+                    amount: props.params.amount,
                     // status: status()
                 }),
             });
 
             if (response.ok) {
-                // Data berhasil diubah, tampilkan alert
+                // params berhasil diubah, tampilkan alert
                 alert('Data berhasil diubah');
                 props.OnClose();
                 window.location.reload();
@@ -129,11 +129,11 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
 
                             <label>Tanggal</label>
                             <br />
-                            <input type="text" value={props.data.entry_ts} readonly />
+                            <input type="text" value={props.params.entry_ts} readonly />
 
                             <label>Nama Pengajuan</label>
                             <br />
-                            <input type="text" value={props.data.description} readonly />
+                            <input type="text" value={props.params.description} readonly />
 
                             <p>
                                 
@@ -156,7 +156,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                     <label>Kategori</label>
                                     <br />
                                     <input type="text"
-                                        value={props.data.planningtype}
+                                        value={props.params.planningtype}
                                         readonly style={{ "width": "13rem" }} />
                                 </div>
 
@@ -164,7 +164,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                     <label>Jenis</label>
                                     <br />
                                     <input type="text"
-                                        value={props.data.category}
+                                        value={props.params.category}
                                         readonly style={{ "width": "13rem" }} />
                                 </div> */}
 
@@ -174,7 +174,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                 <label>Jumlah</label>
                                 <br />
                                 <input type="number"
-                                    value={props.data.amount}
+                                    value={props.params.amount}
                                     readonly />
                             </p>
 
