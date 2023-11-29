@@ -11,12 +11,12 @@ import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 import TableSortPlan from './table/table-sort-planning';
 
 const Planning: Component = () => {
-    const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
+    const [, { changeSubTitleNavbar }] = useSubNavbarStore();
 
     onMount(() => {
         changeSubTitleNavbar("Planning");
     })
-    
+
     return (
         <div class="plan">
             <Header />
@@ -30,26 +30,7 @@ const Planning: Component = () => {
         </A> */}
 
 
-            <div class="box-1" style={{"justify-content":"center"}}>
-
-                <div class="component-1">
-                    {/* <ChartPlanning />
-                    <div class="tabel-keterangan">
-                        <div class="rightcp">
-                            <input type="text" placeholder="Search.." name="search" />
-                            <span class="search-icon">
-                                <Icon icon="iconamoon:search-bold" color="#808080" width="11" height="11" />
-                            </span>
-                            <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
-                        </div>
-                        <br />
-                        <h1>Keterangan</h1>
-                        <TablePlanning />
-                    </div> */}
-                <TableSortPlan/>
-
-                </div>
-
+            <div class="box-1" style={{ "justify-content": "center" }}>
                 <div>
                     <h1>List Rencana Pengajuan</h1>
                     <TablePengajuanBaru />

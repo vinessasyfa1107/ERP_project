@@ -9,8 +9,8 @@ import { TotalW1 } from '../../../../../../store/Pengajuan/Weekly-satu/weekly-in
 import { Icon } from '@iconify-icon/solid';
 import FormEditWeekly from './forms/form-edit-weeklyinsen';
 import ConfirmPopUpWeeklyInsen from './popup/confirmpopup';
-import { optionsWeekly } from '../../data-coa-weekly';
 import { getNamaPengajuanWeekly } from '../../../../../../store/Pengajuan/nama-pengajuan';
+import { options } from '../../../kategori_pengajuanmonthly/operasional-tamanhas/data-coa';
 
 interface Option {
   value: string;
@@ -79,18 +79,18 @@ const PengajuanWeeklyInsentif: Component = () => {
     // Update local storage
     localStorage.setItem('tableDataWeekly', JSON.stringify(rowData()));
 
-    // Recalculate total if 'qty' or 'price' is changed
-    if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-      const newTotal = data.qty * data.price;
-      const updatedRow = { ...data, total: newTotal };
-      setRowData((prevData) => {
-        const newData = prevData.map((row) =>
-          areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
-        );
-        localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
-        return newData;
-      });
-    }
+    // // Recalculate total if 'qty' or 'price' is changed
+    // if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
+    //   const newTotal = data.qty * data.price;
+    //   const updatedRow = { ...data, total: newTotal };
+    //   setRowData((prevData) => {
+    //     const newData = prevData.map((row) =>
+    //       areRowsEqual(row, data) ? { ...row, ...updatedRow } : row
+    //     );
+    //     localStorage.setItem('tableDataWeekly', JSON.stringify(newData));
+    //     return newData;
+    //   });
+    // }
   };
 
 
@@ -134,7 +134,7 @@ const PengajuanWeeklyInsentif: Component = () => {
       // { field: "quantity", headerName: "Qty", editable: true, width: 80 },
       // { field: "uom", headerName: "UoM", editable: true, width: 100 },
       // { field: "price", headerName: "Price", editable: true, width: 95 },
-      { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
+      { field: "total", headerName: "Total", editable: true, width: 95, valueFormatter: (params) => formatRupiah(params.value) },
       {
         field: 'aksi', width: 80, cellRenderer: (params: any) => {
           const rowIndex = params.rowIndex;
@@ -231,12 +231,12 @@ const PengajuanWeeklyInsentif: Component = () => {
 
   const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
 
-  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsWeekly());
+  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(options());
   const [showDropdown, setShowDropdown] = createSignal(false);
 
   createEffect(() => {
     const inputValueLowerCase = inputValue().toLowerCase();
-    const filtered = optionsWeekly().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+    const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase) || option.value.toLowerCase().includes(inputValueLowerCase));
     setFilteredOptions(filtered);
   });
 
@@ -259,7 +259,7 @@ const PengajuanWeeklyInsentif: Component = () => {
     const label = (e.target as HTMLInputElement).value;
     setInputValue(label);
 
-    const selectedOption = optionsWeekly().find((option) => option.label === label);
+    const selectedOption = options().find((option) => option.label === label);
     if (selectedOption) {
       setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
     } else {
@@ -271,7 +271,7 @@ const PengajuanWeeklyInsentif: Component = () => {
 
 
   const handleOptionSelect = (selectedOption: Option) => {
-    setInputValue(selectedOption.label);
+    setInputValue(`${selectedOption.value} ${selectedOption.label}`);
     setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
     setShowDropdown(false);
   };
@@ -354,7 +354,7 @@ const PengajuanWeeklyInsentif: Component = () => {
                 <div class="dropdown-options-coa">
                   <div class="options-list">
                     {filteredOptions().map((option) => (
-                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.label}</div>
+                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.value} {option.label}</div>
                     ))}
                   </div>
                 </div>

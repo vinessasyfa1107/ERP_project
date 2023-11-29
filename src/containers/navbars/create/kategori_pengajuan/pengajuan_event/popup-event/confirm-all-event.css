@@ -129,7 +129,7 @@ select {
     height: 100%; /* Atur tinggi sesuai kebutuhan */
 }
 
-.confirm-allplan-ev .btn-save-edit-event button {
+.confirm-allplan-ev .btn-save-edit-event {
     background-color: rgba(132, 103, 255, 0.80);    
     color: #fff;
     text-transform: capitalize;

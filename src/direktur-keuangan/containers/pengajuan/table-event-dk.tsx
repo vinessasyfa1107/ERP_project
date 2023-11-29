@@ -2,26 +2,27 @@ import { createSignal, type Component, onMount, onCleanup, createEffect } from '
 import AgGridSolid from 'ag-grid-solid';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-// import '../../dashboaard/plannings/table/table-planning.css';
+// import '../../dashboard/plannings/table/table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
 import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pengajuan';
 // import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
+import { DataDetailEvent } from '../../../api/planning/new-pengajuan/event-detail-pengajuan';
 
-const [dataIdMonthly, setDataIDMonthly] = createSignal(0);
+const [dataIdEvent, setDataIDEvent] = createSignal(0);
 
-export {dataIdMonthly, setDataIDMonthly}
+export {dataIdEvent, setDataIDEvent}
 
-const TablePengajuanDetail: Component = () => {
+const TableEventDK: Component = () => {
 
   const [RowData, setRowData] = createSignal([{}]);
 
   onMount(async () => {
-    const monthlypengajuan = await DataDetailMonthly("data monthly detail plan");
-    console.log("MONTHLY detail plan", monthlypengajuan);
-    setRowData(monthlypengajuan)
+    const eventpengajuan = await DataDetailEvent("data monthly detail plan");
+    console.log("MONTHLY detail plan", eventpengajuan);
+    setRowData(eventpengajuan)
   })
 
 
@@ -87,17 +88,6 @@ const TablePengajuanDetail: Component = () => {
     }
   };
 
-
-  function getCellStyle(params: { value: string; }) {
-    if (params.value === 'Weekly') {
-      return { color: '#FF6838' };
-    } else if (params.value === 'Monthly') {
-      return { color: '#00BA29' };
-    } else {
-      return { color: '#860089' };
-    }
-  }
-
   const formatRupiah = (value) => {
     const numericValue = Number(value);
 
@@ -112,24 +102,35 @@ const TablePengajuanDetail: Component = () => {
   };
 
 
+  function getCellStyle(params: { value: string; }) {
+    if (params.value === 'Weekly') {
+      return { color: '#FF6838' };
+    } else if (params.value === 'Monthly') {
+      return { color: '#00BA29' };
+    } else {
+      return { color: '#860089' };
+    }
+  }
+
+
   const gridOptions = {
     columnDefs: [
       // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
       // { field: 'id', headerName: 'ID', editable: false },
       { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 60 },
-
       { field: 'namapengajuan', headerName: 'Pengajuan', editable: false },
+      { field: 'coa_kd', headerName: 'COA', editable: false },
       { field: 'keterangan', editable: false },
       { field: 'kebutuhan' },
-      { field: 'coa_kd', headerName: 'COA', width: 85 },
-
       // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
-      { field: 'quantity', headerName: 'Qty', editable: false,  width: 90 },
-      { field: 'uom' },
+      { field: 'quantity', headerName: 'Qty', editable: false },
+      { field: 'unit', headerName: 'Unit', editable: false },
+      { field: 'uom', headerName: 'UoM', editable: false },
       { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
       { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
       // { field: 'status', headerName: 'Status', editable: false },
-      // { field: 'price' },
+      { field: 'notes' },
+      { field: 'reference' },
 
       // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
     ],
@@ -159,7 +160,6 @@ const TablePengajuanDetail: Component = () => {
 
 
   const defaultColDef = {
-    // flex: 1,
     sortable: true,
   }
 
@@ -180,7 +180,7 @@ const TablePengajuanDetail: Component = () => {
 
   return (
     <div style={{ "justify-content": "center", "margin-top":"30px" }}>
-      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Monthly</h1>
+      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Event</h1>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
           //   columnDefs={columnDefs}
@@ -197,5 +197,5 @@ const TablePengajuanDetail: Component = () => {
   );
 };
 
-export default TablePengajuanDetail;
+export default TableEventDK;
 

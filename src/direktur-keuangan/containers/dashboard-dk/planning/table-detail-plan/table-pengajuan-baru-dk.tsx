@@ -4,19 +4,15 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
-import FormConfirm from '../form/form-confirm';
-import { dataplanning } from '../../../../api/planning/dataplanning';
-import { RowData } from '../../../navbars/create/kategori_pengajuanweekly/penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import { useNavigate } from '@solidjs/router';
-import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 import { type } from 'os';
-import { setDataIDWeekly } from '../../../pengajuan/pengajuan_detail/table-weekly';
-import { setDataIDEvent } from '../../../pengajuan/pengajuan_detail/table_event_detail';
-import { setDataIDMonthly } from '../../../pengajuan/pengajuan_detail/table-monthly-detail';
-import { setSelectedCategory } from '../../../pengajuan/pengajuan_detail/pengajuan_detail';
+import { DataMonthlyPengajuan } from '../../../../../api/planning/new-pengajuan/new-pengajuan';
+import { setSelectedCategory } from '../../../pengajuan/pengajuan-detail-dk';
+import { setDataIDEvent } from '../../../pengajuan/table-event-dk';
+import { setDataIDMonthly } from '../../../pengajuan/table-monthly-dk';
+import { setDataIDWeekly } from '../../../pengajuan/table-weekly-dk';
 
-
-const TablePengajuanBaru: Component = () => {
+const TablePengajuanBaruDK: Component = () => {
 
 
   const [RowData, setRowData] = createSignal([{}]);
@@ -90,16 +86,16 @@ const TablePengajuanBaru: Component = () => {
       // console.log('meonk', params.data.id);
       setDataIDWeekly(params.data.id);
       setSelectedCategory(params.data.tipepengajuan)
-      navigate('/pengajuan/pengajuan_detail');
+    //   navigate('/pengajuan/pengajuan_detail');
     } else if (params.data.tipepengajuan === 'Event') {
       // console.log('meonk', params.data.id);
       setDataIDEvent(params.data.id);
-      navigate('/pengajuan/pengajuan_detail');
+    //   navigate('/pengajuan/pengajuan_detail');
       setSelectedCategory(params.data.tipepengajuan)
     } else if (params.data.tipepengajuan === 'Monthly') {
       // console.log('meonk', params.data.id);
       setDataIDMonthly(params.data.id);
-      navigate('/pengajuan/pengajuan_detail');
+    //   navigate('/pengajuan/pengajuan_detail');
       setSelectedCategory(params.data.tipepengajuan)
     }
   };
@@ -288,7 +284,7 @@ const TablePengajuanBaru: Component = () => {
   );
 };
 
-export default TablePengajuanBaru;
+export default TablePengajuanBaruDK;
 function isEditing() {
   throw new Error('Function not implemented.');
 }

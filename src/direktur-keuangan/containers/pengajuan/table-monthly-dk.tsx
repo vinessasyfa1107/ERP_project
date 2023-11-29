@@ -14,7 +14,7 @@ const [dataIdMonthly, setDataIDMonthly] = createSignal(0);
 
 export {dataIdMonthly, setDataIDMonthly}
 
-const TablePengajuanDetail: Component = () => {
+const TableMonthlyDK: Component = () => {
 
   const [RowData, setRowData] = createSignal([{}]);
 
@@ -131,7 +131,13 @@ const TablePengajuanDetail: Component = () => {
       // { field: 'status', headerName: 'Status', editable: false },
       // { field: 'price' },
 
-      // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
+      { field: 'confirm', cellRenderer: (params: any) => {
+        return (
+          <div>
+            <input type="checkbox" />
+          </div>
+        );
+      }},
     ],
     pagination: true,
     paginationPageSize: 4,
@@ -197,5 +203,5 @@ const TablePengajuanDetail: Component = () => {
   );
 };
 
-export default TablePengajuanDetail;
+export default TableMonthlyDK;
 

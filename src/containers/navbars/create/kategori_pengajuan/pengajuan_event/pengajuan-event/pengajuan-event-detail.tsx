@@ -8,9 +8,9 @@ import { Total6, Total7, Total8, setTotal4 } from '../../../../../../store/Penga
 import { Icon } from '@iconify-icon/solid';
 import EditEventDetails from '../popup-event/edit-event-details';
 import ComfirmDeleteEvDetails from '../popup-event/confirm-delete-evdetails';
-import { optionsEvdetails } from './data-coa-evdetails';
 import { getNamaPengajuanEvent } from '../../../../../../store/Pengajuan/nama-pengajuan';
 import ConfirmAllEvent from '../popup-event/confirm-all-event';
+import { options } from '../../../kategori_pengajuanmonthly/operasional-tamanhas/data-coa';
 
 interface Option {
   value: string;
@@ -109,8 +109,8 @@ const PengajuanEventDetails: Component = () => {
     localStorage.setItem('tableDataEventDetails', JSON.stringify(rowData()));
 
     // Recalculate total if 'qty' or 'price' is changed
-    if (params.colDef.field === 'qty' || params.colDef.field === 'price') {
-      const newTotal = data.qty * data.price;
+    if (params.colDef.field === 'quantity' || params.colDef.field === 'price' || params.colDef.field === 'unit') {
+      const newTotal = data.quantity * data.price * data.unit;
       const updatedRow = { ...data, total: newTotal };
       setRowData((prevData) => {
         const newData = prevData.map((row) =>
@@ -267,12 +267,12 @@ const PengajuanEventDetails: Component = () => {
 
   const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
 
-  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(optionsEvdetails());
+  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(options());
   const [showDropdown, setShowDropdown] = createSignal(false);
 
   createEffect(() => {
     const inputValueLowerCase = inputValue().toLowerCase();
-    const filtered = optionsEvdetails().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase));
+    const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase) || option.value.toLowerCase().includes(inputValueLowerCase));
     setFilteredOptions(filtered);
   });
 
@@ -295,7 +295,7 @@ const PengajuanEventDetails: Component = () => {
     const label = (e.target as HTMLInputElement).value;
     setInputValue(label);
 
-    const selectedOption = optionsEvdetails().find((option) => option.label === label);
+    const selectedOption = options().find((option) => option.label === label);
     if (selectedOption) {
       setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
     } else {
@@ -389,7 +389,7 @@ const PengajuanEventDetails: Component = () => {
                 <div class="dropdown-options-coa">
                   <div class="options-list">
                     {filteredOptions().map((option) => (
-                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.label}</div>
+                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.value} {option.label}</div>
                     ))}
                   </div>
                 </div>

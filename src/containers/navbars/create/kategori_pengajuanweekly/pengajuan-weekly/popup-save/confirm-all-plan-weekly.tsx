@@ -24,7 +24,6 @@ interface AggregatedRowData {
 interface NewRowData {
   pengajuan: {
     id: number;
-    coa_kd: string;
     entry_ts: string;
     tipepengajuan: string;
     status: string;
@@ -34,6 +33,7 @@ interface NewRowData {
     pengajuan_id: number;
     keterangan: string;
     kebutuhan: string;
+    coa_kd: string;
     // quantity: number;
     // uom: string;
     // price: number;
@@ -86,7 +86,6 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         uniquePengajuan[key] = {
           pengajuan: {
             id: 0,
-            coa_kd: rowData.coa_kd,
             entry_ts: rowData.entry_ts,
             tipepengajuan: rowData.tipepengajuan,
             status: rowData.status,
@@ -100,6 +99,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         pengajuan_id: rowData.pengajuan_id,
         keterangan: rowData.keterangan,
         kebutuhan: rowData.kebutuhan,
+        coa_kd: rowData.coa_kd,
         // quantity: rowData.quantity,
         // uom: rowData.uom,
         // price: rowData.price,
