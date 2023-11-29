@@ -62,7 +62,7 @@ const TablePengajuanBaruDK: Component = () => {
 
   const onCellClicked = (params) => {
     if (params.column.getColId() === 'status'){
-      setPopupData(params);
+      setPopupData(params.data);
       setPopUpOpen(true);
     } else {
       if (params.data.tipepengajuan === 'Weekly') {
