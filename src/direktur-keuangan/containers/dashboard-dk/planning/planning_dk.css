@@ -8,7 +8,8 @@
 
 .plan .box-1 {
     width: 150vh;
-    height: 687px;
+    height: 750px;
+    margin-bottom: 3rem;
     border-radius: 10px;
     background: #EFEFEF;
     justify-content: center;

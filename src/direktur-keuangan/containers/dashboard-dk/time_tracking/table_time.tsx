@@ -25,7 +25,8 @@ const Table_time: Component<TableTimeProps> = (props) => {
     { field: 'approval_ts', headerName: 'Tanggal' },
     { field: 'planning_id', headerName: 'ID Planning' },
     { field: 'realization', headerName: 'Jumlah' },
-    { field: 'status', headerName: 'Status' }
+    { field: 'status', headerName: 'Status' },
+    { field: 'alasan', headerName: 'Alasan' }
   ];
 
 
