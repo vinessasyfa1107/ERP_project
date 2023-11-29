@@ -6,6 +6,7 @@ import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import Form_approve from '../form_approve/form_approve';
 import { dataplanning } from '../../../../../api/planning/dataplanning';
+import Formapprove_dk from '../formapprove_data/formapprove_dk';
 
 const TableDetailPlan: Component = () => {
   const [RowData, setRowData] = createSignal([]);
@@ -83,7 +84,7 @@ const TableDetailPlan: Component = () => {
           gridOptions={gridOptions}
           onRowClicked={(event) => handlePopUpApproved(event.data)}
         />
-        {popUpOpen() && <Form_approve data={popupData()} OnClose={ClosePopUp} />}
+        {popUpOpen() && <Formapprove_dk data={popupData()} OnClose={ClosePopUp} />}
       </div>
     </div>
   );

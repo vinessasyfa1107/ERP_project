@@ -131,7 +131,13 @@ const TableWeeklyDK: Component = () => {
     // { field: 'notes'},
     // { field: 'reference'},
 
-    { field: 'confirm',  },
+    { field: 'confirm', cellRenderer: (params: any) => {
+      return (
+        <div>
+          <input type="checkbox" />
+        </div>
+      );
+    }},
   ],
     pagination: true,
     paginationPageSize: 4,
