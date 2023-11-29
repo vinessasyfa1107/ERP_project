@@ -1,4 +1,4 @@
-import { dataIdWeekly } from "../../../store/Pengajuan/pengajuan-id";
+import { dataIdWeeklyDK } from "../../../../store/Pengajuan/pengajuan-id";
 
 export type resultdata = {
   "pengajuan_id": number,
@@ -10,13 +10,13 @@ export type resultdata = {
   "coa_kd": string,
 }
   
-  export async function DataDetailWeekly(query: string) {
+  export async function DataDetailWeeklyDK(query: string) {
     if (query.trim() === "") return [];
     // /?q=${encodeURI(query)}
   
   
     const response = await fetch(
-      `/api/weeklypengajuan/${dataIdWeekly()}`
+      `/api/weeklypengajuan/${dataIdWeeklyDK()}`
     );
   
     const results = await response.json();

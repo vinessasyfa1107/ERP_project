@@ -8,10 +8,8 @@ import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly 
 import TablePengajuanDetail from './table-monthly-detail';
 import Table_event_detail from './table_event_detail';
 import TablePengajuanDetailWeekly from './table-weekly';
+import { selectedCategory } from '../../../store/Pengajuan/pengajuan-id';
 
-const [selectedCategory, setSelectedCategory] = createSignal('');
-
-export {selectedCategory, setSelectedCategory}
 
 const PengajuanDetail: Component = () => {
 

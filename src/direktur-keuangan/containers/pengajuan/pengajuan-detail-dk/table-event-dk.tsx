@@ -5,15 +5,12 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 // import '../../dashboard/plannings/table/table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
-import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pengajuan';
+import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 // import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
-import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
+import { DataDetailMonthly } from '../../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
-import { DataDetailEvent } from '../../../api/planning/new-pengajuan/event-detail-pengajuan';
+import { DataDetailEvent } from '../../../../api/planning/new-pengajuan/event-detail-pengajuan';
 
-const [dataIdEvent, setDataIDEvent] = createSignal(0);
-
-export {dataIdEvent, setDataIDEvent}
 
 const TableEventDK: Component = () => {
 
@@ -131,8 +128,6 @@ const TableEventDK: Component = () => {
       // { field: 'status', headerName: 'Status', editable: false },
       { field: 'notes' },
       { field: 'reference' },
-
-      // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
     ],
     pagination: true,
     paginationPageSize: 4,

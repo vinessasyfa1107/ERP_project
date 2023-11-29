@@ -11,7 +11,8 @@ import PengajuanReimburse from '../containers/navbars/create/kategori_pengajuanw
 
 import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kickoff-meeting/kickoff-meeting';
 import PengajuanEventDetails from '../containers/navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event-detail';
-import PengajuanDetailDK from '../direktur-keuangan/containers/pengajuan/pengajuan-detail-dk';
+import PengajuanDetailDK from '../direktur-keuangan/containers/pengajuan/pengajuan-detail-dk/pengajuan-detail-dk';
+import PengajuanDashboardDK from '../direktur-keuangan/containers/pengajuan/pengajuan-dashboard-dk/pengajuan-dashboard-dk';
 
 interface UserData {
     id: number;
@@ -125,6 +126,7 @@ const RouteData: Component = () => {
             </Route>
 
             <Route path="/direktur-keuangan/pengajuan">
+                <Route path="/pengajuan-dashboard" component={PengajuanDashboardDK} />
                 <Route path="/pengajuan-detail" component={PengajuanDetailDK} />
 
             </Route>

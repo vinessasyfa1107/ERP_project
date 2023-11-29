@@ -7,10 +7,7 @@ import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
 import { type } from 'os';
 import { DataMonthlyPengajuan } from '../../../../../api/planning/new-pengajuan/new-pengajuan';
-import { setSelectedCategory } from '../../../pengajuan/pengajuan-detail-dk';
-import { setDataIDEvent } from '../../../pengajuan/table-event-dk';
-import { setDataIDMonthly } from '../../../pengajuan/table-monthly-dk';
-import { setDataIDWeekly } from '../../../pengajuan/table-weekly-dk';
+import { dataIdMonthly, dataIdMonthlyDK, setDataIDEvent, setDataIDEventDK, setDataIDMonthly, setDataIDMonthlyDK, setDataIDWeekly, setDataIDWeeklyDK, setSelectedCategory } from '../../../../../store/Pengajuan/pengajuan-id';
 
 const TablePengajuanBaruDK: Component = () => {
 
@@ -82,21 +79,26 @@ const TablePengajuanBaruDK: Component = () => {
 
 
   const onCellClicked = (params) => {
-    if (params.data.tipepengajuan === 'Weekly') {
-      // console.log('meonk', params.data.id);
-      setDataIDWeekly(params.data.id);
-      setSelectedCategory(params.data.tipepengajuan)
-    //   navigate('/pengajuan/pengajuan_detail');
-    } else if (params.data.tipepengajuan === 'Event') {
-      // console.log('meonk', params.data.id);
-      setDataIDEvent(params.data.id);
-    //   navigate('/pengajuan/pengajuan_detail');
-      setSelectedCategory(params.data.tipepengajuan)
-    } else if (params.data.tipepengajuan === 'Monthly') {
-      // console.log('meonk', params.data.id);
-      setDataIDMonthly(params.data.id);
-    //   navigate('/pengajuan/pengajuan_detail');
-      setSelectedCategory(params.data.tipepengajuan)
+    if (params.column.getColId() === 'status'){
+      console.log("klik")
+    } else {
+      if (params.data.tipepengajuan === 'Weekly') {
+        // console.log('meonk', params.data.id);
+        setDataIDWeekly(params.data.id);
+        setSelectedCategory(params.data.tipepengajuan)
+        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+      } else if (params.data.tipepengajuan === 'Event') {
+        // console.log('meonk', params.data.id);
+        setDataIDEvent(params.data.id);
+        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+        setSelectedCategory(params.data.tipepengajuan)
+      } else if (params.data.tipepengajuan === 'Monthly') {
+        console.log('meonk', params.data.id);
+        setDataIDMonthly(params.data.id);
+        console.log("pp", dataIdMonthly())
+        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+        setSelectedCategory(params.data.tipepengajuan)
+      }
     }
   };
 
@@ -138,7 +140,7 @@ const TablePengajuanBaruDK: Component = () => {
 
     filteredData = filteredData.filter((item) =>
       Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(
+        value && value.toString().toLowerCase().includes(
           (searchTermValue && searchTermValue) ? searchTermValue.toLowerCase() : ''
         )
       )

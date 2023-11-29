@@ -10,10 +10,6 @@ import { DataWeeklyPengajuan } from '../../../api/planning/new-pengajuan/weekly-
 import { DataDetailWeekly } from '../../../api/planning/new-pengajuan/weekly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 
-const [dataIdWeekly, setDataIDWeekly] = createSignal(0);
-
-export {dataIdWeekly, setDataIDWeekly}
-
 
 const TablePengajuanDetailWeekly: Component = () => {
     

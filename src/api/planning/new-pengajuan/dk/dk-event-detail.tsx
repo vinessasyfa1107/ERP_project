@@ -1,4 +1,4 @@
-import { dataIdEvent } from "../../../store/Pengajuan/pengajuan-id";
+import { dataIdEventDK } from "../../../../store/Pengajuan/pengajuan-id";
 
 export type resultdata = {
   "pengajuan_id": number,
@@ -15,13 +15,13 @@ export type resultdata = {
   "coa_kd": String
 }
   
-  export async function DataDetailEvent(query: string) {
+  export async function DataDetailEventDK(query: string) {
     if (query.trim() === "") return [];
     // /?q=${encodeURI(query)}
   
   
     const response = await fetch(
-      `/api/eventpengajuan/${dataIdEvent()}`
+      `/api/eventpengajuan/${dataIdEventDK()}`
     );
   
     const results = await response.json();

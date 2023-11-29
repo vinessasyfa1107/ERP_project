@@ -11,9 +11,7 @@ import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-d
 import { GridOptions } from 'ag-grid-community';
 import { DataDetailEvent } from '../../../api/planning/new-pengajuan/event-detail-pengajuan';
 
-const [dataIdEvent, setDataIDEvent] = createSignal(0);
 
-export {dataIdEvent, setDataIDEvent}
 
 const Table_event_detail: Component = () => {
 

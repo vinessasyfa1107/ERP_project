@@ -10,11 +10,7 @@ import { RowData } from '../../../navbars/create/kategori_pengajuanweekly/pengua
 import { useNavigate } from '@solidjs/router';
 import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 import { type } from 'os';
-import { setDataIDWeekly } from '../../../pengajuan/pengajuan_detail/table-weekly';
-import { setDataIDEvent } from '../../../pengajuan/pengajuan_detail/table_event_detail';
-import { setDataIDMonthly } from '../../../pengajuan/pengajuan_detail/table-monthly-detail';
-import { setSelectedCategory } from '../../../pengajuan/pengajuan_detail/pengajuan_detail';
-
+import { setDataIDEvent, setDataIDMonthly, setDataIDWeekly, setSelectedCategory } from '../../../../store/Pengajuan/pengajuan-id';
 
 const TablePengajuanBaru: Component = () => {
 
@@ -142,11 +138,12 @@ const TablePengajuanBaru: Component = () => {
 
     filteredData = filteredData.filter((item) =>
       Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(
+        value && value.toString().toLowerCase().includes(
           (searchTermValue && searchTermValue) ? searchTermValue.toLowerCase() : ''
         )
       )
     );
+
 
 
     console.log("Filtered Data:", filteredData);

@@ -10,9 +10,6 @@ import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pe
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 
-const [dataIdMonthly, setDataIDMonthly] = createSignal(0);
-
-export {dataIdMonthly, setDataIDMonthly}
 
 const TablePengajuanDetail: Component = () => {
 

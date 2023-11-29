@@ -8,6 +8,7 @@ import { Icon } from '@iconify-icon/solid';
 import { A } from '@solidjs/router';
 import Header from '../header/header';
 import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
+import TableDetailPlan from './table-detail-plan/table-detail-plan';
 
 const Planning_dk: Component = () => {
 
@@ -45,7 +46,7 @@ const Planning_dk: Component = () => {
 
                 <div>
                     <h1>List Rencana Pengajuan</h1>
-                    {/* <TableDetailPlan /> */}
+                    <TableDetailPlan />
                     <TablePengajuanBaru />
                 </div>
 

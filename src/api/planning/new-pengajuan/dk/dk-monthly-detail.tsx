@@ -1,4 +1,4 @@
-import { dataIdMonthly } from "../../../store/Pengajuan/pengajuan-id";
+import { dataIdMonthlyDK } from "../../../../store/Pengajuan/pengajuan-id";
 
 export type resultdata = {
   "pengajuan_id": number,
@@ -16,13 +16,13 @@ export type resultdata = {
   "approved": string
 }
   
-  export async function DataDetailMonthly(query: string) {
+  export async function DataDetailMonthlyDK(query: string) {
     if (query.trim() === "") return [];
     // /?q=${encodeURI(query)}
   
   
     const response = await fetch(
-      `/api/monthlypengajuan/${dataIdMonthly()}`
+      `/api/monthlypengajuan/${dataIdMonthlyDK()}`
     );
   
     const results = await response.json();
