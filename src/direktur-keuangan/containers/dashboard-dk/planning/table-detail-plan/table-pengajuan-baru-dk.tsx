@@ -7,10 +7,8 @@ import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
 import { type } from 'os';
 import { DataMonthlyPengajuan } from '../../../../../api/planning/new-pengajuan/new-pengajuan';
-import { setSelectedCategory } from '../../../pengajuan/pengajuan-detail-dk';
-import { setDataIDEvent } from '../../../pengajuan/table-event-dk';
-import { setDataIDMonthly } from '../../../pengajuan/table-monthly-dk';
-import { setDataIDWeekly } from '../../../pengajuan/table-weekly-dk';
+import { dataIdMonthly, dataIdMonthlyDK, setDataIDEvent, setDataIDEventDK, setDataIDMonthly, setDataIDMonthlyDK, setDataIDWeekly, setDataIDWeeklyDK, setSelectedCategory } from '../../../../../store/Pengajuan/pengajuan-id';
+import Formapprove_dk from '../formapprove_data/formapprove_dk';
 
 const TablePengajuanBaruDK: Component = () => {
 
@@ -36,41 +34,22 @@ const TablePengajuanBaruDK: Component = () => {
 
   };
 
-  // const [gridApi, setGridApi] = createSignal(null);
-  // const [rowData, setRowData] = createSignal<RowData[]>(
-  //     (() => {
-  //       // Coba ambil data dari localStorage saat komponen diinisialisasi
-  //       const savedData = localStorage.getItem('tableAllPengajuan');
-  //       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-  //     })()
-  //   );
-
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
-  const [confirmationStatus, setConfirmationStatus] = createSignal(false);
-  const [formSubmitted, setFormSubmitted] = createSignal(false);
+  // const [confirmationStatus, setConfirmationStatus] = createSignal(false);
+  // const [formSubmitted, setFormSubmitted] = createSignal(false);
 
-  //   onMount(async () => {
-  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-  //     console.log("dataplanning", data_planning);
-  //     setRowData(data_planning);
-  //   })
 
-  //   const fetchData = async () => {
-  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-  //     setRowData(data_planning);
-  //   };
+  // const handlePopUpApproved = (data) => {
+  //   if (data.status === 'Approved') {
+  //     setPopupData(data);
+  //     setPopUpOpen(true);
+  //   }
+  // };
 
-  //   onMount(() => {
-  //     fetchData();
-  //   });
-
-  const handlePopUpApproved = (data) => {
-    if (data.status === 'Approved') {
-      setPopupData(data);
-      setPopUpOpen(true);
-    }
+  const ClosePopUp = () => {
+    setPopUpOpen(false);
   };
 
   //   const ClosePopUp = () => {
@@ -82,38 +61,30 @@ const TablePengajuanBaruDK: Component = () => {
 
 
   const onCellClicked = (params) => {
-    if (params.data.tipepengajuan === 'Weekly') {
-      // console.log('meonk', params.data.id);
-      setDataIDWeekly(params.data.id);
-      setSelectedCategory(params.data.tipepengajuan)
-    //   navigate('/pengajuan/pengajuan_detail');
-    } else if (params.data.tipepengajuan === 'Event') {
-      // console.log('meonk', params.data.id);
-      setDataIDEvent(params.data.id);
-    //   navigate('/pengajuan/pengajuan_detail');
-      setSelectedCategory(params.data.tipepengajuan)
-    } else if (params.data.tipepengajuan === 'Monthly') {
-      // console.log('meonk', params.data.id);
-      setDataIDMonthly(params.data.id);
-    //   navigate('/pengajuan/pengajuan_detail');
-      setSelectedCategory(params.data.tipepengajuan)
+    if (params.column.getColId() === 'status'){
+      setPopupData(params.data);
+      setPopUpOpen(true);
+    } else {
+      if (params.data.tipepengajuan === 'Weekly') {
+        // console.log('meonk', params.data.id);
+        setDataIDWeekly(params.data.id);
+        setSelectedCategory(params.data.tipepengajuan)
+        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+      } else if (params.data.tipepengajuan === 'Event') {
+        // console.log('meonk', params.data.id);
+        setDataIDEvent(params.data.id);
+        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+        setSelectedCategory(params.data.tipepengajuan)
+      } else if (params.data.tipepengajuan === 'Monthly') {
+        console.log('meonk', params.data.id);
+        setDataIDMonthly(params.data.id);
+        console.log("pp", dataIdMonthly())
+        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+        setSelectedCategory(params.data.tipepengajuan)
+      }
     }
   };
 
-
-  const handleSelectionChanged = (event) => {
-    const selectedRows = event.api.getSelectedRows();
-    if (selectedRows.length > 0) {
-      const selectedRowData = selectedRows[0];
-      handlePopUpApproved(selectedRowData);
-      // Step 2: Update confirmationStatus based on checkbox
-      setConfirmationStatus(selectedRowData.confirm || false);
-
-    }
-    if (formSubmitted()) {
-      event.api.deselectAll(); // Deselect the checkbox
-    }
-  };
 
   const loadGridData = async () => {
     const selectedMonthValue = selectedMonth();
@@ -138,7 +109,7 @@ const TablePengajuanBaruDK: Component = () => {
 
     filteredData = filteredData.filter((item) =>
       Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(
+        value && value.toString().toLowerCase().includes(
           (searchTermValue && searchTermValue) ? searchTermValue.toLowerCase() : ''
         )
       )
@@ -221,14 +192,6 @@ const TablePengajuanBaruDK: Component = () => {
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
-    onSelectionChanged: handleSelectionChanged,
-    onCellEditingStopped: (event) => {
-      // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-      if (event.column.getColId() === 'amount' && event.data.confirm) {
-        // Reset nilai ke nilai asli
-        event.api.applyTransaction({ update: [{ ...event.data }] });
-      }
-    },
   }
 
   return (
@@ -278,7 +241,7 @@ const TablePengajuanBaruDK: Component = () => {
             rowMultiSelectWithClick={true}
           />
         </div>
-        {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+        {popUpOpen() && <Formapprove_dk params={popupData()} OnClose={ClosePopUp} />}
       </div>
     </div>
   );
