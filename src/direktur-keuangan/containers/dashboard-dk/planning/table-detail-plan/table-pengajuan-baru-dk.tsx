@@ -194,6 +194,10 @@ const TablePengajuanBaruDK: Component = () => {
     rowHeight: 40,
   }
 
+  function handlePopUpApproved(data: any): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <div>
       <div style={{ display: "flex", "justify-content": "space-between" }}>
@@ -239,6 +243,7 @@ const TablePengajuanBaruDK: Component = () => {
             gridOptions={gridOptions}
             rowSelection="multiple"
             rowMultiSelectWithClick={true}
+            // onRowClicked={(event) => handlePopUpApproved(event.data)}
           />
         </div>
         {popUpOpen() && <Formapprove_dk params={popupData()} OnClose={ClosePopUp} />}
