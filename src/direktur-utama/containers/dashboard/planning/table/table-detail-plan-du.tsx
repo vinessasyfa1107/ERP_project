@@ -5,9 +5,9 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-detail-plan-du.css';
 import { Icon } from '@iconify-icon/solid';
 import { dataplanning } from '../../../../../api/planning/dataplanning';
-import FormApproveDU from '../form/form-approve-du';
+import Formapprove_du from '../form_approvedu/formapprove_du';
 
-const TableDetailPlan: Component = () => {
+const TableDetailPlanDU: Component = () => {
   const [RowData, setRowData] = createSignal([]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
@@ -20,7 +20,7 @@ const TableDetailPlan: Component = () => {
 
 
   const handlePopUpApproved = (data) => {
-    if (data.status === 'InProgress') {
+    if (data.status === 'Waiting') {
       setPopupData(data);
       setPopUpOpen(true);
     }
@@ -83,10 +83,10 @@ const TableDetailPlan: Component = () => {
           gridOptions={gridOptions}
           onRowClicked={(event) => handlePopUpApproved(event.data)}
         />
-        {popUpOpen() && <FormApproveDU data={popupData()} OnClose={ClosePopUp} />}
+        {popUpOpen() && <Formapprove_du params={popupData()} OnClose={ClosePopUp} />}
       </div>
     </div>
   );
 };
 
-export default TableDetailPlan;
+export default TableDetailPlanDU;
