@@ -9,7 +9,6 @@ interface EditPopUpProps {
         entry_ts: string,
         namapengajuan: string,
         alasan: string,
-        planningtype: string,
         tipepengajuan: string,
         total: number,
         // coa_kd: string,
@@ -71,51 +70,38 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
         const updateStatusToSend = {
             id: props.params.id,
             entry_ts: timestamp(),
-            alasan: props.params.alasan,
-            // coa_kd: props.params.coa_kd,
-            //namapengajuan: props.params.namapengajuan,
-            planningtype: props.params.planningtype,
+            namapengajuan: props.params.namapengajuan,
             tipepengajuan: props.params.tipepengajuan,
-           // category: categoryValue,
             total: props.params.total,
-            // status: status()
+            status: status()
         }
+
         console.log("test", updateStatusToSend);
 
+        const dataToSend = {
+            planning_id: props.params.id,
+            planning_ts: timestamp(),
+            alasan: props.params.alasan,
+            entry_by: 2,
+            realization: props.params.total,
+            status: status()
+        }
+
         try {
-            const response = await fetch(`/api/planning/${(props.params.id)}`, {
+            const response = await fetch(`/api/pengajuan/${(props.params.id)}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    // id: props.params.id,
-                    entry_ts: timestamp(),
-                    // coa_kd: props.params.coa_kd,
-                    alasan: props.params.alasan,
-                    planningtype: props.params.planningtype,
-                    tipepengajuan: props.params.tipepengajuan,
-                    // category: categoryValue,
-                    total: props.params.total,
-                    // status: status()
-                }),
+                body: JSON.stringify(updateStatusToSend),
+            });
 
-                // const response2 = await fetch(`/api/approval/${(props.params.id)}`, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         // id: props.params.id,
-                //         entry_ts: timestamp(),
-                //         // coa_kd: props.params.coa_kd,
-                //         alasan: props.params.alasan,
-                //         planningtype: props.params.planningtype,
-                //         tipepengajuan: props.params.tipepengajuan,
-                //         // category: categoryValue,
-                //         total: props.params.total,
-                //         // status: status()
-                //     }),
+            const response2 = await fetch(`/api/approval/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSend),
             });
 
             if (response.ok) {
@@ -182,32 +168,18 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                     <br />
                                     <input type="text"
                                         value={props.params.tipepengajuan}
-                                        readonly style={{ "width": "13rem" }} />
+                                        readonly style={{ "width": "14.5rem" }} />
                                 </div>
 
-                                {/* <div>
-                                    <label>Jenis</label>
+                                <div>
+                                    <label>Jumlah</label>
                                     <br />
-                                    <input type="text"
-                                        value={props.params.category}
-                                        readonly style={{ "width": "13rem" }} />
-                                </div> */}
+                                    <input type="number" style={{ "width": "14.5rem" }}
+                                        value={props.params.total}
+                                        readonly />
+                                </div>
 
                             </div>
-
-                            <p>
-                                <label>Jumlah</label>
-                                <br />
-                                <input type="number"
-                                    value={props.params.total}
-                                    readonly />
-                            </p>
-
-                            {/* <p>
-                                <label>Tag*</label>
-                                <br />
-                                <input type="text" readonly />
-                            </p> */}
 
                         </div>
 
