@@ -12,6 +12,7 @@ import TableDetailPlan from '../../dashboard/planning/table/table-detail-plan-du
 import './pengajuan-dashboard-du.css';
 import NavbarPengajuanDU from '../navbar-pengajuan-du';
 import { useNavbarStore } from '../../../../store/Navbar/NavbarStore';
+import TablePengajuanBaruDU from '../../dashboard/planning/table/table-pengajuan-baru-du';
 
 
 const PengajuanDashboardDU: Component = () => {
@@ -57,7 +58,7 @@ const PengajuanDashboardDU: Component = () => {
 
                     <div class="rencanaPengajuan-container">
                         <h1>List Rencana Pengajuan</h1>
-                        <TableDetailPlan />
+                        <TablePengajuanBaruDU/>
                         {/* <FormPlanning /> */}
                     </div>
 
