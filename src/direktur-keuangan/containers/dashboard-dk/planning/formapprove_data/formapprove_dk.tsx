@@ -176,7 +176,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                 </textarea>
                             </p>
 
-                            <div style={{ "display": "flex", "justify-content": "space-between", "padding-right": "10px" }}>
+                            <div style={{ "display": "flex", "justify-content": "space-between", "padding-right": "10px"}}>
                                 <div>
                                     <label>Kategori</label>
                                     <br />
@@ -184,23 +184,14 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                         value={props.params.tipepengajuan}
                                         readonly style={{ "width": "13rem" }} />
                                 </div>
-
-                                {/* <div>
-                                    <label>Jenis</label>
-                                    <br />
-                                    <input type="text"
-                                        value={props.params.category}
-                                        readonly style={{ "width": "13rem" }} />
-                                </div> */}
-
-                            </div>
+                    
 
                             <p>
                                 <label>Jumlah</label>
                                 <br />
                                 <input type="number"
                                     value={props.params.total}
-                                    readonly />
+                                    readonly style={{ "width": "13rem" }} />
                             </p>
 
                             {/* <p>
@@ -209,6 +200,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
                                 <input type="text" readonly />
                             </p> */}
 
+                        </div>
                         </div>
 
                         <br />
