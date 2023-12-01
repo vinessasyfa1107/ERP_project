@@ -9,6 +9,8 @@ import DashboardDU from '../dashboard-du';
 import ChartPlanning from '../../../../containers/dashboard/plannings/chart-planning';
 import TablePlanning from '../../../../containers/dashboard/plannings/table/table-planning';
 import TableDetailPlan from '../../../../direktur-utama/containers/dashboard/planning/table/table-detail-plan-du';
+import TablePengajuanBaruDU from './table/table-pengajuan-baru-du';
+import TableDetailPlanDU from '../../../../direktur-utama/containers/dashboard/planning/table/table-detail-plan-du';
 // import FormPlanning from './form/form-planning';
 // import { A } from '@solidjs/router';
 // import Header from '../../header/header';
@@ -72,7 +74,8 @@ const PlanningDU: Component = () => {
 
                 <div>
                     <h1>List Rencana Pengajuan</h1>
-                    <TableDetailPlan />
+                    <TableDetailPlanDU />
+                    <TablePengajuanBaruDU />
                 </div>
 
             </div>
