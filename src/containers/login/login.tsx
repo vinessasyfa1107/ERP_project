@@ -113,6 +113,7 @@ const Login: Component = () => {
       const data = await fetchLogin();
       // Cek apakah data login berhasil atau tidak
       if (data) {
+        console.log("apa", data)
         // Login berhasil, Anda dapat menyimpan data pengguna di sessionStorage atau localStorage
         sessionStorage.setItem('userData', JSON.stringify(data));
         // Redirect ke halaman utama atau halaman lain yang sesuai
@@ -172,6 +173,7 @@ const Login: Component = () => {
             </div>
             <div>
               <button onclick={() => ActionLogin1()}>Log in</button>
+              {/* <button onclick={() => ActionLogin()}>Log in</button> */}
             </div>
           </div>
         </div>
