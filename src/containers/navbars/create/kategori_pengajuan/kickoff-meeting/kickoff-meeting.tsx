@@ -303,7 +303,7 @@ const KickOffMeeting: Component = () => {
         </div>
 
         </div>
-        {popUp() && <PengajuanEvent OnClose={ClosePopUp} totalE1={calculateTotal()} />}
+        {popUp() && <PengajuanEvent OnClose={ClosePopUp} />}
     </div>
   );
 };

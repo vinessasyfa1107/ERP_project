@@ -49,6 +49,19 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
     };
     console.log("ini apa", props.params.namapengajuan)
 
+    const formatRupiah = (value) => {
+        const numericValue = Number(value);
+    
+        if (isNaN(numericValue)) {
+          return value;
+        }
+    
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+        }).format(numericValue);
+      };
+    
     // const categoryValueMap = {
     //     "Marketing": 1,
     //     "Project": 2,
@@ -176,7 +189,7 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                                 </textarea>
                             </p>
 
-                            <div style={{ "display": "flex", "justify-content": "space-between", "padding-right": "10px" }}>
+                            <div style={{ "display": "flex", "justify-content": "space-between", "padding-right": "10px"}}>
                                 <div>
                                     <label>Kategori</label>
                                     <br />
@@ -184,24 +197,18 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                                         value={props.params.tipepengajuan}
                                         readonly style={{ "width": "13rem" }} />
                                 </div>
+                    
 
-                                {/* <div>
-                                    <label>Jenis</label>
+                                <p>
+                                    <label>Jumlah</label>
                                     <br />
-                                    <input type="text"
-                                        value={props.params.category}
-                                        readonly style={{ "width": "13rem" }} />
-                                </div> */}
-
-                            </div>
-
-                            <p>
-                                <label>Jumlah</label>
-                                <br />
-                                <input type="number"
-                                    value={props.params.total}
-                                    readonly />
-                            </p>
+                                    <input
+                                        type="text"
+                                        value={formatRupiah(props.params.total)}
+                                        readOnly
+                                        style={{ "width": "13rem" }}
+                                    />
+                                </p>
 
                             {/* <p>
                                 <label>Tag*</label>
@@ -210,7 +217,9 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                             </p> */}
 
                         </div>
+                        </div>
 
+                        <br />
                         <br />
                         <div class="btn-add-acc">
                             <button value='InProgress' style={{
