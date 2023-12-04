@@ -17,8 +17,14 @@ const TableListAkun: Component = () => {
 
     const columnDefs = [
         { field: 'account_name', headerName: 'Nama'},
-        { field: 'email'},
-        { field: 'role'},
+        { field: 'access', headerName: 'Akses'},
+        {
+          headerName: 'COA',
+          valueGetter: (params) => {
+            // Combine coa_kd and coa_name into a single string
+            return `${params.data.coa_kd}  ${params.data.coa_name}`;
+          }
+        },
       ];
     
       const rowData = [

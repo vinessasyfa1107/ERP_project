@@ -6,7 +6,9 @@ export type resultpengeluaran = {
     "access": string,
     "role": string,
     "username": string,
-    "password": string
+    "password": string,
+    "coa_name": string,
+    "coa_kd": string
 }
 
 
@@ -23,7 +25,7 @@ export async function dataaccountmaster(query: string) {
     // console.log("response ", results)
     const documents = results as resultpengeluaran[];
     console.log(documents);
-    return documents.slice(0, documents.length).map(({ id, account_name, email, access, role, username, password }) => ({
-        id, account_name, email, access, role, username, password
+    return documents.slice(0, documents.length).map(({ id, account_name, email, access, role, username, password, coa_name, coa_kd }) => ({
+        id, account_name, email, access, role, username, password, coa_name, coa_kd
       }));
   }

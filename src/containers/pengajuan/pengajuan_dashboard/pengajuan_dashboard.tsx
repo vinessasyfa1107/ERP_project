@@ -15,6 +15,7 @@ import TablePengajuanBaru from '../../dashboard/plannings/table/table-pengajuan-
 // import FormPlanning from '../../dashboard/plannings/form/form-planning';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 import TableSortPlan from '../../dashboard/plannings/table/table-sort-planning';
+import Table_pengajuan_ModulPengajuan from '../table_pengajuan_ModulPengajuan';
 
 const Pengajuan_dashboard: Component = () => {
     const [, {changeSubTitleNavbar} ] = useSubNavbarStore();
@@ -30,7 +31,7 @@ const Pengajuan_dashboard: Component = () => {
                 <div class="pengajuanDashboard_container2">
                     <div class="rencanaPengajuan-container">
                         <h1>List Rencana Pengajuan</h1>
-                        <TablePengajuanBaru />
+                        <Table_pengajuan_ModulPengajuan />
                         {/* <TableDetailPlan /> */}
                         {/* <FormPlanning /> */}
                     </div>
