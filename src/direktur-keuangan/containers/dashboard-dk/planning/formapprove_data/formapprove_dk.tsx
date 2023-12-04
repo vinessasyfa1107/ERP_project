@@ -49,6 +49,20 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
     };
     console.log("ini apa", props.params.namapengajuan)
 
+    const formatRupiah = (value) => {
+        const numericValue = Number(value);
+    
+        if (isNaN(numericValue)) {
+          return value;
+        }
+    
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+        }).format(numericValue);
+      };
+    
+
     // const categoryValueMap = {
     //     "Marketing": 1,
     //     "Project": 2,
@@ -144,7 +158,7 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                 <div class="modal-form">
                     <form method="dialog">
                         <div class="headakun">
-                            <h2>Pengajuan Direktur Utama</h2>
+                            <h2>Pengajuan Direktur Keuangan</h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
@@ -186,13 +200,16 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                                 </div>
                     
 
-                            <p>
-                                <label>Jumlah</label>
-                                <br />
-                                <input type="number"
-                                    value={props.params.total}
-                                    readonly style={{ "width": "13rem" }} />
-                            </p>
+                                <p>
+                                    <label>Jumlah</label>
+                                    <br />
+                                    <input
+                                        type="text"
+                                        value={formatRupiah(props.params.total)}
+                                        readOnly
+                                        style={{ "width": "13rem" }}
+                                    />
+                                </p>
 
                             {/* <p>
                                 <label>Tag*</label>
