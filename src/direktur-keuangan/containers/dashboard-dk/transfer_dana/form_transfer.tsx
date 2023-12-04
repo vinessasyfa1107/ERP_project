@@ -154,6 +154,19 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
         }
     };
 
+    const formatRupiah = (value) => {
+        const numericValue = Number(value);
+    
+        if (isNaN(numericValue)) {
+          return value;
+        }
+    
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+        }).format(numericValue);
+      };
+
 
     return (
         <div class="overlay">
@@ -177,7 +190,7 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
                                 <div>
                                     <label>Biaya*</label>
                                     <br />
-                                    <input value={props.data.amount}
+                                    <input value={formatRupiah(props.data.amount)}
                                         readonly>
                                     </input>
                                 </div>
