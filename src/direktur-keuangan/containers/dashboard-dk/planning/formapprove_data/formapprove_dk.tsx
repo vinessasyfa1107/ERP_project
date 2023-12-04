@@ -76,6 +76,15 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
             status: status()
         }
 
+        const updatePengajuan = new FormData();
+        updatePengajuan.append('id', props.params.id.toString());
+        updatePengajuan.append('entry_ts', timestamp().toString());
+        updatePengajuan.append('namapengajuan', props.params.namapengajuan.toString());
+        updatePengajuan.append('tipepengajuan', props.params.tipepengajuan.toString());
+        updatePengajuan.append('total', props.params.total.toString());
+        updatePengajuan.append('status', status().toString());
+        
+
         console.log("test", updateStatusToSend);
 
         const dataToSend = {
@@ -90,19 +99,19 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
         try {
             const response = await fetch(`/api/pengajuan/${(props.params.id)}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updateStatusToSend),
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                body: updatePengajuan,
             });
 
-            const response2 = await fetch(`/api/approval/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dataToSend),
-            });
+            // const response2 = await fetch(`/api/approval/`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(dataToSend),
+            // });
 
             if (response.ok) {
                 // params berhasil diubah, tampilkan alert
