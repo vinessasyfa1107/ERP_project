@@ -29,8 +29,9 @@ const Tabel_transfer_dana = () => {
 
     onMount(async () => {
         const data_planning = await DataMonthlyPengajuan("data planning dashboard dan modul pengajuan");
-        console.log("dataplanning", data_planning);
-        setRowData(data_planning);
+        const approvedRows = data_planning.filter(row => row.status === 'Approved');
+        console.log("dataplanning", approvedRows);
+        setRowData(approvedRows);
     })
 
     const formatRupiah = (value) => {
