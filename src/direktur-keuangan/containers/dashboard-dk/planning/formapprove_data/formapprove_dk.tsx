@@ -18,7 +18,7 @@ interface EditPopUpProps {
     // updateStatusButton:a (data: object, status: string) => void;
 }
 
-const Formapprove_du: Component<EditPopUpProps> = (props) => {
+const Formapprove_dk: Component<EditPopUpProps> = (props) => {
 
     const [status, setStatus] = createSignal('');
     const [timestamp, setTimestamp] = createSignal('');
@@ -102,11 +102,12 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
         updatePengajuan.append('tipepengajuan', props.params.tipepengajuan.toString());
         updatePengajuan.append('total', props.params.total.toString());
         updatePengajuan.append('status', status().toString());
+        updatePengajuan.append('alasan', alasan());
         
         console.log("test", updateStatusToSend);
 
         try {
-            const response = await fetch(`/api/planning/${(props.params.id)}`, {
+            const response = await fetch(`/api/pengajuan/${(props.params.id)}`, {
                 method: 'PUT',
                 // headers: {
                 //     'Content-Type': 'application/json',
@@ -235,4 +236,4 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
     );
 };
 
-export default Formapprove_du;
+export default Formapprove_dk;
