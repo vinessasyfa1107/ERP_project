@@ -49,6 +49,20 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
     };
     console.log("ini apa", props.params.namapengajuan)
 
+    const formatRupiah = (value) => {
+        const numericValue = Number(value);
+    
+        if (isNaN(numericValue)) {
+          return value;
+        }
+    
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+        }).format(numericValue);
+      };
+    
+
     // const categoryValueMap = {
     //     "Marketing": 1,
     //     "Project": 2,
@@ -80,43 +94,34 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
             total: props.params.total,
             // status: status()
         }
+
+        const updatePengajuan = new FormData();
+        updatePengajuan.append('id', props.params.id.toString());
+        updatePengajuan.append('entry_ts', timestamp().toString());
+        updatePengajuan.append('namapengajuan', props.params.namapengajuan.toString());
+        updatePengajuan.append('tipepengajuan', props.params.tipepengajuan.toString());
+        updatePengajuan.append('total', props.params.total.toString());
+        updatePengajuan.append('status', status().toString());
+        updatePengajuan.append('alasan', alasan());
+        
         console.log("test", updateStatusToSend);
 
         try {
-            const response = await fetch(`/api/planning/${(props.params.id)}`, {
+            const response = await fetch(`/api/pengajuan/${(props.params.id)}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    // id: props.params.id,
-                    entry_ts: timestamp(),
-                    // coa_kd: props.params.coa_kd,
-                    alasan: props.params.alasan,
-                    planningtype: props.params.planningtype,
-                    tipepengajuan: props.params.tipepengajuan,
-                    // category: categoryValue,
-                    total: props.params.total,
-                    // status: status()
-                }),
-
-                // const response2 = await fetch(`/api/approval/${(props.params.id)}`, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         // id: props.params.id,
-                //         entry_ts: timestamp(),
-                //         // coa_kd: props.params.coa_kd,
-                //         alasan: props.params.alasan,
-                //         planningtype: props.params.planningtype,
-                //         tipepengajuan: props.params.tipepengajuan,
-                //         // category: categoryValue,
-                //         total: props.params.total,
-                //         // status: status()
-                //     }),
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                body: updatePengajuan,
             });
+
+            // const response2 = await fetch(`/api/approval/`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(dataToSend),
+            // });
 
             if (response.ok) {
                 // params berhasil diubah, tampilkan alert
@@ -186,13 +191,16 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                                 </div>
                     
 
-                            <p>
-                                <label>Jumlah</label>
-                                <br />
-                                <input type="number"
-                                    value={props.params.total}
-                                    readonly style={{ "width": "13rem" }} />
-                            </p>
+                                <p>
+                                    <label>Jumlah</label>
+                                    <br />
+                                    <input
+                                        type="text"
+                                        value={formatRupiah(props.params.total)}
+                                        readOnly
+                                        style={{ "width": "13rem" }}
+                                    />
+                                </p>
 
                             {/* <p>
                                 <label>Tag*</label>

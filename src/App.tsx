@@ -69,9 +69,9 @@ export default App;
 // import Navbar from './containers/navbars/navbar';
 
 // const App: Component = () => {
-//   const [{ sessionStore }] = useStore();
-//   const navigate = useNavigate();
-//   const [needLogin, setNeedLogin] = createSignal(true);
+  // const [{ sessionStore }] = useStore();
+  // const navigate = useNavigate();
+  // const [needLogin, setNeedLogin] = createSignal(true);
 
   // onMount(() => {
   //   console.log('session ', sessionStore.sessionData);
@@ -79,15 +79,16 @@ export default App;
   //     setNeedLogin(!needLogin());
   //   }
   //   console.log('need login ' + needLogin());
+
   //   if (needLogin()) {
   //     navigate('/dashboard/admin', { replace: true });
   //   }
   // });
-//   return (
-//     <>
-//       {!needLogin() ? <Navbar><RouteData /></Navbar> : <Login />}
-//     </>
-//   );
+  // return (
+  //   <>
+  //     {!needLogin() ? <Navbar><RouteData /></Navbar> : <Login />}
+  //   </>
+  // );
 // };
 
 // export default App;
