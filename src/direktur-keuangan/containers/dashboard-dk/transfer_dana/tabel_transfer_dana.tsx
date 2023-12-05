@@ -6,6 +6,7 @@ import { Icon } from '@iconify-icon/solid';
 import './tabel_transfer_dana.css';
 import Form_transfer from './form_transfer';
 import { dataplanning } from '../../../../api/planning/dataplanning';
+import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
   
@@ -27,18 +28,30 @@ const Tabel_transfer_dana = () => {
 
 
     onMount(async () => {
-        const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
+        const data_planning = await DataMonthlyPengajuan("data planning dashboard dan modul pengajuan");
         console.log("dataplanning", data_planning);
         setRowData(data_planning);
     })
 
+    const formatRupiah = (value) => {
+        const numericValue = Number(value);
+
+        if (isNaN(numericValue)) {
+            return value;
+        }
+
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+        }).format(numericValue);
+    };
+
     const columnDefs = [
         { field: 'id', headerName: "ID" },
         { field: 'entry_ts', headerName: "Tanggal" },
-        { field: 'description', headerName: "Keterangan" },
-        { field: 'planningtype', headerName: "Kategori" },
-        { field: 'category', headerName: "Jenis", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
-        { field: 'amount', headerName: "Jumlah" },
+        { field: 'namapengajuan', headerName: "Keterangan" },
+        { field: 'tipepengajuan', headerName: "Kategori", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }  },
+        { field: 'total', headerName: "Jumlah", valueFormatter: (params) => formatRupiah(params.value) },
         { field: 'status', headerName: "Status" },
         {
             field: "transfer", headerName: "", cellRenderer: (params: any) => {

@@ -9,13 +9,11 @@ interface EditPopUpProps {
     data: {
         id: number,
         entry_ts: string,
-        coa_kd: string,
-        description: string,
-        planningtype: string,
-        category: number,
-        amount: number,
-        status: string,
-        confirm: boolean
+        namapengajuan: string,
+        tipepengajuan: string,
+        category: string,
+        total: number,
+        status: string
     }
 }
 const Form_transfer: Component<EditPopUpProps> = (props) => {
@@ -89,45 +87,39 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
         console.log("tanggal dan waktu: ", timestamp);
         setTimestamp(timestamp);
         updateStatus();
-
     };
 
-
-
-    const categoryValueMap = {
-        "Marketing": 1,
-        "Projek": 2,
-        "Rutinitas": 3,
-        "Event": 4,
-        "DLL": 5
-    };
+    // const categoryValueMap = {
+    //     "Marketing": 1,
+    //     "Projek": 2,
+    //     "Rutinitas": 3,
+    //     "Event": 4,
+    //     "DLL": 5
+    // };
 
     // Fungsi bantuan untuk mendapatkan nilai dari category string
-    function getCategoryValue(category) {
-        return categoryValueMap[category] || 0; // Nilai default jika tidak ada pemetaan
-    }
+    // function getCategoryValue(category) {
+    //     return categoryValueMap[category] || 0; // Nilai default jika tidak ada pemetaan
+    // }
 
     // Menggunakan fungsi getCategoryValue untuk mendapatkan nilai
-    const category = props.data.category;
-    const categoryValue = getCategoryValue(category);
+    // const category = props.data.category;
+    // const categoryValue = getCategoryValue(category);
 
 
     const updateStatus = async () => {
         const updateStatusToSend = {
             id: props.data.id,
             entry_ts: timestamp(),
-            coa_kd: props.data.coa_kd,
-            description: props.data.description,
-            planningtype: props.data.planningtype,
-            category: categoryValue,
-            amount: props.data.amount,
+            namapengajuan: props.data.namapengajuan,
+            tipepengajuan: props.data.tipepengajuan,
+            total: props.data.total,
             status: props.data.status,
-            confirm: props.data.confirm
         }
         console.log("test", updateStatusToSend);
 
         try {
-            const response = await fetch(`/api/planning/${(props.data.id)}`, {
+            const response = await fetch(`/api/pengajuan/${(props.data.id)}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -156,16 +148,16 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
 
     const formatRupiah = (value) => {
         const numericValue = Number(value);
-    
+
         if (isNaN(numericValue)) {
-          return value;
+            return value;
         }
-    
+
         return new Intl.NumberFormat('id-ID', {
-          style: 'currency',
-          currency: 'IDR',
+            style: 'currency',
+            currency: 'IDR',
         }).format(numericValue);
-      };
+    };
 
 
     return (
@@ -183,14 +175,14 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
                             <div style={{ "display": "flex", "justify-content": "space-between" }}>
                                 <div class="date" >
                                     <label>Tanggal*</label>
-                                    <input type="date" value={props.data.id}
+                                    <input type="string" value={props.data.entry_ts}
                                         readonly />
                                 </div>
 
                                 <div>
                                     <label>Biaya*</label>
                                     <br />
-                                    <input value={formatRupiah(props.data.amount)}
+                                    <input value={formatRupiah(props.data.total)}
                                         readonly>
                                     </input>
                                 </div>
@@ -200,7 +192,7 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
                                 <div>
                                     <label>Keterangan*</label>
                                     <br />
-                                    <textarea class="textarea textarea-bordered" value={props.data.description}
+                                    <textarea class="textarea textarea-bordered" value={props.data.namapengajuan}
                                         readonly
                                         style={{
                                             "background": '#F8F8F9',
@@ -215,16 +207,7 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
                                 <div>
                                     <label>Kategori*</label>
                                     <br />
-                                    <input value={props.data.planningtype}
-                                        readonly>
-                                    </input>
-                                </div>
-
-
-                                <div>
-                                    <label>Jenis*</label>
-                                    <br />
-                                    <input value={props.data.category}
+                                    <input value={props.data.tipepengajuan}
                                         readonly>
                                     </input>
                                 </div>
