@@ -9,6 +9,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { RowData } from '../operasional-tamanhas/operasional-tamanhas';
 import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/nama-pengajuan';
+import { useNavigate } from '@solidjs/router';
 
 interface ConfirmAllPlanProps {
     OnClose: () => void;
@@ -29,6 +30,7 @@ interface AggregatedRowData {
       tipepengajuan: string;
       status: string;
       namapengajuan?: string;
+      total: number
     };
     details: {
       pengajuan_id: number;
@@ -45,7 +47,6 @@ interface AggregatedRowData {
   
 
 const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
-
     // const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
     //     (() => {
     //       const savedData = localStorage.getItem('tableData');
@@ -68,6 +69,8 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
   //             : ([] as RowData[]);
   //     })()
   // );
+
+  const navigate = useNavigate();
 
   const [originalRowData, setOriginalRowData] = createSignal<RowData[]>(
     (() => {
@@ -93,7 +96,7 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
     const uniquePengajuan: Record<string, NewRowData> = {};
   
     originalRowData.forEach((rowData) => {
-      const key = `${rowData.id}_${rowData.coa_kd}_${rowData.entry_ts}_${rowData.tipepengajuan}`;
+      const key = `${rowData.entry_ts}_${rowData.tipepengajuan}`;
   
       if (!uniquePengajuan[key]) {
         uniquePengajuan[key] = {
@@ -103,6 +106,7 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
             tipepengajuan: rowData.tipepengajuan,
             status: rowData.status,
             namapengajuan: rowData.namapengajuan,
+            total: 0,
           },
           details: [],
         };
@@ -116,9 +120,12 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
         quantity: rowData.quantity,
         uom: rowData.uom,
         price: rowData.price,
-        total: rowData.total,
+        total: 0,
         namapengajuan: rowData.namapengajuan,
       });
+  
+      // Update the total in the pengajuan object
+      // uniquePengajuan[key].pengajuan.total += rowData.total;
     });
   
     const result = Object.values(uniquePengajuan);
@@ -126,10 +133,11 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
   }
   
   
+  
   // Contoh penggunaan dalam konversi data
   const newStructuredData = convertRowData(originalRowData());
   
-  console.log("struktur", newStructuredData)
+  console.log("struktur1", newStructuredData)
 
   
 
@@ -216,6 +224,7 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
           alert('Data berhasil dikirim ke backend');
           console.log('Data berhasil dikirim ke backend');
           props.OnClose();
+          navigate('/pengajuan/pengajuan_dashboard')
           localStorage.removeItem('tableData');
           localStorage.removeItem('tableKetMonth');
           localStorage.removeItem('namaPengajuanMonthly');
