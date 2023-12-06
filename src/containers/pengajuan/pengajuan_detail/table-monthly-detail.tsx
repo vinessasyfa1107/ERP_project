@@ -9,6 +9,7 @@ import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pe
 // import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
+import EditMonthlyPlan from './popup/edit-detail-monthly';
 
 
 const TablePengajuanDetail: Component = () => {
@@ -59,10 +60,7 @@ const TablePengajuanDetail: Component = () => {
     }
   };
 
-  //   const ClosePopUp = () => {
-  //     setPopUpOpen(false);
-  //     fetchData();
-  //   };
+
 
 
   // const onCellClicked = (data) => {
@@ -108,6 +106,17 @@ const TablePengajuanDetail: Component = () => {
     }).format(numericValue);
   };
 
+  const [dataMonthly, setDataMonthly] = createSignal(null)
+  const [editPopUp, setEditPopUp] = createSignal(false);
+
+  function showEditPopup(data){
+    setDataMonthly(data)
+    setEditPopUp(true)
+  }
+
+  const ClosePopUp = () => {
+    setEditPopUp(false);
+  };
 
   const gridOptions = {
     columnDefs: [
@@ -125,7 +134,14 @@ const TablePengajuanDetail: Component = () => {
       { field: 'uom' },
       { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
       { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
-      // { field: 'status', headerName: 'Status', editable: false },
+      { field: 'aksi', cellRenderer: (params) => {
+        return (
+          <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
+            <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+            {/* <button onClick={() => showEditPopup2(params.data.id)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button> */}
+          </div>
+        );
+      } },
       // { field: 'price' },
 
       // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
@@ -189,7 +205,7 @@ const TablePengajuanDetail: Component = () => {
           rowMultiSelectWithClick={true}
         />
       </div>
-      {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+      {editPopUp() && <EditMonthlyPlan data={dataMonthly()}  OnClose={ClosePopUp} />}
     </div>
   );
 };

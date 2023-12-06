@@ -29,6 +29,7 @@ interface NewRowData {
     tipepengajuan: string;
     status: string;
     namapengajuan?: string;
+    total: 0
   };
   details: {
     pengajuan_id: number;
@@ -82,6 +83,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
             tipepengajuan: rowData.tipepengajuan,
             status: rowData.status,
             namapengajuan: rowData.namapengajuan,
+            total: 0
           },
           details: [],
         };
