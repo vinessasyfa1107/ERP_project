@@ -33,17 +33,64 @@ const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
 
     console.log("tes", id())
 
+    const SendDataEdit = async () => {
+        const dataToSend = {
+            pengajuan_id: id(),
+            namapengajuan: namaPengajuan(),
+            keterangan: keterangan(),
+            kebutuhan: kebutuhan(),
+            coa_kd: coaKd(),
+            quantity: quantity(),
+            uom: uom(),
+            price: price(),
+            total: price() * quantity(),
+        }
+
+        console.log("edited", dataToSend)
+
+        try {
+            const response = await fetch (`/api/monthlypengajuan/detail/${id()}`, {
+                method:'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend)
+            });
+
+            if (response.ok) {
+                alert('Data berhasil diubah!')
+            } else {
+                const errorMessage = await response.text();
+                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                console.error('Gagal mengubah data:', errorMessage);            }
+        } catch (error) {
+            console.log('Gagal: ', error)
+        }
+    };
+
     return (
         <div class="overlay">
-            <div class="edit-monthly-plan">
+            <div class="edit-event-plan">
                 <div class="form-edit">
                     <form method="dialog">
                         <div class="head-acc">
-                            <h2>Edit Data Pengajuan</h2>
+                            <h2>Edit Data Pengajuan {namaPengajuan()}</h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
                         <div class="form-pengajuan">
+                            <p>
+                                <label>Keterangan*</label>
+                                <br />
+                                <input
+                                    type="text"
+                                    name="Keterangan"
+                                    value={keterangan()}
+                                    // onInput={(e) => setKeterangan(e.currentTarget.value)}
+                                    readonly
+                                />
+                            </p>
+
                             <p>
                                 <label>Kebutuhan*</label>
                                 <br />
@@ -66,27 +113,30 @@ const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
                                 />
                             </p>
 
-                            <p>
+                        <div style={{display:"flex", "flex-direction":"row","justify-content":"space-between", width:"29rem"}}>
+                            <div>
                                 <label>Qty*</label>
                                 <br />
-                                <input
+                                <input style={{width:"33vh"}}
                                     type="number"
                                     name="quantity"
                                     value={quantity()}
                                     onInput={(e) => setQuantity(parseFloat(e.currentTarget.value))}
                                 />
-                            </p>
+                            </div>
 
-                            <p>
-                                <label>Unit*</label>
+                            <div>
+                                <label>UoM*</label>
                                 <br />
-                                <input
+                                <input style={{width:"33vh"}}
                                     type="text"
                                     name="uom"
                                     value={uom()}
                                     onInput={(e) => setUom(e.currentTarget.value)}
                                 />
-                            </p>
+                            </div>
+                        </div>
+
 
                             <p>
                                 <label>Price*</label>
@@ -102,7 +152,7 @@ const EditMonthlyPlan: Component<EditMonthlyPlanProps> = (props) => {
 
                         <br />
                         <div class="btn-save-edit">
-                            <button ><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
+                            <button onClick={SendDataEdit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
                         </div>
                     </form>
                 </div>

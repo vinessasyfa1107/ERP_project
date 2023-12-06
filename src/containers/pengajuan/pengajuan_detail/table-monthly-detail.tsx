@@ -9,7 +9,7 @@ import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pe
 // import { dataIdPlan } from '../../dashboard/plannings/table/table-pengajuan-baru';
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
-import EditMonthlyPlan from './popup/edit-detail-monthly';
+import EditMonthlyPlan from './popup/edit-monthly-plan';
 
 
 const TablePengajuanDetail: Component = () => {
@@ -141,10 +141,8 @@ const TablePengajuanDetail: Component = () => {
             {/* <button onClick={() => showEditPopup2(params.data.id)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button> */}
           </div>
         );
-      } },
-      // { field: 'price' },
-
-      // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
+      } 
+      },
     ],
     pagination: true,
     paginationPageSize: 4,
@@ -159,37 +157,10 @@ const TablePengajuanDetail: Component = () => {
     },
   };
 
-  // const rowData = [
-  //   { id: '11C7D', tanggal: '10-2-22', COA: '1-0000', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
-  //   { id: '11C7C', tanggal: '10-2-22', COA: '1-1000', kategori: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Event' , status: 'Approved', confirm: true },
-  //   { id: '11C7B', tanggal: '10-2-22', COA: '2-1001', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly', status: 'Rejected' },
-  //   { id: '11C7A', tanggal: '9-2-22', COA: '2-2000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-  //   { id: '11C7D', tanggal: '10-2-22', COA: '3-4001', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-  //   { id: '11C7C', tanggal: '10-2-22', COA: '3-5000', kategori: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Weekly' },
-  //   { id: '11C7B', tanggal: '10-2-22', COA: '4-1000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly' },
-  //   { id: '11C7A', tanggal: '9-2-22', COA: '4-2000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' }
-  // ];
-
-
   const defaultColDef = {
     // flex: 1,
     sortable: true,
   }
-
-  //   const gridOptions = {
-  //     // domLayout: 'autoHeight' as DomLayoutType,
-  //     pagination: true,
-  //     paginationPageSize: 4,
-  //     rowHeight: 40,
-  //     onSelectionChanged: handleSelectionChanged,
-  //     onCellEditingStopped: (event) => {
-  //       // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-  //       if (event.column.getColId() === 'amount' && event.data.confirm) {
-  //         // Reset nilai ke nilai asli
-  //         event.api.applyTransaction({ update: [{ ...event.data }] });
-  //       }
-  //     },
-  //   }
 
   return (
     <div style={{ "justify-content": "center", "margin-top":"30px" }}>
