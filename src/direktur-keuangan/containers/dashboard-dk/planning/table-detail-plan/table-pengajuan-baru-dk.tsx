@@ -61,7 +61,7 @@ const TablePengajuanBaruDK: Component = () => {
 
 
   const onCellClicked = (params) => {
-    if (params.column.getColId() === 'status'){
+    if (params.column.getColId() === 'status' && params.data.status !== 'Rejected'){
       setPopupData(params.data);
       setPopUpOpen(true);
     } else {
