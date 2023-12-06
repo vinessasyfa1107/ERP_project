@@ -86,6 +86,14 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
 
         console.log("tanggal dan waktu: ", timestamp);
         setTimestamp(timestamp);
+
+        const confirmSubmission = window.confirm("Are you sure you want to submit the form?");
+        if (!confirmSubmission) {
+            // If user cancels the submission, do nothing
+            return;
+        }
+
+        // Proceed with form submission
         updateStatus();
     };
 
@@ -106,25 +114,37 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
     // const category = props.data.category;
     // const categoryValue = getCategoryValue(category);
 
+    const [formData, setFormData] = createSignal({
+        id: 0,
+        entry_ts: '',
+        namapengajuan: '',
+        tipepengajuan: '',
+        category: '',
+        total: 0,
+        status: ''
+    });
 
     const updateStatus = async () => {
-        const updateStatusToSend = {
-            id: props.data.id,
-            entry_ts: timestamp(),
-            namapengajuan: props.data.namapengajuan,
-            tipepengajuan: props.data.tipepengajuan,
-            total: props.data.total,
-            status: props.data.status,
+        const formData = new FormData();
+
+        // Append file to FormData if a file is selected
+        if (selectedFile()) {
+            formData.append('evidence', selectedFile());
         }
-        console.log("test", updateStatusToSend);
+
+        // Append other form data
+        // const formData = new FormData();
+        // formData.append('id', props.data.id);
+        // formData.append('entry_ts', timestamp());
+        // formData.append('namapengajuan', props.data.namapengajuan);
+        // formData.append('tipepengajuan', props.data.tipepengajuan);
+        // formData.append('total', props.data.total);
+        // formData.append('status', status());
 
         try {
-            const response = await fetch(`/api/pengajuan/${(props.data.id)}`, {
+            const response = await fetch(`/api/pengajuan/${props.data.id}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updateStatusToSend),
+                body: formData,
             });
 
             if (response.ok) {
