@@ -6,6 +6,7 @@ export type resultdata = {
     "total": number,
     "coa_kd": string,
     "status": string,
+    "evidence": string
   }
   
   
@@ -22,7 +23,7 @@ export type resultdata = {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "test");
-    return documents.slice(0, documents.length).map(({ id, entry_ts, namapengajuan, tipepengajuan, total, coa_kd, status}) => ({
-      id, entry_ts, namapengajuan, tipepengajuan, total, coa_kd, status
+    return documents.slice(0, documents.length).map(({ id, entry_ts, namapengajuan, tipepengajuan, total, coa_kd, status, evidence}) => ({
+      id, entry_ts, namapengajuan, tipepengajuan, total, coa_kd, status, evidence
     }));
   }

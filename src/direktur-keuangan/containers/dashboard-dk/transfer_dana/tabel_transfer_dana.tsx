@@ -21,6 +21,7 @@ function CloseEditPopUp () {
   setIsEditPopupOpen (false);
 }
 
+
 const Tabel_transfer_dana = () => {
     const [RowData, setRowData] = createSignal([{}]);
     const [selectedRow, setSelectedRow] = createSignal(null);
@@ -50,7 +51,7 @@ const Tabel_transfer_dana = () => {
     const columnDefs = [
         { field: 'id', headerName: "ID" },
         { field: 'entry_ts', headerName: "Tanggal" },
-        { field: 'namapengajuan', headerName: "Keterangan" },
+        { field: 'namapengajuan', headerName: "Nama Pengajuan" },
         { field: 'tipepengajuan', headerName: "Kategori", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }  },
         { field: 'total', headerName: "Jumlah", valueFormatter: (params) => formatRupiah(params.value) },
         { field: 'status', headerName: "Status" },

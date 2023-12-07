@@ -13,7 +13,8 @@ interface EditPopUpProps {
         tipepengajuan: string,
         category: string,
         total: number,
-        status: string
+        status: string,
+        evidence: string
     }
 }
 const Form_transfer: Component<EditPopUpProps> = (props) => {
@@ -23,17 +24,26 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
     //========== UNTUK FILE FOTO ==========
     const [selectedFile, setSelectedFile] = createSignal<File | null>(null);
 
+    // function untuk mengunggah gambar
     const handleFileChange = (e: Event) => {
+
+        if (props.data.evidence) {
+            // Menampilkan peringatan jika evidence sudah ada
+            alert("Anda tidak bisa mengupload gambar karena form ini sudah memiliki evidence!");
+            return;
+        }
+
         const target = e.target as HTMLInputElement;
         const file = target.files && target.files[0];
 
         if (file) {
             setSelectedFile(() => file);
+            // Create a temporary URL for the selected image file
+            const url = URL.createObjectURL(file);
         } else {
             setSelectedFile(null);
         }
     };
-
 
     const [message, setMessage] = createSignal('');
 
@@ -65,8 +75,9 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
         }
     };
 
-    const [timestamp, setTimestamp] = createSignal('');
+    const [timestamps, setTimestamp] = createSignal('');
     const [status, setStatus] = createSignal('');
+
 
 
     const handleInputChange = async (e) => {
@@ -87,14 +98,51 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
         console.log("tanggal dan waktu: ", timestamp);
         setTimestamp(timestamp);
 
-        const confirmSubmission = window.confirm("Are you sure you want to submit the form?");
-        if (!confirmSubmission) {
-            // If user cancels the submission, do nothing
-            return;
+        const statusValue = "Approved";
+        const alasan = 'approved, tidak ada alasan';
+
+        const confirmSubmission = window.confirm("Apakah Anda yakin ingin mengirim bukti transfer dana sebesar ");
+
+        const formTransfer = new FormData();
+
+        // Append other form data
+        formTransfer.append('id', props.data.id.toString());
+        formTransfer.append('entry_ts', timestamps());
+        formTransfer.append('namapengajuan', props.data.namapengajuan.toString());
+        formTransfer.append('tipepengajuan', props.data.tipepengajuan.toString());
+        formTransfer.append('total', props.data.total.toString());
+        formTransfer.append('status', statusValue);
+        formTransfer.append('alasan', `${alasan}`);
+
+        // Append file to FormData if a file is selected
+        if (selectedFile()) {
+            formTransfer.append('evidence', selectedFile());
         }
 
-        // Proceed with form submission
-        updateStatus();
+        try {
+            const response = await fetch(`/api/pengajuan/${props.data.id}`, {
+                method: 'PUT',
+                body: formTransfer,
+            });
+
+            if (response.ok) {
+                !confirmSubmission;
+                // Data berhasil diubah, tampilkan alert
+                alert('Data berhasil diubah');
+                props.OnClose();
+                window.location.reload();
+            } else {
+                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
+                const errorMessage = await response.text();
+                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                console.error('Gagal mengubah data:', errorMessage);
+            }
+        } catch (error) {
+            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
+            alert('Terjadi kesalahan. Silakan coba lagi.');
+            console.error('Terjadi kesalahan:', error);
+        }
+
     };
 
     // const categoryValueMap = {
@@ -114,57 +162,6 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
     // const category = props.data.category;
     // const categoryValue = getCategoryValue(category);
 
-    const [formData, setFormData] = createSignal({
-        id: 0,
-        entry_ts: '',
-        namapengajuan: '',
-        tipepengajuan: '',
-        category: '',
-        total: 0,
-        status: ''
-    });
-
-    const updateStatus = async () => {
-        const formData = new FormData();
-
-        // Append file to FormData if a file is selected
-        if (selectedFile()) {
-            formData.append('evidence', selectedFile());
-        }
-
-        // Append other form data
-        // const formData = new FormData();
-        // formData.append('id', props.data.id);
-        // formData.append('entry_ts', timestamp());
-        // formData.append('namapengajuan', props.data.namapengajuan);
-        // formData.append('tipepengajuan', props.data.tipepengajuan);
-        // formData.append('total', props.data.total);
-        // formData.append('status', status());
-
-        try {
-            const response = await fetch(`/api/pengajuan/${props.data.id}`, {
-                method: 'PUT',
-                body: formData,
-            });
-
-            if (response.ok) {
-                setFormSubmitted(true);
-                // Data berhasil diubah, tampilkan alert
-                alert('Data berhasil diubah');
-                props.OnClose();
-                window.location.reload();
-            } else {
-                // Gagal mengubah data, tampilkan pesan kesalahan dari respons
-                const errorMessage = await response.text();
-                alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-                console.error('Gagal mengubah data:', errorMessage);
-            }
-        } catch (error) {
-            // Terjadi kesalahan jaringan atau kesalahan lainnya, tampilkan alert dengan pesan kesalahan
-            alert('Terjadi kesalahan. Silakan coba lagi.');
-            console.error('Terjadi kesalahan:', error);
-        }
-    };
 
     const formatRupiah = (value) => {
         const numericValue = Number(value);
@@ -210,7 +207,7 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
 
                             <div>
                                 <div>
-                                    <label>Keterangan*</label>
+                                    <label>Nama Pengajuan*</label>
                                     <br />
                                     <textarea class="textarea textarea-bordered" value={props.data.namapengajuan}
                                         readonly
@@ -255,10 +252,19 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
                                             style="display: none"
                                             onChange={handleFileChange}
                                             required
+                                            disabled={!!props.data.evidence} // Menonaktifkan input jika evidence sudah ada
                                         />
 
                                         {selectedFile() && (
                                             <p>File yang dipilih: {selectedFile().name}</p>
+                                        )}
+
+                                        {/* Menampilkan informasi evidence jika ada */}
+                                        {props.data.evidence && (
+                                            <div>
+                                                <label>Evidence Sudah Ada</label>
+                                                <p>{props.data.evidence}</p>
+                                            </div>
                                         )}
                                     </div>
                                 </div>
