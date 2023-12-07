@@ -5,6 +5,7 @@ import { Icon } from '@iconify-icon/solid';
 interface EditPopUpProps {
     OnClose: () => void;
     params: {
+        // status: any;
         id: number,
         entry_ts: string,
         namapengajuan: string,
@@ -19,7 +20,7 @@ interface EditPopUpProps {
 }
 
 const Formapprove_du: Component<EditPopUpProps> = (props) => {
-
+    
     const [status, setStatus] = createSignal('');
     const [timestamp, setTimestamp] = createSignal('');
     const [alasan, setAlasan] = createSignal('');
@@ -27,8 +28,8 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
 
     const handleInputChange = (e) => {
         const { value } = e.target;
-        setStatus(value);
-        if (value === 'InProgress' || value === 'Rejected') {
+        setStatus(value)
+        if (value === 'Approved' || value === 'Rejected') {
             // Menggunakan timestamp saat ini dalam format ISO 8601
 
             const currentDate = new Date();
@@ -92,7 +93,7 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
             tipepengajuan: props.params.tipepengajuan,
            // category: categoryValue,
             total: props.params.total,
-            // status: status()
+            status: (props.params.planningtype === 'Event' || 'Monthly') ? 'inProgress' : 'Approved',
         }
 
         const updatePengajuan = new FormData();
@@ -101,7 +102,8 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
         updatePengajuan.append('namapengajuan', props.params.namapengajuan.toString());
         updatePengajuan.append('tipepengajuan', props.params.tipepengajuan.toString());
         updatePengajuan.append('total', props.params.total.toString());
-        updatePengajuan.append('status', status().toString());
+        updatePengajuan.append('status', status());
+        // updatePengajuan.append('status', status().toString());
         updatePengajuan.append('alasan', alasan());
         
         console.log("test", updateStatusToSend);
@@ -158,7 +160,8 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                             <label>Tanggal</label>
                             <br />
                             <input type="text" value={props.params.entry_ts} readonly />
-
+                            
+                            <br />
                             <label>Nama Pengajuan</label>
                             <br />
                             <input type="text" value={props.params.namapengajuan} readonly />
@@ -214,7 +217,7 @@ const Formapprove_du: Component<EditPopUpProps> = (props) => {
                         <br />
                         <br />
                         <div class="btn-add-acc">
-                            <button value='InProgress' style={{
+                            <button value='Approved' style={{
                                 "background-color": "rgba(132, 103, 255, 0.80)",
                                 "border-radius": "5px",
                                 "width": "7rem",
