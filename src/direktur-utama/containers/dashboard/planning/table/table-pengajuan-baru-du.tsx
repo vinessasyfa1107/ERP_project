@@ -20,7 +20,10 @@ const TablePengajuanBaruDU: Component = () => {
   onMount(async () => {
     const monthlypengajuan = await DataMonthlyPengajuan("data monthly plan");
     console.log("data detail plan", monthlypengajuan);
-    setRowData(monthlypengajuan)
+    // setRowData(monthlypengajuan)
+    const filtered = monthlypengajuan
+    .filter((item) => item.tipepengajuan !== 'Weekly');
+    setRowData(filtered)
   })
 
   const handleMonthChange = (event) => {
@@ -58,32 +61,58 @@ const TablePengajuanBaruDU: Component = () => {
   //   };
   const navigate = useNavigate();
 
-
-
   const onCellClicked = (params) => {
-    if (params.column.getColId() === 'status'){
+    // if (params.data.status === 'Rejected' || params.data.status === 'Approved') {
+    //   return null; // Do nothing if the status is 'Rejected' or 'Approved'
+    // }
+  
+    if (params.column.getColId() === 'status' && params.data.status === 'InProgress') {
       setPopupData(params.data);
       setPopUpOpen(true);
     } else {
       if (params.data.tipepengajuan === 'Weekly') {
-        // console.log('meonk', params.data.id);
         setDataIDWeekly(params.data.id);
-        setSelectedCategory(params.data.tipepengajuan)
-        navigate('/direktur-utama/pengajuan/pengajuan-detail');
+        setSelectedCategory(params.data.tipepengajuan);
+        navigate('/direktur-utama/pengajuan/pengajuan-detail-du');
       } else if (params.data.tipepengajuan === 'Event') {
-        // console.log('meonk', params.data.id);
         setDataIDEvent(params.data.id);
-        navigate('/direktur-utama/pengajuan/pengajuan-detail');
-        setSelectedCategory(params.data.tipepengajuan)
+        navigate('/direktur-utama/pengajuan/pengajuan-detail-du');
+        setSelectedCategory(params.data.tipepengajuan);
       } else if (params.data.tipepengajuan === 'Monthly') {
-        console.log('meonk', params.data.id);
         setDataIDMonthly(params.data.id);
-        console.log("pp", dataIdMonthly())
-        navigate('/direktur-utama/pengajuan/pengajuan-detail');
-        setSelectedCategory(params.data.tipepengajuan)
+        console.log("pp", dataIdMonthly());
+        navigate('/direktur-utama/pengajuan/pengajuan-detail-du');
+        setSelectedCategory(params.data.tipepengajuan);
       }
     }
   };
+  
+
+  // const onCellClicked = (params) => {
+  //   if (params.data.status === 'Rejected' || params.data.status === 'Approved') {
+  //     return null; // Do nothing if the status is 'Rejected' or 'Approved'
+  //   }
+  
+  //   if (params.column.getColId() === 'status') {
+  //     setPopupData(params.data);
+  //     setPopUpOpen(true);
+  //   } else {
+  //     if (params.data.tipepengajuan === 'Weekly') {
+  //       setDataIDWeekly(params.data.id);
+  //       setSelectedCategory(params.data.tipepengajuan);
+  //       navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+  //     } else if (params.data.tipepengajuan === 'Event') {
+  //       setDataIDEvent(params.data.id);
+  //       navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+  //       setSelectedCategory(params.data.tipepengajuan);
+  //     } else if (params.data.tipepengajuan === 'Monthly') {
+  //       setDataIDMonthly(params.data.id);
+  //       console.log("pp", dataIdMonthly());
+  //       navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
+  //       setSelectedCategory(params.data.tipepengajuan);
+  //     }
+  //   }
+  // };
 
 
   const loadGridData = async () => {
@@ -95,8 +124,9 @@ const TablePengajuanBaruDU: Component = () => {
     console.log("search ", searchTermValue);
     console.log("bulan ", selectedMonthValue);
     const data_planning = await DataMonthlyPengajuan("data pengajuan baru");
-
-    let filteredData = data_planning;
+    const filtered = data_planning
+    .filter((item) => item.tipepengajuan !== 'Weekly');
+    let filteredData = filtered;
 
     if (selectedMonthValue) {
       filteredData = filteredData

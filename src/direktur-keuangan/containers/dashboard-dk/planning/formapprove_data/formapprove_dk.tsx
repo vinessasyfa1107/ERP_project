@@ -122,6 +122,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
               <br />
               <input type="text" value={props.params.entry_ts} readonly />
 
+              <br />
               <label>Nama Pengajuan</label>
               <br />
               <input type="text" value={props.params.namapengajuan} readonly />
