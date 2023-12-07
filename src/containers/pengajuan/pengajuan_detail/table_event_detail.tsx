@@ -10,6 +10,7 @@ import { DataMonthlyPengajuan } from '../../../api/planning/new-pengajuan/new-pe
 import { DataDetailMonthly } from '../../../api/planning/new-pengajuan/monthly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 import { DataDetailEvent } from '../../../api/planning/new-pengajuan/event-detail-pengajuan';
+import EditEventPlan from './popup/edit-event-plan';
 
 
 
@@ -110,6 +111,19 @@ const Table_event_detail: Component = () => {
     }
   }
 
+  
+  const [dataEvent, setDataEvent] = createSignal(null)
+  const [editPopUp, setEditPopUp] = createSignal(false);
+
+  function showEditPopup(data){
+    setDataEvent(data)
+    setEditPopUp(true)
+  }
+
+  const ClosePopUp = () => {
+    setEditPopUp(false);
+  };
+
 
   const gridOptions = {
     columnDefs: [
@@ -130,7 +144,15 @@ const Table_event_detail: Component = () => {
       { field: 'notes' },
       { field: 'reference' },
 
-      // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
+      { field: 'aksi', cellRenderer: (params) => {
+        return (
+          <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
+            <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
+            {/* <button onClick={() => showEditPopup2(params.data.id)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button> */}
+          </div>
+        );
+      } 
+      },
     ],
     pagination: true,
     paginationPageSize: 4,
@@ -190,7 +212,7 @@ const Table_event_detail: Component = () => {
           rowMultiSelectWithClick={true}
         />
       </div>
-      {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+      {editPopUp() && <EditEventPlan data={dataEvent()}  OnClose={ClosePopUp} />}
     </div>
   );
 };
