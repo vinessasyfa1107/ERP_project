@@ -22,16 +22,6 @@ const TablePengajuanDetail: Component = () => {
     setRowData(monthlypengajuan)
   })
 
-
-  // const [gridApi, setGridApi] = createSignal(null);
-  // const [rowData, setRowData] = createSignal<RowData[]>(
-  //     (() => {
-  //       // Coba ambil data dari localStorage saat komponen diinisialisasi
-  //       const savedData = localStorage.getItem('tableAllPengajuan');
-  //       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-  //     })()
-  //   );
-
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);

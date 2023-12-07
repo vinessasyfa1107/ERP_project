@@ -14,6 +14,7 @@ import { setDataIDEvent, setDataIDMonthly, setDataIDWeekly, setSelectedCategory 
 
 const TablePengajuanBaru: Component = () => {
 
+  const navigate = useNavigate();
 
   const [RowData, setRowData] = createSignal([{}]);
   const [searchTerm, setSearchTerm] = createSignal('');
@@ -36,35 +37,11 @@ const TablePengajuanBaru: Component = () => {
 
   };
 
-  // const [gridApi, setGridApi] = createSignal(null);
-  // const [rowData, setRowData] = createSignal<RowData[]>(
-  //     (() => {
-  //       // Coba ambil data dari localStorage saat komponen diinisialisasi
-  //       const savedData = localStorage.getItem('tableAllPengajuan');
-  //       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-  //     })()
-  //   );
-
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
   const [confirmationStatus, setConfirmationStatus] = createSignal(false);
   const [formSubmitted, setFormSubmitted] = createSignal(false);
-
-  //   onMount(async () => {
-  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-  //     console.log("dataplanning", data_planning);
-  //     setRowData(data_planning);
-  //   })
-
-  //   const fetchData = async () => {
-  //     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-  //     setRowData(data_planning);
-  //   };
-
-  //   onMount(() => {
-  //     fetchData();
-  //   });
 
   const handlePopUpApproved = (data) => {
     if (data.status === 'Approved') {
@@ -72,14 +49,6 @@ const TablePengajuanBaru: Component = () => {
       setPopUpOpen(true);
     }
   };
-
-  //   const ClosePopUp = () => {
-  //     setPopUpOpen(false);
-  //     fetchData();
-  //   };
-  const navigate = useNavigate();
-
-
 
   const onCellClicked = (params) => {
     if (params.data.tipepengajuan === 'Weekly') {
@@ -100,7 +69,6 @@ const TablePengajuanBaru: Component = () => {
     }
   };
 
-
   const handleSelectionChanged = (event) => {
     const selectedRows = event.api.getSelectedRows();
     if (selectedRows.length > 0) {
@@ -119,7 +87,6 @@ const TablePengajuanBaru: Component = () => {
     const selectedMonthValue = selectedMonth();
     const searchTermValue = searchTerm();
 
-    // ...
 
     console.log("search ", searchTermValue);
     console.log("bulan ", selectedMonthValue);
