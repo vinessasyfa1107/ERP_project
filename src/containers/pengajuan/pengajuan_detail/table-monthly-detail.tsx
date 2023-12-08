@@ -13,13 +13,15 @@ import EditMonthlyPlan from './popup/edit-monthly-plan';
 
 
 const TablePengajuanDetail: Component = () => {
-
+  const navigate = useNavigate();
   const [RowData, setRowData] = createSignal([{}]);
 
   onMount(async () => {
     const monthlypengajuan = await DataDetailMonthly("data monthly detail plan");
     console.log("MONTHLY detail plan", monthlypengajuan);
     setRowData(monthlypengajuan)
+    localStorage.setItem('editDetailMonthly', JSON.stringify([...monthlypengajuan]));
+
   })
 
   const [backendData, setBackendData] = createSignal([{}]);
@@ -108,6 +110,52 @@ const TablePengajuanDetail: Component = () => {
     setEditPopUp(false);
   };
 
+  const areRowsEqual = (row1, row2) => {
+    // Implementasikan logika perbandingan berdasarkan properti yang sesuai
+    return row1.rowIndex === row2.rowIndex;
+  };
+
+  const [editID, setEditID] = createSignal(0)
+
+  const handleCellValueChanged = async (params) => {
+    const { data } = params;
+  
+    // // Log data yang sedang diubah
+    // console.log('Data yang diubah:', data);
+    // const updatedData = RowData().map((row) => ({ ...row, total: 0 }));
+
+    // // Update the state with all rows having total set to 0
+    // setRowData(updatedData);
+
+    // // Update local storage
+    // localStorage.setItem('editDetailMonthly', JSON.stringify(updatedData));
+    // Update local storage
+    localStorage.setItem('editDetailMonthly', JSON.stringify(RowData()));
+  
+    // Recalculate total if 'qty' or 'price' is changed
+    if (params.colDef.field === 'quantity' || params.colDef.field === 'price') {
+      const newTotal = data.quantity * Number(data.price);
+  
+      // Update local storage only for the changed row
+      const updatedData = RowData().map((row, index) =>
+        index === params.rowIndex ? { ...row, price: Number(data.price), total: newTotal } : row
+      );
+  
+      // Update local storage
+      localStorage.setItem('editDetailMonthly', JSON.stringify(updatedData));
+  
+      // Update the state with the changed row
+      setRowData(updatedData);
+    }
+  
+    // Log data setelah seluruh proses
+    console.log('edited', RowData());
+    console.log('id', data.pengajuan_id)
+
+    setEditID(data.pengajuan_id)
+  };
+  
+
   const gridOptions = {
     columnDefs: [
       // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
@@ -116,35 +164,20 @@ const TablePengajuanDetail: Component = () => {
 
       { field: 'namapengajuan', headerName: 'Pengajuan', editable: false },
       { field: 'keterangan', editable: false },
-      { field: 'kebutuhan' },
-      { field: 'coa_kd', headerName: 'COA', width: 85 },
+      { field: 'kebutuhan', editable: true },
+      { field: 'coa_kd', headerName: 'COA', editable: true, width: 85 },
 
-      // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
-      { field: 'quantity', headerName: 'Qty', editable: false,  width: 90 },
-      { field: 'uom' },
-      { field: 'price', headerName: 'Harga', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
-      { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
-      { field: 'aksi', cellRenderer: (params) => {
-        return (
-          <div style={{ "margin-top": "1vh", display: "flex", "justify-content": "space-between", width: "9vh" }}>
-            <button onClick={() => showEditPopup(params.data)}><Icon icon="iconamoon:edit" color="#40444b" width="18" height="18" /></button>
-            {/* <button onClick={() => showEditPopup2(params.data.id)}><Icon icon="mdi:delete" color="#40444b" width="18" height="18" /></button> */}
-          </div>
-        );
-      } 
-      },
+      { field: 'quantity', headerName: 'Qty', editable: true,  width: 90 },
+      { field: 'uom', width: 100 },
+      { field: 'price', headerName: 'Harga', editable: true, valueFormatter: (params) => formatRupiah(params.value),  width: 110 },
+      { field: 'total', headerName: 'Jumlah', editable: true, valueFormatter: (params) => formatRupiah(params.value),  width: 110 },
     ],
+    onCellValueChanged: handleCellValueChanged,
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
-    onSelectionChanged: handleSelectionChanged,
-    onCellEditingStopped: (event) => {
-      // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-      if (event.column.getColId() === 'amount' && event.data.confirm) {
-        // Reset nilai ke nilai asli
-        event.api.applyTransaction({ update: [{ ...event.data }] });
-      }
-    },
+    // onSelectionChanged: handleSelectionChanged,
+
   };
 
   const defaultColDef = {
@@ -152,9 +185,53 @@ const TablePengajuanDetail: Component = () => {
     sortable: true,
   }
 
+  const [onEdit, setOnEdit] = createSignal(false);
+
+  const handleEditClick = () => {
+    const localStorageData = JSON.parse(localStorage.getItem('editDetailMonthly'));
+    if (localStorageData) {
+      setOnEdit(true);
+      setRowData(localStorageData);
+      console.log("berhasil store", RowData());
+    } else {
+      console.log("lain")
+    }
+    // setEditPopUp(true);
+  };
+
+  const handleSubmitEdit = async () => {
+    // const jsonString = JSON.stringify(RowData(), null, 2);
+    // const trimmedString = jsonString.substring(1, jsonString.length - 1);
+    // console.log('editt', trimmedString)
+    try {
+      const response = await fetch (`/api/monthlypengajuan/detail/${editID()}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify(RowData())
+      })
+
+      if (response.ok) {
+        console.log('Data berhasil diubah');
+        alert('Data berhasil diubah');
+        navigate('/pengajuan/pengajuan_dashboard');
+      } else {
+        const errorMessage = await response.text();
+        alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+        console.error('Gagal mengubah data:', errorMessage);
+      }
+
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
   return (
     <div style={{ "justify-content": "center", "margin-top":"30px" }}>
-      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>Detail Pengajuan Monthly</h1>
+
+      <h1 style={{ "font-size": "18px", "text-align":"left","margin-bottom":"5px"}}>
+        {onEdit() ? 'Edit Detail Pengajuan Monthly': 'Detail Pengajuan Monthly'}</h1>
       <div class="ag-theme-alpine" style={{ width: '141vh', height: '21vw', margin: "auto" }}>
         <AgGridSolid
           //   columnDefs={columnDefs}
@@ -166,7 +243,10 @@ const TablePengajuanDetail: Component = () => {
           rowMultiSelectWithClick={true}
         />
       </div>
-      {editPopUp() && <EditMonthlyPlan data={dataMonthly()}  OnClose={ClosePopUp} />}
+      <div>
+        <button onClick={handleEditClick}>Edit</button>
+        <button onClick={handleSubmitEdit}>Simpan</button>
+      </div>
     </div>
   );
 };
