@@ -130,6 +130,7 @@ const Arus_kas: Component = () => {
                     </div>
                 </div>
                 <div class="tableteams">
+                    <h3 style={{ "margin-left": "2.5rem" }}>Transfer Dana Weekly</h3>
                     <Tabel_transfer_dana />
                 </div>
 

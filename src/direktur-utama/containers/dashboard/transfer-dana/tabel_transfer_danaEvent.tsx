@@ -22,7 +22,7 @@ function CloseEditPopUp () {
 }
 
 
-const Tabel_transfer_dana = () => {
+const Tabel_transfer_danaEvent = () => {
     const [RowData, setRowData] = createSignal([{}]);
     const [selectedRow, setSelectedRow] = createSignal(null);
     const [FormTransfer, setFormTransfer] = createSignal(null);
@@ -30,7 +30,7 @@ const Tabel_transfer_dana = () => {
 
     onMount(async () => {
         const data_planning = await DataMonthlyPengajuan("data planning dashboard dan modul pengajuan");
-        const approvedRows = data_planning.filter(row => row.status === 'Approved' && row.tipepengajuan === 'Weekly');
+        const approvedRows = data_planning.filter(row => row.status === 'Approved' && row.tipepengajuan === 'Event');
         console.log("dataplanning", approvedRows);
         setRowData(approvedRows);
     })
@@ -109,4 +109,4 @@ const Tabel_transfer_dana = () => {
     );
 };
 
-export default Tabel_transfer_dana;
+export default Tabel_transfer_danaEvent;

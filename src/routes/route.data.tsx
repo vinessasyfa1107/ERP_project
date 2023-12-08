@@ -31,6 +31,7 @@ const PlanningDU = lazy(() => import('../direktur-utama/containers/dashboard/pla
 const TimeTrackingDU = lazy(() => import('../direktur-utama/containers/dashboard/time-tracking/time-tracking-du'));
 const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'));
 const KeuanganDU = lazy(() => import('../direktur-utama/containers/dashboard/keuangan/keuangan-du'));
+const Transfer_danaDU = lazy(() => import('../direktur-utama/containers/dashboard/transfer-dana/transfer_danaDU'));
 
 const PengajuanDashboardDU = lazy(() => import('../direktur-utama/containers/pengajuan/dashboard/pengajuan-dashboard-du'));
 const PengajuanReportDU = lazy(() => import('../direktur-utama/containers/pengajuan/report/pengajuan-report-du'));
@@ -182,6 +183,7 @@ const RouteData: Component = () => {
                 <Route path="/time-tracking" component={TimeTrackingDU}/>
                 <Route path="/kas-approval" component={KasApproval}/>
                 <Route path="/keuangan" component={KeuanganDU}/>
+                <Route path="/transfer_danaDU" component={Transfer_danaDU}/>
             </Route>
 
             <Route path="/direktur-utama/pengajuan">
