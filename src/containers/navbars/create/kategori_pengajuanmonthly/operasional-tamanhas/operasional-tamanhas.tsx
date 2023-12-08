@@ -7,7 +7,7 @@ import PengajuanMonthly from '../pengajuan-monthly';
 import { Total, Total3, Total4, Total5, setTotal } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Total2 } from '../../../../../store/Pengajuan/Monthly-satu/pengajuan-m-satu';
 import { Icon } from '@iconify-icon/solid';
-import EditMonthlyPlan from './popup/edit-monthly-plan';
+import EditMonthlyPlan from '../../../../pengajuan/pengajuan_detail/popup/edit-monthly-plan';
 import ComfirmDeletePlan from './popup/confirm-delete-plan';
 import { options } from './data-coa';
 import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/nama-pengajuan';

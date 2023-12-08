@@ -63,7 +63,7 @@ const TablePengajuanBaruDK: Component = () => {
     //   return null; // Do nothing if the status is 'Rejected' or 'Approved'
     // }
   
-    if (params.column.getColId() === 'status' && params.data.status === 'InProgress') {
+     if (params.column.getColId() === 'status' && (params.data.status === 'InProgress' || params.data.status === 'Waiting')) {
       setPopupData(params.data);
       setPopUpOpen(true);
     } else {

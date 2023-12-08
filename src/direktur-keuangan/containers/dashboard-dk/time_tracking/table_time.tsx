@@ -23,7 +23,7 @@ const Table_time: Component<TableTimeProps> = (props) => {
 
   const columnDefs = [
     { field: 'approval_ts', headerName: 'Tanggal' },
-    { field: 'planning_id', headerName: 'ID Planning' },
+    { field: 'pengajuan_id', headerName: 'ID Pengajuan' },
     { field: 'realization', headerName: 'Jumlah' },
     { field: 'status', headerName: 'Status' },
     { field: 'alasan', headerName: 'Alasan' }

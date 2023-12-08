@@ -1,6 +1,6 @@
 export type resultTimeTracking = {
     "approval_ts": string,
-    "planning_id": number,
+    "pengajuan_id": number,
     "entry_by": number,
     "realization": number,
     "status": string,
@@ -21,7 +21,7 @@ export async function dataTimeTracking(query: string) {
     // console.log("response ", results)
     const documents = results as resultTimeTracking[];
     console.log(documents, "test");
-    return documents.slice(0, documents.length).map(({ approval_ts, planning_id, entry_by, realization, status, alasan }) => ({
-        approval_ts, planning_id, entry_by, realization, status, alasan
+    return documents.slice(0, documents.length).map(({ approval_ts, pengajuan_id, entry_by, realization, status, alasan }) => ({
+        approval_ts, pengajuan_id, entry_by, realization, status, alasan
     }));
 }
