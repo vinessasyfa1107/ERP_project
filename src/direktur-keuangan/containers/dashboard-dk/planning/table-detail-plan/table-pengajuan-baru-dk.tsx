@@ -58,29 +58,28 @@ const TablePengajuanBaruDK: Component = () => {
   //   };
   const navigate = useNavigate();
 
-
-
   const onCellClicked = (params) => {
-    if (params.column.getColId() === 'status'){
+    // if (params.data.status === 'Rejected' || params.data.status === 'Approved') {
+    //   return null; // Do nothing if the status is 'Rejected' or 'Approved'
+    // }
+  
+     if (params.column.getColId() === 'status' && (params.data.status === 'InProgress' || params.data.status === 'Waiting')) {
       setPopupData(params.data);
       setPopUpOpen(true);
     } else {
       if (params.data.tipepengajuan === 'Weekly') {
-        // console.log('meonk', params.data.id);
         setDataIDWeekly(params.data.id);
-        setSelectedCategory(params.data.tipepengajuan)
+        setSelectedCategory(params.data.tipepengajuan);
         navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
       } else if (params.data.tipepengajuan === 'Event') {
-        // console.log('meonk', params.data.id);
         setDataIDEvent(params.data.id);
         navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
-        setSelectedCategory(params.data.tipepengajuan)
+        setSelectedCategory(params.data.tipepengajuan);
       } else if (params.data.tipepengajuan === 'Monthly') {
-        console.log('meonk', params.data.id);
         setDataIDMonthly(params.data.id);
-        console.log("pp", dataIdMonthly())
+        console.log("pp", dataIdMonthly());
         navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
-        setSelectedCategory(params.data.tipepengajuan)
+        setSelectedCategory(params.data.tipepengajuan);
       }
     }
   };

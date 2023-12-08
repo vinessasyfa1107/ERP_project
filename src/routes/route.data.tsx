@@ -13,6 +13,7 @@ import KickOffMeeting from '../containers/navbars/create/kategori_pengajuan/kick
 import PengajuanEventDetails from '../containers/navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/pengajuan-event-detail';
 import PengajuanDetailDK from '../direktur-keuangan/containers/pengajuan/pengajuan-detail-dk/pengajuan-detail-dk';
 import PengajuanDashboardDK from '../direktur-keuangan/containers/pengajuan/pengajuan-dashboard-dk/pengajuan-dashboard-dk';
+import PengajuanDetailDU from '../direktur-utama/containers/pengajuan/dashboard/pengajuan-detail/pengajuan-detail-du';
 
 interface UserData {
     id: number;
@@ -31,6 +32,7 @@ const PlanningDU = lazy(() => import('../direktur-utama/containers/dashboard/pla
 const TimeTrackingDU = lazy(() => import('../direktur-utama/containers/dashboard/time-tracking/time-tracking-du'));
 const KasApproval = lazy(() => import('../direktur-utama/containers/dashboard/kas-approval/kas-approval'));
 const KeuanganDU = lazy(() => import('../direktur-utama/containers/dashboard/keuangan/keuangan-du'));
+const Transfer_danaDU = lazy(() => import('../direktur-utama/containers/dashboard/transfer-dana/transfer_danaDU'));
 
 const PengajuanDashboardDU = lazy(() => import('../direktur-utama/containers/pengajuan/dashboard/pengajuan-dashboard-du'));
 const PengajuanReportDU = lazy(() => import('../direktur-utama/containers/pengajuan/report/pengajuan-report-du'));
@@ -182,11 +184,13 @@ const RouteData: Component = () => {
                 <Route path="/time-tracking" component={TimeTrackingDU}/>
                 <Route path="/kas-approval" component={KasApproval}/>
                 <Route path="/keuangan" component={KeuanganDU}/>
+                <Route path="/transfer_danaDU" component={Transfer_danaDU}/>
             </Route>
 
             <Route path="/direktur-utama/pengajuan">
                  <Route path="/dashboard" component={PengajuanDashboardDU} />
                  <Route path="/report" component={PengajuanReportDU} />
+                 <Route path="/pengajuan-detail-du" component={PengajuanDetailDU} />
             </Route>
 
 

@@ -11,6 +11,20 @@ import { useNavigate } from '@solidjs/router';
 import { DataMonthlyPengajuan } from '../../api/planning/new-pengajuan/new-pengajuan';
 // import { type } from 'os';
 import { setDataIDEvent, setDataIDMonthly, setDataIDWeekly, setSelectedCategory } from '../../store/Pengajuan/pengajuan-id';
+import Form_transferAdmin from './form_transferAdmin';
+
+const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
+
+const [editedData, setEditedData] = createSignal(null);
+
+const showEditPopup = (rowData: any) => {
+    setEditedData(rowData);
+    setIsEditPopupOpen(true);
+};
+
+function CloseEditPopUp() {
+    setIsEditPopupOpen(false);
+}
 
 const Table_pengajuan_ModulPengajuan: Component = () => {
 
@@ -79,26 +93,6 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     //   };
     const navigate = useNavigate();
 
-
-
-    const onCellClicked = (params) => {
-        if (params.data.tipepengajuan === 'Weekly') {
-            // console.log('meonk', params.data.id);
-            setDataIDWeekly(params.data.id);
-            setSelectedCategory(params.data.tipepengajuan)
-            navigate('/pengajuan/pengajuan_detail');
-        } else if (params.data.tipepengajuan === 'Event') {
-            // console.log('meonk', params.data.id);
-            setDataIDEvent(params.data.id);
-            navigate('/pengajuan/pengajuan_detail');
-            setSelectedCategory(params.data.tipepengajuan)
-        } else if (params.data.tipepengajuan === 'Monthly') {
-            // console.log('meonk', params.data.id);
-            setDataIDMonthly(params.data.id);
-            navigate('/pengajuan/pengajuan_detail');
-            setSelectedCategory(params.data.tipepengajuan)
-        }
-    };
 
 
     const handleSelectionChanged = (event) => {
@@ -222,8 +216,19 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                         {value}
                     </div>
                 );
-            }
+            },
+
         },
+        {
+            field: "transfer", headerName: "", cellRenderer: (params: any) => {
+                return (
+                    <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
+                        <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
+                        {params.value}
+                    </div>
+                );
+            }
+        }
         // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
     ];
 
@@ -260,6 +265,28 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
             }
         },
     }
+
+    const onCellClicked = (params) => {
+        const isTransferButtonClicked = params.colDef.field === "transfer";
+
+        if (isTransferButtonClicked) {
+            showEditPopup(params.data);
+        } else {
+            if (params.data.tipepengajuan === 'Weekly') {
+                setDataIDWeekly(params.data.id);
+                setSelectedCategory(params.data.tipepengajuan)
+                navigate('/pengajuan/pengajuan_detail');
+            } else if (params.data.tipepengajuan === 'Event') {
+                setDataIDEvent(params.data.id);
+                navigate('/pengajuan/pengajuan_detail');
+                setSelectedCategory(params.data.tipepengajuan)
+            } else if (params.data.tipepengajuan === 'Monthly') {
+                setDataIDMonthly(params.data.id);
+                navigate('/pengajuan/pengajuan_detail');
+                setSelectedCategory(params.data.tipepengajuan)
+            }
+        }
+    };
 
     return (
         <div>
@@ -308,7 +335,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                         rowMultiSelectWithClick={true}
                     />
                 </div>
-                {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+                {isEditPopupOpen() && (<Form_transferAdmin data={editedData()} OnClose={CloseEditPopUp} />)}
             </div>
         </div>
     );
