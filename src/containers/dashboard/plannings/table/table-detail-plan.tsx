@@ -4,7 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
-import FormConfirm from '../form/form-confirm';
+// import FormConfirm from '../form/form-confirm';
 import { dataplanning } from '../../../../api/planning/dataplanning';
 
 const TableDetailPlan: Component = () => {
@@ -129,7 +129,7 @@ const TableDetailPlan: Component = () => {
           rowMultiSelectWithClick={true}
         />
       </div>
-      {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />}
+      {/* {popUpOpen() && <FormConfirmdata={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
     </div>
   );
 };
