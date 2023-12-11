@@ -335,7 +335,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                         rowMultiSelectWithClick={true}
                     />
                 </div>
-                {isEditPopupOpen() && (<Form_transferAdmin data={editedData()} OnClose={CloseEditPopUp} />)}
+                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} />)}
             </div>
         </div>
     );
