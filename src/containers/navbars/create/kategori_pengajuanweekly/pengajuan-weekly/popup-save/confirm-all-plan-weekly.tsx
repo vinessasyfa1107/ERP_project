@@ -8,6 +8,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { RowData } from '../../penguanweekly-rutin/pengajuanweekly-insentif/pengajuanweekly-insentif';
 import { getNamaPengajuanWeekly } from '../../../../../../store/Pengajuan/nama-pengajuan';
+import { useNavigate } from '@solidjs/router';
 
 interface ConfirmAllPlanWeeklyProps {
   OnClose: () => void;
@@ -30,6 +31,7 @@ interface NewRowData {
     namapengajuan?: string;
   };
   details: {
+    id: number,
     pengajuan_id: number;
     keterangan: string;
     kebutuhan: string;
@@ -54,6 +56,9 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
   //         : ([] as RowData[]);
   //     })()
   //   );
+
+  const navigate = useNavigate();
+
   const [originalRowDataW, setOriginalRowData] = createSignal<RowData[]>(
     (() => {
         const savedData = localStorage.getItem('tableDataWeekly');
@@ -96,6 +101,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
       }
   
       uniquePengajuan[key].details.push({
+        id: 0,
         pengajuan_id: rowData.pengajuan_id,
         keterangan: rowData.keterangan,
         kebutuhan: rowData.kebutuhan,
@@ -239,6 +245,7 @@ const ConfirmAllPlanWeekly: Component<ConfirmAllPlanWeeklyProps> = (props) => {
         alert('Data berhasil dikirim ke backend');
         console.log('Data berhasil dikirim ke backend');
         props.OnClose();
+        navigate('/pengajuan/pengajuan_dashboard')
         localStorage.removeItem('tableDataWeekly');
         localStorage.removeItem('tableKetWeekly');
         localStorage.removeItem('namaPengajuanWeekly');

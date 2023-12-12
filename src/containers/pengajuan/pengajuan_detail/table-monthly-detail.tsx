@@ -15,13 +15,22 @@ import EditMonthlyPlan from './popup/edit-monthly-plan';
 const TablePengajuanDetail: Component = () => {
   const navigate = useNavigate();
   const [RowData, setRowData] = createSignal([{}]);
+  const [editData, setEditData] = createSignal({
+    id: 0,
+    keterangan: '',
+  })
 
   onMount(async () => {
     const monthlypengajuan = await DataDetailMonthly("data monthly detail plan");
     console.log("MONTHLY detail plan", monthlypengajuan);
+    monthlypengajuan.forEach((plan) =>
+      setEditData({
+        id: plan.pengajuan_id,
+        keterangan: plan.keterangan,
+      })
+    )
     setRowData(monthlypengajuan)
     localStorage.setItem('editDetailMonthly', JSON.stringify([...monthlypengajuan]));
-
   })
 
   const [backendData, setBackendData] = createSignal([{}]);
@@ -99,16 +108,7 @@ const TablePengajuanDetail: Component = () => {
   };
 
   const [dataMonthly, setDataMonthly] = createSignal(null)
-  const [editPopUp, setEditPopUp] = createSignal(false);
 
-  function showEditPopup(data){
-    setDataMonthly(data)
-    setEditPopUp(true)
-  }
-
-  const ClosePopUp = () => {
-    setEditPopUp(false);
-  };
 
   const areRowsEqual = (row1, row2) => {
     // Implementasikan logika perbandingan berdasarkan properti yang sesuai
@@ -116,6 +116,7 @@ const TablePengajuanDetail: Component = () => {
   };
 
   const [editID, setEditID] = createSignal(0)
+  const [totalPrice, setTotalPrice] = createSignal(0);
 
   const handleCellValueChanged = async (params) => {
     const { data } = params;
@@ -138,12 +139,12 @@ const TablePengajuanDetail: Component = () => {
   
       // Update local storage only for the changed row
       const updatedData = RowData().map((row, index) =>
-        index === params.rowIndex ? { ...row, price: Number(data.price), total: newTotal } : row
+        index === params.rowIndex ? { ...row, quantity: Number(data.quantity), price: Number(data.price), total: newTotal } : row
       );
   
       // Update local storage
       localStorage.setItem('editDetailMonthly', JSON.stringify(updatedData));
-  
+      
       // Update the state with the changed row
       setRowData(updatedData);
     }
@@ -153,6 +154,7 @@ const TablePengajuanDetail: Component = () => {
     console.log('id', data.pengajuan_id)
 
     setEditID(data.pengajuan_id)
+
   };
   
 
@@ -160,7 +162,8 @@ const TablePengajuanDetail: Component = () => {
     columnDefs: [
       // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
       // { field: 'id', headerName: 'ID', editable: false },
-      { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 60 },
+      { field: 'pengajuan_id', headerName: 'Pengajuan ID', editable: false, width: 60 },
+      { field: 'id', headerName: 'ID', editable: false, width: 60 },
 
       { field: 'namapengajuan', headerName: 'Pengajuan', editable: false },
       { field: 'keterangan', editable: false },
@@ -193,39 +196,96 @@ const TablePengajuanDetail: Component = () => {
       setOnEdit(true);
       setRowData(localStorageData);
       console.log("berhasil store", RowData());
+      handleSubmitEdit();
     } else {
       console.log("lain")
     }
     // setEditPopUp(true);
   };
 
+  const calculateTotal = () => {
+    const gridData = RowData();
+    let sumtotal = 0;
+    for (const row of gridData) {
+      return sumtotal;
+    }
+  }
+
   const handleSubmitEdit = async () => {
-    // const jsonString = JSON.stringify(RowData(), null, 2);
-    // const trimmedString = jsonString.substring(1, jsonString.length - 1);
-    // console.log('editt', trimmedString)
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().slice(0, 11);
+
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    const timestamp = `${formattedDate}${formattedTime}`;
+
+    const updatedData = RowData().map(item => ({
+      ...item,
+      pengajuan_id: 0
+    }));
+
+    const formated = {
+      details: 
+      updatedData
+    }
+
+    const updatePengajuan = new FormData();
+    updatePengajuan.append('id', editData().id.toString());
+    updatePengajuan.append('entry_ts', timestamp);
+    updatePengajuan.append('namapengajuan', editData().keterangan);
+    updatePengajuan.append('tipepengajuan', 'Monthly');
+    updatePengajuan.append('total', `${calculateTotal()}`);
+    updatePengajuan.append('status','Waiting');
+    updatePengajuan.append('alasan', 'Sudah di revisi');
+
+
+    console.log("format", formated)
+
     try {
-      const response = await fetch (`/api/monthlypengajuan/detail/${editID()}`, {
+      const response = await fetch (`/api/monthlypengajuan/detail`, {
         method: 'PUT',
         headers: {
           'Content-Type':'application/json',
         },
-        body: JSON.stringify(RowData())
-      })
+        body: JSON.stringify(formated)
+      });
 
-      if (response.ok) {
+      const response2 = await fetch (`/api/pengajuan/${editID()}`, {
+        method: 'PUT',
+        body: updatePengajuan,
+      });
+
+      if (response.ok && response2.ok) {
         console.log('Data berhasil diubah');
         alert('Data berhasil diubah');
         navigate('/pengajuan/pengajuan_dashboard');
       } else {
         const errorMessage = await response.text();
-        alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-        console.error('Gagal mengubah data:', errorMessage);
+        alert(`Gagal menambah data. Pesan kesalahan: ${errorMessage}`);
+        console.error('Gagal menambah data:', errorMessage);
+        const errorMessage2 = await response2.text();
+        alert(`Gagal menambah data. Pesan kesalahan: ${errorMessage2}`);
+        console.error('Gagal menambah data:', errorMessage2);
       }
 
     } catch (error) {
       console.log("error", error)
     }
   }
+
+  const [editPopUp, setEditPopUp] = createSignal(false);
+
+  function showEditPopup(){
+    setEditPopUp(true)
+  }
+
+  const ClosePopUp = () => {
+    setEditPopUp(false);
+  };
+
 
   return (
     <div style={{ "justify-content": "center", "margin-top":"30px" }}>
@@ -244,9 +304,22 @@ const TablePengajuanDetail: Component = () => {
         />
       </div>
       <div>
-        <button onClick={handleEditClick}>Edit</button>
+        {/* <button onClick={handleEditClick}>Edit</button> */}
         <br/>
-        <button onClick={handleSubmitEdit}>Simpan</button>
+        <button class="simpan-perubahan-detail" onClick={showEditPopup}>Simpan</button>
+          {editPopUp() && 
+          <div class='overlay'>
+            <div class="absolute">
+            <div class="confirm-edit-detail">
+                Apakah anda yakin ingin mengirim perubahan?
+                <div class="btn-confirm-edit-detail">
+                  <button class="btn-iya-tidak iya" onClick={ClosePopUp}>Tidak</button>
+                  <button class="btn-iya-tidak tidak" onClick={handleSubmitEdit}>Ya</button>
+                </div>
+            </div>
+            </div>
+          </div>
+          }
       </div>
     </div>
   );

@@ -33,6 +33,7 @@ interface AggregatedRowData {
       total: number
     };
     details: {
+      id: number;
       pengajuan_id: number;
       keterangan: string;
       coa_kd: string;
@@ -113,6 +114,7 @@ const ConfirmAllPlan: Component<ConfirmAllPlanProps> = (props) => {
       }
   
       uniquePengajuan[key].details.push({
+        id: 0,
         pengajuan_id: rowData.pengajuan_id,
         keterangan: rowData.keterangan,
         kebutuhan: rowData.kebutuhan,

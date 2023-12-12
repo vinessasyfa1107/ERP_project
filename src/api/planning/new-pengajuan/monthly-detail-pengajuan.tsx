@@ -1,6 +1,7 @@
 import { dataIdMonthly } from "../../../store/Pengajuan/pengajuan-id";
 
-export type resultdata = {
+export type resultMonthlyDetail = {
+  "id": number,
   "pengajuan_id": number,
   "keterangan": string,
   "kebutuhan": string,
@@ -10,8 +11,6 @@ export type resultdata = {
   "price": number,
   "total": number,
   "unit": string,
-  "notes": string,
-  "reference": string,
   "namapengajuan": String,
   "approved": string
 }
@@ -27,9 +26,9 @@ export type resultdata = {
   
     const results = await response.json();
     // console.log("response ", results)
-    const documents = results as resultdata[];
+    const documents = results as resultMonthlyDetail[];
     console.log(documents, "TESTT detail");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd, approved}) => ({
-      pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, notes, reference, namapengajuan, coa_kd, approved
+    return documents.slice(0, documents.length).map(({ id, pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, namapengajuan, coa_kd, approved}) => ({
+      id, pengajuan_id, keterangan, kebutuhan, quantity, uom, price, total, unit, namapengajuan, coa_kd, approved
     }));
   }

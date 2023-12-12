@@ -9,6 +9,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { RowData } from '../pengajuan-event/pengajuan-event-detail';
 import { getNamaPengajuanEvent } from '../../../../../../store/Pengajuan/nama-pengajuan';
+import { useNavigate } from '@solidjs/router';
 
 interface ConfirmAllEventProps {
   OnClose: () => void;
@@ -32,6 +33,7 @@ interface NewRowData {
     total: 0
   };
   details: {
+    id: number;
     pengajuan_id: number;
     keterangan: string;
     kebutuhan: string;
@@ -68,6 +70,9 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
     })()
   );
 
+  const navigate = useNavigate();
+
+
   // Fungsi untuk mengonversi originalRowData ke NewRowData
   function convertRowData(originalRowData): NewRowData | null {
     const uniquePengajuan: Record<string, NewRowData> = {};
@@ -90,6 +95,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
       }
 
       uniquePengajuan[key].details.push({
+        id: 0,
         pengajuan_id: rowData.pengajuan_id,
         keterangan: rowData.keterangan,
         kebutuhan: rowData.kebutuhan,
@@ -196,6 +202,7 @@ const ConfirmAllEvent: Component<ConfirmAllEventProps> = (props) => {
         alert('Data berhasil dikirim ke backend');
         console.log('Data berhasil dikirim ke backend');
         props.OnClose();
+        navigate('/pengajuan/pengajuan_dashboard')
         localStorage.removeItem('tableDataEventDetails');
         localStorage.removeItem('tableKetPengajuanEvent');
         localStorage.removeItem('namaPengajuanEvent');
