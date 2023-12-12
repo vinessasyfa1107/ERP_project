@@ -19,9 +19,14 @@ const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
 
 const [editedData, setEditedData] = createSignal(null);
 
+const [evidence, setEvidence] = createSignal('');
+
+
 const showEditPopup = (rowData: any) => {
     setEditedData(rowData);
     setIsEditPopupOpen(true);
+    setEvidence(rowData.evidence);
+    console.log("test", evidence());
 };
 
 function CloseEditPopUp() {
@@ -421,7 +426,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                         rowMultiSelectWithClick={true}
                     />
                 </div>
-                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} />)}
+                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} evidence={evidence()}/>)}
             </div>
         </div>
     );
