@@ -245,6 +245,7 @@ const TablePengajuanDetail: Component = () => {
       </div>
       <div>
         <button onClick={handleEditClick}>Edit</button>
+        <br/>
         <button onClick={handleSubmitEdit}>Simpan</button>
       </div>
     </div>

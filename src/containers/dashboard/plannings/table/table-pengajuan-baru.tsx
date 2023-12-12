@@ -248,6 +248,7 @@ const TablePengajuanBaru: Component = () => {
         </div>
         {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
       </div>
+      
     </div>
   );
 };
@@ -256,4 +257,3 @@ export default TablePengajuanBaru;
 function isEditing() {
   throw new Error('Function not implemented.');
 }
-
