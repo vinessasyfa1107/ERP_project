@@ -12,6 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "@iconify-icon/solid": "^1.0.8",
+    "@types/jspdf": "^2.0.0",
     "@types/node": "^20.8.0",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "autoprefixer": "^10.4.14",
@@ -38,6 +39,9 @@
     "ag-grid-community": "^30.2.0",
     "ag-grid-enterprise": "^30.2.0",
     "ag-grid-solid": "^30.2.0",
+    "html2pdf.js": "^0.10.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1",
     "solid-contextmenu": "^0.0.2",
     "solid-js": "^1.7.6"
   }
