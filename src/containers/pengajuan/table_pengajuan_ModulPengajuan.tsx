@@ -12,14 +12,21 @@ import { DataMonthlyPengajuan } from '../../api/planning/new-pengajuan/new-penga
 // import { type } from 'os';
 import { setDataIDEvent, setDataIDMonthly, setDataIDWeekly, setSelectedCategory } from '../../store/Pengajuan/pengajuan-id';
 import Form_transferAdmin from './form_transferAdmin';
+import 'ag-grid-enterprise';
+import html2pdf from 'html2pdf.js';
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
 
 const [editedData, setEditedData] = createSignal(null);
 
+const [evidence, setEvidence] = createSignal('');
+
+
 const showEditPopup = (rowData: any) => {
     setEditedData(rowData);
     setIsEditPopupOpen(true);
+    setEvidence(rowData.evidence);
+    console.log("test", evidence());
 };
 
 function CloseEditPopUp() {
@@ -49,6 +56,86 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
         console.log("search ", searchTerm());
 
     };
+    
+
+    // const exportToPDF = () => {
+    //     const gridApi = gridOptions; // Gunakan gridOptions.api seperti yang Anda lakukan sebelumnya
+    
+    //     // Dapatkan baris yang dipilih menggunakan API
+    //     const selectedRows = gridApi.getSelectedRows();
+    
+    //     // Filter baris yang dipilih berdasarkan kriteria (status 'Approved' dan memiliki bukti)
+    //     const filteredRows = selectedRows.filter(row => row.status === 'Approved' && row.evidence);
+    
+    //     if (filteredRows.length > 0) {
+    //         const gridDiv = document.querySelector('.ag-theme-alpine');
+    //         if (gridDiv) {
+    //             html2pdf(gridDiv, {
+    //                 margin: 10,
+    //                 filename: 'approved_status_report.pdf',
+    //                 image: { type: 'jpeg', quality: 0.98 },
+    //                 html2canvas: { scale: 2 },
+    //                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    //             });
+    //         }
+    //     } else {
+    //         // Beri tahu pengguna bahwa tidak ada baris yang memenuhi syarat untuk diekspor
+    //         console.log('No approved records with evidence selected for export.');
+    //     }
+    // };
+
+    // const exportToPDF = async () => { ini gabisa
+    //     // Fetch the backend data
+    //     const backendData = await DataMonthlyPengajuan("data pengajuan baru");
+    
+    //     // Filter the backend data based on criteria (approved status and evidence availability)
+    //     const filteredData = backendData.filter(
+    //         (item) => item.status === 'Approved' && item.evidence !== undefined
+    //     );
+    
+    //     // Create a temporary element to render the filtered data
+    //     const tempDiv = document.createElement('div');
+    //     tempDiv.className = 'ag-theme-alpine';
+    //     document.body.appendChild(tempDiv);
+    
+    //     // Render the filtered data in the temporary element
+    //     AgGridSolid({
+    //         columnDefs: columnDefs,
+    //         rowData: filteredData,
+    //         defaultColDef: defaultColDef,
+    //         gridOptions: gridOptions,
+    //         rowSelection: 'multiple',
+    //         rowMultiSelectWithClick: true,
+    //     });
+    
+    //     // Export the rendered HTML to PDF
+    //     html2pdf(tempDiv, {
+    //         margin: 10,
+    //         filename: 'approved_status_report.pdf',
+    //         image: { type: 'jpeg', quality: 0.98 },
+    //         html2canvas: { scale: 2 },
+    //         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    //     });
+    
+    //     // Remove the temporary element
+    //     document.body.removeChild(tempDiv);
+    // };
+    
+    
+
+    const exportToPDF = () => { // ini yang bisa tapi gak ada kondisi 
+        const gridDiv = document.querySelector('.ag-theme-alpine');
+        console.log ("coba", gridDiv)
+        if (gridDiv) {
+          html2pdf(gridDiv, {
+            margin: 10,
+            filename: 'approved_status_report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          });
+        }
+      };
 
     // const [gridApi, setGridApi] = createSignal(null);
     // const [rowData, setRowData] = createSignal<RowData[]>(
@@ -198,8 +285,8 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
         { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
         // { field: 'category', headerName: 'Jenis', editable: false },
         { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
-        {
-            field: 'status', headerName: 'Status', editable: false, cellRenderer: (params) => {
+        { field: 'status', headerName: 'Status', editable: false, cellRenderer: (params) => {
+
                 // Fungsi ini akan dijalankan setiap kali rendering sel
                 const { value, data } = params;
                 const handleStatusClick = () => {
@@ -290,6 +377,10 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
     return (
         <div>
+            <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
+            <Icon icon="ph:export" width="23" height="23" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
+            </div>
+
             <div style={{ display: "flex", "justify-content": "space-between" }}>
                 <div>
                     {/* <label for="monthSelect">Pilih Bulan: </label> */}
@@ -335,7 +426,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                         rowMultiSelectWithClick={true}
                     />
                 </div>
-                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} />)}
+                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} evidence={evidence()}/>)}
             </div>
         </div>
     );
@@ -345,4 +436,3 @@ export default Table_pengajuan_ModulPengajuan;
 function isEditing() {
     throw new Error('Function not implemented.');
 }
-
