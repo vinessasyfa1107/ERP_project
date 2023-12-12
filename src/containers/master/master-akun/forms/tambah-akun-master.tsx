@@ -1,15 +1,27 @@
 import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
-import { createSignal, onCleanup, onMount } from 'solid-js';
+import { createSignal, onCleanup, onMount, createEffect } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './tambah-akun-master.css'
+import { options } from './data_coa';
 
 interface TambahAkunMasterProps {
     OnClose: () => void;
 }
 
+interface Option {
+    value: string;
+    label: string
+}
+
+interface SelectedOption {
+    value?: string;
+    label?: string;
+}
+
+
 const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
-    
+
     const [formData, setFormData] = createSignal({
         id: 0,
         account_name: '',
@@ -129,6 +141,58 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
     // };
 
 
+    // fungsi untuk drop down search COA
+    const [inputValue, setInputValue] = createSignal('');
+    const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(options());
+    const [showDropdown, setShowDropdown] = createSignal(false);
+    const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+
+    createEffect(() => {
+        const inputValueLowerCase = inputValue().toLowerCase();
+        const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase) || option.value.toLowerCase().includes(inputValueLowerCase));
+        setFilteredOptions(filtered);
+    });
+
+    createEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (target && !target.closest('.dropdown-container')) {
+                setShowDropdown(false);
+            }
+        };
+
+        window.addEventListener('click', handleClickOutside);
+
+        onCleanup(() => {
+            window.removeEventListener('click', handleClickOutside);
+        });
+    });
+
+    const handleInput = (e: Event) => {
+        const label = (e.target as HTMLInputElement).value;
+        console.log("?", label)
+        setInputValue(label);
+
+        const selectedOption = options().find((option) => option.value === label);
+
+        if (selectedOption) {
+            setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+        } else {
+            setSelectedOption(null);
+        }
+
+        setShowDropdown(true);
+    };
+
+
+    const handleOptionSelect = (selectedOption: Option) => {
+        // setInputValue(selectedOption.label);
+        setInputValue(`${selectedOption.value} ${selectedOption.label}`);
+        setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+        setShowDropdown(false);
+    };
+
+
     return (
         <div class="overlay">
 
@@ -163,6 +227,31 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                                     onInput={(e) => setFormData({ ...formData(), account_name: e.target.value })}
                                 />
                             </p>
+
+                            <div>
+                                <label>COA</label>
+                                <br />
+                                <div>
+                                    <input
+                                        type="text"
+                                        value={inputValue()}
+                                        onInput={handleInput}
+                                        // onKeyDown={handleKeyDown}
+                                        class="custom-dropdown-coa"
+                                    />
+                                    {showDropdown() && (
+                                        <div class="dropdown-options-coa">
+                                            <div class="options-list">
+                                                {filteredOptions().map((option) => (
+                                                    <div onClick={() => handleOptionSelect(option)} class="option-label">{option.value} {option.label}</div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {/* <div>Selected Value: {selectedOption() ? selectedOption().value : 'None'}</div> */}
+                                    {/* <div>Selected Value: {selectedOption()?.value || 'None'}</div> */}
+                                </div>
+                            </div>
 
                             <p>
                                 <label>Email*</label>
