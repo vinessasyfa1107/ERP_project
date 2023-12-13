@@ -121,16 +121,6 @@ const TablePengajuanDetail: Component = () => {
   const handleCellValueChanged = async (params) => {
     const { data } = params;
   
-    // // Log data yang sedang diubah
-    // console.log('Data yang diubah:', data);
-    // const updatedData = RowData().map((row) => ({ ...row, total: 0 }));
-
-    // // Update the state with all rows having total set to 0
-    // setRowData(updatedData);
-
-    // // Update local storage
-    // localStorage.setItem('editDetailMonthly', JSON.stringify(updatedData));
-    // Update local storage
     localStorage.setItem('editDetailMonthly', JSON.stringify(RowData()));
   
     // Recalculate total if 'qty' or 'price' is changed

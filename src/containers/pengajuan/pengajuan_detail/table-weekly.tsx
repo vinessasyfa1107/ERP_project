@@ -12,24 +12,27 @@ import { GridOptions } from 'ag-grid-community';
 
 
 const TablePengajuanDetailWeekly: Component = () => {
-    
-    const [RowData, setRowData] = createSignal([{}]);
+  const navigate = useNavigate();
 
+    const [RowData, setRowData] = createSignal([{}]);
+    const [editData, setEditData] = createSignal({
+      id: 0,
+      keterangan: '',
+    })
+  
     onMount(async () => {
         const weeklypengajuan = await DataDetailWeekly("data weekly detail plan");
         console.log("WEEKLY detail plan", weeklypengajuan);
         setRowData(weeklypengajuan)
+        weeklypengajuan.forEach((plan) =>
+        setEditData({
+          id: plan.pengajuan_id,
+          keterangan: plan.keterangan,
+        })
+      )
+        localStorage.setItem('editDetailWeekly', JSON.stringify([...weeklypengajuan]));
     })
 
-
-// const [gridApi, setGridApi] = createSignal(null);
-// const [rowData, setRowData] = createSignal<RowData[]>(
-//     (() => {
-//       // Coba ambil data dari localStorage saat komponen diinisialisasi
-//       const savedData = localStorage.getItem('tableAllPengajuan');
-//       return savedData ? JSON.parse(savedData) : ([] as RowData[]);
-//     })()
-//   );
 
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
@@ -37,20 +40,6 @@ const TablePengajuanDetailWeekly: Component = () => {
   const [confirmationStatus, setConfirmationStatus] = createSignal(false);
   const [formSubmitted, setFormSubmitted] = createSignal(false);
 
-//   onMount(async () => {
-//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-//     console.log("dataplanning", data_planning);
-//     setRowData(data_planning);
-//   })
-
-//   const fetchData = async () => {
-//     const data_planning = await dataplanning("data planning dashboard dan modul pengajuan");
-//     setRowData(data_planning);
-//   };
-
-//   onMount(() => {
-//     fetchData();
-//   });
 
   const handlePopUpApproved = (data) => {
     if (data.status === 'Approved') {
@@ -59,16 +48,6 @@ const TablePengajuanDetailWeekly: Component = () => {
     }
   };
 
-//   const ClosePopUp = () => {
-//     setPopUpOpen(false);
-//     fetchData();
-//   };
-
-  
-// const onCellClicked = (data) => {
-//         setDataIDPlan(data.id);
-//         navigate('/pengajuan/pengajuan_detail');
-//   };
 
   const handleSelectionChanged = (event) => {
     const selectedRows = event.api.getSelectedRows();
@@ -108,27 +87,49 @@ const TablePengajuanDetailWeekly: Component = () => {
     }).format(numericValue);
   }; 
 
+  const [editID, setEditID] = createSignal(0)
+  const [totalPrice, setTotalPrice] = createSignal(0);
+
+  const handleCellValueChanged = async (params) => {
+    const { data } = params;
+  
+    localStorage.setItem('editDetailMonthly', JSON.stringify(RowData()));
+  
+    // Recalculate total if 'qty' or 'price' is changed
+    if (params.colDef.field === 'quantity' || params.colDef.field === 'price') {
+      const newTotal = data.quantity * Number(data.price);
+  
+      // Update local storage only for the changed row
+      const updatedData = RowData().map((row, index) =>
+        index === params.rowIndex ? { ...row, quantity: Number(data.quantity), price: Number(data.price), total: newTotal } : row
+      );
+  
+      // Update local storage
+      localStorage.setItem('editDetailMonthly', JSON.stringify(updatedData));
+      
+      // Update the state with the changed row
+      setRowData(updatedData);
+    }
+  
+    // Log data setelah seluruh proses
+    console.log('edited', RowData());
+    console.log('id', data.pengajuan_id)
+
+    setEditID(data.pengajuan_id)
+
+  };
+  
 
   const gridOptions = {
     columnDefs: [
-    // { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
-    // { field: 'id', headerName: 'ID', editable: false },
     { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 100 },
     { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
     { field: 'coa_kd', headerName: 'COA', editable: false },
     { field: 'keterangan', editable: false },
     { field: 'kebutuhan'},
     { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
-    // { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
-    // { field: 'quantity', headerName: 'Qty', editable: false },
-    // { field: 'price', headerName: 'Harga' },
-    // { field: 'total', headerName: 'Jumlah' },
-    // // { field: 'status', headerName: 'Status', editable: false },
-    // { field: 'notes'},
-    // { field: 'reference'},
-
-    // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
   ],
+    onCellValueChanged: handleCellValueChanged,
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
@@ -142,37 +143,93 @@ const TablePengajuanDetailWeekly: Component = () => {
     },
 };
 
-  // const rowData = [
-  //   { id: '11C7D', tanggal: '10-2-22', COA: '1-0000', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' , status: 'Waiting' },
-  //   { id: '11C7C', tanggal: '10-2-22', COA: '1-1000', kategori: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Event' , status: 'Approved', confirm: true },
-  //   { id: '11C7B', tanggal: '10-2-22', COA: '2-1001', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly', status: 'Rejected' },
-  //   { id: '11C7A', tanggal: '9-2-22', COA: '2-2000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-  //   { id: '11C7D', tanggal: '10-2-22', COA: '3-4001', kategori: 'Trip', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' },
-  //   { id: '11C7C', tanggal: '10-2-22', COA: '3-5000', kategori: 'Meeting', Keterangan: 'Lorem Ipsum', amount: 10000000, type: 'Weekly' },
-  //   { id: '11C7B', tanggal: '10-2-22', COA: '4-1000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 3250000, type: 'Monthly' },
-  //   { id: '11C7A', tanggal: '9-2-22', COA: '4-2000', kategori: 'Requisite', Keterangan: 'Lorem Ipsum', amount: 2000000, type: 'Weekly' }
-  // ];
-
-
   const defaultColDef = {
     flex: 1,
     sortable: true,
   }
 
-//   const gridOptions = {
-//     // domLayout: 'autoHeight' as DomLayoutType,
-//     pagination: true,
-//     paginationPageSize: 4,
-//     rowHeight: 40,
-//     onSelectionChanged: handleSelectionChanged,
-//     onCellEditingStopped: (event) => {
-//       // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
-//       if (event.column.getColId() === 'amount' && event.data.confirm) {
-//         // Reset nilai ke nilai asli
-//         event.api.applyTransaction({ update: [{ ...event.data }] });
-//       }
-//     },
-//   }
+  const [editPopUp, setEditPopUp] = createSignal(false);
+
+  function showEditPopup(){
+    setEditPopUp(true)
+  }
+
+  const ClosePopUp = () => {
+    setEditPopUp(false);
+  };
+
+  const calculateTotal = () => {
+    const gridData = RowData();
+    let sumtotal = 0;
+    for (const row of gridData) {
+      return sumtotal;
+    }
+  }
+
+  const handleSubmitEdit = async () => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().slice(0, 11);
+
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+    const timestamp = `${formattedDate}${formattedTime}`;
+
+    const updatedData = RowData().map(item => ({
+      ...item,
+      pengajuan_id: 0
+    }));
+
+    const formated = {
+      details: 
+      updatedData
+    }
+
+    const updatePengajuan = new FormData();
+    updatePengajuan.append('id', editData().id.toString());
+    updatePengajuan.append('entry_ts', timestamp);
+    updatePengajuan.append('namapengajuan', editData().keterangan);
+    updatePengajuan.append('tipepengajuan', 'Monthly');
+    updatePengajuan.append('total', `${calculateTotal()}`);
+    updatePengajuan.append('status','Waiting');
+    updatePengajuan.append('alasan', 'Sudah di revisi');
+
+
+    console.log("format", formated)
+
+    try {
+      const response = await fetch (`/api/monthlypengajuan/detail`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify(formated)
+      });
+
+      const response2 = await fetch (`/api/pengajuan/${editID()}`, {
+        method: 'PUT',
+        body: updatePengajuan,
+      });
+
+      if (response.ok && response2.ok) {
+        console.log('Data berhasil diubah');
+        alert('Data berhasil diubah');
+        navigate('/pengajuan/pengajuan_dashboard');
+      } else {
+        const errorMessage = await response.text();
+        alert(`Gagal menambah data. Pesan kesalahan: ${errorMessage}`);
+        console.error('Gagal menambah data:', errorMessage);
+        const errorMessage2 = await response2.text();
+        alert(`Gagal menambah data. Pesan kesalahan: ${errorMessage2}`);
+        console.error('Gagal menambah data:', errorMessage2);
+      }
+
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
 
   return (
     <div style={{ "justify-content": "center", "margin-top":"30px" }}>
@@ -189,6 +246,24 @@ const TablePengajuanDetailWeekly: Component = () => {
         />
       </div>
       {/* {popUpOpen() && <FormConfirm data={popupData()} confirm={confirmationStatus()} OnClose={ClosePopUp} />} */}
+      <div>
+        {/* <button onClick={handleEditClick}>Edit</button> */}
+        <br/>
+        <button class="simpan-perubahan-detail" onClick={showEditPopup}>Simpan</button>
+          {editPopUp() && 
+          <div class='overlay'>
+            <div class="absolute">
+            <div class="confirm-edit-detail">
+                Apakah anda yakin ingin mengirim perubahan?
+                <div class="btn-confirm-edit-detail">
+                  <button class="btn-iya-tidak iya" onClick={ClosePopUp}>Tidak</button>
+                  <button class="btn-iya-tidak tidak" onClick={handleSubmitEdit}>Ya</button>
+                </div>
+            </div>
+            </div>
+          </div>
+          }
+      </div>
     </div>
   );
 };
