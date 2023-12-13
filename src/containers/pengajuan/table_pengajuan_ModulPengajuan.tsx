@@ -277,7 +277,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
 
     const columnDefs = [
-        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
+        { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 30 },
         { field: 'id', headerName: 'ID', editable: false },
         { field: 'entry_ts', headerName: 'Tanggal', editable: false },
         // { field: 'coa_kd', headerName: 'COA', editable: false },
@@ -315,7 +315,20 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                     </div>
                 );
             }
-        }
+        },
+        
+        
+        { field: "export", headerName: "", cellRenderer: (params: any) => {
+            return (
+                <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
+                    <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
+                </div>
+                // <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
+                //     <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
+                //     {params.value}
+                // </div>
+            );
+        }}
         // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
     ];
 
@@ -377,9 +390,9 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
     return (
         <div>
-            <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
+            {/* <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
             <Icon icon="ph:export" width="23" height="23" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
-            </div>
+            </div> */}
 
             <div style={{ display: "flex", "justify-content": "space-between" }}>
                 <div>
