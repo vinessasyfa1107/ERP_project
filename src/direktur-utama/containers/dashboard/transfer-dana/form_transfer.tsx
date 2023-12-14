@@ -103,6 +103,7 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
 
         const confirmSubmission = window.confirm("Apakah Anda yakin ingin mengirim bukti transfer dana sebesar ");
 
+        // form keseluruhan selain evidence
         const formTransfer = new FormData();
 
         // Append other form data
@@ -113,11 +114,6 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
         formTransfer.append('total', props.data.total.toString());
         formTransfer.append('status', statusValue);
         formTransfer.append('alasan', `${alasan}`);
-
-        // Append file to FormData if a file is selected
-        if (selectedFile()) {
-            formTransfer.append('evidence', selectedFile());
-        }
 
         try {
             const response = await fetch(`/api/pengajuan/${props.data.id}`, {
@@ -142,6 +138,36 @@ const Form_transfer: Component<EditPopUpProps> = (props) => {
             alert('Terjadi kesalahan. Silakan coba lagi.');
             console.error('Terjadi kesalahan:', error);
         }
+
+        // form untuk evidence
+
+        // Append file to FormData if a file is selected
+        if (selectedFile()) {
+            const formEvidence = new FormData();
+            formEvidence.append('id', props.data.id.toString());
+            formEvidence.append('evidence', selectedFile());
+
+            try {
+                const evidenceResponse = await fetch(`/api/pengajuan/evidence/${props.data.id}`, {
+                    method: 'PUT',
+                    body: formEvidence,
+                });
+
+                if (!evidenceResponse.ok) {
+                    const evidenceErrorMessage = await evidenceResponse.text();
+                    alert(`Gagal mengirim evidence. Pesan kesalahan: ${evidenceErrorMessage}`);
+                    console.error('Gagal mengirim evidence:', evidenceErrorMessage);
+                    return; // Hentikan eksekusi jika pengiriman evidence gagal
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan saat mengirim evidence. Silakan coba lagi.');
+                console.error('Terjadi kesalahan saat mengirim evidence:', error);
+                return; // Hentikan eksekusi jika terjadi kesalahan saat mengirim evidence
+            }
+        }
+
+
+
 
     };
 

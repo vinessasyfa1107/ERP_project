@@ -49,7 +49,9 @@ const TambahAkunMaster: Component<TambahAkunMasterProps> = (props) => {
                 access: formData().access,
                 role: formData().role,
                 username: formData().username,
-                password: formData().password
+                password: formData().password,
+                coa_kd: selectedOption()?.value,
+                coa_name: selectedOption()?.label
             };
 
             console.log("Insert: ", DataAccount);

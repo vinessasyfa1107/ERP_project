@@ -45,7 +45,7 @@ input::-webkit-inner-spin-button {
     background-color: #fff;
     text-align: left;
     padding: 25px 20px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .form-transfer-container .form .headakun {
