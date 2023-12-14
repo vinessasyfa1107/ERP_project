@@ -123,19 +123,67 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     
     
 
-    const exportToPDF = () => { // ini yang bisa tapi gak ada kondisi 
-        const gridDiv = document.querySelector('.ag-theme-alpine');
-        console.log ("coba", gridDiv)
-        if (gridDiv) {
-          html2pdf(gridDiv, {
-            margin: 10,
-            filename: 'approved_status_report.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          });
+    // const exportToPDF = () => { // ini yang bisa tapi gak ada kondisi 
+    //     const gridDiv = document.querySelector('.ag-theme-alpine');
+    //     console.log ("coba", gridDiv)
+    //     if (gridDiv) {
+    //       html2pdf(gridDiv, {
+    //         margin: 10,
+    //         filename: 'approved_status_report.pdf',
+    //         image: { type: 'jpeg', quality: 0.98 },
+    //         html2canvas: { scale: 2 },
+    //         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    //       });
+    //     }
+    //   };
+
+    const exportToCSV = () => {
+    const gridDiv = document.querySelector('.ag-theme-alpine');
+
+    if (gridDiv) {
+        // Mengambil data dari tabel/grid
+        const gridData = [];
+        const headerRow = [];
+        const rows = gridDiv.querySelectorAll('.ag-header-row, .ag-row');
+
+        rows.forEach(row => {
+            const rowData = [];
+            const cells = row.querySelectorAll('.ag-cell');
+
+            cells.forEach(cell => {
+                const cellText = (cell as HTMLElement).innerText.trim(); // Explicit cast to HTMLElement
+                rowData.push(cellText);
+
+                // Jika ini adalah baris header, simpan nama kolom
+                if (row.classList.contains('ag-header-row')) {
+                    headerRow.push(cellText);
+                }
+            });
+
+            if (rowData.length > 0) {
+                gridData.push(rowData.join(','));
+            }
+        });
+
+        if (gridData.length > 0) {
+            // Menyusun data CSV
+            const csvContent = [headerRow.join(',')].concat(gridData).join('\n');
+
+            // Membuat file CSV
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+
+            // Menyimpan file CSV
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', 'approved_status_report.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
-      };
+    }
+};
+
+    
 
     // const [gridApi, setGridApi] = createSignal(null);
     // const [rowData, setRowData] = createSignal<RowData[]>(
@@ -320,9 +368,22 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
         
         { field: "export", headerName: "", cellRenderer: (params: any) => {
             return (
-                <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
-                    <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
+                <div class="tooltip fixed-tooltip" data-tip="Export">
+                    <div class="flex-container">
+                        <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer" }} onclick={exportToCSV} />
+                    </div>
                 </div>
+
+
+                // <div class="tooltip" data-tip="Export">
+                //     <div style="display: flex; align-items: center;">
+                //         <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onclick={exportToPDF} />
+                //     </div>
+                // </div>
+
+                // <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
+                //     <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
+                // </div>
                 // <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
                 //     <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
                 //     {params.value}
