@@ -9,16 +9,20 @@ import { dataplanning } from '../../../../api/planning/dataplanning';
 import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
-  
+
+const [evidence, setEvidence] = createSignal('');
+
 const [editedData, setEditedData] = createSignal(null);
 
 const showEditPopup = (rowData: any) => {
-  setEditedData(rowData);
-  setIsEditPopupOpen(!isEditPopupOpen());
+    setEditedData(rowData);
+    setIsEditPopupOpen(!isEditPopupOpen());
+    setEvidence(rowData.evidence);
+    console.log("test", evidence());
 };
 
-function CloseEditPopUp () {
-  setIsEditPopupOpen (false);
+function CloseEditPopUp() {
+    setIsEditPopupOpen(false);
 }
 
 
@@ -52,19 +56,19 @@ const Tabel_transfer_dana = () => {
         { field: 'id', headerName: "ID" },
         { field: 'entry_ts', headerName: "Tanggal" },
         { field: 'namapengajuan', headerName: "Nama Pengajuan" },
-        { field: 'tipepengajuan', headerName: "Kategori", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }  },
+        { field: 'tipepengajuan', headerName: "Kategori", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
         { field: 'total', headerName: "Jumlah", valueFormatter: (params) => formatRupiah(params.value) },
         { field: 'status', headerName: "Status" },
         {
             field: "transfer", headerName: "", cellRenderer: (params: any) => {
                 return (
                     <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
-                        <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Transfer &gt</button>
+                        <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
                         {params.value}
                     </div>
                 );
             }
-        }
+        },
     ];
 
     const defaultColDef = {
@@ -98,13 +102,14 @@ const Tabel_transfer_dana = () => {
                 <AgGridSolid
                     rowData={RowData()} // use signal
                     columnDefs={columnDefs} // no signal
-                    rowSelection="single" // no signal, inline
+                    rowSelection="multiple" // no signal, inline
                     defaultColDef={defaultColDef}
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
-                    rowClassRules={rowClassRules} 
+                    rowClassRules={rowClassRules}
+                    rowMultiSelectWithClick={true}
                 />
             </div>
-            {isEditPopupOpen() && (<Form_transfer data={editedData()} OnClose={CloseEditPopUp} />)}
+            {isEditPopupOpen() && (<Form_transfer OnClose={CloseEditPopUp} evidence={evidence()} />)}
         </div>
     );
 };
