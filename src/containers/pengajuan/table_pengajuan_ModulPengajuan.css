@@ -90,3 +90,22 @@
   .icon-export {
     color:black;
   }
+
+  /* .tooltip {
+    position: fixed;
+    margin-top: 10px;
+    margin-bottom: 10px;
+} */
+
+.fixed-tooltip {
+  position: fixed;
+  /* tambahkan properti lain sesuai kebutuhan */
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  /* tambahkan properti lain sesuai kebutuhan */
+}
+
+

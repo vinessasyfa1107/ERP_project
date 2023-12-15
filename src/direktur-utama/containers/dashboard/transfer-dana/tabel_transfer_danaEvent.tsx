@@ -9,16 +9,20 @@ import { dataplanning } from '../../../../api/planning/dataplanning';
 import { DataMonthlyPengajuan } from '../../../../api/planning/new-pengajuan/new-pengajuan';
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
-  
+
+const [evidence, setEvidence] = createSignal('');
+
 const [editedData, setEditedData] = createSignal(null);
 
 const showEditPopup = (rowData: any) => {
-  setEditedData(rowData);
-  setIsEditPopupOpen(!isEditPopupOpen());
+    setEditedData(rowData);
+    setIsEditPopupOpen(!isEditPopupOpen());
+    setEvidence(rowData.evidence);
+    console.log("test", evidence());
 };
 
-function CloseEditPopUp () {
-  setIsEditPopupOpen (false);
+function CloseEditPopUp() {
+    setIsEditPopupOpen(false);
 }
 
 
@@ -52,14 +56,14 @@ const Tabel_transfer_danaEvent = () => {
         { field: 'id', headerName: "ID" },
         { field: 'entry_ts', headerName: "Tanggal" },
         { field: 'namapengajuan', headerName: "Nama Pengajuan" },
-        { field: 'tipepengajuan', headerName: "Kategori", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true }  },
+        { field: 'tipepengajuan', headerName: "Kategori", cellStyle: getCellStyle, cellClassRules: { 'bold-type': () => true } },
         { field: 'total', headerName: "Jumlah", valueFormatter: (params) => formatRupiah(params.value) },
         { field: 'status', headerName: "Status" },
         {
             field: "transfer", headerName: "", cellRenderer: (params: any) => {
                 return (
                     <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
-                        <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Transfer &gt</button>
+                        <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
                         {params.value}
                     </div>
                 );
@@ -91,6 +95,13 @@ const Tabel_transfer_danaEvent = () => {
         'evidence-present': (params) => params.data.evidence, // Menambahkan kelas 'evidence-present' jika evidence ada
     };
 
+    const gridOptions = {
+        // domLayout: 'autoHeight' as DomLayoutType,
+        pagination: true,
+        paginationPageSize: 4,
+        rowHeight: 40
+    }
+
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
@@ -98,13 +109,15 @@ const Tabel_transfer_danaEvent = () => {
                 <AgGridSolid
                     rowData={RowData()} // use signal
                     columnDefs={columnDefs} // no signal
-                    rowSelection="single" // no signal, inline
                     defaultColDef={defaultColDef}
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
-                    rowClassRules={rowClassRules} 
+                    rowClassRules={rowClassRules}
+                    rowSelection="multiple"
+                    rowMultiSelectWithClick={true}
+                    gridOptions={gridOptions}
                 />
             </div>
-            {isEditPopupOpen() && (<Form_transfer data={editedData()} OnClose={CloseEditPopUp} />)}
+            {isEditPopupOpen() && (<Form_transfer OnClose={CloseEditPopUp} evidence={evidence()}/>)}
         </div>
     );
 };

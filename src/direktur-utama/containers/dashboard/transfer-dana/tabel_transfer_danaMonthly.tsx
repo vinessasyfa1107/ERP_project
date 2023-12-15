@@ -15,7 +15,10 @@ const [editedData, setEditedData] = createSignal(null);
 const showEditPopup = (rowData: any) => {
   setEditedData(rowData);
   setIsEditPopupOpen(!isEditPopupOpen());
+  setEvidence(rowData.evidence);
 };
+
+const [evidence, setEvidence] = createSignal('');
 
 function CloseEditPopUp () {
   setIsEditPopupOpen (false);
@@ -91,6 +94,14 @@ const Tabel_transfer_danaMonthly = () => {
         'evidence-present': (params) => params.data.evidence, // Menambahkan kelas 'evidence-present' jika evidence ada
     };
 
+    const gridOptions = {
+        // domLayout: 'autoHeight' as DomLayoutType,
+        pagination: true,
+        paginationPageSize: 4,
+        rowHeight: 40
+    }
+
+
 
     return (
         <div style={{ display: 'flex', "justify-content": 'center', "align-items": 'center' }}>
@@ -98,13 +109,15 @@ const Tabel_transfer_danaMonthly = () => {
                 <AgGridSolid
                     rowData={RowData()} // use signal
                     columnDefs={columnDefs} // no signal
-                    rowSelection="single" // no signal, inline
                     defaultColDef={defaultColDef}
                     onSelectionChanged={selectionChangedCallback} // listen for grid event
                     rowClassRules={rowClassRules} 
+                    rowSelection="multiple"
+                    rowMultiSelectWithClick={true}
+                    gridOptions={gridOptions}
                 />
             </div>
-            {isEditPopupOpen() && (<Form_transfer data={editedData()} OnClose={CloseEditPopUp} />)}
+            {isEditPopupOpen() && (<Form_transfer OnClose={CloseEditPopUp} evidence={evidence()}/>)}
         </div>
     );
 };
