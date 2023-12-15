@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import { render } from 'solid-js/web';
-import { createSignal, onCleanup, onMount } from 'solid-js';
+import { createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './pemasukan.css'
 
@@ -10,6 +10,14 @@ interface PemasukanProps {
 
 const PemasukanCreate: Component<PemasukanProps> = (props) => {
     const [selectedFile, setSelectedFile] = createSignal<File | null>(null);
+
+    const [inputValue, setInputValue] = createSignal('');
+
+     createEffect(() => {
+    const inputValueLowerCase = inputValue().toLowerCase();
+    const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase) || option.value.toLowerCase().includes(inputValueLowerCase));
+    setFilteredOptions(filtered);
+  });
 
     const handleFileChange = (e: Event) => {
         const target = e.target as HTMLInputElement;
@@ -206,37 +214,26 @@ const PemasukanCreate: Component<PemasukanProps> = (props) => {
                                 </div>
 
                                 <div>
-                                    <label>COA*</label>
-                                    <br />
-                                    <div class="custom-dropdown-coa" ref={dropdownRef}>
-                                        <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
-                                            <div>{selectedOption() || ""}</div>
-                                            <div>
-                                                {isOpen() ? 
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
-                                                : <svg xmlns="http://www.w3.org/2000/svg" class="mt-1" width="13" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
-                                                }
-                                            </div>
-                                            {/* {isOpen() ? "▲" : "▼"} */}
-                                        </div>
-                                        <div>
-                                        {isOpen() && (
-                                            <div class="dropdown-options-coa">
-                                            <div class="options-list" >
-                                                {options.map((option, index) => (
-                                                <div
-                                                    class="option"
-                                                    onClick={() => {
-                                                    setSelectedOption(option);
-                                                    setIsOpen(false);
-                                                    }}
-                                                >
-                                                    {option}
-                                                </div>
-                                                ))}
-                                            </div>
-                                            </div>
-                                        )}
+            <label>COA</label>
+            <br />
+            <div>
+              <input
+                type="text"
+                placeholder="COA.."
+                value={inputValue()}
+                onInput={handleInput}
+                onKeyDown={handleKeyDown}
+                class="custom-dropdown-coa"
+              />
+              {showDropdown() && (
+                <div class="dropdown-options-coa">
+                  <div class="options-list">
+                    {filteredOptions().map((option) => (
+                      <div onClick={() => handleOptionSelect(option)} class="option-label">{option.value} {option.label}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
                                         </div>
                                     </div>
 
