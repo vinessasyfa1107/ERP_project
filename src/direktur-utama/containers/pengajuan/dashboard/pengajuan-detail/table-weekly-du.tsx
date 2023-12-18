@@ -10,7 +10,6 @@ import { DataWeeklyPengajuan } from '../../../../../api/planning/new-pengajuan/w
 import { DataDetailWeekly } from '../../../../../api/planning/new-pengajuan/weekly-detail-pengajuan';
 import { GridOptions } from 'ag-grid-community';
 
-
 const TableWeeklyDU: Component = () => {
     
     const [RowData, setRowData] = createSignal([{}]);
