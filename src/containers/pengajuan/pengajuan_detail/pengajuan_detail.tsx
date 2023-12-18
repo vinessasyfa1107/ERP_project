@@ -10,6 +10,7 @@ import Table_event_detail from './table_event_detail';
 import TablePengajuanDetailWeekly from './table-weekly';
 import { selectedCategory } from '../../../store/Pengajuan/pengajuan-id';
 import { Icon } from '@iconify-icon/solid';
+import Admin from '../../dashboard/teams/teams';
 
 
 const PengajuanDetail: Component = () => {
@@ -40,6 +41,37 @@ const PengajuanDetail: Component = () => {
         localStorage.removeItem('tableKetMonth');
     };
 
+    const [popUpConfirm, setPopUpConfirm] = createSignal(false)
+    const [categoryDelete, setCategoryDelete] = createSignal('');
+
+    function handlePopUpConfirm(category: string){
+        setPopUpConfirm(true);
+        setCategoryDelete(category);
+        // if(category === 'Monthly'){
+        //     setCategoryDelete(category);
+        // } else if(category === 'Event'){
+        //     setCategoryDelete(category);
+        // } else if(category === 'Weekly'){
+        //     setCategoryDelete(category);
+        // }
+    }
+
+    function deletePlan(){
+        console.log(`dlt ${categoryDelete()}`)
+        if(categoryDelete() === 'Monthly'){
+            hapusMonthlyDetail();
+        } else if(categoryDelete() === 'Event'){
+            hapusEventDetail();
+        } else if(categoryDelete() === 'Weekly'){
+            hapusWeeklyDetail();
+        }
+        setPopUpConfirm(false);
+    }
+
+    function closePopUpConfirm(){
+        setPopUpConfirm(false)
+    }
+
     return (
         <div>
             <Pengajuan_navbar />
@@ -54,19 +86,19 @@ const PengajuanDetail: Component = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Pengajuan Event</td>
-                        <td><A href="/pengajuan-event/pengajuan-event-detail">{getNamaPengajuanEvent()}</A></td>
-                        <td><Icon icon="bi:trash-fill" onClick={hapusEventDetail}/></td>
+                    <td>Pengajuan Event</td>
+                    <td><A href="/pengajuan-event/pengajuan-event-detail">{getNamaPengajuanEvent()}</A></td>
+                    <td><Icon icon="bi:trash-fill" onClick={() => handlePopUpConfirm('Event')} /></td>
                     </tr>
                     <tr>
-                        <td>Pengajuan Weekly</td>
-                        <td><A href="/pengajuan-weekly/pengajuanweekly-insentif">{getNamaPengajuanWeekly()}</A></td>
-                        <td><Icon icon="bi:trash-fill" onClick={hapusWeeklyDetail}/></td>
+                    <td>Pengajuan Weekly</td>
+                    <td><A href="/pengajuan-weekly/pengajuanweekly-insentif">{getNamaPengajuanWeekly()}</A></td>
+                    <td><Icon icon="bi:trash-fill" onClick={() => handlePopUpConfirm('Weekly')} /></td>
                     </tr>
                     <tr>
-                        <td>Pengajuan Monthly</td>
-                        <td><A href="/pengajuan-monthly/operasional-rutin-tamanhas">{getNamaPengajuanMonthly()}</A></td>
-                        <td><Icon icon="bi:trash-fill" onClick={hapusMonthlyDetail}/></td>
+                    <td>Pengajuan Monthly</td>
+                    <td><A href="/pengajuan-monthly/operasional-rutin-tamanhas">{getNamaPengajuanMonthly()}</A></td>
+                    <td><Icon icon="bi:trash-fill" onClick={() => handlePopUpConfirm('Monthly')} /></td>
                     </tr>
                 </tbody>
             </table>
@@ -99,7 +131,19 @@ const PengajuanDetail: Component = () => {
 
                 {/* {showWeekly() && (<TablePengajuanDetail /> || <TablePengajuanDetailWeekly /> || <Table_event_detail />)} */}
             </div>
-
+                {popUpConfirm() && 
+                <div class='overlay'>
+                <div class="absolute">
+                <div class="confirm-edit-detail" style={{"text-align":"center"}}>
+                    Apakah anda yakin ingin menghapus data dari {categoryDelete()}?
+                    <div class="btn-confirm-edit-detail" style={{"margin-top":"10px"}}>
+                        <button class="btn-iya-tidak iya" onClick={closePopUpConfirm}>Tidak</button>
+                        <button class="btn-iya-tidak tidak" onClick={deletePlan}>Ya</button>
+                    </div>
+                </div>
+                </div>
+                </div>
+                }
         </div>
     );
 };
