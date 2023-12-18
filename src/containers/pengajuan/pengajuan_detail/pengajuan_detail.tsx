@@ -4,11 +4,12 @@ import Pengajuan_navbar from '../pengajuan_navbar';
 import './pengajuan_detail.css'
 // import { namaPengajuanEvent } from '../../navbars/create/kategori_pengajuan/pengajuan_event/pengajuan-event/nama-pengajuan-event';
 import { A } from '@solidjs/router';
-import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly } from '../../../store/Pengajuan/nama-pengajuan';
+import { getNamaPengajuanEvent, getNamaPengajuanMonthly, getNamaPengajuanWeekly, resetNamaPengajuanEvent, resetNamaPengajuanMonthly, resetNamaPengajuanWeekly } from '../../../store/Pengajuan/nama-pengajuan';
 import TablePengajuanDetail from './table-monthly-detail';
 import Table_event_detail from './table_event_detail';
 import TablePengajuanDetailWeekly from './table-weekly';
 import { selectedCategory } from '../../../store/Pengajuan/pengajuan-id';
+import { Icon } from '@iconify-icon/solid';
 
 
 const PengajuanDetail: Component = () => {
@@ -21,46 +22,76 @@ const PengajuanDetail: Component = () => {
 
     const [showWeekly, setShowWeekly] = createSignal(true);
 
+    function hapusEventDetail(){
+        resetNamaPengajuanEvent();
+        localStorage.removeItem('tableDataEventDetails');
+        localStorage.removeItem('tableKetPengajuanEvent');
+    };
+
+    function hapusWeeklyDetail(){
+        resetNamaPengajuanWeekly();
+        localStorage.removeItem('tableDataWeekly');
+        localStorage.removeItem('tableKetWeekly');
+    };
+
+    function hapusMonthlyDetail(){
+        resetNamaPengajuanMonthly();
+        localStorage.removeItem('tableData');
+        localStorage.removeItem('tableKetMonth');
+    };
 
     return (
         <div>
             <Pengajuan_navbar />
             <div class="pengajuan-detail-container">
-                <A href="/pengajuan-event/pengajuan-event-detail">
-                    <div>
-                        <h1>Pengajuan Event:</h1>
-                        <p>{getNamaPengajuanEvent()}</p>
-                    </div>
-                </A>
+            <table>
+                <thead>
+                    <tr>
+                        <th style={{width:"30vh"}}>Jenis Pengajuan</th>
+                        <th style={{width:"fit-content"}}>Nama Pengajuan</th>
+                        <th style={{width:"10vh"}}>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pengajuan Event</td>
+                        <td><A href="/pengajuan-event/pengajuan-event-detail">{getNamaPengajuanEvent()}</A></td>
+                        <td><Icon icon="bi:trash-fill" onClick={hapusEventDetail}/></td>
+                    </tr>
+                    <tr>
+                        <td>Pengajuan Weekly</td>
+                        <td><A href="/pengajuan-weekly/pengajuanweekly-insentif">{getNamaPengajuanWeekly()}</A></td>
+                        <td><Icon icon="bi:trash-fill" onClick={hapusWeeklyDetail}/></td>
+                    </tr>
+                    <tr>
+                        <td>Pengajuan Monthly</td>
+                        <td><A href="/pengajuan-monthly/operasional-rutin-tamanhas">{getNamaPengajuanMonthly()}</A></td>
+                        <td><Icon icon="bi:trash-fill" onClick={hapusMonthlyDetail}/></td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <A href="/pengajuan-weekly/pengajuanweekly-insentif">
+
+                    {/* <div>
+                        <h1>Pengajuan Event:</h1>
+                        <A href="/pengajuan-event/pengajuan-event-detail">
+                        <p>{getNamaPengajuanEvent()}</p>
+                        </A>
+                    </div>
+
                     <div>
                         <h1>Pengajuan Weekly:</h1>
+                        <A href="/pengajuan-weekly/pengajuanweekly-insentif">
                         <p>{getNamaPengajuanWeekly()}</p>
+                        </A>
                     </div>
-                </A>
 
-                <A href="/pengajuan-monthly/operasional-rutin-tamanhas">
                     <div>
                         <h1>Pengajuan Monthly:</h1>
+                        <A href="/pengajuan-monthly/operasional-rutin-tamanhas">
                         <p>{getNamaPengajuanMonthly()}</p>
-                    </div>
-                </A>
-
-                {/* <div style={{ "margin-top": "20px" }}>
-                    <h1 style={{ "font-size": "18px" }}>Detail Pengajuan Monthly</h1>
-                    <TablePengajuanDetail />
-                </div>
-
-                <div style={{ "margin-top": "20px" }}>
-                    <h1 style={{ "font-size": "18px" }}>Detail Pengajuan Weekly</h1>
-                    <TablePengajuanDetailWeekly />
-                </div>
-
-                <div style={{ "margin-top": "20px" }}>
-                    <h1 style={{ "font-size": "18px" }}>Detail Pengajuan Event</h1>
-                    <Table_event_detail />
-                </div> */}
+                        </A>
+                    </div> */}
 
                 {selectedCategory() === 'Weekly' && <TablePengajuanDetailWeekly />}
                 {selectedCategory() === 'Event' && <Table_event_detail />}

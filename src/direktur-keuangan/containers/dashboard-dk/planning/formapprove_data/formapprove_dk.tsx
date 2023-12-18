@@ -81,7 +81,7 @@ const Formapprove_dk: Component<EditPopUpProps> = (props) => {
     updatePengajuan.append('namapengajuan', props.params.namapengajuan.toString());
     updatePengajuan.append('tipepengajuan', props.params.tipepengajuan.toString());
     updatePengajuan.append('total', props.params.total.toString());
-    updatePengajuan.append('status', (props.params.planningtype === 'Weekly') ? 'Approved' : 'InProgress');
+    updatePengajuan.append('status', status());
     updatePengajuan.append('alasan', alasan());
     // updatePengajuan.set('konfirmasi', null);
 

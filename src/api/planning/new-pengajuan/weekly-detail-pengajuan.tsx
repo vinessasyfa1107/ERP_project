@@ -1,6 +1,7 @@
 import { dataIdWeekly } from "../../../store/Pengajuan/pengajuan-id";
 
 export type resultdata = {
+  "id": number,
   "pengajuan_id": number,
   "keterangan": string,
   "kebutuhan": string,
@@ -23,7 +24,7 @@ export type resultdata = {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents, "TESTT");
-    return documents.slice(0, documents.length).map(({ pengajuan_id, keterangan, kebutuhan, namapengajuan, total, coa_kd}) => ({
-      pengajuan_id, keterangan, kebutuhan, namapengajuan, total, coa_kd
+    return documents.slice(0, documents.length).map(({ id, pengajuan_id, keterangan, kebutuhan, namapengajuan, total, coa_kd}) => ({
+      id, pengajuan_id, keterangan, kebutuhan, namapengajuan, total, coa_kd
     }));
   }

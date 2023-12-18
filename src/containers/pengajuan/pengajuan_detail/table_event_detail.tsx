@@ -215,7 +215,7 @@ const Table_event_detail: Component = () => {
     updatePengajuan.append('id', editData().id.toString());
     updatePengajuan.append('entry_ts', timestamp);
     updatePengajuan.append('namapengajuan', editData().keterangan);
-    updatePengajuan.append('tipepengajuan', 'Monthly');
+    updatePengajuan.append('tipepengajuan', 'Event');
     updatePengajuan.append('total', `${calculateTotal()}`);
     updatePengajuan.append('status','Waiting');
     updatePengajuan.append('alasan', 'Sudah di revisi');

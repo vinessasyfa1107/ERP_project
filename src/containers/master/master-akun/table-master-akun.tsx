@@ -63,8 +63,7 @@ const TableAkunMaster: Component = () => {
         { field: 'email' },
         { field: 'access', headerName: 'Akses'},
         { field: 'role', headerName: 'Posisi'},
-        {
-          headerName: 'COA',
+        {headerName: 'COA',
           valueGetter: (params) => {
               // Combine coa_kd and coa_name into a single string
               return `${params.data.coa_kd}  ${params.data.coa_name}`;

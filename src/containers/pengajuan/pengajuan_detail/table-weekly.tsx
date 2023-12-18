@@ -124,10 +124,10 @@ const TablePengajuanDetailWeekly: Component = () => {
     columnDefs: [
     { field: 'pengajuan_id', headerName: 'ID', editable: false, width: 100 },
     { field: 'namapengajuan', headerName: 'Pengajuan', editable: false},
-    { field: 'coa_kd', headerName: 'COA', editable: false },
+    { field: 'coa_kd', headerName: 'COA', editable: true },
     { field: 'keterangan', editable: false },
-    { field: 'kebutuhan'},
-    { field: 'total', headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
+    { field: 'kebutuhan', editable: true},
+    { field: 'total', editable: true, headerName: 'Jumlah', valueFormatter: (params) => formatRupiah(params.value),  width: 100 },
   ],
     onCellValueChanged: handleCellValueChanged,
     pagination: true,
@@ -191,7 +191,7 @@ const TablePengajuanDetailWeekly: Component = () => {
     updatePengajuan.append('id', editData().id.toString());
     updatePengajuan.append('entry_ts', timestamp);
     updatePengajuan.append('namapengajuan', editData().keterangan);
-    updatePengajuan.append('tipepengajuan', 'Monthly');
+    updatePengajuan.append('tipepengajuan', 'Weekly');
     updatePengajuan.append('total', `${calculateTotal()}`);
     updatePengajuan.append('status','Waiting');
     updatePengajuan.append('alasan', 'Sudah di revisi');
@@ -200,7 +200,7 @@ const TablePengajuanDetailWeekly: Component = () => {
     console.log("format", formated)
 
     try {
-      const response = await fetch (`/api/monthlypengajuan/detail`, {
+      const response = await fetch (`/api/weeklypengajuan/detail`, {
         method: 'PUT',
         headers: {
           'Content-Type':'application/json',

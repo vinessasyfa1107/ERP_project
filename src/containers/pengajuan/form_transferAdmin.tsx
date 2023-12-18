@@ -6,6 +6,7 @@ import './form_transferAdmin.css';
 
 interface EditPopUpProps {
     OnClose: () => void;
+    id?: number;
     evidence?: string;
 }
 
@@ -16,6 +17,7 @@ const Form_transferAdmin: Component<EditPopUpProps> = (props) => {
     const [evidence, setEvidence] = createSignal<string | null>(null);
 
     const fetchData = async () => {
+
         try {
             const response = await fetch(`/api/pengajuan/${props.evidence}`); // Update the API endpoint with the correct ID
             const result = await response.json();
@@ -52,7 +54,7 @@ const Form_transferAdmin: Component<EditPopUpProps> = (props) => {
                                 <label>Bukti*</label>
                                 <div class="container-bukti" style={{ "display": "flex", "justify-content": "center", "align-items": "center" }}>
                                     {evidence() !== null ? (
-                                        <img src={`/api/pengajuan/${props.evidence}`} alt="Selected Image" width="100" height="100" />
+                                        <img src={`/api/pengajuan/${props.evidence}`} alt="Selected Image"/>
                                     ) : (
                                         <span>No evidence available</span>
                                     )}
