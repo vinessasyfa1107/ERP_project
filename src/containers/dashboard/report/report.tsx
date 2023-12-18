@@ -12,6 +12,7 @@ import Header from '../../header/header';
 import { useNavbarStore } from '../../../store/Navbar/NavbarStore';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
 import { A } from '@solidjs/router';
+import Grafik_keuangan_dashboard from '../accounting/grafik_keuangan_dashboard';
 
 
 const Report: Component = () => {
@@ -50,13 +51,14 @@ const Report: Component = () => {
                 <ReportNavbar />
             </div> */}
 
-            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
+            <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "380vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
                 {/* <div class="card-module">
                     <div style={{ "font-family":"Exo","font-size": "20px", "font-weight": "600", "margin-top": "2vh", "margin-left": "2vw" }}>
                         Report
                     </div>
                 </div> */}
                 <div class="report-container" style={{ "background-color": "#EFEFEF", "height": "290vh", "width": "150vh", "border-radius": "10px", "padding-top": "15px", "margin-bottom": "20px" }}>
+
                     {/* div untuk barchart container */}
                     <div class="barchartReport-container">
                         <div class="top-table">
@@ -73,6 +75,47 @@ const Report: Component = () => {
                                     </span>
                                 </div>
                                 <button class="btn-sort"><Icon icon="gg:sort-za" color="white" width="25" height="25" /></button>
+                            </div>
+                        </div>
+
+                        <div class="keuanganModul-dashboard-container">
+                            {/* div untuk card chart total pada keuangan dashboard */}
+                            <div class="all-report-card">
+                                <div class="report-case">
+                                    <div class="card-title">Journal</div>
+                                    <div class="card-total" style={{ "color": "#a155b9" }}>BGN 28,051.00</div>
+                                </div>
+                                <div class="report-case">
+                                    <div class="card-title">Balance</div>
+                                    <div class="card-total" style={{ "color": "#f765b3" }}>BGN 28,051.00</div>
+                                </div>
+                                <div class="report-case">
+                                    <div class="card-title">Profit Loss</div>
+                                    <div class="card-total" style={{ "color": "#165baa" }}>BGN 28,051.00</div>
+                                </div>
+                                <div class="report-case">
+                                    <div class="card-title">Profit Loss</div>
+                                    <div class="card-total" style={{ "color": "#165baa" }}>BGN 28,051.00</div>
+                                </div>
+                            </div>
+
+                            {/* div untuk card chart total pada keuangan dashboard dan grafik keuangan dashboard */}
+                            <div class="chart-total-keuanganModul">
+                                <div class="card-total-container">
+                                    <div class="total-title">
+                                        Total
+                                    </div>
+                                    <div class="card-total2">
+                                        5.987,37
+                                    </div>
+                                    <div class="card-total3">
+                                        BGN
+                                    </div>
+                                </div>
+
+                                <div class="grafik-keuangan-dashboard-container">
+                                    <Grafik_keuangan_dashboard />
+                                </div>
                             </div>
                         </div>
 
