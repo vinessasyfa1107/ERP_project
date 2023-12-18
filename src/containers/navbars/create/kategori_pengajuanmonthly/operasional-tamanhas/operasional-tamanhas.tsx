@@ -11,12 +11,12 @@ import ComfirmDeletePlan from './popup/confirm-delete-plan';
 import { options } from './data-coa';
 import { getNamaPengajuanMonthly } from '../../../../../store/Pengajuan/nama-pengajuan';
 
-interface Option {
+export interface Option {
   value: string;
   label: string
 }
 
-interface SelectedOption {
+export interface SelectedOption {
   value?: string;
   label?: string;
 }
@@ -321,6 +321,8 @@ const OperasionalTamanhas: Component = () => {
       handleOptionSelect(selectedOption() as Option);
     }
   };
+
+  //
 
 
   return (
