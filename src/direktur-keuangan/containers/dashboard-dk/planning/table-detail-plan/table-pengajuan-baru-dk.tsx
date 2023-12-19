@@ -5,13 +5,13 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './table-planning.css';
 import { Icon } from '@iconify-icon/solid';
 import { useNavigate } from '@solidjs/router';
-import { type } from 'os';
 import { DataMonthlyPengajuan } from '../../../../../api/planning/new-pengajuan/new-pengajuan';
-import { dataIdMonthly, dataIdMonthlyDK, setDataIDEvent, setDataIDEventDK, setDataIDMonthly, setDataIDMonthlyDK, setDataIDWeekly, setDataIDWeeklyDK, setSelectedCategory } from '../../../../../store/Pengajuan/pengajuan-id';
+import { setDataIDEventDK, setDataIDMonthlyDK, setDataIDWeeklyDK, setSelectedCategory } from '../../../../../store/Pengajuan/pengajuan-id';
 import Formapprove_dk from '../formapprove_data/formapprove_dk';
 
 const TablePengajuanBaruDK: Component = () => {
 
+  const navigate = useNavigate();
 
   const [RowData, setRowData] = createSignal([{}]);
   const [searchTerm, setSearchTerm] = createSignal('');
@@ -33,63 +33,63 @@ const TablePengajuanBaruDK: Component = () => {
     console.log("search ", searchTerm());
 
   };
+  
 
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
   const [popupData, setPopupData] = createSignal(null);
-  // const [confirmationStatus, setConfirmationStatus] = createSignal(false);
-  // const [formSubmitted, setFormSubmitted] = createSignal(false);
+  const [confirmationStatus, setConfirmationStatus] = createSignal(false);
+  const [formSubmitted, setFormSubmitted] = createSignal(false);
 
-
-  // const handlePopUpApproved = (data) => {
-  //   if (data.status === 'Approved') {
-  //     setPopupData(data);
-  //     setPopUpOpen(true);
-  //   }
-  // };
-
-  const ClosePopUp = () => {
-    setPopUpOpen(false);
-  };
-
-  //   const ClosePopUp = () => {
-  //     setPopUpOpen(false);
-  //     fetchData();
-  //   };
-  const navigate = useNavigate();
-
-  const onCellClicked = (params) => {
-    // if (params.data.status === 'Rejected' || params.data.status === 'Approved') {
-    //   return null; // Do nothing if the status is 'Rejected' or 'Approved'
-    // }
-  
-     if (params.column.getColId() === 'status' && (params.data.status === 'InProgress' || params.data.status === 'Waiting')) {
-      setPopupData(params.data);
+  const handlePopUpApproved = (data) => {
+    if (data.status === 'Approved') {
+      setPopupData(data);
       setPopUpOpen(true);
-    } else {
-      if (params.data.tipepengajuan === 'Weekly') {
-        setDataIDWeekly(params.data.id);
-        setSelectedCategory(params.data.tipepengajuan);
-        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
-      } else if (params.data.tipepengajuan === 'Event') {
-        setDataIDEvent(params.data.id);
-        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
-        setSelectedCategory(params.data.tipepengajuan);
-      } else if (params.data.tipepengajuan === 'Monthly') {
-        setDataIDMonthly(params.data.id);
-        console.log("pp", dataIdMonthly());
-        navigate('/direktur-keuangan/pengajuan/pengajuan-detail');
-        setSelectedCategory(params.data.tipepengajuan);
-      }
     }
   };
 
+  const ClosePopUp = () => {
+    setPopUpOpen(false);
+    // Optionally, you can perform additional actions here when the popup is closed.
+  };
+
+  const onCellClicked = (params) => {
+    if (params.data.tipepengajuan === 'Weekly') {
+      // console.log('meonk', params.data.id);
+      setDataIDWeeklyDK(params.data.id);
+      setSelectedCategory(params.data.tipepengajuan)
+      navigate('/pengajuan/pengajuan_detail');
+    } else if (params.data.tipepengajuan === 'Event') {
+      // console.log('meonk', params.data.id);
+      setDataIDEventDK(params.data.id);
+      navigate('/pengajuan/pengajuan_detail');
+      setSelectedCategory(params.data.tipepengajuan)
+    } else if (params.data.tipepengajuan === 'Monthly') {
+      // console.log('meonk', params.data.id);
+      setDataIDMonthlyDK(params.data.id);
+      navigate('/pengajuan/pengajuan_detail');
+      setSelectedCategory(params.data.tipepengajuan)
+    }
+  };
+
+  const handleSelectionChanged = (event) => {
+    const selectedRows = event.api.getSelectedRows();
+    if (selectedRows.length > 0) {
+      const selectedRowData = selectedRows[0];
+      handlePopUpApproved(selectedRowData);
+      // Step 2: Update confirmationStatus based on checkbox
+      setConfirmationStatus(selectedRowData.confirm || false);
+
+    }
+    if (formSubmitted()) {
+      event.api.deselectAll(); // Deselect the checkbox
+    }
+  };
 
   const loadGridData = async () => {
     const selectedMonthValue = selectedMonth();
     const searchTermValue = searchTerm();
 
-    // ...
 
     console.log("search ", searchTermValue);
     console.log("bulan ", selectedMonthValue);
@@ -113,6 +113,7 @@ const TablePengajuanBaruDK: Component = () => {
         )
       )
     );
+
 
 
     console.log("Filtered Data:", filteredData);
@@ -151,8 +152,8 @@ const TablePengajuanBaruDK: Component = () => {
     { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
     // { field: 'category', headerName: 'Jenis', editable: false },
     { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
-    { field: 'status', headerName: 'Status', editable: false },
-    // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
+    { field: 'status', headerName: 'Status', editable: false, onCellClicked },
+    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false }
   ];
 
   // const rowData = [
@@ -191,10 +192,14 @@ const TablePengajuanBaruDK: Component = () => {
     pagination: true,
     paginationPageSize: 4,
     rowHeight: 40,
-  }
-
-  function handlePopUpApproved(data: any): void {
-    throw new Error('Function not implemented.');
+    onSelectionChanged: handleSelectionChanged,
+    onCellEditingStopped: (event) => {
+      // Periksa apakah sel yang diedit adalah 'amount' dan baris sudah dikonfirmasi
+      if (event.column.getColId() === 'amount' && event.data.confirm) {
+        // Reset nilai ke nilai asli
+        event.api.applyTransaction({ update: [{ ...event.data }] });
+      }
+    },
   }
 
   return (
@@ -242,11 +247,11 @@ const TablePengajuanBaruDK: Component = () => {
             gridOptions={gridOptions}
             rowSelection="multiple"
             rowMultiSelectWithClick={true}
-            // onRowClicked={(event) => handlePopUpApproved(event.data)}
           />
         </div>
         {popUpOpen() && <Formapprove_dk params={popupData()} OnClose={ClosePopUp} />}
       </div>
+      
     </div>
   );
 };
@@ -255,4 +260,3 @@ export default TablePengajuanBaruDK;
 function isEditing() {
   throw new Error('Function not implemented.');
 }
-

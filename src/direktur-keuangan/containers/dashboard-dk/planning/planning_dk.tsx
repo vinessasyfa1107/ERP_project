@@ -9,6 +9,7 @@ import { A } from '@solidjs/router';
 import Header from '../header/header';
 import { useSubNavbarStore } from '../../../../store/Navbar/SubNavbarStore';
 import TableDetailPlan from './table-detail-plan/table-detail-plan';
+import TablePengajuanBaruDK from './table-detail-plan/table-pengajuan-baru-dk';
 
 const Planning_dk: Component = () => {
 
@@ -47,7 +48,7 @@ const Planning_dk: Component = () => {
                 <div>
                     <h1>List Rencana Pengajuan</h1>
                     <TableDetailPlan />
-                    <TablePengajuanBaru />
+                    <TablePengajuanBaruDK />
                 </div>
 
             </div>
