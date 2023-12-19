@@ -128,7 +128,8 @@
 }
 
 .keuanganModul-dashboard-container .all-report-card .report-case .card-total {
-    font-size: 2rem;
+    margin-top: 8px;
+    font-size: 1.65rem;
     font-weight: 650;
     float: left;
     background-color: white;

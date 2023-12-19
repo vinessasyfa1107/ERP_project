@@ -81,21 +81,27 @@ const Report: Component = () => {
                         <div class="keuanganModul-dashboard-container">
                             {/* div untuk card chart total pada keuangan dashboard */}
                             <div class="all-report-card">
+                                <A href="/report/pemasukan" classList={{ active: location.pathname.startsWith('/report') }}>
                                 <div class="report-case">
-                                    <div class="card-title">Journal</div>
-                                    <div class="card-total" style={{ "color": "#a155b9" }}>BGN 28,051.00</div>
+                                    <div class="card-title">Pemasukan</div>
+                                    <div class="card-total" style={{ "color": "#a155b9" }}>Rp 128.550,00</div>
                                 </div>
+                                </A>
+                                <A href="/report/pengeluaran" classList={{ active: location.pathname.startsWith('/report') }}>
                                 <div class="report-case">
-                                    <div class="card-title">Balance</div>
-                                    <div class="card-total" style={{ "color": "#f765b3" }}>BGN 28,051.00</div>
+                                    <div class="card-title">Pengeluaran</div>
+                                    <div class="card-total" style={{ "color": "#f765b3" }}>Rp 56.240,00</div>
                                 </div>
+                                </A>
+                                <A href="/report/kas_besar" classList={{ active: location.pathname.startsWith('/report') }}>
                                 <div class="report-case">
-                                    <div class="card-title">Profit Loss</div>
-                                    <div class="card-total" style={{ "color": "#165baa" }}>BGN 28,051.00</div>
+                                    <div class="card-title">Kas Besar</div>
+                                    <div class="card-total" style={{ "color": "#165baa" }}>Rp 48.524,00</div>
                                 </div>
+                                </A>
                                 <div class="report-case">
-                                    <div class="card-title">Profit Loss</div>
-                                    <div class="card-total" style={{ "color": "#165baa" }}>BGN 28,051.00</div>
+                                    <div class="card-title">Kas Kecil</div>
+                                    <div class="card-total" style={{ "color": "#FF8C00" }}>Rp 28.000,00</div>
                                 </div>
                             </div>
 
@@ -109,7 +115,7 @@ const Report: Component = () => {
                                         5.987,37
                                     </div>
                                     <div class="card-total3">
-                                        BGN
+                                        Rp
                                     </div>
                                 </div>
 
