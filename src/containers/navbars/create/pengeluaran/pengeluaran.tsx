@@ -3,6 +3,9 @@ import { render } from 'solid-js/web';
 import { createSignal, onCleanup, onMount } from 'solid-js';
 import { Icon } from '@iconify-icon/solid';
 import './pengeluaran.css'
+import { options } from '../tambah-akun/data_coa';
+import { Option } from '../kategori_pengajuanmonthly/operasional-tamanhas/data-coa';
+import { SelectedOption } from '../kategori_pengajuanmonthly/operasional-tamanhas/operasional-tamanhas';
 
 interface PengeluaranProps {
     OnClose: () => void;
@@ -22,80 +25,99 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
         }
       };
 
+
+      const [message, setMessage] = createSignal('');
+
+      const handleDragEnter = (e: DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.dataTransfer.dropEffect = 'copy';
+        // Ubah tampilan area drop jika diperlukan
+      };
+    
+      const handleDragOver = (e: DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+      };
+    
+      const handleDragLeave = () => {
+        // Kembalikan tampilan area drop ke kondisi awal jika diperlukan
+      };
+    
+      const handleDrop = (e: DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+    
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          const file = files[0];
+          setMessage(`File yang diunggah: ${file.name}`);
+          // Anda dapat menangani file yang diunggah di sini, misalnya mengunggahnya ke server atau melakukan operasi lain.
+        }
+      };
+
     const [formData, setFormData] = createSignal({
         id: 0,
-        expense_ts:'',
+        income_ts:'',
         amount: 0,
-        faktur_ts: '',
+        nama_pengajuan: '',
         coa_kd: '',
         keterangan: '',
         // evidence: null
     });
 
+
     const [isOpen, setIsOpen] = createSignal(false);
-    const [selectedOption, setSelectedOption] = createSignal('');
-    const options = [
-        "2-1001", "2-2000", "2-2001", "2-3000",
-        "2-3016", "2-4000", "2-4001", "2-5000", "2-5001", "2-6000",
-        "2-8001", "2-8002", "2-9000", "2-9993",
-        "5-0000", "5-1010", "5-1020",
-        "6-0000", "6-1001", "6-1002",
-        "6-1003",
-        "6-1004",
-        "6-1005",
-        "6-2003",
-        "6-2004",
-        "6-2005",
-        "6-2006",
-        "6-2007",
-        "6-2008",
-        "6-2009",
-        "6-2010",
-        "9-0000",
-        "9-1001"
-      ];
-       
+    // const [selectedOption, setSelectedOption] = createSignal('');
+    // const options = [
+    //     "1-0000", "1-1000", "1-1100", "1-1101", "1-1102",
+    //     "1-1200", "1-1201", "1-1202", "1-1203", "1-1204",
+    //     "1-1300", "1-1400", "1-1401", "1-1402", "1-1403", "1-1404",
+    //     "1-1500", "1-1501", "1-1506",
+    //     "1-1600", "1-1700",
+    //     "1-1801", "1-1801", "1-1802", "1-1803",
+    //     "1-9000", "1-9001", "1-2000", "1-2001", "1-2002", "1-2003",
+    //     "3-0000", "3-7000", "3-8000", "3-9000", "3-9999",
+    //     "8-0000",
+    //     "8-1001"
+    //   ];   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-            const formattedDate = `${formData().expense_ts}T00:00:00`;
 
-            const dataToSend2 = {
+            const formattedDate = `${formData().income_ts}T00:00:00`;
+
+            const dataToSend1 = {
                 id: 0,
-                expense_ts: formattedDate,
+                income_ts: formattedDate,
                 amount: formData().amount,
-                faktur_ts: formData().faktur_ts,
+                nama_pengajuan: formData().nama_pengajuan,
                 coa_kd: selectedOption(),
                 keterangan: formData().keterangan,
                 evidence: selectedFile()
                 };
+            
+                const dataToSend = new FormData();
+                dataToSend.append('id', '0');
+                dataToSend.append('income_ts', `${formData().income_ts}T00:00:00`);
+                dataToSend.append('amount', formData().amount !== null ? formData().amount.toString() : '');
+                dataToSend.append('nama_pengajuan', formData().nama_pengajuan !== null ? formData().nama_pengajuan.toString() : '');
+                dataToSend.append('coa_kd', selectedOption()?.value);
+                dataToSend.append('keterangan', formData().keterangan !== null ? formData().keterangan.toString() : '');
+                dataToSend.append('evidence', selectedFile());
 
-            // const formattedDate = `${formData.get('expense_ts')}T00:00:00`;
+            console.log('data income: ', dataToSend);
 
-            const dataToSend = new FormData();
-            dataToSend.append('id', '0');
-            dataToSend.append('expense_ts', `${formData().expense_ts}T00:00:00`);
-            dataToSend.append('amount', formData().amount !== null ? formData().amount.toString() : '');
-            dataToSend.append('faktur_ts', formData().faktur_ts !== null ? formData().faktur_ts.toString() : '');
-            dataToSend.append('coa_kd', selectedOption());
-            dataToSend.append('keterangan', formData().keterangan !== null ? formData().keterangan.toString() : '');
-            dataToSend.append('evidence', selectedFile());
-
-            console.log('Data to send:', Object.fromEntries(dataToSend)); 
             try {
-                const response = await fetch(`/api/expense/`, {
+                const response = await fetch(`/api/income/`, {
                     method: 'POST',
-                    // headers: {
-                    //     'Content-Type': 'multipart/form-data',
-                    // },
                     body: dataToSend,
                 });
         
                 if (response.ok) {
                     // Data berhasil diubah, tampilkan alert
                     alert('Data berhasil diubah');
-                        window.location.href = '/report/Pengeluaran';
+                        window.location.href = '/report/pengeluaran';
                     window.location.reload();
                     props.OnClose();
                 } else {
@@ -111,20 +133,90 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
             }
         };
 
-        const dropdownRef = (el) => {
-            if (el) {
-            const handleDocumentClick = (e) => {
-                if (!el.contains(e.target)) {
-                setIsOpen(false);
-                }
-            };
-            document.addEventListener('click', handleDocumentClick);
-            onCleanup(() => {
-                document.removeEventListener('click', handleDocumentClick);
-            });
-            }
-        };
-    
+    // kode untuk buat dropdown search COA
+  const [inputValue, setInputValue] = createSignal('');
+
+  const [selectedOption, setSelectedOption] = createSignal<SelectedOption | null>(null);
+
+  const [filteredOptions, setFilteredOptions] = createSignal<Option[]>(options());
+  const [showDropdown, setShowDropdown] = createSignal(false);
+
+//   createEffect(() => {
+//     const inputValueLowerCase = inputValue().toLowerCase();
+//     const filtered = options().filter((option) => option.label.toLowerCase().includes(inputValueLowerCase) || option.value.toLowerCase().includes(inputValueLowerCase));
+//     setFilteredOptions(filtered);
+//   });
+
+//   createEffect(() => {
+//     const handleClickOutside = (e: MouseEvent) => {
+//       const target = e.target as HTMLElement;
+//       if (target && !target.closest('.dropdown-container')) {
+//         setShowDropdown(false);
+//       }
+//     };
+
+//     window.addEventListener('click', handleClickOutside);
+
+//     onCleanup(() => {
+//       window.removeEventListener('click', handleClickOutside);
+//     });
+//   });
+
+  const handleInput = (e: Event) => {
+    const label = (e.target as HTMLInputElement).value;
+    console.log("?", label)
+    setInputValue(label);
+
+    const selectedOption = options().find((option) => option.value === label);
+
+    if (selectedOption) {
+      setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+    } else {
+      setSelectedOption(null);
+    }
+
+    setShowDropdown(true);
+  };
+
+
+  const handleOptionSelect = (selectedOption: Option) => {
+    // setInputValue(selectedOption.label);
+    setInputValue(`${selectedOption.value} ${selectedOption.label}`);
+    setSelectedOption({ value: selectedOption.value, label: selectedOption.label });
+    setShowDropdown(false);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+
+      const currentIndex = filteredOptions().findIndex((option) => option === (selectedOption() ?? { value: '', label: '' }));
+      const nextIndex =
+        currentIndex === -1
+          ? 0
+          : e.key === 'ArrowDown'
+            ? (currentIndex + 1) % filteredOptions().length
+            : (currentIndex - 1 + filteredOptions().length) % filteredOptions().length;
+
+      setSelectedOption(filteredOptions()[nextIndex]);
+    } else if (e.key === 'Enter' && selectedOption()) {
+      handleOptionSelect(selectedOption() as Option);
+    }
+  };
+        // const dropdownRef = (el) => {
+        //     if (el) {
+        //     const handleDocumentClick = (e) => {
+        //         if (!el.contains(e.target)) {
+        //         setIsOpen(false);
+        //         }
+        //     };
+        //     document.addEventListener('click', handleDocumentClick);
+        //     onCleanup(() => {
+        //         document.removeEventListener('click', handleDocumentClick);
+        //     });
+        //     }
+        // };
+
     
 
     return (
@@ -135,8 +227,8 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
          
                 <div class="pengeluaran-form">
                     <form method="dialog">
-                        <div class="headakun">
-                        <h2>Tambah Laporan Pengeluaran <span>(*Tidak boleh kosong)</span></h2>
+                    <div class="headakun">
+                        <h2>Tambah Laporan pengeluaran <span>(*Tidak boleh kosong)</span></h2>
                             <button onClick={props.OnClose}>✕</button>
                         </div>
 
@@ -146,20 +238,20 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                 <div class='date' >
                                 <label>Tanggal*</label>
                                     <input type="date" name="trip-start"
-                                    value={formData().expense_ts} 
-                                    onInput={(e) => setFormData({ ...formData(), expense_ts: e.target.value })}
+                                    value={formData().income_ts} 
+                                    onInput={(e) => setFormData({ ...formData(), income_ts: e.target.value })}
                                     />
                                 </div>
 
                                 <div>
-                                    <label>Faktur*</label>
+                                    <label>Nama Pengajuan*</label>
                                     <br />
                                     <input type="text" 
                                         name="onlynumbers" 
                                         pattern="\d{1,5}"  
                                         // maxlength="5"
-                                        value={formData().faktur_ts} 
-                                        onInput={(e) => setFormData({ ...formData(), faktur_ts: e.target.value })}
+                                        value={formData().nama_pengajuan} 
+                                        onInput={(e) => setFormData({ ...formData(), nama_pengajuan: e.target.value })}
                                     >
                                     </input>
                                 </div>
@@ -187,78 +279,27 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                 <div>
                                     <label>COA*</label>
                                     <br />
-                                    <div class="custom-dropdown-coa" ref={dropdownRef}>
-                                    <div class="dropdown-selected" onClick={() => setIsOpen(!isOpen())} style={{"justify-content":"space-between", display:"flex", "flex-direction":"row"}}>
-                                        <div>{selectedOption() || ""}</div>
-                                        <div>
-                                            {isOpen() ? 
-                                            <svg xmlns="http://www.w3.org/2000/svg"  width="13" height="15" viewBox="0 0 15 15"><g transform="translate(0 15) scale(1 -1)"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></g></svg>
-                                            : <svg xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 15 15"><path fill="currentColor" d="M7.5 12L0 4h15l-7.5 8Z"/></svg>
-                                            }
-                                        </div>
-                                        {/* {isOpen() ? "▲" : "▼"} */}
-                                    </div>
-                                    {isOpen() && (
-                                        <div class="dropdown-options-coa">
-                                        <div class="options-list" >
-                                            {options.map((option, index) => (
-                                            <div
-                                                class="option"
-                                                onClick={() => {
-                                                setSelectedOption(option);
-                                                setIsOpen(false);
-                                                }}
-                                            >
-                                                {option}
+                                    <div>
+                                        <input
+                                            type="text"
+                                            placeholder="COA.."
+                                            value={inputValue()}
+                                            onInput={handleInput}
+                                            // onKeyDown={handleKeyDown}
+                                            class="custom-dropdown-coa"
+                                        />
+                                        {showDropdown() && (
+                                            <div class="dropdown-options-coa">
+                                            <div class="options-list">
+                                                {filteredOptions().map((option) => (
+                                                <div onClick={() => handleOptionSelect(option)} class="option-label">{option.value} {option.label}</div>
+                                                ))}
                                             </div>
-                                            ))}
-                                        </div>
-                                        </div>
-                                    )}
+                                            </div>
+                                        )}
+                                 
+                                    </div> 
                                     </div>
-                                    {/* <select
-                                    name="namaCOA" // Ganti cd_account dengan kodeAkun
-                                    value={formData().coa_kd} 
-                                    onInput={(e) => setFormData({ ...formData(), coa_kd: e.target.value })}
-                                    >
-                                        <option value="2-1001">2-1001</option>
-                                        <option value="2-2000">2-2000</option>
-                                        <option value="2-3000">2-3000</option>
-                                        <option value="2-3001">2-3001</option>
-                                        <option value="2-3016">2-3016</option>
-                                        <option value="2-4000">2-4000</option>
-                                        <option value="2-4001">2-4001</option>
-                                        <option value="2-5000">2-5000</option>
-                                        <option value="2-5001">2-5001</option>
-                                        <option value="2-6000">2-6000</option>
-                                        <option value="2-8001">2-8001</option>
-                                        <option value="2-8002">2-8002</option>
-                                        <option value="2-8003">2-8003</option>
-                                        <option value="2-8004">2-8004</option>
-                                        <option value="2-8005">2-8005</option>
-                                        <option value="2-9000">2-9000</option>
-                                        <option value="2-9993">2-9993</option>
-
-                                        <option value="6-0000">6-0000</option>
-                                        <option value="6-1001">6-1001</option>
-                                        <option value="6-1002">6-1002</option>
-                                        <option value="6-1003">6-1003</option>
-                                        <option value="6-1004">6-1004</option>
-                                        <option value="6-1005">6-1005</option>
-
-                                        <option value="6-2003">6-2003</option>
-                                        <option value="6-2004">6-2004</option>
-                                        <option value="6-2005">6-2005</option>
-                                        <option value="6-2006">6-2006</option>
-                                        <option value="6-2007">6-2007</option>
-                                        <option value="6-2008">6-2008</option>
-                                        <option value="6-2009">6-2009</option>
-                                        <option value="6-2010">6-2010</option>
-
-                                        <option value="8-0000">8-0000</option>
-                                        <option value="8-1001">8-1001</option>
-
-                                    </select> */}
                                 </div>
                             </div>
 
@@ -280,8 +321,14 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                             <div>
                                 <label>Bukti*</label>
                                 <div class="container-bukti">
-                                <div class="box-bukti">
+                                <div class="box-bukti"
+                                 onDragEnter={handleDragEnter}
+                                 onDragOver={handleDragOver}
+                                 onDragLeave={handleDragLeave}
+                                 onDrop={handleDrop}
+                                >
                                     <Icon icon="bxs:image" class="icon-file" width="50" height="50" />
+                                    <p>{message()}</p>
                                 </div>
                                 <div class="container-2">
                                     <p>Pilih file dengan format .png atau .jpg ke dalam form atau tarik & lepas file tersebut.</p>
@@ -295,15 +342,12 @@ const PengeluaranCreate: Component<PengeluaranProps> = (props) => {
                                         />
                                   
                                   {selectedFile() && (
-                                                        <p>File yang dipilih: {selectedFile().name}</p>
-                                                    )}                                          
+                                    <p>File yang dipilih: {selectedFile().name}</p>
+                                )}                                          
                             </div>
                         </div>
-                            </div>
-
-
                         </div>
-
+                        
                         <br />
                         <div class="btn-kirim-data">
                             <button onClick={handleSubmit}><Icon icon="ph:paper-plane-tilt-fill" color="white" width="30" height="30" /></button>
