@@ -93,6 +93,8 @@ const Report: Component = () => {
                                     <div class="card-total" style={{ "color": "#f765b3" }}>Rp 56.240,00</div>
                                 </div>
                                 </A>
+                            </div>
+                            <div class="all-report-card">
                                 <A href="/report/kas_besar" classList={{ active: location.pathname.startsWith('/report') }}>
                                 <div class="report-case">
                                     <div class="card-title">Kas Besar</div>
