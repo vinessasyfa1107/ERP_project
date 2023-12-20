@@ -14,6 +14,7 @@ import { setDataIDEvent, setDataIDMonthly, setDataIDWeekly, setSelectedCategory 
 import Form_transferAdmin from './form_transferAdmin';
 import 'ag-grid-enterprise';
 import html2pdf from 'html2pdf.js';
+import { ColDef } from 'ag-grid-enterprise';
 
 const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
 
@@ -322,7 +323,73 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     //         navigateToTimeTrackingFile(id, row);
     //     };
     // }
+    const [confirmID, setConfirmID] = createSignal(0);
 
+
+    const [isChecked, setIsChecked] = createSignal(false);
+    const [confirmDisable, setConfirmDisable] = createSignal(false)
+    const handleCheckboxChange = async (data) => {
+        // Perbarui nilai checkbox saat diklik
+        setIsChecked(!isChecked());
+        console.log("check ", isChecked())
+        if (isChecked() == true){
+            console.log("true")
+            setConfirmID(data.id);
+            console.log("pengajuan id", confirmID())
+            setConfirmDisable(true);
+            console.log("data", data)
+
+            const confirmData = new FormData();
+            confirmData.append('id', data.id);
+            confirmData.append('entry_ts', data.entry_ts);
+            confirmData.append('namapengajuan', data.namapengajuan);
+            confirmData.append('tipepengajuan', data.tipepengajuan.toString());
+            confirmData.append('total', data.total.toString());
+            confirmData.append('status', data.status);
+            confirmData.append('konfirmasi', 'true');   
+            
+            try {
+                const response = await fetch (`/api/pengajuan/${confirmID()}`, {
+                    method: 'PUT',
+                    body: confirmData
+    
+                })
+                if (response.ok) {
+                    alert("Pengajuan telah diconfirm")
+                    window.location.reload();
+                } else {
+                  const errorMessage = await response.text();
+                  alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                  console.error('Gagal mengubah data:', errorMessage);
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+                console.error('Terjadi kesalahan:', error);
+            }
+        }
+    };
+
+    const ConfirmCell = (params) => {
+        const { value, data } = params;
+    
+        const handleConfirmationClick = () => {
+            // Panggil fungsi yang ingin Anda eksekusi saat tombol konfirmasi diklik
+            // Misalnya, Anda bisa melakukan sesuatu seperti menyimpan status konfirmasi ke server
+            console.log("Confirmation clicked for ID:", data.id);
+            console.log("apanih", data.konfirmasi)
+
+        };
+        if(data.konfirmasi == true) {
+            setConfirmDisable(true);
+        }
+        if  (params.data.tipepengajuan !== 'Weekly' && params.data.status === 'Approved' && params.data.evidence !== null)
+        return (
+            <div style={{ cursor: 'pointer' }} onClick={handleConfirmationClick}>
+                <input type="checkbox" checked={data.konfirmasi || isChecked()} onChange={() => handleCheckboxChange(data)} disabled={confirmDisable()}/>
+            </div>
+        )
+
+    };
 
     const columnDefs = [
         { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 30 },
@@ -389,8 +456,8 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                 //     {params.value}
                 // </div>
             );
-        }}
-        // { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false },
+        }},
+        { field: 'confirm', headerName: 'Konfirmasi', cellRenderer: ConfirmCell},
     ];
 
     const defaultColDef = {
@@ -432,6 +499,8 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
         if (isTransferButtonClicked) {
             showEditPopup(params.data);
+        } else if (params.colDef.field === 'confirm'){
+            return;
         } else {
             if (params.data.tipepengajuan === 'Weekly') {
                 setDataIDWeekly(params.data.id);

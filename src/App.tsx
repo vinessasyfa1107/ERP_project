@@ -7,11 +7,12 @@ import Navbar from './containers/navbars/navbar';
 import NavbarDU from './direktur-utama/containers/navbar/navbar-du';
 import NavbarDK from './direktur-keuangan/containers/navbar/navbar-dk';
 
-interface UserData {
+export interface UserData {
   id: number;
   account_name: string;
   access: string;
   email: string;
+  coa_kd: string;
 }
 
 const App: Component = () => {
