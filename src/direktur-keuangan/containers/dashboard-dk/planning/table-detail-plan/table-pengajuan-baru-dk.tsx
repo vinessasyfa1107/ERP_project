@@ -9,6 +9,25 @@ import { DataMonthlyPengajuan } from '../../../../../api/planning/new-pengajuan/
 import { setDataIDEventDK, setDataIDMonthlyDK, setDataIDWeeklyDK, setSelectedCategory } from '../../../../../store/Pengajuan/pengajuan-id';
 import Formapprove_dk from '../formapprove_data/formapprove_dk';
 
+// function transfer
+const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
+
+const [editedData, setEditedData] = createSignal(null);
+
+const [evidence, setEvidence] = createSignal('');
+
+
+const showEditPopup = (rowData: any) => {
+  setEditedData(rowData);
+  setIsEditPopupOpen(true);
+  setEvidence(rowData.evidence);
+  console.log("test", evidence());
+};
+
+function CloseEditPopUp() {
+  setIsEditPopupOpen(false);
+}
+
 const TablePengajuanBaruDK: Component = () => {
 
   const navigate = useNavigate();
@@ -18,10 +37,15 @@ const TablePengajuanBaruDK: Component = () => {
   const [selectedMonth, setSelectedMonth] = createSignal('');
 
   onMount(async () => {
-    const monthlypengajuan = await DataMonthlyPengajuan("data monthly plan");
-    console.log("data detail plan", monthlypengajuan);
-    setRowData(monthlypengajuan)
-  })
+    const data_planning = await DataMonthlyPengajuan("data planning dashboard dan modul pengajuan");
+
+    // Use the || (logical OR) operator to check for 'Event' OR 'Monthly'
+    const approvedRows = data_planning.filter(row => row.tipepengajuan === 'Event' || row.tipepengajuan === 'Monthly');
+
+    console.log("dataplanning", approvedRows);
+    setRowData(approvedRows);
+  });
+
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
@@ -33,7 +57,7 @@ const TablePengajuanBaruDK: Component = () => {
     console.log("search ", searchTerm());
 
   };
-  
+
 
   const [backendData, setBackendData] = createSignal([{}]);
   const [popUpOpen, setPopUpOpen] = createSignal(false);
@@ -54,22 +78,28 @@ const TablePengajuanBaruDK: Component = () => {
   };
 
   const onCellClicked = (params) => {
-    if (params.data.tipepengajuan === 'Weekly') {
-      // console.log('meonk', params.data.id);
-      setDataIDWeeklyDK(params.data.id);
-      setSelectedCategory(params.data.tipepengajuan)
-      navigate('/pengajuan/pengajuan_detail');
-    } else if (params.data.tipepengajuan === 'Event') {
-      // console.log('meonk', params.data.id);
-      setDataIDEventDK(params.data.id);
-      navigate('/pengajuan/pengajuan_detail');
-      setSelectedCategory(params.data.tipepengajuan)
-    } else if (params.data.tipepengajuan === 'Monthly') {
-      // console.log('meonk', params.data.id);
-      setDataIDMonthlyDK(params.data.id);
-      navigate('/pengajuan/pengajuan_detail');
-      setSelectedCategory(params.data.tipepengajuan)
+    if (params.colDef.field === 'transfer') {
+      showEditPopup(params.data)
+
+    } else {
+      if (params.data.tipepengajuan === 'Weekly') {
+        // console.log('meonk', params.data.id);
+        setDataIDWeeklyDK(params.data.id);
+        setSelectedCategory(params.data.tipepengajuan)
+        navigate('/pengajuan/pengajuan_detail');
+      } else if (params.data.tipepengajuan === 'Event') {
+        // console.log('meonk', params.data.id);
+        setDataIDEventDK(params.data.id);
+        navigate('/pengajuan/pengajuan_detail');
+        setSelectedCategory(params.data.tipepengajuan)
+      } else if (params.data.tipepengajuan === 'Monthly') {
+        // console.log('meonk', params.data.id);
+        setDataIDMonthlyDK(params.data.id);
+        navigate('/pengajuan/pengajuan_detail');
+        setSelectedCategory(params.data.tipepengajuan)
+      }
     }
+
   };
 
   const handleSelectionChanged = (event) => {
@@ -142,6 +172,130 @@ const TablePengajuanBaruDK: Component = () => {
     }
   }
 
+  // ==== confirm function ====
+  const [confirmID, setConfirmID] = createSignal(0);
+
+
+  const [isChecked, setIsChecked] = createSignal(false);
+  const [confirmDisable, setConfirmDisable] = createSignal(false)
+  const [checkedMap, setCheckedMap] = createSignal(new Map());
+
+  const handleCheckboxChange = async (data) => {
+    const currentCheckedMap = checkedMap();
+    const currentCheckedState = currentCheckedMap.get(data.id) || false;
+
+    // Update the checked state for the specific checkbox
+    const updatedCheckedMap = new Map(currentCheckedMap);
+    updatedCheckedMap.set(data.id, !currentCheckedState);
+
+    setCheckedMap(updatedCheckedMap);
+    // Perbarui nilai checkbox saat diklik
+    setIsChecked(!isChecked());
+    console.log("check ", isChecked())
+    if (isChecked() == true) {
+      console.log("true")
+      setConfirmID(data.id);
+      console.log("pengajuan id", confirmID())
+      setConfirmDisable(true);
+      console.log("data", data)
+
+      const dataConfirm = {
+        id: data.id,
+        total: 0,
+        konfirmasi: true
+      }
+      const confirmData = new FormData();
+      confirmData.append('id', data.id);
+      // confirmData.append('entry_ts', data.entry_ts);
+      // confirmData.append('namapengajuan', data.namapengajuan);
+      // confirmData.append('tipepengajuan', data.tipepengajuan.toString());
+      confirmData.append('total', '0');
+      // confirmData.append('status', data.status);
+      confirmData.append('konfirmasi', 'true');
+
+      try {
+        const response = await fetch(`/api/pengajuan/konfirmasi/${confirmID()}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dataConfirm)
+
+        })
+        if (response.ok) {
+          alert("Pengajuan telah diconfirm")
+          window.location.reload();
+        } else {
+          const errorMessage = await response.text();
+          alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+          console.error('Gagal mengubah data:', errorMessage);
+        }
+      } catch (error) {
+        alert('Terjadi kesalahan. Silakan coba lagi.');
+        console.error('Terjadi kesalahan:', error);
+      }
+    }
+  };
+
+  const ConfirmCell = (params) => {
+    const { value, data } = params;
+
+    const handleConfirmationClick = () => {
+      // Panggil fungsi yang ingin Anda eksekusi saat tombol konfirmasi diklik
+      // Misalnya, Anda bisa melakukan sesuatu seperti menyimpan status konfirmasi ke server
+      console.log("Confirmation clicked for ID:", data.id);
+      console.log("apanih", data.konfirmasi)
+
+    };
+
+    const isChecked = checkedMap().get(data.id) || false;
+
+    if (data.konfirmasi == true) {
+      setConfirmDisable(true);
+    }
+    if (params.data.tipepengajuan === 'Weekly' && params.data.status === 'Approved' && params.data.evidence !== null) {
+      return (
+        <div style={{ cursor: 'pointer', display: "flex" }} onClick={handleConfirmationClick}>
+          <input
+            class="checkbox checkbox-info"
+            style={{ opacity: "0.7" }}
+            type="checkbox"
+            checked={isChecked}
+            onChange={() => handleCheckboxChange(data)}
+            disabled={confirmDisable()}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <div style={{ display: "flex" }}>
+          {/* <input style={{margin:"auto", cursor:"not-allowed"}} type="checkbox" disabled /> */}
+          <input type="checkbox" style={{ opacity: "0.7" }} class="checkbox" disabled />
+        </div>
+      )
+    }
+
+  };
+
+  // function transfer
+  const [isEditPopupOpen, setIsEditPopupOpen] = createSignal(false);
+
+  const [editedData, setEditedData] = createSignal(null);
+
+  const [evidence, setEvidence] = createSignal('');
+
+
+  const showEditPopup = (rowData: any) => {
+    setEditedData(rowData);
+    setIsEditPopupOpen(true);
+    setEvidence(rowData.evidence);
+    console.log("test", evidence());
+  };
+
+  function CloseEditPopUp() {
+    setIsEditPopupOpen(false);
+  }
+
 
   const columnDefs = [
     { valueGetter: 'node.rowIndex + 1', headerName: 'No', width: 61 },
@@ -153,7 +307,17 @@ const TablePengajuanBaruDK: Component = () => {
     // { field: 'category', headerName: 'Jenis', editable: false },
     { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
     { field: 'status', headerName: 'Status', editable: false, onCellClicked },
-    { field: 'confirm', headerName: 'Konfirmasi', headerCheckboxSelection: true, checkboxSelection: true, editable: false }
+    {
+      field: "transfer", headerName: "", cellRenderer: (params: any) => {
+        return (
+          <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
+            <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
+            {params.value}
+          </div>
+        );
+      }
+    },
+    { field: 'konfirmasi', headerName: 'Konfirmasi', cellRenderer: ConfirmCell },
   ];
 
   // const rowData = [
@@ -249,9 +413,14 @@ const TablePengajuanBaruDK: Component = () => {
             rowMultiSelectWithClick={true}
           />
         </div>
-        {popUpOpen() && <Formapprove_dk params={popupData()} OnClose={ClosePopUp} />}
+        {isEditPopupOpen() && editedData() && (
+          <Formapprove_dk
+            evidence={evidence()}
+            OnClose={CloseEditPopUp}
+          />
+        )}
       </div>
-      
+
     </div>
   );
 };

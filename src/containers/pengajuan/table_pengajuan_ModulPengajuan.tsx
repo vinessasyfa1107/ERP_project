@@ -57,17 +57,17 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
         console.log("search ", searchTerm());
 
     };
-    
+
 
     // const exportToPDF = () => {
     //     const gridApi = gridOptions; // Gunakan gridOptions.api seperti yang Anda lakukan sebelumnya
-    
+
     //     // Dapatkan baris yang dipilih menggunakan API
     //     const selectedRows = gridApi.getSelectedRows();
-    
+
     //     // Filter baris yang dipilih berdasarkan kriteria (status 'Approved' dan memiliki bukti)
     //     const filteredRows = selectedRows.filter(row => row.status === 'Approved' && row.evidence);
-    
+
     //     if (filteredRows.length > 0) {
     //         const gridDiv = document.querySelector('.ag-theme-alpine');
     //         if (gridDiv) {
@@ -88,17 +88,17 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     // const exportToPDF = async () => { ini gabisa
     //     // Fetch the backend data
     //     const backendData = await DataMonthlyPengajuan("data pengajuan baru");
-    
+
     //     // Filter the backend data based on criteria (approved status and evidence availability)
     //     const filteredData = backendData.filter(
     //         (item) => item.status === 'Approved' && item.evidence !== undefined
     //     );
-    
+
     //     // Create a temporary element to render the filtered data
     //     const tempDiv = document.createElement('div');
     //     tempDiv.className = 'ag-theme-alpine';
     //     document.body.appendChild(tempDiv);
-    
+
     //     // Render the filtered data in the temporary element
     //     AgGridSolid({
     //         columnDefs: columnDefs,
@@ -108,7 +108,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     //         rowSelection: 'multiple',
     //         rowMultiSelectWithClick: true,
     //     });
-    
+
     //     // Export the rendered HTML to PDF
     //     html2pdf(tempDiv, {
     //         margin: 10,
@@ -117,12 +117,12 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     //         html2canvas: { scale: 2 },
     //         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     //     });
-    
+
     //     // Remove the temporary element
     //     document.body.removeChild(tempDiv);
     // };
-    
-    
+
+
 
     // const exportToPDF = () => { // ini yang bisa tapi gak ada kondisi 
     //     const gridDiv = document.querySelector('.ag-theme-alpine');
@@ -139,52 +139,52 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
     //   };
 
     const exportToCSV = () => {
-    const gridDiv = document.querySelector('.ag-theme-alpine');
+        const gridDiv = document.querySelector('.ag-theme-alpine');
 
-    if (gridDiv) {
-        // Mengambil data dari tabel/grid
-        const gridData = [];
-        const headerRow = [];
-        const rows = gridDiv.querySelectorAll('.ag-header-row, .ag-row');
+        if (gridDiv) {
+            // Mengambil data dari tabel/grid
+            const gridData = [];
+            const headerRow = [];
+            const rows = gridDiv.querySelectorAll('.ag-header-row, .ag-row');
 
-        rows.forEach(row => {
-            const rowData = [];
-            const cells = row.querySelectorAll('.ag-cell');
+            rows.forEach(row => {
+                const rowData = [];
+                const cells = row.querySelectorAll('.ag-cell');
 
-            cells.forEach(cell => {
-                const cellText = (cell as HTMLElement).innerText.trim(); // Explicit cast to HTMLElement
-                rowData.push(cellText);
+                cells.forEach(cell => {
+                    const cellText = (cell as HTMLElement).innerText.trim(); // Explicit cast to HTMLElement
+                    rowData.push(cellText);
 
-                // Jika ini adalah baris header, simpan nama kolom
-                if (row.classList.contains('ag-header-row')) {
-                    headerRow.push(cellText);
+                    // Jika ini adalah baris header, simpan nama kolom
+                    if (row.classList.contains('ag-header-row')) {
+                        headerRow.push(cellText);
+                    }
+                });
+
+                if (rowData.length > 0) {
+                    gridData.push(rowData.join(','));
                 }
             });
 
-            if (rowData.length > 0) {
-                gridData.push(rowData.join(','));
+            if (gridData.length > 0) {
+                // Menyusun data CSV
+                const csvContent = [headerRow.join(',')].concat(gridData).join('\n');
+
+                // Membuat file CSV
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+
+                // Menyimpan file CSV
+                link.href = URL.createObjectURL(blob);
+                link.setAttribute('download', 'approved_status_report.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
-        });
-
-        if (gridData.length > 0) {
-            // Menyusun data CSV
-            const csvContent = [headerRow.join(',')].concat(gridData).join('\n');
-
-            // Membuat file CSV
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-
-            // Menyimpan file CSV
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', 'approved_status_report.csv');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
-    }
-};
+    };
 
-    
+
 
     // const [gridApi, setGridApi] = createSignal(null);
     // const [rowData, setRowData] = createSignal<RowData[]>(
@@ -342,7 +342,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
         // Perbarui nilai checkbox saat diklik
         setIsChecked(!isChecked());
         console.log("check ", isChecked())
-        if (isChecked() == true){
+        if (isChecked() == true) {
             console.log("true")
             setConfirmID(data.id);
             console.log("pengajuan id", confirmID())
@@ -361,24 +361,24 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
             // confirmData.append('tipepengajuan', data.tipepengajuan.toString());
             confirmData.append('total', '0');
             // confirmData.append('status', data.status);
-            confirmData.append('konfirmasi', 'true');   
-            
+            confirmData.append('konfirmasi', 'true');
+
             try {
-                const response = await fetch (`/api/pengajuan/konfirmasi/${confirmID()}`, {
+                const response = await fetch(`/api/pengajuan/konfirmasi/${confirmID()}`, {
                     method: 'PUT',
                     headers: {
-                        'Content-Type':'application/json',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(dataConfirm)
-    
+
                 })
                 if (response.ok) {
                     alert("Pengajuan telah diconfirm")
                     window.location.reload();
                 } else {
-                  const errorMessage = await response.text();
-                  alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
-                  console.error('Gagal mengubah data:', errorMessage);
+                    const errorMessage = await response.text();
+                    alert(`Gagal mengubah data. Pesan kesalahan: ${errorMessage}`);
+                    console.error('Gagal mengubah data:', errorMessage);
                 }
             } catch (error) {
                 alert('Terjadi kesalahan. Silakan coba lagi.');
@@ -389,7 +389,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
     const ConfirmCell = (params) => {
         const { value, data } = params;
-    
+
         const handleConfirmationClick = () => {
             // Panggil fungsi yang ingin Anda eksekusi saat tombol konfirmasi diklik
             // Misalnya, Anda bisa melakukan sesuatu seperti menyimpan status konfirmasi ke server
@@ -400,27 +400,27 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
         const isChecked = checkedMap().get(data.id) || false;
 
-        if(data.konfirmasi == true) {
+        if (data.konfirmasi == true) {
             setConfirmDisable(true);
         }
-        if (params.data.tipepengajuan === 'Weekly' && params.data.status === 'Approved' && params.data.evidence !== null ) {
-        return (
-            <div style={{ cursor: 'pointer', display:"flex" }} onClick={handleConfirmationClick}>
-                <input
-                    class="checkbox checkbox-info"
-                    style={{ opacity: "0.7"}}
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => handleCheckboxChange(data)}
-                    disabled={confirmDisable()}
-                />           
-            </div>
-        ) 
+        if (params.data.tipepengajuan === 'Weekly' && params.data.status === 'Approved' && params.data.evidence !== null) {
+            return (
+                <div style={{ cursor: 'pointer', display: "flex" }} onClick={handleConfirmationClick}>
+                    <input
+                        class="checkbox checkbox-info"
+                        style={{ opacity: "0.7" }}
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => handleCheckboxChange(data)}
+                        disabled={confirmDisable()}
+                    />
+                </div>
+            )
         } else {
             return (
-                <div style={{display:"flex"}}>
+                <div style={{ display: "flex" }}>
                     {/* <input style={{margin:"auto", cursor:"not-allowed"}} type="checkbox" disabled /> */}
-                    <input type="checkbox" style={{ opacity: "0.7"}} class="checkbox" disabled />
+                    <input type="checkbox" style={{ opacity: "0.7" }} class="checkbox" disabled />
                 </div>
             )
         }
@@ -436,7 +436,8 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
         { field: 'tipepengajuan', cellStyle: getCellStyle, headerName: 'Kategori', cellClassRules: { 'bold-type': () => true }, editable: false },
         // { field: 'category', headerName: 'Jenis', editable: false },
         { field: "total", headerName: "Total", width: 95, valueFormatter: (params) => formatRupiah(params.value) },
-        { field: 'status', headerName: 'Status', editable: false, cellRenderer: (params) => {
+        {
+            field: 'status', headerName: 'Status', editable: false, cellRenderer: (params) => {
 
                 // Fungsi ini akan dijalankan setiap kali rendering sel
                 const { value, data } = params;
@@ -467,33 +468,35 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                 );
             }
         },
-        
-        
-        { field: "export", headerName: "", cellRenderer: (params: any) => {
-            return (
-                <div class="tooltip fixed-tooltip" data-tip="Export">
-                    <div class="flex-container">
-                        <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer" }} onclick={exportToCSV} />
+
+
+        {
+            field: "export", headerName: "", cellRenderer: (params: any) => {
+                return (
+                    <div class="tooltip fixed-tooltip" data-tip="Export">
+                        <div class="flex-container">
+                            <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer" }} onclick={exportToCSV} />
+                        </div>
                     </div>
-                </div>
 
 
-                // <div class="tooltip" data-tip="Export">
-                //     <div style="display: flex; align-items: center;">
-                //         <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onclick={exportToPDF} />
-                //     </div>
-                // </div>
+                    // <div class="tooltip" data-tip="Export">
+                    //     <div style="display: flex; align-items: center;">
+                    //         <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onclick={exportToPDF} />
+                    //     </div>
+                    // </div>
 
-                // <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
-                //     <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
-                // </div>
-                // <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
-                //     <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
-                //     {params.value}
-                // </div>
-            );
-        }},
-        { field: 'konfirmasi', headerName: 'Konfirmasi', cellRenderer: ConfirmCell},
+                    // <div class="icon-export" style={{ display: "flex", "align-items": "center"}}>
+                    //     <Icon icon="ph:export" width="20" height="20" style={{ "margin-left": "auto", cursor: "pointer"  }} onClick={exportToPDF} />
+                    // </div>
+                    // <div style={{ "justify-content": "center", "align-items": "center", "margin-right": "20px" }}>
+                    //     <button onClick={() => showEditPopup(params.data)} style={{ "background-color": "#6E49E9", "justify-content": "center", "border-radius": "10px", "width": "5.5rem", "height": "2.3rem", "color": "white", "align-items": "center" }}>Evidence &gt</button>
+                    //     {params.value}
+                    // </div>
+                );
+            }
+        },
+        { field: 'konfirmasi', headerName: 'Konfirmasi', cellRenderer: ConfirmCell },
     ];
 
     const defaultColDef = {
@@ -535,7 +538,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
         if (isTransferButtonClicked) {
             showEditPopup(params.data);
-        } else if (params.colDef.field === 'konfirmasi'){
+        } else if (params.colDef.field === 'konfirmasi') {
             setConfirmID(params.data.id)
             return;
         } else {
@@ -606,7 +609,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                         rowMultiSelectWithClick={true}
                     />
                 </div>
-                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} evidence={evidence()}/>)}
+                {isEditPopupOpen() && (<Form_transferAdmin OnClose={CloseEditPopUp} evidence={evidence()} />)}
             </div>
         </div>
     );

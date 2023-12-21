@@ -104,23 +104,12 @@ const Pemasukan: Component = () => {
 
   const columnDefs = [
     // { headerName: 'ID', field: 'planning_id' },
-    { headerName: 'ID Pengajuan', field: 'pengajuan_id' },
+    { headerName: 'ID Pengajuan', field: 'id' },
     { headerName: 'Faktur', field: 'nomor_faktur' },
     { headerName: 'COA', field: 'coa_kd' },
     { headerName: 'Jumlah', field: 'amount' },
     { headerName: 'Tanggal', field: 'income_ts' },
     { headerName: 'Keterangan', field: 'keterangan' },
-    { headerName: 'Bukti', field: 'evidence', cellRenderer: agLinkCellRenderer },
-    {
-      headerName: 'Tags',
-      field: 'tags',
-      filter: 'agSetColumnFilter',
-      filterParams: {
-        applyMiniFilterWhileTyping: true,
-        values: ['VIP', 'In Progress', 'Urgent', 'Bug', 'VVIP'],
-      } as ISetFilterParams,
-      cellRenderer: tagsCellRenderer
-    },
     {
       field: "transfer", headerName: "", cellRenderer: (params: any) => {
         return (
