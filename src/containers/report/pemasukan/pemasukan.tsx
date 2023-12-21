@@ -86,13 +86,13 @@ const Pemasukan: Component = () => {
 
   const columnDefs = [
     // { headerName: 'ID', field: 'planning_id' },
-    { headerName: 'ID Pengajuan', field: 'planning_id' },
-    { headerName: 'Faktur', field: 'faktur_ts' },
+    { headerName: 'ID Pengajuan', field: 'pengajuan_id' },
+    { headerName: 'Faktur', field: 'nomor_faktur' },
     { headerName: 'COA', field: 'coa_kd' },
     { headerName: 'Jumlah', field: 'amount' },
     { headerName: 'Tanggal', field: 'income_ts' },
     { headerName: 'Keterangan', field: 'keterangan' },
-    { headerName: 'Bukti', field: 'bukti', cellRenderer: agLinkCellRenderer },
+    { headerName: 'Bukti', field: 'evidence', cellRenderer: agLinkCellRenderer },
     {
       headerName: 'Tags',
       field: 'tags',

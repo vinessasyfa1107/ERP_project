@@ -86,13 +86,13 @@ const Pengeluaran: Component = () => {
 
 const columnDefs = [
   // { headerName: 'ID', field: 'id' },
-  { headerName: 'ID Pengajuan', field: 'planning_id' },
-  { headerName: 'Faktur', field: 'faktur_ts' },
+  { headerName: 'ID Pengajuan', field: 'id' },
+  { headerName: 'Faktur', field: 'nomor_faktur' },
   { headerName: 'COA', field: 'coa_kd' },
   { headerName: 'Jumlah', field: 'amount' },
   { headerName: 'Tanggal', field: 'expense_ts' },
   { headerName: 'Keterangan', field: 'keterangan' },
-  { headerName: 'Bukti', field: 'bukti', cellRenderer: agLinkCellRenderer },
+  { headerName: 'Bukti', field: 'evidence', cellRenderer: agLinkCellRenderer },
   {
     headerName: 'Tags',
     field: 'tags',
@@ -102,64 +102,6 @@ const columnDefs = [
       values: ['VIP','In Progress','Urgent','Bug','VVIP'],
     } as ISetFilterParams,
     cellRenderer: tagsCellRenderer
-  }
-];
-
-const rowData = [
-  {
-    "id": 1,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "VIP"
-  },
-  {
-    "id": 2,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "In Progress"
-  },
-  {
-    "id": 3,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "Urgent"
-  },
-  {
-    "id": 4,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "Bug"
-  },
-  {
-    "id": 5,
-    "id_pengajuan": 123,
-    "faktur": "KM20231016",
-    "COA": "1-1000",
-    "jumlah": 2000000,
-    "tanggal": '10/12/22',
-    "keterangan": "Lorem Ipsum Dolor Sit Amet",
-    "bukti": "evidance.jpg",
-    "tags": "VVIP"
   }
 ];
 
