@@ -1,11 +1,14 @@
 
 export type resultdata = {
-    "planning_id": number,
-    "income_ts" : Date,
+    "id": number,
+    "pengajuan_id": number,
+    "income_ts" : string,
+    "entry_by": number,
     "amount": number,
-    "faktur_ts": string,
+    "nomor_faktur": string,
     "coa_kd": string,
     "keterangan": string,
+    "evidence": string
 }
 
 
@@ -22,7 +25,7 @@ export async function DataIncome (query: string) {
     // console.log("response ", results)
     const documents = results as resultdata[];
     console.log(documents);
-    return documents.slice(0, documents.length).map(({ planning_id, income_ts, amount, faktur_ts, coa_kd, keterangan }) => ({
-        planning_id, income_ts, amount, faktur_ts, coa_kd, keterangan
+    return documents.slice(0, documents.length).map(({ id, pengajuan_id, income_ts, amount, nomor_faktur, coa_kd, keterangan, evidence }) => ({
+        id, pengajuan_id, income_ts, amount, nomor_faktur, coa_kd, keterangan, evidence
       }));
   }

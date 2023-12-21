@@ -328,7 +328,17 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
     const [isChecked, setIsChecked] = createSignal(false);
     const [confirmDisable, setConfirmDisable] = createSignal(false)
+    const [checkedMap, setCheckedMap] = createSignal(new Map());
+
     const handleCheckboxChange = async (data) => {
+        const currentCheckedMap = checkedMap();
+        const currentCheckedState = currentCheckedMap.get(data.id) || false;
+
+        // Update the checked state for the specific checkbox
+        const updatedCheckedMap = new Map(currentCheckedMap);
+        updatedCheckedMap.set(data.id, !currentCheckedState);
+
+        setCheckedMap(updatedCheckedMap);
         // Perbarui nilai checkbox saat diklik
         setIsChecked(!isChecked());
         console.log("check ", isChecked())
@@ -339,19 +349,27 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
             setConfirmDisable(true);
             console.log("data", data)
 
+            const dataConfirm = {
+                id: data.id,
+                total: 0,
+                konfirmasi: true
+            }
             const confirmData = new FormData();
             confirmData.append('id', data.id);
-            confirmData.append('entry_ts', data.entry_ts);
-            confirmData.append('namapengajuan', data.namapengajuan);
-            confirmData.append('tipepengajuan', data.tipepengajuan.toString());
-            confirmData.append('total', data.total.toString());
-            confirmData.append('status', data.status);
+            // confirmData.append('entry_ts', data.entry_ts);
+            // confirmData.append('namapengajuan', data.namapengajuan);
+            // confirmData.append('tipepengajuan', data.tipepengajuan.toString());
+            confirmData.append('total', '0');
+            // confirmData.append('status', data.status);
             confirmData.append('konfirmasi', 'true');   
             
             try {
-                const response = await fetch (`/api/pengajuan/${confirmID()}`, {
+                const response = await fetch (`/api/pengajuan/konfirmasi/${confirmID()}`, {
                     method: 'PUT',
-                    body: confirmData
+                    headers: {
+                        'Content-Type':'application/json',
+                    },
+                    body: JSON.stringify(dataConfirm)
     
                 })
                 if (response.ok) {
@@ -379,15 +397,33 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
             console.log("apanih", data.konfirmasi)
 
         };
+
+        const isChecked = checkedMap().get(data.id) || false;
+
         if(data.konfirmasi == true) {
             setConfirmDisable(true);
         }
-        if  (params.data.tipepengajuan !== 'Weekly' && params.data.status === 'Approved' && params.data.evidence !== null)
+        if (params.data.tipepengajuan === 'Weekly' && params.data.status === 'Approved' && params.data.evidence !== null ) {
         return (
-            <div style={{ cursor: 'pointer' }} onClick={handleConfirmationClick}>
-                <input type="checkbox" checked={data.konfirmasi || isChecked()} onChange={() => handleCheckboxChange(data)} disabled={confirmDisable()}/>
+            <div style={{ cursor: 'pointer', display:"flex" }} onClick={handleConfirmationClick}>
+                <input
+                    class="checkbox checkbox-info"
+                    style={{ opacity: "0.7"}}
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={() => handleCheckboxChange(data)}
+                    disabled={confirmDisable()}
+                />           
             </div>
-        )
+        ) 
+        } else {
+            return (
+                <div style={{display:"flex"}}>
+                    {/* <input style={{margin:"auto", cursor:"not-allowed"}} type="checkbox" disabled /> */}
+                    <input type="checkbox" style={{ opacity: "0.7"}} class="checkbox" disabled />
+                </div>
+            )
+        }
 
     };
 
@@ -457,7 +493,7 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
                 // </div>
             );
         }},
-        { field: 'confirm', headerName: 'Konfirmasi', cellRenderer: ConfirmCell},
+        { field: 'konfirmasi', headerName: 'Konfirmasi', cellRenderer: ConfirmCell},
     ];
 
     const defaultColDef = {
@@ -499,7 +535,8 @@ const Table_pengajuan_ModulPengajuan: Component = () => {
 
         if (isTransferButtonClicked) {
             showEditPopup(params.data);
-        } else if (params.colDef.field === 'confirm'){
+        } else if (params.colDef.field === 'konfirmasi'){
+            setConfirmID(params.data.id)
             return;
         } else {
             if (params.data.tipepengajuan === 'Weekly') {
