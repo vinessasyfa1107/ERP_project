@@ -14,6 +14,7 @@ import './pengeluaran.css';
 import Tutup_buku from '../pemasukan/tutup_buku';
 import { DataExpense } from '../../../api/report/data-expense';
 import { useSubNavbarStore } from '../../../store/Navbar/SubNavbarStore';
+import EvidencePopUp from './evidence-popup';
 
 
 const Pengeluaran: Component = () => {
@@ -83,6 +84,21 @@ const Pengeluaran: Component = () => {
     );
   };
 
+  const [evidencePopUp, setEvidencePopUp] = createSignal(false)
+  const [evidence, setEvidence] = createSignal('');
+  const [ID, setID] = createSignal(0);
+
+  function closeEvidence(){
+    setEvidencePopUp(false)
+  }
+
+  const onCellClicked = (params) => {
+      if (params.colDef.field === 'evidence') {
+        setEvidencePopUp(true);
+        setEvidence(params.data.evidence);
+        setID(params.data.id)
+      }
+  }
 
 const columnDefs = [
   // { headerName: 'ID', field: 'id' },
@@ -92,7 +108,7 @@ const columnDefs = [
   { headerName: 'Jumlah', field: 'amount' },
   { headerName: 'Tanggal', field: 'expense_ts' },
   { headerName: 'Keterangan', field: 'keterangan' },
-  { headerName: 'Bukti', field: 'evidence', cellRenderer: agLinkCellRenderer },
+  { headerName: 'Bukti', field: 'evidence' },
   {
     headerName: 'Tags',
     field: 'tags',
@@ -153,10 +169,12 @@ return (
             defaultColDef={defaultColDef}
             domLayout='autoHeight'
             gridOptions={gridOptions}
+            onCellClicked={onCellClicked}
           />
         </div>
       </div>
     </div>
+    {evidencePopUp() && (<EvidencePopUp OnClose={closeEvidence} id={ID()} evidence={evidence()}/>)}
   </div>
 );
 };
