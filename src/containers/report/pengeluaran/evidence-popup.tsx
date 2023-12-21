@@ -18,7 +18,7 @@ const EvidencePopUp: Component<EvidencePopUp> = (props) => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`/api/pengajuan/${props.evidence}`); // Update the API endpoint with the correct ID
+            const response = await fetch(`/api/expense/${props.evidence}`); // Update the API endpoint with the correct ID
             const result = await response.json();
             console.log("ini result", result);
             return result.evidence; // Adjust this based on your API response structure
@@ -53,7 +53,7 @@ const EvidencePopUp: Component<EvidencePopUp> = (props) => {
                                 <label>Bukti*</label>
                                 <div class="container-bukti" style={{ "display": "flex", "justify-content": "center", "align-items": "center" }}>
                                     {props.evidence !== null ? (
-                                        <img src={`/api/pengajuan/${props.evidence}`} alt="Selected Image"/>
+                                        <img src={`/api/expense/${props.evidence}`} alt="Selected Image"/>
                                     ) : (
                                         <span>No evidence available</span>
                                     )}
